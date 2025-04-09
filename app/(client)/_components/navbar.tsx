@@ -85,7 +85,7 @@ const CompanySection = () => (
       />
       <NavLink
         icon={<AddIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-        text="Book a Demo"
+        text="Get Started"
       />
     </ul>
   </div>
@@ -144,7 +144,7 @@ const MobileAboutUsDropdown = ({ isOpen, onToggle }) => (
           />
           <MobileNavLink
             icon={<AddIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
-            text="Book a Demo"
+            text="Get Started"
           />
         </MobileSection>
 
@@ -182,6 +182,7 @@ const MobileNavLink = ({ icon, text }) => (
 
 // Main Navbar Component
 import { ServicesDropdownContent } from "./_navbar-component/services-dropdown";
+import LogoIcon from "@/public/incons/logo";
 
 // Add this new component for Mobile Services Dropdown
 const MobileServicesDropdown = ({ isOpen, onToggle }) => (
@@ -257,13 +258,14 @@ export function Navbar() {
       <div className="container px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <CustomImage
+          {/* <CustomImage
             src={logo.src}
             alt="Company Logo"
             width={120}
             height={40}
             layout="fixed"
-          />
+          /> */}
+          <LogoIcon/>
         </Link>
 
         {/* Desktop Navigation */}
@@ -341,10 +343,10 @@ export function Navbar() {
                   Log in
                 </Link>
                 <Link href="#" className="serotiva-regular">
-                  Book a Demo
+                  Get Started
                 </Link>
                 <Button className="bg-black hover:bg-gray-800 text-white serotiva-regular">
-                  Get Started <ArrowRight className="ml-2 w-4 h-4" />
+                Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </div>
             </nav>
@@ -363,10 +365,10 @@ export function Navbar() {
             href="#"
             className="hover:text-black transition serotiva-regular"
           >
-            Book a Demo
+            Get Starded
           </Link>
           <Button className="bg-black hover:bg-gray-800 text-white serotiva-regular">
-            Get Started <ArrowRight className="ml-2 w-4 h-4" />
+          Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
           </Button>
         </div>
       </div>
