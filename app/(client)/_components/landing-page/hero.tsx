@@ -67,7 +67,7 @@ const Hero: React.FC = () => {
                 </div>
             </div>
 
-            <div className="max-w-[1200px] mx-auto 2xl:px-0 px-5 mt-10">
+            <div className="max-w-[1200px] mx-auto 2xl:px-0 px-5 ">
                 <div className="relative">
                     <ImageMasonry images={images} />
                     {/* White gradient overlay at the bottom */}
