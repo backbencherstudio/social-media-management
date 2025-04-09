@@ -44,17 +44,6 @@ const AboutUsDropdownContent = () => (
   </div>
 );
 
-const NavLink = ({ icon, text, className = "" }) => (
-  <li className="list-none">
-    <Link
-      href="#"
-      className={`flex items-center gap-2 hover:text-black hover:bg-[#F6F8FA] rounded-lg p-2 transition-all duration-200 ${className}`}
-    >
-      {icon} {text}
-    </Link>
-  </li>
-);
-
 const ServiceSection = () => (
   <div>
     <p className="text-gray-500 serotiva-regular text-sm">SERVICES</p>
@@ -62,14 +51,17 @@ const ServiceSection = () => (
       <NavLink
         icon={<PricingIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Pricing"
+        href="/pricing"
       />
       <NavLink
         icon={<EditIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Our Work"
+        href="/our-work"
       />
       <NavLink
         icon={<EmojiIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Reviews"
+        href="/reviews"
       />
     </ul>
   </div>
@@ -82,10 +74,12 @@ const CompanySection = () => (
       <NavLink
         icon={<FileTextIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="About Us"
+        href="/about"
       />
       <NavLink
         icon={<AddIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Get Started"
+        href="/get-started"
       />
     </ul>
   </div>
@@ -98,13 +92,27 @@ const LearnSection = () => (
       <NavLink
         icon={<WatchIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Watch Demo Video"
+        href="/demo"
       />
       <NavLink
         icon={<BookIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Blog"
+        href="/blog"
       />
     </ul>
   </div>
+);
+
+// Update NavLink component to accept href prop
+const NavLink = ({ icon, text, className = "", href = "#" }) => (
+  <li className="list-none">
+    <Link
+      href={href}
+      className={`flex items-center gap-2 hover:text-black hover:bg-[#F6F8FA] rounded-lg p-2 transition-all duration-200 ${className}`}
+    >
+      {icon} {text}
+    </Link>
+  </li>
 );
 
 // Mobile Navigation Components

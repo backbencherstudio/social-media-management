@@ -4,7 +4,7 @@ import { Navbar } from './_components/navbar'
 export default function HomePage() {
   return (
     <div>
-        <Navbar />
+        <p>home</p>
     </div>
   )
 }
