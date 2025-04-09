@@ -10,10 +10,27 @@ const interTight = Inter_Tight({
   display: 'swap',
 });
 
-// Load Serotiva from local files
+// Load Serotiva with all weights
 const serotiva = localFont({
-  src: '../public/fonts/Serotiva-Bold.otf',
+  src: [
+    {
+      path: '../public/fonts/Serotiva-Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Serotiva-SemiBold.otf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Serotiva-Bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
   display: 'swap',
+  variable: '--font-serotiva',
 });
 
 export const metadata: Metadata = {
@@ -27,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${interTight.className} ${serotiva.className}`}>
+    <html lang="en" suppressHydrationWarning className={`${interTight.className} ${serotiva.variable}`}>
       <body>{children}</body>
     </html>
   );

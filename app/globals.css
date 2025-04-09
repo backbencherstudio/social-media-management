@@ -12,10 +12,21 @@
     --font-inter-tight: 'Inter Tight';
   }
   
+  .serotiva-regular {
+    font-family: var(--font-serotiva);
+    font-weight: 400;
+  }
+
+  .serotiva-semibold {
+    font-family: var(--font-serotiva);
+    font-weight: 600;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serotiva);
+    font-weight: 700;
   }
-  
+
   body {
     font-family: var(--font-inter-tight);
   }
