@@ -7,6 +7,7 @@ import createOne from "@/public/about-page/creatingOne.png";
 import createTwo from "@/public/about-page/creatingTwo.png";
 import Heading from "../../_components/heading-text";
 import ParagraphText from "../../_components/paragraph-text";
+import SmileIcon from "@/public/incons/smile-icon";
 
 export default function Creating() {
   return (
@@ -19,9 +20,9 @@ export default function Creating() {
           className="md:max-w-[632px] mx-auto mt-4"
         />
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div className="mt-10 w-full items-center flex gap-4">
           {/* Left Image */}
-          <div className="rounded-xl overflow-hidden">
+          <div className="w-[70%] rounded-xl overflow-hidden">
             <Image
               src={createOne} // Replace with your actual image path
               alt="Team working"
@@ -32,21 +33,21 @@ export default function Creating() {
           </div>
 
           {/* Right Image + Card */}
-          <div className="space-y-6">
+          <div className="w-[30%] space-y-6">
             <div className="rounded-xl overflow-hidden">
               <Image
                 src={createTwo} // Replace with your actual image path
                 alt="Discussion"
-                width={600}
-                height={400}
+                width={400}
+                height={500}
                 className="w-full h-auto object-cover"
               />
             </div>
 
-            <Card className="w-full max-w-xs mx-auto shadow-md">
+            <Card className="w-full max-w-xs mx-auto shadow-md border border-[#A5A5AB]">
               <CardContent className="flex items-center gap-4 py-6">
-                <div className="bg-yellow-100 text-yellow-600 rounded-full p-3">
-                  <EmojiIcon className="w-6 h-6" />
+                <div className="bg-gray-200  rounded-full p-3">
+                  <SmileIcon className="w-6 h-6" />
                 </div>
                 <div>
                   <p className="text-xl font-bold text-gray-900">12,000+</p>

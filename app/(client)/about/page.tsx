@@ -5,6 +5,9 @@ import { IoMdAddCircle } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 import BusinessTrust from "../_components/business-trust";
 import Creating from "./_components/creating";
+import OurTeam from "./_components/our-team";
+import SocialMediaManagement from "./_components/social-media-management";
+import ScheduleDemo from "./_components/schedule-demo";
 // Remove the video import
 // import video from "@/public/video/about-video.mp4";
 
@@ -19,7 +22,7 @@ export default function About() {
               Professional and Cost-Effective Social Media Management Solutions
             </>
           }
-          className="text-[24px] md:text-[36px] lg:text-[42px] "
+          className="text-[24px] md:text-[36px] lg:text-[42px] text-center"
         />
         {/* paragraph */}
         <ParagraphText
@@ -52,6 +55,12 @@ export default function About() {
         <BusinessTrust/>
         {/* creating */}
         <Creating/>
+        {/* our team */}
+        <OurTeam/>
+        {/* social media management */}
+        <SocialMediaManagement/>
+        {/* schedule demo */}
+        <ScheduleDemo/>
     </div>
   );
 }
