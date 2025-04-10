@@ -3,12 +3,14 @@ import HeadingText from "../_components/heading-text";
 import ParagraphText from "../_components/paragraph-text";
 import { IoMdAddCircle } from "react-icons/io";
 import { Button } from "@/components/ui/button";
+import BusinessTrust from "../_components/business-trust";
+import Creating from "./_components/creating";
 // Remove the video import
 // import video from "@/public/video/about-video.mp4";
 
 export default function About() {
   return (
-    <div className="container px-5 2xl:px-0">
+    <div className="px-5 2xl:px-0">
       <div className="max-w-[776px] mx-auto mt-20 flex flex-col gap-6">
         {/* heading */}
         <HeadingText
@@ -44,7 +46,12 @@ export default function About() {
             Your browser does not support the video tag.
           </video>
         </div>
+
       </div>
+        {/* business trust grow */}
+        <BusinessTrust/>
+        {/* creating */}
+        <Creating/>
     </div>
   );
 }
