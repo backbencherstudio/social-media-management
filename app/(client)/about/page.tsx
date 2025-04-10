@@ -39,8 +39,8 @@ export default function About() {
         </div>
 
         {/* video */}
-        <div className="mt-16 rounded-2xl overflow-hidden">
-          <video 
+        <div className="pt-16 rounded-2xl overflow-hidden ">
+          <video
             className="w-full h-full object-cover"
             controls
             poster="/video-thumbnail.jpg"
@@ -49,18 +49,24 @@ export default function About() {
             Your browser does not support the video tag.
           </video>
         </div>
+      </div>
+      {/* business trust grow */}
+      <div className=" mt-20 md:mt-[300px]">
+      <BusinessTrust />
 
       </div>
-        {/* business trust grow */}
-        <BusinessTrust/>
-        {/* creating */}
-        <Creating/>
-        {/* our team */}
-        <OurTeam/>
-        {/* social media management */}
-        <SocialMediaManagement/>
-        {/* schedule demo */}
-        <ScheduleDemo/>
+      
+      {/* creating */}
+      <Creating />
+      
+      {/* our team */}
+      <OurTeam />
+      
+      {/* social media management */}
+      <SocialMediaManagement />
+      
+      {/* schedule demo */}
+      <ScheduleDemo />
     </div>
   );
 }
