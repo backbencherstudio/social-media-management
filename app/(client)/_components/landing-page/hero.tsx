@@ -15,6 +15,12 @@ import LinkdinIcon from "@/public/incons/landin-page/LinkdinIcon";
 import YoutubeIcon from "@/public/incons/landin-page/youtubeIcon";
 import TiktokIcon from "@/public/incons/landin-page/ToktokIcon";
 import TwitterIcon from "@/public/incons/landin-page/TwitterIcon";
+import DocuSignIcon from "@/public/incons/landin-page/Docusign";
+import AfterPayIcon from "@/public/incons/landin-page/AfterPay";
+import GithubIcon from "@/public/incons/landin-page/GithubIcon";
+import MazeIcon from "@/public/incons/landin-page/MazeIcon";
+import GumroadIcon from "@/public/incons/landin-page/GumroadIcon";
+import RipplingIcon from "@/public/incons/landin-page/RippklingIcon";
 
 const images = [
   img1.src,
@@ -85,34 +91,43 @@ const Hero: React.FC = () => {
         <div className="mt-7">
           <Link href="">
             <div className="bg-black leading-[150%] px-9 py-4 flex cursor-pointer items-center rounded-[8px] gap-2 font-semibold hover:bg-gray-800 text-white">
-              <span className="font-serotiva"> Schedule a free demo call</span>{" "}
+              <span className="font-serotiva text-sm md:text-base"> Schedule a free demo call</span>
               <IoMdAddCircle className="ml-2 w-5 h-5" />
             </div>
           </Link>
         </div>
       </div>
 
-            <div className="max-w-[1200px] mx-auto 2xl:px-0 px-5 ">
-                <div className="relative">
-                    <ImageMasonry images={images} />
-                    {/* White gradient overlay at the bottom */}
-                    <div className="absolute bottom-0 left-0 w-full md:h-[28%] bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.00)_0%,_rgba(255,_255,_255,_0.74)_27.4%,_#FFF_36.22%,_#FFF_100%)]"></div>
-                </div>
-            </div>
+      <div className="max-w-[1200px] mx-auto 2xl:px-0 px-5 mt-6 md:mt-0">
+        <div className="relative">
+          <ImageMasonry images={images} />
+          {/* White gradient overlay at the bottom */}
+          <div className="absolute bottom-0 left-0 w-full md:h-[38%] bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.00)_0%,_rgba(255,_255,_255,_0.74)_27.4%,_#FFF_36.22%,_#FFF_100%)]"></div>
+        </div>
+      </div>
 
 
-      <div className="w-full bg-black py-[34px] relative z-10 md:-top-30 ">
-        <div className="max-w-[1200px] px-5 2xl:px-0 mx-auto flex justify-between">
-          <div className="text-white">
+      <div className="w-full bg-black md:py-[34px] py-4 mt-4 md:mt-0 relative z-10 md:-top-43 ">
+        <div className="max-w-[1200px] px-5 2xl:px-0 mx-auto flex justify-between items-center">
+          <div className="text-white flex flex-col gap-2 py-1 w-full md:w-[22%]">
             <h2 className="md:text-[36px] text-2xl font-bold leading-[120%]">
               12,000+
             </h2>
-            <p className="text-[#F5F5F7] leading-[150%]">
+            <p className="text-[#F5F5F7] text-base leading-[150%]">
               Business trust TagGrowth
             </p>
           </div>
-          <div className="border border-white"></div>
-          <div></div>
+          <div className=" border-white lg:mx-[78px] mx-6"><svg xmlns="http://www.w3.org/2000/svg" width="2" height="84" viewBox="0 0 2 84" fill="none">
+            <path d="M1 0V83.5" stroke="#4A4C56" />
+          </svg></div>
+          <div className="flex md:flex-row flex-col md:gap-2 gap-2 items-center w-full justify-between">
+            <span><DocuSignIcon /></span>
+            <span><AfterPayIcon /></span>
+            <span><GithubIcon /></span>
+            <span><MazeIcon /></span>
+            <span><GumroadIcon /></span>
+            <span><RipplingIcon /></span>
+          </div>
         </div>
       </div>
     </div>
