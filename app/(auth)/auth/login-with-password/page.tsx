@@ -68,7 +68,7 @@ export default function LoginWithPassword() {
 
               <div className="flex justify-end">
                 <Link
-                  href="/forgot-password"
+                  href="/auth/forgot-password"
                   className="text-sm text-blue-600 hover:underline"
                 >
                   Forgot password?
