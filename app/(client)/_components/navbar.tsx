@@ -51,7 +51,7 @@ const ServiceSection = () => (
       <NavLink
         icon={<PricingIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Pricing"
-        href="/pricing"
+        href="/pricing-and-package"
       />
       <NavLink
         icon={<EditIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
@@ -308,7 +308,7 @@ export function Navbar() {
 
             <NavigationMenuItem>
               <Link
-                href="#"
+                href="/pricing-and-package"
                 className="hover:text-black transition serotiva-regular"
               >
                 Pricing
@@ -341,7 +341,7 @@ export function Navbar() {
                 <Link href="#" className="serotiva-regular">
                   Examples
                 </Link>
-                <Link href="#" className="serotiva-regular">
+                <Link href="/pricing-and-package" className="serotiva-regular">
                   Pricing
                 </Link>
               </div>
