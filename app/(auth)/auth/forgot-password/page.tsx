@@ -7,6 +7,7 @@ import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Heading from "@/app/(client)/_components/heading-text";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ export default function ForgotPassword() {
 
             {/* Welcome Text */}
             <div className="mt-8">
-              <h1 className="text-[32px] font-bold">Account recovery</h1>
+              <Heading text="Account recovery" className="text-[32px] font-bold"/>
               <p className="text-gray-600 mt-2">
                 We're excited to see you again! Please log in to continue.
               </p>

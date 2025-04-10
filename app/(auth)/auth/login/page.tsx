@@ -6,6 +6,7 @@ import loginImg from '@/public/login.png'
 import LogoIcon from '@/public/incons/logo'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import Heading from '@/app/(client)/_components/heading-text'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -26,7 +27,7 @@ export default function Login() {
 
             {/* Welcome Text */}
             <div className="mt-8">
-              <h1 className="text-[32px] font-bold">Welcome back</h1>
+              <Heading text="Welcome back" className="text-[32px] font-bold"/>
               <p className="text-gray-600 mt-2">
                 We're excited to see you again! Please log in to continue.
               </p>
