@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import SocialMediaPost from "./social-media-post";
-import Video from "./video";
-import Email from "./email";
-import Blogs from "./blogs";
+import SocialMediaPost from "../../_components/_post/social-media-post";
+import Video from "../../_components/_video/video";
+import Email from "../../_components/_email/email";
+import Blogs from "../../_components/_blogs/blogs";
 
 const services = [
   { id: "post", title: "Posts" },
