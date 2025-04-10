@@ -347,7 +347,7 @@ export function Navbar() {
               </div>
 
               <div className="flex flex-col space-y-3 mt-4">
-                <Link href="#" className="serotiva-regular">
+                <Link href="/auth/login" className="serotiva-regular">
                   Log in
                 </Link>
                 <Link href="#" className="serotiva-regular">
@@ -364,7 +364,7 @@ export function Navbar() {
         {/* Right Side - Desktop */}
         <div className="hidden lg:flex items-center space-x-4 text-sm text-gray-700">
           <Link
-            href="#"
+            href="/auth/login"
             className="hover:text-black transition serotiva-regular"
           >
             Log in
