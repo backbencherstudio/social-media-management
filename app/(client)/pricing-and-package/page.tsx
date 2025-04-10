@@ -4,9 +4,11 @@ import Pricing from './_components/pricing'
 
 export default function PricingAndPackage() {
   return (
-    <div>
-        <Banner/>
+    <div className="min-h-screen w-full px-4">
+      <Banner/>
+      <div className="sm:px-6 lg:px-8">
         <Pricing/>
+      </div>
     </div>
   )
 }
