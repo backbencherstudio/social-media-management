@@ -20,8 +20,8 @@ export default function ScheduleDemo() {
           </p>
 
           <ScheduleButton
-            text="Start Using TagGrowth Now"
-            className="bg-white hover:bg-gray-300 ease-in duration-300 text-black w-[250px]"
+            text="Schedule a Demo"
+            className="bg-white hover:bg-gray-300 ease-in duration-300 text-black w-[168px] py-7"
           />
         </div>
         <div>
