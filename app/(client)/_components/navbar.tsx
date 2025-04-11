@@ -51,7 +51,7 @@ const ServiceSection = () => (
       <NavLink
         icon={<PricingIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Pricing"
-        href="/pricing"
+        href="/pricing-and-package"
       />
       <NavLink
         icon={<EditIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
@@ -308,7 +308,7 @@ export function Navbar() {
 
             <NavigationMenuItem>
               <Link
-                href="#"
+                href="/pricing-and-package"
                 className="hover:text-black transition serotiva-regular"
               >
                 Pricing
@@ -341,13 +341,13 @@ export function Navbar() {
                 <Link href="#" className="serotiva-regular">
                   Examples
                 </Link>
-                <Link href="#" className="serotiva-regular">
+                <Link href="/pricing-and-package" className="serotiva-regular">
                   Pricing
                 </Link>
               </div>
 
               <div className="flex flex-col space-y-3 mt-4">
-                <Link href="#" className="serotiva-regular">
+                <Link href="/auth/login" className="serotiva-regular">
                   Log in
                 </Link>
                 <Link href="#" className="serotiva-regular">
@@ -364,7 +364,7 @@ export function Navbar() {
         {/* Right Side - Desktop */}
         <div className="hidden lg:flex items-center space-x-4 text-sm text-gray-700">
           <Link
-            href="#"
+            href="/auth/login"
             className="hover:text-black transition serotiva-regular"
           >
             Log in
