@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react"
 import { cn } from "@/lib/utils"
 // import { MoreHorizontal, Hash, Heart, MessageCircle, Send, Bookmark, HeartIcon, SendIcon } from "lucide-react"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import HashTagIcon from "@/public/incons/landin-page/HashTag"
@@ -13,6 +13,7 @@ import CommentIcon from "@/public/incons/landin-page/Comments"
 import SendIcons from "@/public/incons/landin-page/Send"
 import BookmarkIcon from "@/public/incons/landin-page/Bookmark"
 import useEmblaCarousel from "embla-carousel-react"
+import { IoIosArrowForward } from "react-icons/io";
 
 // Types for our component
 type ContentType = "Posts" | "Videos" | "Emails" | "Blogs"
@@ -46,18 +47,18 @@ export default function ContentTabs({
     const [activeCategory, setActiveCategory] = useState(initialCategory)
 
     // const [emblaRef, emblaApi] = useEmblaCarousel()
-    const [emblaRef,emblaApi] = useEmblaCarousel({
+    const [emblaRef, emblaApi] = useEmblaCarousel({
         align: "start",
         dragFree: true,
         containScroll: "trimSnaps",
     })
 
     const scrollPrev = useCallback(() => {
-      if (emblaApi) emblaApi.scrollPrev()
+        if (emblaApi) emblaApi.scrollPrev()
     }, [emblaApi])
-  
+
     const scrollNext = useCallback(() => {
-      if (emblaApi) emblaApi.scrollNext()
+        if (emblaApi) emblaApi.scrollNext()
     }, [emblaApi])
     // Initialize Embla Carousel
 
@@ -84,7 +85,7 @@ export default function ContentTabs({
 
             {/* Categories */}
             {/* <ScrollArea className="w-full whitespace-nowrap pb-4"> */}
-            <div className="overflow-hidden" ref={emblaRef}>
+            <div className="overflow-hidden relative" ref={emblaRef}>
                 <div className="flex space-x-2 py-4">
                     {categories.map((category) => (
                         <Button
@@ -102,10 +103,8 @@ export default function ContentTabs({
                         </Button>
                     ))}
                 </div>
-                <div className="w-full flex justify-between">
-                    <button onClick={() => scrollNext()}>Next</button>
-                    <button onClick={() => scrollPrev()}>Prev</button>
-                </div>
+                    <button className=" absolute top-1/2 left-0 -translate-y-1/2" onClick={() => scrollPrev()}>Prev</button>
+                    <button className=" absolute top-1/2 right-0 -translate-y-1/2 bg-white " onClick={() => scrollNext()}><IoIosArrowForward className="w-[20px]" /></button>
             </div>
             {/* <ScrollBar orientation="horizontal" /> */}
             {/* </ScrollArea> */}
