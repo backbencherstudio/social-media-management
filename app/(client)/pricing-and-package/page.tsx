@@ -4,6 +4,7 @@ import Pricing from "./_components/pricing";
 import BusinessTrust from "../_components/business-trust";
 import Packages from "./_components/packages";
 import AddOns from "./_components/add-ons";
+import SocialChannel from "./_components/socical-channel";
 
 export default function PricingAndPackage() {
   return (
@@ -19,6 +20,7 @@ export default function PricingAndPackage() {
       </div>
       <Packages />
       <AddOns/>
+      <SocialChannel/>
     </div>
   );
 }
