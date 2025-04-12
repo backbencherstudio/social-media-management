@@ -50,32 +50,34 @@ const socialChannels = [
 
 export default function SocialChannel() {
   return (
-    <div className='container mx-auto text-center py-20'>
-      <Heading text="Social channels" className='text-[42px]'/>
+    <div className='container mx-auto text-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20'>
+      <Heading text="Social channels" className='text-2xl sm:text-3xl md:text-[42px]'/>
       <ParagraphText 
         paraText="We support scheduling & posting to these social media platforms" 
-        className='text-base mt-4 mb-12'
+        className='text-sm sm:text-base mt-3 sm:mt-4 mb-8 sm:mb-12 max-w-[335px] sm:max-w-[500px] mx-auto'
       />
       
-      <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="max-w-[1200px] mx-auto px-2 sm:px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-3 sm:mb-4">
           {socialChannels.slice(0, 4).map((channel, index) => (
-            <SocialCard
-              key={index}
-              icon={channel.icon}
-              platform={channel.platform}
-              count={channel.count}
-            />
+            <div key={index} className="flex justify-center">
+              <SocialCard
+                icon={channel.icon}
+                platform={channel.platform}
+                count={channel.count}
+              />
+            </div>
           ))}
         </div>
-        <div className="flex justify-center gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 ">
           {socialChannels.slice(4).map((channel, index) => (
-            <SocialCard
-              key={index + 4}
-              icon={channel.icon}
-              platform={channel.platform}
-              count={channel.count}
-            />
+            <div key={index + 4} className="flex justify-center">
+              <SocialCard
+                icon={channel.icon}
+                platform={channel.platform}
+                count={channel.count}
+              />
+            </div>
           ))}
         </div>
       </div>

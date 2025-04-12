@@ -24,9 +24,9 @@ const RightTopIcon: React.FC<RightTopIconProps> = ({ className }) => {
       <path
         d="M12.1756 10.0588L12.1756 5.81618M12.1756 5.81618L7.93291 5.81618M12.1756 5.81618L5.81159 12.1801"
         stroke="white"
-        stroke-width="1.125"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.125"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

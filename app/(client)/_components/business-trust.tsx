@@ -8,7 +8,7 @@ import React from "react";
 
 export default function BusinessTrust() {
   return (
-    <div className="w-full bg-white border border-[#DFE1E7] md:py-[34px] py-4 mt-4 md:mt-0 relative z-10 md:-top-43">
+    <div className="w-full bg-white border border-[#DFE1E7] md:py-[34px] py-4  md:mt-0 relative z-10 md:-top-43">
       <div className="container px-5 2xl:px-0 mx-auto flex justify-between items-center">
         <div className="text-black flex flex-col gap-2 py-1 w-full md:w-[22%]">
           <h2 className="md:text-[36px] text-2xl font-bold leading-[120%] text-black">
