@@ -134,18 +134,20 @@ const serviceCardsData = [
 
 export default function Packages() {
   return (
-    <div className="container">
-      <div className="mx-auto text-center">
-        <Heading text="All Service Packages" className="text-[42px]" />
+    <div className="container px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto text-center mt-20 md:mt-0">
+        <Heading text="All Service Packages" className="text-2xl sm:text-3xl md:text-[42px]" />
         <ParagraphText
           paraText="Get your creative & marketing work done without the hassle of unreliable freelancers, costly agencies. Pay a fixed, monthly, and predictable rate, with no contracts or surprises."
-          className="w-[644px] text-center mx-auto mt-4 mb-16"
+          className="max-w-[335px] sm:max-w-[500px] md:max-w-[644px] text-center mx-auto mt-3 sm:mt-4 mb-8 sm:mb-12 md:mb-16 text-sm sm:text-base"
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16 md:mb-20">
         {serviceCardsData.map((service, index) => (
-          <ServiceCard key={index} {...service} />
+          <div key={index} className="flex justify-center">
+            <ServiceCard {...service} />
+          </div>
         ))}
       </div>
     </div>

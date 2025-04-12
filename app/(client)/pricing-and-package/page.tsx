@@ -4,6 +4,9 @@ import Pricing from "./_components/pricing";
 import BusinessTrust from "../_components/business-trust";
 import Packages from "./_components/packages";
 import AddOns from "./_components/add-ons";
+import SocialChannel from "./_components/socical-channel";
+import ApplyReseller from "./_components/apply-reseller";
+import TrustedBrand from "../_components/trusted-brand";
 
 export default function PricingAndPackage() {
   return (
@@ -14,11 +17,14 @@ export default function PricingAndPackage() {
           <Pricing />
         </div>
       </div>
-      <div className="pt-[100px]">
+      <div className="md:pt-[100px]">
         <BusinessTrust />
       </div>
       <Packages />
       <AddOns/>
+      <SocialChannel/>
+      <ApplyReseller/>
+      <TrustedBrand/>
     </div>
   );
 }
