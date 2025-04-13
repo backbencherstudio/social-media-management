@@ -20,8 +20,8 @@ export default function Pricing() {
   const [activeTab, setActiveTab] = useState("post");
 
   return (
-    <>
-    <div className='container mx-auto text-center pt-[100px] pb-14'>
+    <div className="bg-[#ECEFF3] py-[100px]">
+    <div className='container mx-auto text-center  pb-14'>
         <Heading text="Affordable Marketing Services" className='text-[42px] mb-4'/>
         <ParagraphText paraText="Elite Creative Talent | 80% More Cost-Effective than Agencies | Work with Real Experts, Not AI" className='text-[1D1F2C] '/>
     </div>
@@ -58,6 +58,6 @@ export default function Pricing() {
         </div>
       </Tabs>
     </div>
-    </>
+    </div>
   );
 }
