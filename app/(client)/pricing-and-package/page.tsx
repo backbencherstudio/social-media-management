@@ -17,7 +17,7 @@ export default function PricingAndPackage() {
           <Pricing />
         </div>
       </div>
-      <div className="md:pt-[100px]">
+      <div className="mb-20">
         <BusinessTrust />
       </div>
       <Packages />

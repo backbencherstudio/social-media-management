@@ -51,7 +51,7 @@ export default function About() {
         </div>
       </div>
       {/* business trust grow */}
-      <div className=" mt-20 md:mt-[300px]">
+      <div className=" mt-20 md:mt-[200px]">
       <BusinessTrust />
 
       </div>
