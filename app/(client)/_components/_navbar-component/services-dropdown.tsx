@@ -11,57 +11,69 @@ import AnalysisIcon from "@/public/incons/analysis-icon";
 import EditIcon from "@/public/incons/edit";
 
 export const ServicesDropdownContent = () => (
-  <div className="bg-white w-full p-1 rounded-xl">
-    <div className="grid grid-cols-2">
-      <div className="space-y-4 list-none"> {/* Added list-none class */}
-        <NavLink
-          icon={<MediaIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="Social Media Posts"
-        />
-        <NavLink
-          icon={<WatchIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="Short-Form Videos"
-        />
-        <NavLink
-          icon={<EmailIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="Email Design"
-        />
-        <NavLink
-          icon={<BookIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="Blog Post"
-        />
-        <NavLink
-          icon={<LikeIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="Instagram Growth"
-        />
+  <div className="bg-white w-full p-6 rounded-xl">
+    <div className="grid grid-cols-3 gap-4">
+      <div>
+        <p className="text-gray-500 serotiva-regular text-sm">SOCIAL MEDIA</p>
+        <ul className="mt-2 space-y-2">
+          <NavLink
+            href="/services/social-media-posts"
+            icon={<MediaIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="Social Media Posts"
+          />
+          <NavLink
+            href="/services/short-form-videos"
+            icon={<WatchIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="Short-Form Videos"
+          />
+          <NavLink
+            href="/services/email-design"
+            icon={<EmailIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="Email Design"
+          />
+        </ul>
       </div>
-      <div className="space-y-4 list-none"> {/* Added list-none class */}
-        <NavLink
-          icon={<LinkIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="SEO Backlinks"
-        />
-        <NavLink
-          icon={<StarIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="Review Management"
-          className="text-gray-500"
-          suffix="(Coming soon)"
-        />
-        <NavLink
-          icon={<CameraIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="UGC Videos"
-          className="text-gray-500"
-          suffix="(Coming soon)"
-        />
-        <NavLink
-          icon={<AnalysisIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="Meta Ads Management"
-          className="text-gray-500"
-          suffix="(Coming soon)"
-        />
-        <NavLink
-          icon={<EditIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-          text="Become a Reseller"
-        />
+
+      <div>
+        <p className="text-gray-500 serotiva-regular text-sm">CONTENT</p>
+        <ul className="mt-2 space-y-2">
+          <NavLink
+            href="/services/blog-post"
+            icon={<BookIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="Blog Post"
+          />
+          <NavLink
+            href="/services/instagram-growth"
+            icon={<LikeIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="Instagram Growth"
+          />
+          <NavLink
+            href="/services/seo-backlinks"
+            icon={<LinkIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="SEO Backlinks"
+          />
+        </ul>
+      </div>
+
+      <div>
+        <p className="text-gray-500 serotiva-regular text-sm">COMING SOON</p>
+        <ul className="mt-2 space-y-2">
+          <NavLink
+            href="/services/review-management"
+            icon={<StarIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="Review Management"
+          />
+          <NavLink
+            href="/services/ugc-videos"
+            icon={<CameraIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="UGC Videos"
+          />
+          <NavLink
+            href="/services/meta-ads"
+            icon={<AnalysisIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            text="Meta Ads Management"
+          />
+        </ul>
       </div>
     </div>
   </div>

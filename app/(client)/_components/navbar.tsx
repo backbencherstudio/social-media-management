@@ -44,6 +44,7 @@ const AboutUsDropdownContent = () => (
   </div>
 );
 
+// about part start
 const ServiceSection = () => (
   <div>
     <p className="text-gray-500 serotiva-regular text-sm">SERVICES</p>
@@ -102,9 +103,10 @@ const LearnSection = () => (
     </ul>
   </div>
 );
+// about part end
 
 // Update NavLink component to accept href prop
-const NavLink = ({ icon, text, className = "", href = "#" }) => (
+const NavLink = ({ icon, text, className = "", href }) => (
   <li className="list-none">
     <Link
       href={href}
@@ -128,18 +130,22 @@ const MobileAboutUsDropdown = ({ isOpen, onToggle }) => (
       />
     </button>
 
+    {/* mobile device */}
     {isOpen && (
       <div className="mt-3 ml-4 space-y-4">
         <MobileSection title="SERVICES">
           <MobileNavLink
+            href="/pricing-and-package"
             icon={<PricingIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Pricing"
           />
           <MobileNavLink
+            href="/our-work"
             icon={<EditIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Our Work"
           />
           <MobileNavLink
+            href="/reviews"
             icon={<EmojiIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Reviews"
           />
@@ -147,10 +153,12 @@ const MobileAboutUsDropdown = ({ isOpen, onToggle }) => (
 
         <MobileSection title="COMPANY">
           <MobileNavLink
+            href="/about"
             icon={<FileTextIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="About Us →"
           />
           <MobileNavLink
+            href="/get-started"
             icon={<AddIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Get Started"
           />
@@ -158,10 +166,12 @@ const MobileAboutUsDropdown = ({ isOpen, onToggle }) => (
 
         <MobileSection title="LEARN">
           <MobileNavLink
+            href="/video"
             icon={<WatchIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Watch Demo Video"
           />
           <MobileNavLink
+            href="/blog"
             icon={<BookIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Blog"
           />
@@ -178,9 +188,9 @@ const MobileSection = ({ title, children }) => (
   </div>
 );
 
-const MobileNavLink = ({ icon, text }) => (
+const MobileNavLink = ({ href, icon, text }) => (
   <Link
-    href="#"
+    href={href}
     className="flex items-center gap-2 hover:text-black transition"
   >
     {icon}
@@ -192,7 +202,7 @@ const MobileNavLink = ({ icon, text }) => (
 import { ServicesDropdownContent } from "./_navbar-component/services-dropdown";
 import LogoIcon from "@/public/incons/logo";
 
-// Add this new component for Mobile Services Dropdown
+// services dropdown mobile
 const MobileServicesDropdown = ({ isOpen, onToggle }) => (
   <div>
     <button
@@ -209,44 +219,51 @@ const MobileServicesDropdown = ({ isOpen, onToggle }) => (
       <div className="mt-3 ml-4 space-y-4">
         <MobileSection title="SOCIAL MEDIA">
           <MobileNavLink
+            href="/services/social-media-posts"
             icon={<MediaIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Social Media Posts"
           />
           <MobileNavLink
+            href="/services/short-form-videos"
             icon={<WatchIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Short-Form Videos"
           />
           <MobileNavLink
+            href="/services/email-design"
             icon={<EmailIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Email Design"
           />
         </MobileSection>
-
         <MobileSection title="CONTENT">
           <MobileNavLink
+            href="/services/blog-post"
             icon={<BookIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Blog Post"
           />
           <MobileNavLink
+            href="/services/instagram-growth"
             icon={<LikeIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Instagram Growth"
           />
           <MobileNavLink
+            href="/services/seo-backlinks"
             icon={<LinkIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="SEO Backlinks"
           />
         </MobileSection>
-
         <MobileSection title="COMING SOON">
           <MobileNavLink
+            href="/services/review-management"
             icon={<StarIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Review Management"
           />
           <MobileNavLink
+            href="/services/ugc-videos"
             icon={<CameraIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="UGC Videos"
           />
           <MobileNavLink
+            href="/services/meta-ads"
             icon={<AnalysisIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Meta Ads Management"
           />
@@ -266,14 +283,7 @@ export function Navbar() {
       <div className="container px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          {/* <CustomImage
-            src={logo.src}
-            alt="Company Logo"
-            width={120}
-            height={40}
-            layout="fixed"
-          /> */}
-          <LogoIcon/>
+          <LogoIcon />
         </Link>
 
         {/* Desktop Navigation */}
@@ -292,14 +302,17 @@ export function Navbar() {
               <NavigationMenuTrigger className="bg-transparent p-0 hover:bg-transparent serotiva-regular">
                 Services
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out absolute left-0 top-0 w-[700px]">
+              <NavigationMenuContent 
+                className="data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out absolute left-0 top-0 w-[700px]"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <ServicesDropdownContent />
               </NavigationMenuContent>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
               <Link
-                href="#"
+                href="examples"
                 className="hover:text-black transition serotiva-regular"
               >
                 Examples
@@ -338,7 +351,7 @@ export function Navbar() {
                   isOpen={isServicesMenuOpen}
                   onToggle={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
                 />
-                <Link href="#" className="serotiva-regular">
+                <Link href="examples" className="serotiva-regular">
                   Examples
                 </Link>
                 <Link href="/pricing-and-package" className="serotiva-regular">
@@ -350,11 +363,11 @@ export function Navbar() {
                 <Link href="/auth/login" className="serotiva-regular">
                   Log in
                 </Link>
-                <Link href="#" className="serotiva-regular">
+                <Link href="get-startd" className="serotiva-regular">
                   Get Started
                 </Link>
                 <Button className="bg-black hover:bg-gray-800 text-white serotiva-regular">
-                Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
+                  Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </div>
             </nav>
@@ -370,13 +383,13 @@ export function Navbar() {
             Log in
           </Link>
           <Link
-            href="#"
+            href="get-started"
             className="hover:text-black transition serotiva-regular"
           >
             Get Starded
           </Link>
           <Button className="bg-black hover:bg-gray-800 text-white serotiva-regular">
-          Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
+            Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
           </Button>
         </div>
       </div>
