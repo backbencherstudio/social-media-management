@@ -6,6 +6,8 @@ import SocialMediaPost from "../../_components/_post/social-media-post";
 import Video from "../../_components/_video/video";
 import Email from "../../_components/_email/email";
 import Blogs from "../../_components/_blogs/blogs";
+import Heading from "../../_components/heading-text";
+import ParagraphText from "../../_components/paragraph-text";
 
 const services = [
   { id: "post", title: "Posts" },
@@ -18,6 +20,12 @@ export default function Pricing() {
   const [activeTab, setActiveTab] = useState("post");
 
   return (
+    <>
+    <div className='container mx-auto text-center pt-[100px] pb-14'>
+        <Heading text="Affordable Marketing Services" className='text-[42px] mb-4'/>
+        <ParagraphText paraText="Elite Creative Talent | 80% More Cost-Effective than Agencies | Work with Real Experts, Not AI" className='text-[1D1F2C] '/>
+    </div>
+    
     <div className="container mx-auto py-6 md:py-12">
       <Tabs defaultValue="post" className="w-full" onValueChange={setActiveTab}>
         <TabsList className="flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-20 md:mb-8">
@@ -50,5 +58,6 @@ export default function Pricing() {
         </div>
       </Tabs>
     </div>
+    </>
   );
 }

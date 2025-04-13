@@ -1,5 +1,5 @@
 import React from "react";
-import Banner from "./_components/banner";
+import Banner from "./_components/_banner";
 import Pricing from "./_components/pricing";
 import BusinessTrust from "../_components/business-trust";
 import Packages from "./_components/packages";
@@ -12,7 +12,7 @@ export default function PricingAndPackage() {
   return (
     <div className="min-h-screen w-full px-4">
       <div className="bg-[#F7F7F9]">
-        <Banner />
+        {/* <Banner /> */}
         <div className="sm:px-6 lg:px-8 mb-20">
           <Pricing />
         </div>
