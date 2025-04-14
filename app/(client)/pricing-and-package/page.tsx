@@ -24,7 +24,7 @@ export default function PricingAndPackage() {
       <AddOns/>
       <SocialChannel/>
       <ApplyReseller/>
-      <TrustedBrand/>
+      <TrustedBrand bgcolor={false} />
     </div>
   );
 }

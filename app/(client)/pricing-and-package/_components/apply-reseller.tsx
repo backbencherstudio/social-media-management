@@ -8,7 +8,7 @@ import RightTopIcon from "@/public/incons/right-top-icon";
 
 export default function ApplyReseller() {
   return (
-    <div className="container overflow-hidden bg-[#070707] rounded-xl my-12 md:my-20 lg:my-28">
+    <div className="container overflow-hidden bg-[#070707] rounded-xl lg:mt-[78px] md:mt-[60px] mt-[40px] lg:mb-[48px] md:mb-[30px] mb-[10px] ">
       <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 p-6 md:p-0">
         <div className="hidden md:block">
           <CustomImage 

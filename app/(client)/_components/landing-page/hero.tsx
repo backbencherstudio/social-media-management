@@ -34,13 +34,13 @@ const images = [
 
 const Hero: React.FC = () => {
   return (
-    <div>
-      <div className="max-w-[700px] px-5 2xl:px-0 mx-auto flex flex-col items-center justify-center gap-5 md:mt-[66px] mt-[40px]">
-        <div className="flex text-[#1D1F2C] text-sm font-medium leading-[150%] tracking-[.14px] px-[14px] py-[6px] border-[.5px] border-[#1D1D1F] rounded-[99px] bg-[#F7F8FA] gap-2">
+    <div className=" relative">
+      <div className="max-w-[700px] px-5 2xl:px-0 mx-auto flex flex-col items-center justify-center  md:mt-[66px] mt-[40px]">
+        <div className="flex  text-[#1D1F2C] text-sm font-medium leading-[150%] tracking-[.14px] px-[14px] py-[6px] border-[.5px] border-[#1D1D1F] rounded-[99px] bg-[#F7F8FA] gap-2">
           <span>icon</span>
           <span>Elite Creative Talent – Top 1% Worldwide</span>
         </div>
-        <div>
+        <div className="md:mt-5 mt-4">
           <div className="bg-gradient-to-b from-[#0D0D0D] to-[#7C7C85] bg-clip-text text-transparent md:text-[42px] text-[28px] lg:text-[56px] text-center leading-[126%] font-semibold">
             <h1 className="capitalize">
               Results-Driven
@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
             </h1>
           </div>
         </div>
-        <div className="leading-[150%] tracking-[.16px] flex md:flex-row flex-col items-center gap-2 md:gap-0">
+        <div className="leading-[150%] md:mt-5 mt-4 tracking-[.16px] flex md:flex-row flex-col items-center gap-2 md:gap-0">
           <p className="text-[#1D1F2C] mr-4">Supported social media</p>
           <div className="flex ">
             <span>
@@ -88,7 +88,7 @@ const Hero: React.FC = () => {
           </div>
           <p className="text-[#4A4C56]">Cancel anytime</p>
         </div>
-        <div className="mt-7">
+        <div className="md:mt-12 mt-10">
           <Link href="">
             <div className="bg-black leading-[150%] px-9 py-4 flex cursor-pointer items-center rounded-[8px] gap-2 font-semibold hover:bg-gray-800 text-white">
               <span className="font-serotiva text-sm md:text-base"> Schedule a free demo call</span>
@@ -99,15 +99,15 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="max-w-[1200px] mx-auto 2xl:px-0 px-5 mt-6 md:mt-0">
-        <div className="relative">
+        <div className="relative ">
           <ImageMasonry images={images} />
           {/* White gradient overlay at the bottom */}
-          <div className="absolute bottom-0 left-0 w-full md:h-[38%] bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.00)_0%,_rgba(255,_255,_255,_0.74)_27.4%,_#FFF_36.22%,_#FFF_100%)]"></div>
+          <div className="absolute bottom-0 left-0 w-full lg:h-[35%] md:h-[48%] bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.00)_0%,_rgba(255,_255,_255,_0.74)_27.4%,_#FFF_36.22%,_#FFF_100%)]"></div>
         </div>
       </div>
 
 
-      <div className="w-full bg-black md:py-[34px] py-4 mt-4 md:mt-0 relative z-10 md:-top-43 ">
+      <div className="w-full bg-black lg:py-[34px] md:py-5 py-4 mt-4 md:mt-0 md:absolute z-10 bottom-0  ">
         <div className="max-w-[1200px] px-5 2xl:px-0 mx-auto flex justify-between items-center">
           <div className="text-white flex flex-col gap-2 py-1 w-full md:w-[22%]">
             <h2 className="md:text-[36px] text-2xl font-bold leading-[120%]">

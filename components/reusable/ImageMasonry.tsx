@@ -6,7 +6,7 @@ const ImageCard: React.FC<{ src: string; alt: string }> = ({ src, alt }) => (
     <img
         src={src}
         alt={alt}
-        className="max-w-full max-h-full object-cover rounded-lg transition-transform transform hover:scale-105"
+        className={`${alt === "image-5" ? "max-h-[300px] w-full":"max-h-full"} max-w-full  object-cover rounded-lg transition-transform transform `}
         loading="lazy"
     />
 );

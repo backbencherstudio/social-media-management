@@ -7,6 +7,8 @@ import AutoPlay from 'embla-carousel-autoplay';
 import profile from "@/public/img/pricing/profileOne.png";
 import CustomImage from "@/components/reusable/CustomImage";
 import { Play } from "lucide-react";
+import Heading from "./heading-text";
+
 
 const testimonials = [
   {
@@ -91,15 +93,20 @@ const testimonials = [
   },
 ];
 
-export default function TrustedBrand() {
+interface TrustedProps {
+  bgcolor: boolean; // Use boolean type instead of string for "false"
+}
+
+
+export default function TrustedBrand({bgcolor = false}:TrustedProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { 
+    {
       loop: true,
       align: 'start',
       slidesToScroll: 1,
       skipSnaps: false,
-    }, 
-    [AutoPlay({ delay: 3000, stopOnInteraction: false })]
+    },
+    [AutoPlay({ delay: 3000, stopOnInteraction: true })]
   );
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -112,52 +119,56 @@ export default function TrustedBrand() {
   }, [emblaApi]);
 
   return (
-    <div className="container py-20">
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-6">
-          {testimonials.map((testimonial) => (
-            <div className="flex-none w-[282px]" key={testimonial.id}>
-              <TestimonialCard {...testimonial} />
-            </div>
+    <div className={`${bgcolor ? "bg-[#F7F7F9]" : ""}`}>
+      <div className="lg:py-25 md:py-20 py-16">
+        <div className="max-w-[694px] mx-auto text-center ">
+          <Heading text="Trusted by Brands for Seamless Social Media Management" className="text-2xl sm:text-3xl md:text-[42px]" />
+        </div>
+
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-6 md:mt-12 mt-8">
+            {testimonials.map((testimonial) => (
+              <div className="flex-none   w-[282px]" key={testimonial.id}>
+                <TestimonialCard {...testimonial }  bgcolor={bgcolor} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-center gap-2 mt-8">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => emblaApi?.scrollTo(index)}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === selectedIndex
+                ? "bg-[#1D1D1F] w-8"
+                : "bg-[#D4D4D8]"
+                }`}
+            />
           ))}
         </div>
-      </div>
-      
-      <div className="flex justify-center gap-2 mt-8">
-        {testimonials.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => emblaApi?.scrollTo(index)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              index === selectedIndex 
-                ? "bg-[#1D1D1F] w-8" 
-                : "bg-[#D4D4D8]"
-            }`}
-          />
-        ))}
       </div>
     </div>
   );
 }
 
-const TestimonialCard = ({ image, name, position, quote, video }) => {
+const TestimonialCard = ({ image, name, position, quote, video, bgcolor }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
-      className="bg-[#F7F7F9] rounded-xl w-[282px] h-[400px] hover:bg-[#F0F0F3] transition-colors relative"
+      className={` ${bgcolor ? "bg-white " :"bg-[#F7F7F9] "} border border-[#DFE1E7]  rounded-xl w-[282px] h-[400px] hover:bg-[#F0F0F3] transition-colors relative`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {!isPlaying ? (
         <>
-          <div className={`transition-opacity duration-300 h-full p-8 ${
-            isHovered ? "opacity-0" : "opacity-100"
-          }`}>
-            <div className="flex items-start gap-5">
+          <div className={`transition-opacity duration-300 h-full p-5 ${isHovered ? "opacity-0" : "opacity-100"
+            }`}>
+            <div className="flex  h-full   flex-col items-start gap-5">
               <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                <CustomImage 
+                <CustomImage
                   src={image}
                   alt={name}
                   className="w-full h-full object-cover"
@@ -167,18 +178,17 @@ const TestimonialCard = ({ image, name, position, quote, video }) => {
                 <p className="text-[#1D1D1F] text-base leading-[160%] mb-6">
                   "{quote}"
                 </p>
-                <div className="mt-auto">
-                  <h4 className="text-[#1D1D1F] font-medium text-lg">{name}</h4>
-                  <p className="text-[#777980] text-base">{position}</p>
-                </div>
+              </div>
+              <div className="flex flex-col   h-full justify-end">
+                <h4 className="text-[#1D1D1F] font-medium text-lg">{name}</h4>
+                <p className="text-[#777980] text-base">{position}</p>
               </div>
             </div>
           </div>
 
           <div
-            className={`absolute inset-0 rounded-xl overflow-hidden cursor-pointer transition-opacity duration-300 ${
-              isHovered ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute inset-0 rounded-xl overflow-hidden cursor-pointer transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"
+              }`}
             onClick={() => setIsPlaying(true)}
           >
             <video
@@ -206,5 +216,6 @@ const TestimonialCard = ({ image, name, position, quote, video }) => {
         </div>
       )}
     </div>
+
   );
 };
