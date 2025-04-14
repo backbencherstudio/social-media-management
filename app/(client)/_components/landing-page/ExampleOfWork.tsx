@@ -1,112 +1,13 @@
 import React from 'react';
 import Heading from '../heading-text';
 import ParagraphText from '../paragraph-text';
-import image1 from "@/public/landing-page/card/image.png";
-import image2 from "@/public/landing-page/card/image2.png";
-import image3 from "@/public/landing-page/card/image3.png";
-import image4 from "@/public/landing-page/card/image4.png";
-import image5 from "@/public/landing-page/card/image5.png";
-import image6 from "@/public/landing-page/card/image6.png";
 
-import ContentTabs from "@/components/content-tabs"
+
+import ContentTabs from "@/app/(client)/_components/landing-page/_work_components/content-tabs"
 // import EnhancedContentTabs from '@/components/enhanced-content-tabs.tsx'
 
 
 
-// Sample data
-const categories = [
-    { id: "1", name: "Featured" },
-    { id: "2", name: "Beauty Services" },
-    { id: "3", name: "Food & Beverages" },
-    { id: "4", name: "Health & Wellness" },
-    { id: "5", name: "Home Services" },
-    { id: "6", name: "Professional Services" },
-    { id: "7", name: "Real Estate" },
-    { id: "8", name: "Shopping" },
-    { id: "9", name: "Shopping2" },
-    { id: "10", name: "Shopping3" },
-    { id: "11", name: "Shopping3" },
-    { id: "12", name: "Shopping3" },
-    { id: "13", name: "Shopping3" },
-    { id: "14", name: "Shopping3" },
-]
-
-
-
-const contentItems = [
-    {
-        id: "1",
-        title: "Digital Service",
-        image: image1.src,
-        likes: 24,
-        category: "Featured",
-    },
-    {
-        id: "2",
-        title: "Car Promotion",
-        image: image2.src,
-        likes: 15,
-        category: "Featured",
-    },
-    {
-        id: "3",
-        title: "Payment Service",
-        image: image3.src,
-        likes: 32,
-        category: "Featured",
-    },
-    {
-        id: "4",
-        title: "Jewelry Promotion",
-        image:  image4.src,
-        likes: 18,
-        category: "Featured",
-    },
-    {
-        id: "5",
-        title: "Food Delivery",
-        image:  image5.src,
-        likes: 27,
-        category: "Featured",
-    },
-    {
-        id: "6",
-        title: "Beauty Product",
-        image: image6.src,
-        likes: 21,
-        category: "Featured",
-    },
-    // Beauty Services content
-    {
-        id: "7",
-        title: "Spa Treatment",
-        image: "/placeholder.svg?height=400&width=400",
-        likes: 42,
-        category: "Beauty Services",
-    },
-    {
-        id: "8",
-        title: "Hair Styling",
-        image: "/placeholder.svg?height=400&width=400",
-        likes: 38,
-        category: "Beauty Services",
-    },
-    // Food & Beverages content
-    {
-        id: "9",
-        title: "Restaurant Promo",
-        image: "/placeholder.svg?height=400&width=400",
-        likes: 56,
-        category: "Food & Beverages",
-    },
-    {
-        id: "10",
-        title: "Coffee Shop",
-        image: "/placeholder.svg?height=400&width=400",
-        likes: 29,
-        category: "Food & Beverages",
-    },
-]
 
 const ExampleOfWork = () => {
     return (
@@ -123,7 +24,7 @@ const ExampleOfWork = () => {
 
                 </div>
                 <div className='mt-10'>
-                    <ContentTabs initialTab="Posts" initialCategory="Featured" categories={categories} contentItems={contentItems} />
+                    <ContentTabs  />
                 </div>
             </div>
         </div>
