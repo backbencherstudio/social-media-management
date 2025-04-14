@@ -10,9 +10,7 @@ import HeartIcons from "@/public/incons/landin-page/Heart"
 import CommentIcon from "@/public/incons/landin-page/Comments"
 import SendIcons from "@/public/incons/landin-page/Send"
 import BookmarkIcon from "@/public/incons/landin-page/Bookmark"
-import useEmblaCarousel from "embla-carousel-react"
-import { IoIosArrowForward } from "react-icons/io"
-import { IoIosArrowBack } from "react-icons/io"
+
 import CategorySelector from "./category-selection"
 
 type Category = {

@@ -354,13 +354,11 @@ export default function ContentTabs() {
         )
       case "Emails":
         return (
-          <EmailsContent
-          />
+          <EmailsContent />
         )
       case "Blogs":
         return (
-          <BlogsContent 
-         />
+          <BlogsContent />
         )
       default:
         return (

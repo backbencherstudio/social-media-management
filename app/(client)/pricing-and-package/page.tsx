@@ -20,7 +20,7 @@ export default function PricingAndPackage() {
       <div className="mb-20">
         <BusinessTrust />
       </div>
-      <Packages />
+      <Packages scrollable={false} />
       <AddOns/>
       <SocialChannel/>
       <ApplyReseller/>

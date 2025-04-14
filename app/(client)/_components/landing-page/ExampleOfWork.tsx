@@ -12,7 +12,7 @@ import ContentTabs from "@/app/(client)/_components/landing-page/_work_component
 const ExampleOfWork = () => {
     return (
         <div className='bg-[#F7F7F9]'>
-            <div className='max-w-[1200px] mx-auto px-5 2xl:px-0 m'>
+            <div className='max-w-[1200px] mx-auto px-5 2xl:px-0 md:pb-[100px] '>
                 <div className='max-w-[694px] mx-auto flex flex-col gap-4 text-center -mt-[77px]'>
                     <div>
                         <Heading text="Examples of our work" className='lg:text-[42px] md:text-[36px] text-2xl leading-[126%] font-bold capitalize' />
