@@ -9,7 +9,7 @@ export default function ParagraphText({
 }) {
   return (
     <div>
-      <p className={`text-[#1D1F2C] font-inter ${className}`}>{paraText}</p>
+      <p className={`text-[#1D1F2C] leading-[150%] tracking-[.16px] font-inter ${className}`}>{paraText}</p>
     </div>
   );
 }
