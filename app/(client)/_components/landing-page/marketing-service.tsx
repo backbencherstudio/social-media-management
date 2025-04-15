@@ -41,9 +41,6 @@ const MarketingService = () => {
                         <div className="px-4 py-6 flex flex-col gap-3">
                             {beforeItems.map((item, index) => (
                                 <div key={`before-${index}`} className="flex  items-center gap-3">
-                                    {/* <div className="mt-1 flex-shrink-0 rounded-full bg-gray-400 p-1">
-                                       <CrossIcon />
-                                    </div> */}
                                     <span> <CrossIcon /> </span>
                                     <p className='text-[#4A4C56] md:text-lg text-base leading-[150%] tracking-[.18px]'>{item}</p>
                                 </div>
@@ -52,40 +49,18 @@ const MarketingService = () => {
                     </div>
 
                     {/* After TagGrowth Column */}
-                    {/* <div className="flex-1 bg-black text-white rounded-lg overflow-hidden">
-                        <div className="flex justify-between items-center p-4">
-                            <h2 className="text-lg font-bold">After TagGrowth</h2>
-                            <button className="text-white">
-                                <ThumbsUp size={20} />
-                            </button>
-                        </div>
-
-                        <div className="px-4 pb-6 space-y-4">
-                            {afterItems.map((item, index) => (
-                                <div key={`after-${index}`} className="flex items-start gap-2">
-                                    <div className="mt-1 flex-shrink-0 rounded-full bg-white p-1">
-                                        <Check size={16} color="black" />
-                                    </div>
-                                    <p>{item}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div> */}
-                    <div className="flex-1  rounded-lg overflow-hidden" style={{ background: "rgba(245, 245, 247, 0.59)" }}>
+                    <div className="flex-1  rounded-lg overflow-hidden" >
                         <div className="flex justify-between bg-[#1D1D1F] items-center px-4 py-5">
                             <h2 className="md:text-[32px] text-white text-[28px] font-bold leading-[126%] capitalize">After TagGrowth</h2>
                             <button className="text-gray-500 w-[48px] h-[48px] bg-[#FFF] rounded-full flex justify-center items-center">
-                            <ThumbsUp size={24} />
+                                <ThumbsUp size={24} />
                             </button>
                         </div>
 
                         <div className="px-4 py-6 flex flex-col gap-3 border rounded-b-lg border-[#DFE1E7]">
                             {afterItems.map((item, index) => (
                                 <div key={`before-${index}`} className="flex  items-center gap-3 ">
-                                    {/* <div className="mt-1 flex-shrink-0 rounded-full bg-gray-400 p-1">
-                                       <CrossIcon />
-                                    </div> */}
-                                    <span> <CheckIcon  /> </span>
+                                    <span> <CheckIcon /> </span>
                                     <p className='text-[#1D1F2C] md:text-lg text-base leading-[150%] tracking-[.18px]'>{item}</p>
                                 </div>
                             ))}
