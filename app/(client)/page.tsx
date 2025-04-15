@@ -4,6 +4,7 @@ import ExampleOfWork from './_components/landing-page/ExampleOfWork'
 import AllServices from './_components/landing-page/all-services'
 import TrustedBrand from './_components/trusted-brand'
 import HowToWork from './_components/landing-page/how-to-work'
+import MarketingService from './_components/landing-page/marketing-service'
 
 
 
@@ -17,6 +18,7 @@ export default function HomePage() {
       <AllServices />
       <TrustedBrand bgcolor={true} />
       <HowToWork />
+      <MarketingService />
     </div>
   )
 }
