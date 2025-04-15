@@ -159,7 +159,7 @@ const SeamlessExperience = () => {
 
   return (
     <section className="bg-[#F7F7F9] py-16 md:py-24 lg:py-32">
-      <div className="max-w-[1200px] mx-auto px-5 2xl:px-0">
+      <div className="max-w-[996px] mx-auto px-5 2xl:px-0">
         <div className="mx-auto text-center mb-12 md:mb-16">
           <Heading
             text="Seamless experience"

@@ -126,9 +126,9 @@ export default function TrustedBrand({bgcolor = false}:TrustedProps) {
         </div>
 
         <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-6 md:mt-12 mt-8">
+          <div className="flex gap-4 md:gap-6 md:mt-12 mt-8">
             {testimonials.map((testimonial) => (
-              <div className="flex-none   w-[282px]" key={testimonial.id}>
+              <div className="flex-none  w-[282px] last:mr-4 md:last:mr-6" key={testimonial.id}>
                 <TestimonialCard {...testimonial }  bgcolor={bgcolor} />
               </div>
             ))}

@@ -7,6 +7,7 @@ import HowToWork from './_components/landing-page/how-to-work'
 import MarketingService from './_components/landing-page/marketing-service'
 import SeamlessExperience from './_components/landing-page/seamless-experience'
 import FrequentlyAsked from './_components/landing-page/frequently-asked'
+import ClientsProject from './_components/landing-page/clients-project'
 
 
 
@@ -23,6 +24,7 @@ export default function HomePage() {
       <MarketingService />
       <SeamlessExperience />
       <FrequentlyAsked />
+      <ClientsProject />
     </div>
   )
 }
