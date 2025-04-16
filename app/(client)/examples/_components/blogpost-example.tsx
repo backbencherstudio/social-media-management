@@ -10,7 +10,7 @@ const BlogpostExample = () => {
                     text="Blog Post Examples"
                     className="text-center text-2xl md:text-[28px] lg:text-[42px] capitalize font-bold text-[#1D1D1F]"
                 />
-                <div>
+                <div className='md:mt-12 mt-8'>
                     <Blogs />
                 </div>
             </div>

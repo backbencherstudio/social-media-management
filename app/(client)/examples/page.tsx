@@ -1,12 +1,12 @@
 
 
 import React from 'react';
-import Heading from '../_components/heading-text';
 import PostExample from './_components/post-content';
 import ShortVideoExample from './_components/short-video';
-import Email from '../_components/_email/email';
 import EmailDesign from './_components/email-design';
 import BlogpostExample from './_components/blogpost-example';
+import TrustedBrand from '../_components/trusted-brand';
+import InstastoryExample from './_components/instastory-example';
 
 
 
@@ -19,8 +19,10 @@ const ExamplePages = () => {
         <div>
             <PostExample />
             <ShortVideoExample />
+            <InstastoryExample />
             <EmailDesign />
             <BlogpostExample/>
+            <TrustedBrand bgcolor={false} />
         </div >
     );
 };

@@ -48,76 +48,76 @@ const categories = [
 
 const contentItems = [
   {
-      id: "1",
-      title: "Digital Service",
-      image: image1.src,
-      likes: 24,
-      category: "Featured",
+    id: "1",
+    title: "Digital Service",
+    image: image1.src,
+    likes: 24,
+    category: "Featured",
   },
   {
-      id: "2",
-      title: "Car Promotion",
-      image: image2.src,
-      likes: 15,
-      category: "Featured",
+    id: "2",
+    title: "Car Promotion",
+    image: image2.src,
+    likes: 15,
+    category: "Featured",
   },
   {
-      id: "3",
-      title: "Payment Service",
-      image: image3.src,
-      likes: 32,
-      category: "Featured",
+    id: "3",
+    title: "Payment Service",
+    image: image3.src,
+    likes: 32,
+    category: "Featured",
   },
   {
-      id: "4",
-      title: "Jewelry Promotion",
-      image:  image4.src,
-      likes: 18,
-      category: "Featured",
+    id: "4",
+    title: "Jewelry Promotion",
+    image: image4.src,
+    likes: 18,
+    category: "Featured",
   },
   {
-      id: "5",
-      title: "Food Delivery",
-      image:  image5.src,
-      likes: 27,
-      category: "Featured",
+    id: "5",
+    title: "Food Delivery",
+    image: image5.src,
+    likes: 27,
+    category: "Featured",
   },
   {
-      id: "6",
-      title: "Beauty Product",
-      image: image6.src,
-      likes: 21,
-      category: "Featured",
+    id: "6",
+    title: "Beauty Product",
+    image: image6.src,
+    likes: 21,
+    category: "Featured",
   },
   // Beauty Services content
   {
-      id: "7",
-      title: "Spa Treatment",
-      image: "/placeholder.svg?height=400&width=400",
-      likes: 42,
-      category: "Beauty Services",
+    id: "7",
+    title: "Spa Treatment",
+    image: "/placeholder.svg?height=400&width=400",
+    likes: 42,
+    category: "Beauty Services",
   },
   {
-      id: "8",
-      title: "Hair Styling",
-      image: "/placeholder.svg?height=400&width=400",
-      likes: 38,
-      category: "Beauty Services",
+    id: "8",
+    title: "Hair Styling",
+    image: "/placeholder.svg?height=400&width=400",
+    likes: 38,
+    category: "Beauty Services",
   },
   // Food & Beverages content
   {
-      id: "9",
-      title: "Restaurant Promo",
-      image: "/placeholder.svg?height=400&width=400",
-      likes: 56,
-      category: "Food & Beverages",
+    id: "9",
+    title: "Restaurant Promo",
+    image: "/placeholder.svg?height=400&width=400",
+    likes: 56,
+    category: "Food & Beverages",
   },
   {
-      id: "10",
-      title: "Coffee Shop",
-      image: "/placeholder.svg?height=400&width=400",
-      likes: 29,
-      category: "Food & Beverages",
+    id: "10",
+    title: "Coffee Shop",
+    image: "/placeholder.svg?height=400&width=400",
+    likes: 29,
+    category: "Food & Beverages",
   },
 ]
 
@@ -187,7 +187,7 @@ export default function ContentTabs() {
 
   const initialTab: ContentType = "Posts";
   const initialCategory = "Featured";
-  
+
   const [activeTab, setActiveTab] = useState<ContentType>(initialTab)
   const [activeCategory, setActiveCategory] = useState(initialCategory)
 
@@ -214,7 +214,7 @@ export default function ContentTabs() {
             categories={categories}
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
-            videoItems = {videoItems}
+            videoItems={videoItems}
           />
         )
       case "Emails":
@@ -241,7 +241,7 @@ export default function ContentTabs() {
   return (
     <div className="w-full">
       {/* Main Tabs */}
-      <div className="flex w-full mb-4 bg-white p-[6px] rounded-[12px]">
+      <div className="flex w-full mb:8 md:mb-12 bg-white p-[6px] rounded-[12px] ">
         {(["Posts", "Videos", "Emails", "Blogs"] as ContentType[]).map((tab) => (
           <button
             key={tab}
@@ -257,7 +257,9 @@ export default function ContentTabs() {
       </div>
 
       {/* Render the content for the active tab */}
-      {renderTabContent()}
+      <div>
+        {renderTabContent()}
+      </div>
     </div>
   )
 }
