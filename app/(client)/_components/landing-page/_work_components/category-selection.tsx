@@ -55,7 +55,7 @@ export default function CategorySelector({ categories, activeCategory, setActive
 
   return (
     <div className="overflow-hidden relative" ref={emblaRef}>
-      <div className="flex space-x-2 py-4">
+      <div className="flex space-x-2 ">
         {categories.map((category) => (
           <Button
             key={category.id}
@@ -64,7 +64,7 @@ export default function CategorySelector({ categories, activeCategory, setActive
               setActiveCategory(category.name)
             }}
             className={cn(
-              "rounded-full border px-5 py-2 text-base cursor-pointer leading-[150%] tracking-[.16px] ",
+              "rounded-full border px-3 py-1 md:px-5 md:py-2 md:text-base text-sm cursor-pointer leading-[150%] tracking-[.16px] ",
               activeCategory === category.name
                 ? "bg-black text-white font-medium border-black "
                 : "bg-white text-black font-normal border-gray-200 hover:bg-gray-100 ",

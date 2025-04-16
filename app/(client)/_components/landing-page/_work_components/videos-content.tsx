@@ -15,69 +15,12 @@ interface VideosContentProps {
   categories: Category[]
   activeCategory: string
   setActiveCategory: (category: string) => void
+  videoItems: { id: string; category: string; videoUrl: string }[]
 }
 
-// Sample video data with more reliable video URLs
-const videoItems = [
-  {
-    id: "v1",
-    title: "Woman Working on Crafts",
-    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    duration: "9:56",
-    views: "1.2K",
-    category: "Featured",
-  },
-  {
-    id: "v2",
-    title: "Elephants Dream",
-    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-    duration: "10:53",
-    views: "856",
-    category: "Featured",
-  },
-  {
-    id: "v3",
-    title: "For Bigger Blazes",
-    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    duration: "0:15",
-    views: "3.4K",
-    category: "Featured",
-  },
-  {
-    id: "v4",
-    title: "For Bigger Escapes",
-    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    duration: "0:15",
-    views: "2.1K",
-    category: "Feautured",
-  },
-  {
-    id: "v5",
-    title: "For Bigger Fun",
-    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-    duration: "0:15",
-    views: "945",
-    category: "Featured",
-  },
-  {
-    id: "v6",
-    title: "For Bigger Fun",
-    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    duration: "0:15",
-    views: "945",
-    category: "Beauty Services",
-  },
-  {
-    id: "v7",
-    title: "For Bigger Joyrides",
-    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    duration: "0:15",
-    views: "5.2K",
-    category: "Beauty Services",
-  },
-]
 
-export default function VideosContent({ categories, activeCategory, setActiveCategory }: VideosContentProps) {
+
+export default function VideosContent({ categories, activeCategory, setActiveCategory,videoItems }: VideosContentProps) {
 
   const [playingVideo, setPlayingVideo] = useState<string | null>(null)
   const [isMuted, setIsMuted] = useState(true)
@@ -147,7 +90,7 @@ export default function VideosContent({ categories, activeCategory, setActiveCat
       <CategorySelector categories={categories} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
 
       {/* Videos Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         {filteredVideos.map((video) => (
           <Card
             key={video.id}

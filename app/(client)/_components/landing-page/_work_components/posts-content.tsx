@@ -1,8 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+
 import { Card } from "@/components/ui/card"
 import HashTagIcon from "@/public/incons/landin-page/HashTag"
 import UnionIcon from "@/public/incons/landin-page/Union"
@@ -47,7 +45,7 @@ export default function PostsContent({
       <CategorySelector categories={categories} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
 
       {/* Content Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
         {contentItems.map((item) => (
           <Card
             key={item.id}

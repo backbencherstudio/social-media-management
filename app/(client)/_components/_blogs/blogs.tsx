@@ -37,7 +37,7 @@ const blogData = [
 
 export default function Blogs() {
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {blogData.map((blog, index) => (
           <BlogCard key={index} {...blog} />
