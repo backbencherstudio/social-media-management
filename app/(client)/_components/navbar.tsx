@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, ChevronDown, ArrowRight } from "lucide-react";
+import { Menu, ChevronDown, ArrowRight, ArrowBigRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -201,6 +201,7 @@ const MobileNavLink = ({ href, icon, text }) => (
 // Main Navbar Component
 import { ServicesDropdownContent } from "./_navbar-component/services-dropdown";
 import LogoIcon from "@/public/incons/logo";
+import { BsArrowUpRightCircle } from "react-icons/bs";
 
 // services dropdown mobile
 const MobileServicesDropdown = ({ isOpen, onToggle }) => (
@@ -280,7 +281,7 @@ export function Navbar() {
 
   return (
     <header className="w-full shadow bg-[#FFF]">
-      <div className="container px-4 py-3 flex items-center justify-between">
+      <div className="container px-4 2xl:px-0 py-[18px] flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
           <LogoIcon />
@@ -288,7 +289,7 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <NavigationMenu className="relative hidden lg:block">
-          <NavigationMenuList className="hidden md:flex space-x-6 text-sm text-gray-700">
+          <NavigationMenuList className="hidden md:flex space-x-6 text-base text-gray-700">
             <NavigationMenuItem>
               <NavigationMenuTrigger className="bg-transparent p-0 hover:bg-transparent cursor-pointer serotiva-regular">
                 About us
@@ -375,7 +376,7 @@ export function Navbar() {
         </Sheet>
 
         {/* Right Side - Desktop */}
-        <div className="hidden lg:flex items-center space-x-4 text-sm text-gray-700">
+        <div className="hidden lg:flex items-center space-x-4 text-base text-gray-700">
           <Link
             href="/auth/login"
             className="hover:text-black transition serotiva-regular"
@@ -386,10 +387,10 @@ export function Navbar() {
             href="get-started"
             className="hover:text-black transition serotiva-regular"
           >
-            Get Starded
+            Book a Demo 
           </Link>
           <Button className="bg-black hover:bg-gray-800 text-white serotiva-regular">
-            Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
+            Get Starded  <BsArrowUpRightCircle className="ml-2 w-5 h-5 "/>
           </Button>
         </div>
       </div>

@@ -1,9 +1,7 @@
 "use client";
 
 import CustomImage from "@/components/reusable/CustomImage";
-import { Button } from "@/components/ui/button";
 import RightTopIcon from "@/public/incons/right-top-icon";
-import { ArrowRight } from "lucide-react";
 import { StaticImageData } from "next/image";
 import React, { ReactNode } from "react";
 import ScheduleButton from "./schedule-button";

@@ -1,195 +1,3 @@
-// "use client"
-
-// import { useCallback, useEffect, useState } from "react"
-// import { cn } from "@/lib/utils"
-// // import { MoreHorizontal, Hash, Heart, MessageCircle, Send, Bookmark, HeartIcon, SendIcon } from "lucide-react"
-// // import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-// import { Button } from "@/components/ui/button"
-// import { Card } from "@/components/ui/card"
-// import HashTagIcon from "@/public/incons/landin-page/HashTag"
-// import UnionIcon from "@/public/incons/landin-page/Union"
-// import HeartIcons from "@/public/incons/landin-page/Heart"
-// import CommentIcon from "@/public/incons/landin-page/Comments"
-// import SendIcons from "@/public/incons/landin-page/Send"
-// import BookmarkIcon from "@/public/incons/landin-page/Bookmark"
-// import useEmblaCarousel from "embla-carousel-react"
-// import { IoIosArrowForward } from "react-icons/io";
-// import { IoIosArrowBack } from "react-icons/io";
-
-// // Types for our component
-// type ContentType = "Posts" | "Videos" | "Emails" | "Blogs"
-// type Category = {
-//     id: string
-//     name: string
-// }
-
-// type ContentItem = {
-//     id: string
-//     title: string
-//     image: string
-//     likes: number
-//     category: string
-// }
-
-// interface ContentTabsProps {
-//     initialTab?: ContentType
-//     initialCategory?: string
-//     categories: Category[]
-//     contentItems: ContentItem[]
-// }
-
-// export default function ContentTabs({
-//     initialTab = "Posts",
-//     initialCategory = "Featured",
-//     categories,
-//     contentItems,
-// }: ContentTabsProps) {
-//     const [activeTab, setActiveTab] = useState<ContentType>(initialTab)
-//     const [activeCategory, setActiveCategory] = useState(initialCategory)
-//     const [navigationClick, setNavigationClick] = useState(false)
-
-
-//     // const [emblaRef, emblaApi] = useEmblaCarousel()
-//     const [emblaRef, emblaApi] = useEmblaCarousel({
-//         align: "start",
-//         dragFree: true,
-//         containScroll: "trimSnaps",
-//     })
-
-//     const [selectedIndex, setSelectedIndex] = useState(0);
-
-//     useEffect(() => {
-//         if (!emblaApi) return;
-
-//         const onSelect = () => {
-//             const index = emblaApi.selectedScrollSnap();
-//             setSelectedIndex(index);
-//         };
-
-//         emblaApi.on('select', onSelect);
-//         onSelect(); // Run once on mount
-
-//         return () => {
-//             emblaApi.off('select', onSelect);
-//         };
-//     }, [emblaApi]);
-
-//     const scrollNext = useCallback(() => {
-//         setNavigationClick(true);
-//         if (emblaApi) emblaApi.scrollNext();
-//     }, [emblaApi]);
-
-//     const scrollPrev = useCallback(() => {
-//         if (emblaApi) emblaApi.scrollPrev();
-//     }, [emblaApi]);
-//     // Initialize Embla Carousel
-
-//     // Filter content based on active tab and category
-//     const filteredContent = contentItems.filter((item) => item.category === activeCategory)
-
-//     return (
-//         <div className="w-full">
-//             {/* Main Tabs */}
-//             <div className="flex w-full mb-4 bg-white p-[6px] rounded-[12px]">
-//                 {(["Posts", "Videos", "Emails", "Blogs"] as ContentType[]).map((tab) => (
-//                     <button
-//                         key={tab}
-//                         onClick={() => setActiveTab(tab)}
-//                         className={cn(
-//                             "flex-1 py-3 text-center font-medium transition-colors",
-//                             activeTab === tab ? "bg-black text-white rounded-md " : "bg-white text-black hover:bg-gray-100",
-//                         )}
-//                     >
-//                         {tab}
-//                     </button>
-//                 ))}
-//             </div>
-
-//             {/* Categories */}
-//             {/* <ScrollArea className="w-full whitespace-nowrap pb-4"> */}
-//             <div className="overflow-hidden relative" ref={emblaRef}>
-//                 <div className="flex space-x-2 py-4">
-//                     {categories.map((category) => (
-//                         <Button
-//                             key={category.id}
-//                             variant="outline"
-//                             onClick={() => {
-//                                 setActiveCategory(category.name);
-//                             }}
-//                             className={cn(
-//                                 "rounded-full border px-5 py-2 text-base leading-[150%] tracking-[.16px] ",
-//                                 activeCategory === category.name
-//                                     ? "bg-black text-white font-medium border-black "
-//                                     : "bg-white text-black font-normal border-gray-200 hover:bg-gray-100 ",
-//                             )}
-//                         >
-//                             {category.name}
-//                         </Button>
-//                     ))}
-
-//                 </div>
-//                 {selectedIndex > 0 && (
-//                     <button className={` ${navigationClick ? "flex" : "hidden"} cursor-pointer absolute top-1/2 left-0 -translate-y-1/2  w-[40px] h-[40px] flex items-center justify-center rounded-full bg-white hover:bg-amber-100`} onClick={scrollPrev}> <IoIosArrowBack className="text-2xl" /> </button>)}
-
-//                 {emblaApi && selectedIndex < emblaApi.scrollSnapList().length - 1 && (
-//                     <button className="cursor-pointer absolute z-50 top-1/2 right-0 -translate-y-1/2  w-[40px] h-[40px] flex items-center justify-center rounded-full bg-white hover:bg-amber-100" onClick={scrollNext}><IoIosArrowForward className="text-2xl " /></button> )}
-             
-//              {emblaApi && selectedIndex < emblaApi.scrollSnapList().length - 1  && (
-//                 <div className="absolute top-0 right-0 h-full w-24 pointer-events-none" style={{
-//                     background: 'linear-gradient(270deg, #F7F7F9 53.76%, rgba(247, 247, 249, 0.00) 100%)'
-//                 }}></div> )}
-//             </div>
-//             {/* <ScrollBar orientation="horizontal" /> */}
-//             {/* </ScrollArea> */}
-
-//             {/* Content Grid */}
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-//                 {filteredContent.map((item) => (
-//                     <Card key={item.id} className="overflow-hidden  py-0 gap-0 rounded-xl border-[1.28px] border-[#F0F6FD]  bg-white shadow-[0px_12.8px_51.2px_0px_rgba(222,230,237,0.40)]">
-//                         {/* Card Header */}
-//                         <div className="flex items-center justify-between px-5 pt-5 pb-4">
-//                             <div className="flex items-center gap-3">
-//                                 {/* <Hash className="h-5 w-5" /> */}
-//                                 <span> <HashTagIcon /> </span>
-//                                 <span className="text-[17.92px] font-serotiva font-medium text-[#1B1D28]">TagGrowth</span>
-//                             </div>
-//                             <button>
-//                                 {/* <MoreHorizontal className="h-5 w-5 text-gray-500" /> */}
-//                                 <span> <UnionIcon /> </span>
-//                             </button>
-//                         </div>
-
-//                         {/* Card Image */}
-//                         <div className="relative aspect-square ">
-//                             <img src={item.image || "/placeholder.svg"} alt={item.title} className="w-full h-full object-cover" />
-//                         </div>
-
-//                         {/* Card Footer */}
-//                         <div className="flex items-center justify-between px-5 pt-5 pb-[28px]">
-//                             <div className="flex items-center gap-4">
-//                                 <button className="text-red-500">
-//                                     <HeartIcons />
-//                                 </button>
-//                                 <button>
-//                                     {/* <MessageCircle className="h-5 w-5" /> */}
-//                                     <CommentIcon />
-//                                 </button>
-//                                 <button>
-//                                     <SendIcons />
-//                                 </button>
-//                             </div>
-//                             <button>
-//                                 <BookmarkIcon />
-//                             </button>
-//                         </div>
-//                     </Card>
-//                 ))}
-//             </div>
-//         </div>
-//     )
-// }
-
-
 "use client"
 
 
@@ -216,10 +24,6 @@ type ContentType = "Posts" | "Videos" | "Emails" | "Blogs"
 
 
 
-interface ContentTabsProps {
-  initialTab?: ContentType
-  initialCategory?: string
-}
 
 
 // Sample data
@@ -317,6 +121,66 @@ const contentItems = [
   },
 ]
 
+// Sample video data with more reliable video URLs
+const videoItems = [
+  {
+    id: "v1",
+    title: "Woman Working on Crafts",
+    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    duration: "9:56",
+    views: "1.2K",
+    category: "Featured",
+  },
+  {
+    id: "v2",
+    title: "Elephants Dream",
+    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    duration: "10:53",
+    views: "856",
+    category: "Featured",
+  },
+  {
+    id: "v3",
+    title: "For Bigger Blazes",
+    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    duration: "0:15",
+    views: "3.4K",
+    category: "Featured",
+  },
+  {
+    id: "v4",
+    title: "For Bigger Escapes",
+    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    duration: "0:15",
+    views: "2.1K",
+    category: "Feautured",
+  },
+  {
+    id: "v5",
+    title: "For Bigger Fun",
+    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    duration: "0:15",
+    views: "945",
+    category: "Featured",
+  },
+  {
+    id: "v6",
+    title: "For Bigger Fun",
+    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    duration: "0:15",
+    views: "945",
+    category: "Beauty Services",
+  },
+  {
+    id: "v7",
+    title: "For Bigger Joyrides",
+    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    duration: "0:15",
+    views: "5.2K",
+    category: "Beauty Services",
+  },
+]
+
 
 
 export default function ContentTabs() {
@@ -350,6 +214,7 @@ export default function ContentTabs() {
             categories={categories}
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
+            videoItems = {videoItems}
           />
         )
       case "Emails":

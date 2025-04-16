@@ -1,8 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+
 import { Card } from "@/components/ui/card"
 import HashTagIcon from "@/public/incons/landin-page/HashTag"
 import UnionIcon from "@/public/incons/landin-page/Union"
