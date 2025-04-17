@@ -50,7 +50,7 @@ const CreativityCompare = () => {
     return (
         <div className=" max-w-[1200px] mx-auto 2xl:px-0 px-5 lg:pb-[100px] md:pb-[80px] pb-[60px]">
 
-            <div className='md:max-w-[632px] mx-auto text-center mb-8 md:mb:12'>
+            <div className='md:max-w-[632px] mx-auto text-center mb-8 md:mb-12'>
                 <Heading
                     text="Creativity is the key to differentiation and growth"
                     className="text-2xl md:text-[28px] lg:text-[42px] capitalize font-bold text-[#1D1D1F]"
@@ -61,11 +61,11 @@ const CreativityCompare = () => {
                 />
             </div>
 
-            <div className='flex flex-col lg:flex-row gap-4 w-full'>
+            <div className='flex flex-col md:flex-row gap-4 w-full'>
                 {socialMediaOptions.map((option, index) => (
-                    <div key={index} className="flex-1 p-4 md:p-6  rounded-[12px] border border-[#ECEFF3] overflow-hidden bg-white">
+                    <div key={index} className="flex-1 p-4 lg:p-6 rounded-[12px] border border-[#ECEFF3] overflow-hidden bg-white">
                         <div className=''>
-                            <div className=" flex flex-col gap-4 md:gap-6  ">
+                            <div className=" flex flex-col gap-4 lg:gap-6  ">
                                 <div className=" flex ">
                                     <span className='bg-[#F6F8FA] p-2 rounded-[8px]'>
                                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,12 +74,12 @@ const CreativityCompare = () => {
                                         </svg>
                                     </span>
                                 </div>
-                                <h2 className="md:text-2xl text-xl leading-[130%] font-semibold text-[#1D1D1F]">{option.title}</h2>
+                                <h2 className="lg:text-2xl text-xl leading-[130%] font-semibold text-[#1D1D1F]">{option.title}</h2>
                             </div>
-                            <div className=' w-full h-[1px] my-4 md:my-6 bg-[#ECEFF3]'></div>
+                            <div className=' w-full h-[1px] my-4 lg:my-6 bg-[#ECEFF3]'></div>
                         </div>
 
-                        <div className="md:pb-6 pb-4">
+                        <div className="lg:pb-6 pb-4">
                             <h3 className="font-semibold text-[#1D1D1F] leading-[130%] text-lg ">Pros:</h3>
                             <ul className="space-y-4 mt-4">
                                 {option.pros.map((pro, i) => (
@@ -89,23 +89,23 @@ const CreativityCompare = () => {
                                                 <path fillRule="evenodd" clipRule="evenodd" d="M14.9993 1.66797H4.99935C3.1584 1.66797 1.66602 3.16035 1.66602 5.0013V15.0013C1.66602 16.8423 3.1584 18.3346 4.99935 18.3346H14.9994C16.8403 18.3346 18.3327 16.8423 18.3327 15.0013V5.0013C18.3327 3.16035 16.8403 1.66797 14.9993 1.66797ZM13.826 7.88504C14.038 7.61258 13.9889 7.2199 13.7164 7.00799C13.4439 6.79607 13.0513 6.84515 12.8393 7.11762L9.50017 11.4108C9.42592 11.5063 9.28625 11.5187 9.19636 11.4378L7.08412 9.53677C6.82756 9.30586 6.43237 9.32666 6.20146 9.58323C5.97055 9.8398 5.99135 10.235 6.24792 10.4659L8.36015 12.3669C8.98943 12.9332 9.9671 12.8465 10.4869 12.1783L13.826 7.88504Z" fill="#3EB83E" />
                                             </svg>
                                         </span>
-                                        <span className="md:text-base lg:tracking-[.13px] tracking-[.16px] leading-[150%] text-[#4A4C56] text-sm">{pro}</span>
+                                        <span className="lg:text-base lg:tracking-[.13px] tracking-[.16px] leading-[150%] text-[#4A4C56] text-sm">{pro}</span>
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
-                        <div className="border-t border-[#ECEFF3] md:pt-6 pt-4">
+                        <div className="border-t border-[#ECEFF3] lg:pt-6 pt-4">
                             <h3 className="font-semibold text-[#1D1D1F] leading-[130%] text-lg">Cons:</h3>
                             <ul className="space-y-4 mt-4">
                                 {option.cons.map((con, i) => (
                                     <li key={i} className="flex  gap-[10px]">
                                         <span className='mt-[2px]'>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.33333 1.66797H15.3333C17.1743 1.66797 18.6667 3.16035 18.6667 5.0013V15.0013C18.6667 16.8423 17.1743 18.3346 15.3333 18.3346H5.33333C3.49238 18.3346 2 16.8423 2 15.0013V5.0013C2 3.16035 3.49238 1.66797 5.33333 1.66797ZM13.1323 7.20238C13.3764 7.44646 13.3764 7.84218 13.1323 8.08626L11.2173 10.0013L13.1323 11.9163C13.3764 12.1604 13.3764 12.5561 13.1323 12.8002C12.8882 13.0443 12.4925 13.0443 12.2484 12.8002L10.3334 10.8852L8.41825 12.8003C8.17418 13.0444 7.77845 13.0444 7.53437 12.8003C7.29029 12.5562 7.29029 12.1605 7.53437 11.9164L9.4495 10.0013L7.53438 8.08617C7.2903 7.84209 7.2903 7.44637 7.53438 7.20229C7.77846 6.95821 8.17418 6.95821 8.41826 7.20229L10.3334 9.11741L12.2484 7.20238C12.4925 6.9583 12.8882 6.9583 13.1323 7.20238Z" fill="#AFAFAF" />
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M5.33333 1.66797H15.3333C17.1743 1.66797 18.6667 3.16035 18.6667 5.0013V15.0013C18.6667 16.8423 17.1743 18.3346 15.3333 18.3346H5.33333C3.49238 18.3346 2 16.8423 2 15.0013V5.0013C2 3.16035 3.49238 1.66797 5.33333 1.66797ZM13.1323 7.20238C13.3764 7.44646 13.3764 7.84218 13.1323 8.08626L11.2173 10.0013L13.1323 11.9163C13.3764 12.1604 13.3764 12.5561 13.1323 12.8002C12.8882 13.0443 12.4925 13.0443 12.2484 12.8002L10.3334 10.8852L8.41825 12.8003C8.17418 13.0444 7.77845 13.0444 7.53437 12.8003C7.29029 12.5562 7.29029 12.1605 7.53437 11.9164L9.4495 10.0013L7.53438 8.08617C7.2903 7.84209 7.2903 7.44637 7.53438 7.20229C7.77846 6.95821 8.17418 6.95821 8.41826 7.20229L10.3334 9.11741L12.2484 7.20238C12.4925 6.9583 12.8882 6.9583 13.1323 7.20238Z" fill="#AFAFAF" />
                                             </svg>
                                         </span>
-                                        <span className="md:text-base tracking-[.16px] leading-[150%] text-[#4A4C56] text-sm">{con}</span>
+                                        <span className="lg:text-base tracking-[.16px] leading-[150%] text-[#4A4C56] text-sm">{con}</span>
                                     </li>
                                 ))}
                             </ul>
