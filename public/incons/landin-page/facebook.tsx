@@ -4,7 +4,7 @@ interface FacebookIconProps {
     className?: string;
 }
 
-const FacebookIcon: React.FC<FacebookIconProps> = ({ className }) => {
+const FacebookIcon: React.FC<FacebookIconProps> = ({ className="" }) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

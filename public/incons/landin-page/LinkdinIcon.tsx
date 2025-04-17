@@ -4,9 +4,9 @@ interface LinkdinIconProps {
     className?: string;
 }
 
-const LinkdinIcon: React.FC<LinkdinIconProps> = () => {
+const LinkdinIcon: React.FC<LinkdinIconProps> = ({ className = "" }) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none"  className={className}>
             <g clipPath="url(#clip0_3475_10994)">
                 <path d="M2.09827 4.29228C2.09827 3.02663 3.15697 2 4.463 2H31.7335C33.0395 2 34.0983 3.02663 34.0983 4.29228V31.7077C34.0983 32.9738 33.0395 34 31.7335 34H4.463C3.15697 34 2.09827 32.9738 2.09827 31.7077V4.29228Z" fill="#006699" />
                 <path fillRule="evenodd" clipRule="evenodd" d="M13.1862 27.0791V14.9339H9.1494V27.0791H13.1862ZM11.1678 13.2757C12.5755 13.2757 13.4517 12.3431 13.4517 11.1776C13.4255 9.98584 12.5755 9.0791 11.1945 9.0791C9.81363 9.0791 8.91077 9.98584 8.91077 11.1776C8.91077 12.3431 9.78677 13.2757 11.1415 13.2757H11.1678Z" fill="white" />
