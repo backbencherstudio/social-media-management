@@ -16,11 +16,15 @@ const services = [
   { id: "blogs", title: "Blogs" },
 ];
 
+// interface PricingProps {
+//   bgColor?: string;
+// }
+
 export default function Pricing() {
   const [activeTab, setActiveTab] = useState("post");
 
   return (
-    <div className="bg-[#ECEFF3] py-[100px]">
+    <div className={`bg-[#F7F7F9] py-[100px]`}>
     <div className='container mx-auto text-center  pb-14'>
         <Heading text="Affordable Marketing Services" className='text-[42px] mb-4'/>
         <ParagraphText paraText="Elite Creative Talent | 80% More Cost-Effective than Agencies | Work with Real Experts, Not AI" className='text-[1D1F2C] '/>
@@ -28,12 +32,12 @@ export default function Pricing() {
     
     <div className="container mx-auto py-6 md:py-12">
       <Tabs defaultValue="post" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-20 md:mb-8">
+        <TabsList className="flex p-[6px] flex-col bg-white h-full sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-20 md:mb-8">
           {services.map((service) => (
             <TabsTrigger
               key={service.id}
               value={service.id}
-              className={`py-3 px-4 text-base transition-all duration-200 ${
+              className={`py-3 bg-[#F6F8FA80] px-4 text-base transition-all duration-200 ${
                 activeTab === service.id ? "bg-black text-white" : ""
               }`}
             >
