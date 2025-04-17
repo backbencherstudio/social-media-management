@@ -4,9 +4,9 @@ interface YoutubeIconProps {
     className?: string;
 }
 
-const YoutubeIcon: React.FC<YoutubeIconProps> = () => {
+const YoutubeIcon: React.FC<YoutubeIconProps> = ({ className="" }) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" className={className}>
         <rect x="1.29827" y="1.2" width="33.6" height="33.6" rx="16.8" fill="#FF0000"/>
         <rect x="1.29827" y="1.2" width="33.6" height="33.6" rx="16.8" stroke="white" strokeWidth="1.6"/>
         <path d="M26.3194 14.0741C26.1219 13.3361 25.5418 12.7562 24.8038 12.5586C23.4676 12.2002 18.1068 12.2002 18.1068 12.2002C18.1068 12.2002 12.746 12.2002 11.4097 12.5586C10.6717 12.7562 10.0917 13.3361 9.89419 14.0741C9.53577 15.4104 9.53577 18.2002 9.53577 18.2002C9.53577 18.2002 9.53577 20.99 9.89419 22.3263C10.0917 23.0643 10.6717 23.6442 11.4097 23.8418C12.746 24.2002 18.1068 24.2002 18.1068 24.2002C18.1068 24.2002 23.4676 24.2002 24.8038 23.8418C25.5418 23.6442 26.1219 23.0643 26.3194 22.3263C26.6778 20.99 26.6778 18.2002 26.6778 18.2002C26.6778 18.2002 26.6764 15.4104 26.3194 14.0741Z" fill="white"/>

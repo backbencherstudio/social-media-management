@@ -216,7 +216,7 @@ const CompetitorTable = () => {
                     </TableHeader>
                     <TableBody>
                         {socialMediaCompanies.map((company, index) => (
-                            <TableRow key={company.id} className={` ${index % 2 === 0 ? "bg-white" : "bg-gray-50"} text-[#4A4C56] md:text-base text-sm leading-[150%] tracking-[.16px]`}>
+                            <TableRow key={company.id} className={` ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}  text-[#4A4C56] md:text-base text-sm leading-[150%] tracking-[.16px]`}>
                                 <TableCell className="py-4 px-4  border-gray-200 border">{company.company}</TableCell>
                                 <TableCell className="py-4 px-4  border-gray-200 border">{renderStars(company.rating)}</TableCell>
                                 <TableCell className="py-4 px-4  border-gray-200 border">{company.startingPrice}</TableCell>
