@@ -17,7 +17,7 @@ const ExamplePages = () => {
 
     return (
         <div>
-            <PostExample />
+            <PostExample header='Examples of Social media post' />
             <ShortVideoExample />
             <InstastoryExample />
             <EmailDesign />

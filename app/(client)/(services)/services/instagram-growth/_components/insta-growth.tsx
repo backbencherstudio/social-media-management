@@ -66,29 +66,34 @@ function ServiceCard() {
                         <div className='flex flex-col gap-4 w-full h-full justify-end'>
                             <div className="gap-4 flex ">
                                 <div className='w-full'>
-                                    <button className="flex px-4 py-2 rounded-[6px] border border-[#4A4C56] bg-[#F6F8FA80] justify-between items-center w-full">
-                                        <div className="flex items-center ">
-                                            <Clock className="h-4 w-4 mr-2" />
-                                            <span className='leading-[150%]  tracking-[.16px] text-base text-[#070707]'>Timeline</span>
-                                        </div>
-                                        <ExternalLink className="h-4 w-4" />
-                                    </button>
+                                    <Link href="">
+                                        <button className="flex cursor-pointer  px-4 py-2 rounded-[6px] border border-[#4A4C56] bg-[#F6F8FA80] justify-between items-center w-full">
+                                            <div className="flex items-center ">
+                                                <Clock className="h-4 w-4 mr-2" />
+                                                <span className='leading-[150%]  tracking-[.16px] text-base text-[#070707]'>Timeline</span>
+                                            </div>
+                                            <ExternalLink className="h-4 w-4" />
+                                        </button>
+                                    </Link>
                                 </div>
 
                                 <div className='w-full'>
-                                    <button className="flex px-4 py-2 rounded-[6px] border border-[#4A4C56] bg-[#F6F8FA80] justify-between items-center w-full">
-                                        <div className="flex items-center">
-                                            <span>Examples</span>
-                                        </div>
-                                        <ExternalLink className="h-4 w-4" />
-                                    </button>
+                                    <Link href="">
+                                        <button className="flex px-4 py-2 cursor-pointer rounded-[6px] border border-[#4A4C56] bg-[#F6F8FA80] justify-between items-center w-full">
+                                            <div className="flex items-center">
+                                                <span>Examples</span>
+                                            </div>
+                                            <ExternalLink className="h-4 w-4" />
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
-
-                            <button className="flex justify-center px-4 py-2 rounded-[6px] border border-[#4A4C56] bg-[#F6F8FA80]  items-center w-full">
-                                <Play className="h-4 w-4 mr-2" />
-                                <span>How the service works</span>
-                            </button>
+                            <Link href="">
+                                <button className="flex cursor-pointer justify-center px-4 py-2 rounded-[6px] border border-[#4A4C56] bg-[#F6F8FA80]  items-center w-full">
+                                    <Play className="h-4 w-4 mr-2" />
+                                    <span>How the service works</span>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

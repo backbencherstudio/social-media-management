@@ -10,6 +10,7 @@ import image5 from "@/public/landing-page/card/image5.png";
 import image6 from "@/public/landing-page/card/image6.png";
 import PostsContent from '../../_components/landing-page/_work_components/posts-content';
 import Heading from '../../_components/heading-text';
+import ParagraphText from '../../_components/paragraph-text';
 
 
 const categories = [
@@ -107,7 +108,12 @@ const contentItems = [
 ]
 
 
-const PostExample = () => {
+interface PostExampleProps {
+    header?: string;
+    para?: String
+}
+
+const PostExample = ({ header = "", para = "" }: PostExampleProps) => {
 
     const initialCategory = "All";
     const [activeCategory, setActiveCategory] = useState(initialCategory)
@@ -117,10 +123,18 @@ const PostExample = () => {
     return (
         <div className='bg-[#F7F7F9] lg:py-[100px] md:py-[80px] py-[60px]'>
             <div className='max-w-[1200px] mx-auto px-5 2xl:px-0'>
-                <Heading
-                    text="Examples of Social media post"
-                    className="text-center text-2xl md:text-[28px] lg:text-[42px] capitalize font-bold text-[#1D1D1F]"
-                />
+                <div className='max-w-[694px] mx-auto text-center'>
+                    <Heading
+                        text={header}
+                        className="text-center text-2xl md:text-[28px] lg:text-[42px] capitalize font-bold text-[#1D1D1F]"
+                    />
+                    {para && (
+                        <ParagraphText
+                            paraText={para}
+                            className=" mx-auto mt-3 sm:mt-4 text-sm sm:text-base text-[#1D1F2C]"
+                        />
+                    )}
+                </div>
                 <div className='md:mt-12 mt-8'>
                     <PostsContent
                         categories={categories}

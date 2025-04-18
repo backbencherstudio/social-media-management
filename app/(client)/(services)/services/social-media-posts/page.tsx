@@ -16,7 +16,7 @@ export default function SocialMediaPost() {
       <BusinessTrust/>
       <Pricing  />
       <HowItWork/>  {/* need to work this */}
-      <PostExample />
+      <PostExample header='Examples of Social media post' para = "Get your design & marketing work done without the hassle of unreliable freelancers, costly agencies. Pay a fixed, monthly, and predictable rate, with no contracts or surprises." />
       <FrequentlyAsked />
     </div>
   )
