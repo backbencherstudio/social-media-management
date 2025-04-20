@@ -8,7 +8,7 @@ import PostExample from '@/app/(client)/examples/_components/post-content'
 import FrequentlyAsked from '@/app/(client)/_components/landing-page/frequently-asked'
 
 
-export default function SocialMediaPost() {
+export default function SocialMediaPostsPage() {
   return (
     <div>
       {/* <Banner/> */}
