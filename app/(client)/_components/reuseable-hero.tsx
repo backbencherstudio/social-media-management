@@ -26,7 +26,7 @@ console.log(para.length > 2 )
                 <div className="flex flex-col w-full">
                     <Heading
                         text={header}
-                        className="text-2xl md:text-[28px] lg:text-[38px] xl:text-[42px]  font-bold text-[#1D1D1F]"
+                        className="text-2xl md:text-[28px] lg:text-[38px] xl:text-[42px]  font-bold text-[#1D1D1F] whitespace-pre-line"
                     />
                     <div className='flex flex-col gap-2 md:mt-6 mt-4'>
                         {para.map((text, ind) => (

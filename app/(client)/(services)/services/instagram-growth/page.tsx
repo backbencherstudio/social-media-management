@@ -10,7 +10,7 @@ import FrequentlyAsked from '@/app/(client)/_components/landing-page/frequently-
 const InstaGrowthPage = () => {
     return (
         <div>
-            <ReuseableHero header={"Grow your Instagramwith real & targeted followers"} para={[
+            <ReuseableHero header={"Grow your Instagram with real & targeted followers"} para={[
                 "Gain 100-400+ relevant followers per month",
                 "Strategic follow/unfollow by experts (not bots)",
                 "Strategic follow/unfollow by experts (not bots)"
