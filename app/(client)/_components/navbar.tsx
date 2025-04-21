@@ -367,9 +367,9 @@ export function Navbar() {
                 <Link href="get-startd" className="serotiva-regular">
                   Get Started
                 </Link>
-                <Button className="bg-black hover:bg-gray-800 text-white serotiva-regular">
+                <Link href="" className="bg-black hover:bg-gray-800 text-white serotiva-regular">
                   Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
+                </Link>
               </div>
             </nav>
           </SheetContent>
@@ -384,7 +384,7 @@ export function Navbar() {
             Log in
           </Link>
           <Link
-            href="get-started"
+            href="/book-demo"
             className="hover:text-black transition serotiva-regular"
           >
             Book a Demo 
