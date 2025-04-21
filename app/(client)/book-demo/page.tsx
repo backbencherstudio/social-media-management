@@ -8,11 +8,11 @@ import "react-day-picker/style.css";
 import Heading from '../_components/heading-text';
 import ParagraphText from '../_components/paragraph-text';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, CopyCheck, FileCode2, Globe, HashIcon, Target } from 'lucide-react';
+import { Clock, CopyCheck, FileCode2, Globe, Globe2, Globe2Icon, GlobeIcon, GlobeLock, GlobeLockIcon, HashIcon, LucideGlobe, LucideGlobeLock, Target } from 'lucide-react';
 import Link from 'next/link';
 import { FiArrowUpRight } from "react-icons/fi";
 import HashIcons from '@/public/incons/hash-icon';
-
+import TimezoneSelect, { type ITimezone } from "react-timezone-select"
 
 
 
@@ -21,7 +21,10 @@ const BookDemoPage = () => {
 
     const [selected, setSelected] = useState<Date>();
 
-    console.log(selected)
+    const [selectedTimezone, setSelectedTimezone] = useState<ITimezone>(
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+    )
+    console.log(selectedTimezone, "selectedTimezone")
 
     return (
         <div className='bg-[#F7F7F9]'>
@@ -106,14 +109,86 @@ const BookDemoPage = () => {
                                     chevron: 'text-red-500',
                                     outside: 'text-[#E0E0E0]',
                                     selected: 'bg-[#1D1D1F] text-white rounded-full',
-                                    today: 'text-black font-semibold bg-[#F6F8FA]  rounded-full' ,
+                                    today: 'text-black font-semibold bg-[#F6F8FA]  rounded-full',
                                     focused: 'bg-gray-900 font-medium text-white rounded-full',
-                                 
-                                  }}
+
+                                }}
                             // footer={
                             //     selected ? `Selected: ${selected.toLocaleDateString()}` : "Pick a day."
                             // }
                             />
+
+                            <div className="mt-4">
+                                <p className="text-sm font-medium mb-2">Time zone</p>
+                                <div className='flex items-center gap-2'>
+                                    <span><LucideGlobe className='w-[16px] h-4' /></span>
+                                    <TimezoneSelect
+                                        value={selectedTimezone}
+                                        onChange={(timezone) => setSelectedTimezone(timezone)}
+                                        labelStyle="original"
+                                        className='border-0 w-full'
+                                        styles={{
+                                            control: (baseStyles) => ({
+                                                ...baseStyles,
+                                                border: 'none',
+                                                boxShadow: 'none',
+                                                '&:hover': {
+                                                    border: 'none',
+                                                },
+                                            }),
+                                        }}
+                                        // formatOptionLabel={(option: ITimezone | string, { context }) => {
+                                        //     // In the dropdown menu
+                                        //     if (context === 'menu') {
+                                        //         // Return the default format with GMT offset
+                                        //         return option?.label; // This shows the default "GMT+6:00 Astana, Dhaka" format
+                                        //     }
+                                        //     // For the selected value display
+                                        //     else {
+                                        //         const now = new Date();
+                                        //         const formatter = new Intl.DateTimeFormat('en-US', {
+                                        //             hour: 'numeric',
+                                        //             minute: 'numeric',
+                                        //             timeZone: option?.value,
+                                        //             hour12: true
+                                        //         });
+                                        //         const time = formatter.format(now);
+                                        //         return `${option?.value} (${time})`;
+                                        //     }
+                                        // }} ///this is the code that is easy but typescript error
+
+                                        formatOptionLabel={(option: ITimezone | string, { context }) => {
+                                            // Handle case when option is a string
+                                            if (typeof option === 'string') {
+                                                const now = new Date();
+                                                const formatter = new Intl.DateTimeFormat('en-US', {
+                                                    hour: 'numeric',
+                                                    minute: 'numeric',
+                                                    timeZone: option,
+                                                    hour12: true
+                                                });
+                                                const time = formatter.format(now);
+                                                return `${option} (${time})`;
+                                            }
+                                        
+                                            // Handle case when option is ITimezone
+                                            if (context === 'menu') {
+                                                return option.label; // This shows the default "GMT+6:00 Astana, Dhaka" format
+                                            } else {
+                                                const now = new Date();
+                                                const formatter = new Intl.DateTimeFormat('en-US', {
+                                                    hour: 'numeric',
+                                                    minute: 'numeric',
+                                                    timeZone: option.value,
+                                                    hour12: true
+                                                });
+                                                const time = formatter.format(now);
+                                                return `${option.value} (${time})`;
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
