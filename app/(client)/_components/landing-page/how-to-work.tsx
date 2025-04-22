@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { IoMdAddCircle } from 'react-icons/io';
 import { BsArrowUpRightCircle } from "react-icons/bs";
 
-const HowToWork = () => {
+const HowToWork = ({ heading }: { heading: string }) => {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const [buttonHide, setButtonHide] = useState(false);
@@ -28,7 +28,7 @@ const HowToWork = () => {
   return (
     <div className='max-w-[996px] mx-auto lg:my-25 md:my-20 my-16 px-5 2xl:px-0'>
       <div className=" text-center ">
-        <Heading text="How to Work TagGrowth" className="text-2xl sm:text-3xl md:text-[42px]" />
+        <Heading text={heading} className="text-2xl sm:text-3xl md:text-[42px]" />
         <ParagraphText
           paraText="Watch our 4-min demo video, then sign up or book a call to learn more."
           className="max-w-[335px] sm:max-w-[500px] md:max-w-[644px] text-center mx-auto mt-3 sm:mt-4 mb-8 sm:mb-12 md:mb-16 text-sm sm:text-base"
