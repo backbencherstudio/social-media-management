@@ -20,7 +20,7 @@ export default function HomePage() {
       <ExampleOfWork />
       <AllServices />
       <TrustedBrand bgcolor={true} />
-      <HowToWork />
+      <HowToWork heading='How to Work TagGrowth'  />
       <MarketingService />
       <SeamlessExperience />
       <FrequentlyAsked />
