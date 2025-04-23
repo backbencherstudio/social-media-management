@@ -8,7 +8,7 @@ import "react-day-picker/style.css";
 
 
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, LucideGlobe, } from 'lucide-react';
+import { ArrowLeft, Clock, LucideGlobe, StepBackIcon, } from 'lucide-react';
 import Link from 'next/link';
 import { FiArrowUpRight } from "react-icons/fi";
 import HashIcons from '@/public/incons/hash-icon';
@@ -76,14 +76,15 @@ const ScheduleDemoTime = () => {
     };
 
 
+    const dateFormat = selected?.toDateString()
 
     console.log(selectedTimezone, selected?.toDateString(), "selectedTime", selectedTime);
 
     return (
         <div>
-            <div className='max-w-[1200px] mx-auto bg-white rounded-[18px] lg:p-6 p-3' >
-                {openSchedule ? (
-                    <>
+            {openSchedule ? (
+                <>
+                    <div className='max-w-[1200px] mx-auto bg-white rounded-[18px] lg:p-6 p-3' >
                         <div className='grid grid-cols-3 lg:grid-cols-11 gap-6 justify-between '>
                             <div className={`w-full col-span-3 ${selected ? "lg:col-span-4 " : "lg:col-span-6"} h-full  block`}>
                                 <BookDemoCard />
@@ -286,13 +287,13 @@ const ScheduleDemoTime = () => {
 
                         </div>
 
-                    </>) : (
-                    <div className='w-full '>
-                        <button onClick={() => setOpenSchedule(true) }>back</button>
-                        <DemoScheduleData />
                     </div>
-                )}
-            </div>
+                </>) : (
+                <div className='max-w-[996px] relative mx-auto bg-white rounded-[18px] lg:p-6 p-3'>
+                    <button className='absolute top-[24px] left-[24px] cursor-pointer' onClick={() => setOpenSchedule(true)}> <div className='w-9 h-9 hover:bg-gray-200 flex justify-center items-center border border-[#A5A5AB] rounded-full'> <ArrowLeft /> </div> </button>
+                    <DemoScheduleData dateFormat = {dateFormat} selectedTime ={selectedTime} selectedTimezone={selectedTimezone} />
+                </div>
+            )}
         </div>
     );
 };
