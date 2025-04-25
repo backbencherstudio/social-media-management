@@ -6,10 +6,12 @@ import { Badge } from '@/components/ui/badge';
 interface EmailTagInputProps {
     maxTags?: number;
     onTagsChange?: (tags: string[]) => void;
+    emails: { value: string; isValid: boolean }[];
+    setEmails: (emails: { value: string; isValid: boolean }[]) => void;
 }
 
-export default function EmailTagInput({ maxTags = 10, onTagsChange }: EmailTagInputProps) {
-    const [emails, setEmails] = useState<Array<{ value: string, isValid: boolean }>>([]);
+export default function EmailTagInput({ maxTags = 10, onTagsChange,emails,setEmails }: EmailTagInputProps) {
+
     const [inputValue, setInputValue] = useState('');
 
     const validateEmail = (email: string): boolean => {
@@ -64,6 +66,7 @@ export default function EmailTagInput({ maxTags = 10, onTagsChange }: EmailTagIn
             }
         });
     };
+
 
     return (
         <div className="w-full">

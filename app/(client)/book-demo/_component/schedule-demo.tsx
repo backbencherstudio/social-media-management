@@ -78,10 +78,10 @@ const ScheduleDemoTime = () => {
 
     const dateFormat = selected?.toDateString()
 
-    console.log(selectedTimezone, selected?.toDateString(), "selectedTime", selectedTime);
+
 
     return (
-        <div>
+        <div className='bg-[#F7F7F9] mt-9 pb-[120px]'>
             {openSchedule ? (
                 <>
                     <div className='max-w-[1200px] mx-auto bg-white rounded-[18px] lg:p-6 p-3' >
@@ -289,9 +289,11 @@ const ScheduleDemoTime = () => {
 
                     </div>
                 </>) : (
-                <div className='max-w-[996px] relative mx-auto bg-white rounded-[18px] lg:p-6 p-3'>
-                    <button className='absolute top-[24px] left-[24px] cursor-pointer' onClick={() => setOpenSchedule(true)}> <div className='w-9 h-9 hover:bg-gray-200 flex justify-center items-center border border-[#A5A5AB] rounded-full'> <ArrowLeft /> </div> </button>
-                    <DemoScheduleData dateFormat = {dateFormat} selectedTime ={selectedTime} selectedTimezone={selectedTimezone} />
+                <div className='max-h-[700px] overflow-y-auto custom-scrollbar2 mr-1'>
+                    <div className='max-w-[996px]  relative mx-auto bg-white rounded-[18px] lg:p-6 p-3'>
+                        <button className='absolute top-[24px] left-[24px] cursor-pointer' onClick={() => setOpenSchedule(true)}> <div className='w-9 h-9 hover:bg-gray-200 flex justify-center items-center border border-[#A5A5AB] rounded-full'> <ArrowLeft /> </div> </button>
+                        <DemoScheduleData dateFormat={dateFormat} selectedTime={selectedTime} selectedTimezone={selectedTimezone} />
+                    </div>
                 </div>
             )}
         </div>
