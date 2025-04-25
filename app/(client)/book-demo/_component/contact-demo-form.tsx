@@ -1,7 +1,18 @@
 "use client"
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
 import { useState } from "react";
 import EmailTagInput from "./guest-email-option";
+import { set } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
@@ -20,7 +31,8 @@ export default function ContactForm() {
 
     });
     const [addguestField, setAddGuestField] = useState(false);
-    const [emails, setEmails] = useState<Array<{ value: string, isValid: boolean }>>([]);
+    const [guestEmails, setGuestEmails] = useState<Array<{ value: string, isValid: boolean }>>([]);
+    const [showDialog, setShowDialog] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target as HTMLInputElement;
@@ -32,13 +44,29 @@ export default function ContactForm() {
         }));
     };
 
+    const router = useRouter();
 
 
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
-        // Add your form submission logic here
+        console.log(guestEmails);
+        setShowDialog(true);
+
+        // Disable scrolling
+        document.body.style.overflow = 'hidden';
+
+ 
+        const timer = setTimeout(() => {
+    
+            router.push('/demo-confirmed'); // Uncomment this line and set the correct target route
+        }, 2000); 
+
+        return () => {
+            clearTimeout(timer);
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        };
     };
 
     const handleGuest = () => {
@@ -46,7 +74,7 @@ export default function ContactForm() {
     }
 
     return (
-        <div className="w-full bg-white">
+        <div className="w-full bg-white ">
             <div className='border border-[#D2D2D5] rounded-[12px] p-6'>
                 <h1 className="text-2xl font-bold mb-6">Enter Details</h1>
 
@@ -89,7 +117,7 @@ export default function ContactForm() {
                         Add Guests
                     </button>
                     {addguestField && (
-                        <EmailTagInput emails={emails} setEmails={setEmails} />
+                        <EmailTagInput emails={guestEmails} setEmails={setGuestEmails} />
                     )}
 
                     <div className="mb-4 mt-4 bg-gray-50 p-4 rounded-md">
@@ -351,12 +379,41 @@ export default function ContactForm() {
                     </div>
 
 
-                    <button
-                        type="submit"
-                        className=" bg-[#070707] cursor-pointer text-white py-4 px-6 rounded-lg hover:bg-[#141111] focus:outline-none  "
-                    >
+
+
+                    <button type="submit" className="bg-[#070707]  cursor-pointer text-white py-4 px-6 rounded-lg hover:bg-[#352d2d] focus:outline-none">
                         Schedule Event
                     </button>
+                    {showDialog && (
+                        <div
+                            className={`fixed inset-0  flex items-start pt-40 justify-center bg-black/30 bg-opacity-10 ${showDialog ? 'block' : 'hidden'}`}
+                        >
+                            <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
+                                <div className="flex justify-center mb-4">
+                                    {/* Green Checkmark Icon */}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="50"
+                                        height="50"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        className="text-green-500"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm0 2a10 10 0 110-20 10 10 0 010 20zm.707-12.707a1 1 0 10-1.414 1.414L9 9.586 7.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l3-3a1 1 0 000-1.414z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </div>
+                                <h2 className="text-xl font-semibold text-gray-800 mb-2">Confirmed</h2>
+                                <p className="text-sm text-gray-600 mb-4">
+                                    You are scheduled with Zana Kastrati.
+                                </p>
+                                <p className="text-sm text-gray-400">Redirecting...</p>
+                            </div>
+                        </div>
+                    )}
                 </form>
             </div>
         </div>
