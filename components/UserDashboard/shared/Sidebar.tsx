@@ -8,6 +8,7 @@ import { HiOutlineCreditCard } from "react-icons/hi2";
 import { TbFileInvoice } from "react-icons/tb";
 import Image from 'next/image';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import LogoIcon from '@/public/incons/logo';
 
 const topMenuItems = [
   { title: "Home", icon: RiHome5Line, href: "/dashboard" },
@@ -88,13 +89,16 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           transition-all duration-300 ease-in-out
           ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-[120px]'}
         `}>
-          <Image
+          {/* <Image
             src="/logo.png"
             alt="Logo"
             width={200}
             height={200}
             className='w-full h-[22px] object-contain'
-          />
+          /> */}
+          <div className='w-[120px] h-[22px] object-contain'>
+            <LogoIcon className='w-full h-full' />
+          </div>
         </div>
 
         {/* Toggle button for large screens */}

@@ -28,7 +28,7 @@ export default function Navbar({ onMenuClick }: HeaderProps) {
   }, []);
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-sm z-10">
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-4">
           <button
@@ -37,7 +37,7 @@ export default function Navbar({ onMenuClick }: HeaderProps) {
           >
             <HiMenuAlt3 className="w-6 h-6" />
           </button>
-          <h1 className="text-xl font-semibold">Overview</h1>
+          {/* <h1 className="text-xl font-semibold">Overview</h1> */}
         </div>
 
         <div className="flex items-center gap-4">
@@ -45,9 +45,9 @@ export default function Navbar({ onMenuClick }: HeaderProps) {
             <ImPower />
             <span>Add Services</span>
           </button>
-          <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
+          {/* <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
             <IoNotificationsOutline className="w-6 h-6" />
-          </button>
+          </button> */}
           <div className="relative" ref={dropdownRef}>
             <div
               className="flex items-center gap-3 p-2 rounded-full hover:bg-gray-100 cursor-pointer transition-colors duration-200"
