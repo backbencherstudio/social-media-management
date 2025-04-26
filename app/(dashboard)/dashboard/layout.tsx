@@ -1,5 +1,34 @@
-import React from "react";
+"use client";
+import Navbar from "@/components/UserDashboard/Navbar";
+import Sidebar from "@/components/UserDashboard/Sidebar";
+import React, { useState } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  return (
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
+
+      <div className="flex-1 flex flex-col min-h-screen transition-all duration-300 ease-in-out">
+        <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
+
+        <main className="flex-1 p-6 overflow-auto">
+          {children}
+        </main>
+      </div>
+
+      {/* Overlay with fade effect */}
+      <div
+        className={`
+          fixed inset-0 bg-black transition-opacity duration-300 md:hidden
+          ${isSidebarOpen ? 'opacity-50 z-30' : 'opacity-0 -z-10'}
+        `}
+        onClick={() => setIsSidebarOpen(false)}
+      />
+    </div>
+  );
 }
