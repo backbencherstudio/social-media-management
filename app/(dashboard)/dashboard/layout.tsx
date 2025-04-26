@@ -12,7 +12,7 @@ export default function ClientLayout({
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50 font-commissioner">
+    <div className="flex h-screen overflow-hidden bg-[#F7F7F9] font-commissioner">
       <Sidebar
         isMobileMenuOpen={isMobileMenuOpen}
         onMobileMenuClose={() => setIsMobileMenuOpen(false)}
