@@ -1,17 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { HiMenuAlt3 } from "react-icons/hi";
-import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
 import { RiUserLine } from "react-icons/ri";
 import { ImPower } from "react-icons/im";
 import { ChevronDown } from 'lucide-react';
 
-interface HeaderProps {
-  onMenuClick: () => void;
+interface NavbarProps {
+  onMobileMenuToggle: () => void;
+  isMobileMenuOpen: boolean;
 }
 
-export default function Navbar({ onMenuClick }: HeaderProps) {
+
+export default function Navbar({ isMobileMenuOpen, onMobileMenuToggle }: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -28,12 +29,12 @@ export default function Navbar({ onMenuClick }: HeaderProps) {
   }, []);
 
   return (
-    <header className="bg-white shadow-sm z-10">
-      <div className="flex items-center justify-between p-4">
+    <header className="bg-white border-b border-[#E9E9EA] z-10">
+      <div className="flex items-center justify-between py-2 px-4">
         <div className="flex items-center gap-4">
           <button
             className="p-2 rounded-lg hover:bg-gray-100 md:hidden"
-            onClick={onMenuClick}
+            onClick={onMobileMenuToggle}
           >
             <HiMenuAlt3 className="w-6 h-6" />
           </button>
@@ -56,10 +57,9 @@ export default function Navbar({ onMenuClick }: HeaderProps) {
               <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                 <FaRegUser className="w-5 h-5 text-gray-600" />
               </div>
-              <ChevronDown 
-                className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${
-                  isDropdownOpen ? 'rotate-180' : ''
-                }`}
+              <ChevronDown
+                className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''
+                  }`}
               />
             </div>
 

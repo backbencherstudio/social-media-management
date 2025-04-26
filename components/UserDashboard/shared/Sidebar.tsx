@@ -6,7 +6,6 @@ import { RiHome5Line, RiLayoutGridLine } from "react-icons/ri";
 import { BsPerson } from "react-icons/bs";
 import { HiOutlineCreditCard } from "react-icons/hi2";
 import { TbFileInvoice } from "react-icons/tb";
-import Image from 'next/image';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import LogoIcon from '@/public/incons/logo';
 
@@ -24,15 +23,14 @@ const bottomMenuItems = [
       { title: "Invoices", icon: TbFileInvoice, href: "/dashboard/invoices" },
     ]
   },
-  // { title: "Logout", icon: LogOut, href: "/logout" },
 ];
 
 interface SidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isMobileMenuOpen: boolean;
+  onMobileMenuClose: () => void;
 }
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ isMobileMenuOpen, onMobileMenuClose }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -46,10 +44,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <Link
         href={item.href}
         className={`
-          flex items-center transition-all duration-200
+          flex items-center text-[14px] transition-all duration-200
           ${isCollapsed ? 'justify-center px-0' : 'px-3 gap-3'}
           p-3 rounded-lg
-          ${isActive ? 'bg-[#F5F5F7] text-black' : 'text-gray-600 hover:bg-gray-100'}
+          ${isActive ? 'bg-[#F5F5F7] text-black' : 'text-[#4A4C56] hover:bg-gray-100'}
         `}
         title={isCollapsed ? item.title : ''}
       >
@@ -77,10 +75,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     <aside
       className={`
         fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         md:relative md:translate-x-0
         ${isCollapsed ? 'md:w-16' : 'w-64'} 
-        bg-white shadow-lg overflow-hidden
+        bg-white border-r border-[#E9E9EA] overflow-hidden
         flex flex-col
       `}
     >
@@ -89,13 +87,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           transition-all duration-300 ease-in-out
           ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-[120px]'}
         `}>
-          {/* <Image
-            src="/logo.png"
-            alt="Logo"
-            width={200}
-            height={200}
-            className='w-full h-[22px] object-contain'
-          /> */}
           <div className='w-[120px] h-[22px] object-contain'>
             <LogoIcon className='w-full h-full' />
           </div>
@@ -121,7 +112,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             transition-opacity duration-300
             ${isCollapsed ? 'opacity-0' : 'opacity-100'}
           `}
-          onClick={onClose}
+          onClick={onMobileMenuClose}
         >
           <IoMdClose className="w-6 h-6" />
         </button>
@@ -138,7 +129,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <nav className={`p-4 space-y-2 ${isCollapsed ? 'px-2' : ''}`}>
         <div className="border-t border-gray-200 pt-2">
           {!isCollapsed && (
-            <h3 className="text-gray-500 text-sm font-medium px-3 mb-2">Settings</h3>
+            <h3 className="text-[#4A4C56] text-sm font-medium px-3 mb-2">Settings</h3>
           )}
           {bottomMenuItems[0].subItems.map((item, index) => (
             <NavLink key={index} item={item} />

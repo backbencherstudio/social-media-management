@@ -4,6 +4,8 @@ import { FiBox, FiHelpCircle } from 'react-icons/fi'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
 import ActiveServicesTable from '@/components/UserDashboard/Home/ActiveServicesTable'
+import RecommendedResources from '@/components/UserDashboard/Home/RecommendedResources'
+
 
 export default function DashboardHome() {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([new Date(), new Date()]);
@@ -88,6 +90,9 @@ export default function DashboardHome() {
       <div>
         <ActiveServicesTable />
       </div>
+
+      <RecommendedResources />
+
     </>
   )
 }

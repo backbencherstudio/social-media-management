@@ -1,35 +1,32 @@
 "use client";
-
 import Navbar from "@/components/UserDashboard/shared/Navbar";
 import Sidebar from "@/components/UserDashboard/shared/Sidebar";
 import React, { useState } from "react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+
+export default function ClientLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-gray-50 font-commissioner">
       <Sidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onMobileMenuClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <div className="flex-1 flex flex-col min-h-screen transition-all duration-300 ease-in-out">
-        <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
-
-        <div className="flex-1 p-5 overflow-auto">
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Navbar
+          isMobileMenuOpen={isMobileMenuOpen}
+          onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        />
+        <div className="flex-1 overflow-y-auto px-6 py-5">
           {children}
         </div>
       </div>
-
-      {/* Overlay with fade effect */}
-      <div
-        className={`
-          fixed inset-0 bg-black transition-opacity duration-300 md:hidden
-          ${isSidebarOpen ? 'opacity-50 z-30' : 'opacity-0 -z-10'}
-        `}
-        onClick={() => setIsSidebarOpen(false)}
-      />
     </div>
   );
 }

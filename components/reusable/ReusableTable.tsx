@@ -25,15 +25,13 @@ export default function ReusableTable({
   emptyMessage = "No orders yet..."
 }: ReusableTableProps) {
   return (
-    <div className="w-full overflow-x-auto">
-      <Table>
-        <TableHeader className=" " >
+    <Table className='overflow-x-auto'>
+        <TableHeader>
           <TableRow className="hover:bg-transparent border-gray-100 bg-[#F9F9FA]">
             {columns.map((column) => (
               <TableHead
                 key={column.accessorKey}
-                className="text-[13px]  font-medium text-gray-600 py-3 first:pl-6 last:pr-6 whitespace-nowrap w-[1%]"
-                style={{ width: `${100 / columns.length}%` }}
+                className="text-[13px] font-medium text-gray-600 py-3 first:pl-6 last:pr-6 whitespace-nowrap min-w-[150px]"
               >
                 {column.header}
               </TableHead>
@@ -59,8 +57,7 @@ export default function ReusableTable({
                 {columns.map((column) => (
                   <TableCell
                     key={column.accessorKey}
-                    className={`py-4 text-sm first:pl-6 last:pr-6 whitespace-nowrap w-[1%]`}
-                    style={{ width: `${100 / columns.length}%` }}
+                    className={`py-4 text-sm first:pl-6 last:pr-6 whitespace-nowrap min-w-[150px]`}
                   >
                     <div className={`${column.accessorKey === 'status'
                       ? 'text-gray-600'
@@ -79,6 +76,5 @@ export default function ReusableTable({
           )}
         </TableBody>
       </Table>
-    </div>
   )
 }
