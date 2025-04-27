@@ -35,6 +35,11 @@ type FormData = {
   keywordPhrases: string;
   additionalPreferences: string;
   upcomingPromotions: string;
+  fontSelect: {
+    heading: string;
+    subheading: string;
+    body: string;
+  };
 };
 
 export default function ClientQuestioneryComponet() {
@@ -228,33 +233,63 @@ export default function ClientQuestioneryComponet() {
                   <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
                     Are there specific colors, fonts, or styles we should follow?
                   </label>
-                  <textarea
+                  {/* <textarea
                     {...register("stylePreferences")}
                     rows={4}
                     className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                  />
+                  /> */}
                 </div>
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Logo</label>
-                  <p className="text-sm text-gray-500">Your logo name is the name your customers use to refer to you.</p>
-                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                    <div className="space-y-1 text-center">
-                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                      <div className="flex text-sm text-gray-600">
-                        <label className="relative cursor-pointer rounded-md bg-white font-medium text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 hover:text-blue-500">
-                          <span>Upload a file</span>
-                          <input
-                            type="file"
-                            className="sr-only"
-                            {...register("logo")}
-                            accept="image/*"
-                          />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
+                <div className='border border-[#DFE1E7] rounded-[6px] p-4'>
+                  <div className='flex items-center justify-between border-b border-[#DFE1E7] pb-4'>
+                    <div className='w-full md:max-w-[29%]'>
+                      <h4 className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Logo</h4>
+                      <p className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Your logo name is the name your customers use to refer to you.</p>
+                    </div>
+                    <div className="mt-1 w-full md:max-w-[52%] flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                      <div className="space-y-1 text-center">
+                        <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                        <div className="flex text-sm text-gray-600">
+                          <label className="relative cursor-pointer rounded-md bg-white font-medium text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 hover:text-blue-500">
+                            <span>Upload a file</span>
+                            <input
+                              type="file"
+                              className="sr-only"
+                              {...register("logo")}
+                              accept="image/*"
+                            />
+                          </label>
+                          <p className="pl-1">or drag and drop</p>
+                        </div>
+                        <p className="text-xs text-gray-500">PNG, JPG up to 10MB</p>
                       </div>
-                      <p className="text-xs text-gray-500">PNG, JPG up to 10MB</p>
                     </div>
                   </div>
+                  <div className='flex items-center justify-between border-b border-[#DFE1E7] pb-4 pt-4'>
+                    <div className='w-full md:max-w-[29%]'>
+                      <h4 className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Font</h4>
+                      <p className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Style of text that's printed on a page or
+                        displayed on a design,</p>
+                    </div>
+                    <div className="mt-1 w-full md:max-w-[52%] flex justify-center  rounded-md">
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                        {[
+                          ['heading', 'heading'],
+                          ['subheading', 'subheading'],
+                          ['body', 'body'],
+                        ].map(([label, key]) => (
+                          <div key={key} className='flex flex-col gap-2'>
+                            <input
+                              type="text"
+                              {...register(`fontSelect.${key as keyof FormData["fontSelect"]}`)}
+                              className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-3 px-2 focus:border-blue-500 focus:ring-blue-500"
+                            />
+                            <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">{label}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </section>
@@ -280,7 +315,7 @@ export default function ClientQuestioneryComponet() {
                   <textarea
                     {...register("competitorContent")}
                     rows={4}
-                   className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -307,7 +342,7 @@ export default function ClientQuestioneryComponet() {
                   <textarea
                     {...register("brandedHashtags")}
                     rows={4}
-                   className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
                 <div>
