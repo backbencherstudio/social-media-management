@@ -1,10 +1,11 @@
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Send, Upload } from 'lucide-react';
 import Heading from '../../_components/heading-text';
 import ParagraphText from '../../_components/paragraph-text';
+import { HexColorPicker } from 'react-colorful';
 
 type FormData = {
   businessName: string;
@@ -40,15 +41,44 @@ type FormData = {
     subheading: string;
     body: string;
   };
+  colorSelect: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+  };
 };
 
 export default function ClientQuestioneryComponet() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      colorSelect: {
+        primary: '#34B6AF',
+        secondary: '#1C2323',
+        tertiary: '#D9D9D9'
+      }
+    }
+  });
 
+  const [colors, setColors] = useState({
+    primary: '#34B6AF',
+    secondary: '#1C2323',
+    tertiary: '#D9D9D9'
+  });
+
+  const [activeColorPicker, setActiveColorPicker] = useState<string | null>(null);
+
+  const handleColorChange = (key: 'primary' | 'secondary' | 'tertiary', value: string) => {
+    setColors(prev => ({
+      ...prev,
+      [key]: value
+    }));
+    setValue(`colorSelect.${key}`, value);
+  };
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
@@ -243,7 +273,7 @@ export default function ClientQuestioneryComponet() {
                   <div className='flex items-center justify-between border-b border-[#DFE1E7] pb-4'>
                     <div className='w-full md:max-w-[29%]'>
                       <h4 className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Logo</h4>
-                      <p className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Your logo name is the name your customers use to refer to you.</p>
+                      <p className="block text-sm leading-[150%] tracking-[.16px] text-[#4A4C56]">Your logo name is the name your customers use to refer to you.</p>
                     </div>
                     <div className="mt-1 w-full md:max-w-[52%] flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
@@ -264,143 +294,191 @@ export default function ClientQuestioneryComponet() {
                       </div>
                     </div>
                   </div>
-                  <div className='flex items-center justify-between border-b border-[#DFE1E7] pb-4 pt-4'>
+                  <div className='flex items-center justify-between border-b border-[#DFE1E7] py-5'>
                     <div className='w-full md:max-w-[29%]'>
                       <h4 className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Font</h4>
-                      <p className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Style of text that's printed on a page or
+                      <p className="block text-sm leading-[150%] tracking-[.16px] text-[#4A4C56]">Style of text that's printed on a page or
                         displayed on a design,</p>
                     </div>
-                    <div className="mt-1 w-full md:max-w-[52%] flex justify-center  rounded-md">
+                    <div className=" w-full md:max-w-[52%] flex justify-center  rounded-md">
                       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
                         {[
-                          ['heading', 'heading'],
-                          ['subheading', 'subheading'],
-                          ['body', 'body'],
+                          ['Heading', 'heading'],
+                          ['Subheading', 'subheading'],
+                          ['Body', 'body'],
                         ].map(([label, key]) => (
                           <div key={key} className='flex flex-col gap-2'>
                             <input
                               type="text"
                               {...register(`fontSelect.${key as keyof FormData["fontSelect"]}`)}
-                              className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-3 px-2 focus:border-blue-500 focus:ring-blue-500"
+                              className="block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-3 px-2 focus:border-blue-500 focus:ring-blue-500"
                             />
-                            <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">{label}</label>
+                            <label className="block text-sm leading-[150%] tracking-[.16px] text-[#4A4C56]">{label}</label>
                           </div>
                         ))}
                       </div>
                     </div>
                   </div>
-
+                  <div className='flex items-center justify-between border-b border-[#DFE1E7]  py-5'>
+                    <div className='w-full md:max-w-[29%] '>
+                      <h4 className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Colors</h4>
+                      <p className="block text-sm leading-[150%] tracking-[.16px] text-[#4A4C56]">Represent its brand identity of your
+                        company or organization.</p>
+                    </div>
+                    <div className=" w-full md:max-w-[52%] flex justify-center  rounded-md">
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                        {[
+                          ['Primary', 'primary'],
+                          ['Secondary', 'secondary'],
+                          ['Tertiary', 'tertiary'],
+                        ].map(([label, key]) => (
+                          <div key={key} className="flex flex-col gap-2 relative">
+                            <div className="flex px-4 py-3 gap-2
+                             items-center rounded-md border border-gray-200 overflow-hidden">
+                              <button
+                                type="button"
+                                className="w-5 h-5 rounded-[4px] flex-shrink-0 cursor-pointer  "
+                                style={{ backgroundColor: colors[key as keyof typeof colors] }}
+                                onClick={() => setActiveColorPicker(activeColorPicker === key ? null : key)}
+                              />
+                              <input
+                                type="text"
+                                value={colors[key as keyof typeof colors]}
+                                onChange={(e) => handleColorChange(key as 'primary' | 'secondary' | 'tertiary', e.target.value)}
+                                className="w-full border-none  focus:outline-none focus:ring-0"
+                                {...register(`colorSelect.${key as keyof FormData["colorSelect"]}`)}
+                              />
+                            </div>
+                            {activeColorPicker === key && (
+                              <div className="absolute z-10 top-12 ">
+                                <div className="fixed inset-0 " onClick={() => setActiveColorPicker(null)} />
+                                <div className="relative z-20 ">
+                                  <HexColorPicker
+                                  className=''
+                                    color={colors[key as keyof typeof colors]}
+                                    onChange={(color) => handleColorChange(key as 'primary' | 'secondary' | 'tertiary', color)}
+                                  />
+                                </div>
+                              </div>
+                            )}
+                            <label className="block text-sm text-gray-700">{label}</label>
+                          </div>
+                        ))}
+                      </div>
+                  </div>
                 </div>
+
               </div>
-            </section>
-
-            {/* 6. Competitor & Inspiration Analysis */}
-            <section>
-              <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">6. Competitor & Inspiration Analysis</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                    Who are your competitors in your business?
-                  </label>
-                  <textarea
-                    {...register("competitors")}
-                    rows={4}
-                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                    What do you like or dislike about their content?
-                  </label>
-                  <textarea
-                    {...register("competitorContent")}
-                    rows={4}
-                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                    Are there any brands/accounts you admire for their social media presence?
-                  </label>
-                  <textarea
-                    {...register("admirableContent")}
-                    rows={4}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-            </section>
-
-            {/* 7. Hashtags & Keywords */}
-            <section>
-              <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">7. Hashtags & Keywords:</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                    Do you have any branded hashtags you use?
-                  </label>
-                  <textarea
-                    {...register("brandedHashtags")}
-                    rows={4}
-                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                    Are there specific keywords or phrases you want included in posts?
-                  </label>
-                  <textarea
-                    {...register("keywordPhrases")}
-                    rows={4}
-                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-            </section>
-
-            {/* 8. Additional Information */}
-            <section>
-              <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">8. Additional Information:</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                    Any other preferences or special requests?
-                  </label>
-                  <textarea
-                    {...register("additionalPreferences")}
-                    rows={4}
-                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                    Do you have any specific promotions or campaigns coming up?
-                  </label>
-                  <textarea
-                    {...register("upcomingPromotions")}
-                    rows={4}
-                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-            </section>
-
-            <div className="border-t border-gray-200 pt-6">
-              <p className="text-sm text-gray-600 mb-6">
-                Thank you for filling out this questionnaire! Our team will use this information to create an effective
-                social media strategy tailored to your brand.
-              </p>
-              <button
-                type="submit"
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-              >
-                <Send className="w-5 h-5 mr-2" />
-                Send
-              </button>
             </div>
-          </form>
-        </div>
+          </section>
+
+          {/* 6. Competitor & Inspiration Analysis */}
+          <section>
+            <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">6. Competitor & Inspiration Analysis</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56] ">
+                  Who are your competitors in your business?
+                </label>
+                <textarea
+                  {...register("competitors")}
+                  rows={4}
+                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                  What do you like or dislike about their content?
+                </label>
+                <textarea
+                  {...register("competitorContent")}
+                  rows={4}
+                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                  Are there any brands/accounts you admire for their social media presence?
+                </label>
+                <textarea
+                  {...register("admirableContent")}
+                  rows={4}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* 7. Hashtags & Keywords */}
+          <section>
+            <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">7. Hashtags & Keywords:</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                  Do you have any branded hashtags you use?
+                </label>
+                <textarea
+                  {...register("brandedHashtags")}
+                  rows={4}
+                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                  Are there specific keywords or phrases you want included in posts?
+                </label>
+                <textarea
+                  {...register("keywordPhrases")}
+                  rows={4}
+                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* 8. Additional Information */}
+          <section>
+            <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">8. Additional Information:</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                  Any other preferences or special requests?
+                </label>
+                <textarea
+                  {...register("additionalPreferences")}
+                  rows={4}
+                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                  Do you have any specific promotions or campaigns coming up?
+                </label>
+                <textarea
+                  {...register("upcomingPromotions")}
+                  rows={4}
+                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+          </section>
+
+          <div className="border-t border-gray-200 pt-6">
+            <p className="text-sm text-gray-600 mb-6">
+              Thank you for filling out this questionnaire! Our team will use this information to create an effective
+              social media strategy tailored to your brand.
+            </p>
+            <button
+              type="submit"
+              className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            >
+              <Send className="w-5 h-5 mr-2" />
+              Send
+            </button>
+          </div>
+        </form>
       </div>
     </div>
+    </div >
   );
 }
