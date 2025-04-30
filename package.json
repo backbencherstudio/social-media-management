@@ -19,10 +19,12 @@
     "@radix-ui/react-select": "^2.2.2",
     "@radix-ui/react-slot": "^1.2.0",
     "@radix-ui/react-tabs": "^1.1.4",
+    "@types/react-datepicker": "^6.2.0",
     "axios": "^1.8.1",
     "chart.js": "^4.4.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
@@ -36,6 +38,8 @@
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
     "react-colorful": "^5.6.1",
+    "react-date-range": "^2.0.1",
+    "react-datepicker": "^8.3.0",
     "react-day-picker": "^9.6.7",
     "react-dnd": "^16.0.1",
     "react-dom": "^19.0.0",
@@ -61,5 +65,6 @@
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^4.1.4",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "yarn@4.5.2+sha224.c2e2e9ed3cdadd6ec250589b3393f71ae56d5ec297af11cec1eba3b4"
 }
