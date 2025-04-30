@@ -85,9 +85,8 @@ const ServiceOption = ({
         value={selectedPlan || ''} 
         onValueChange={handlePlanChange}
         disabled={!selected}
-        
       >
-        <SelectTrigger className="w-full bg-white">
+        <SelectTrigger className="w-full bg-white border-0 focus-visible:border-ring-0 ">
           <SelectValue placeholder={service.selectLabel} />
         </SelectTrigger>
         <SelectContent className='z-20 bg-gray-200'>
