@@ -1,10 +1,11 @@
 "use client"
 
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useRef, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Send, Upload } from 'lucide-react';
 import Heading from '../../_components/heading-text';
 import ParagraphText from '../../_components/paragraph-text';
+import { HexColorPicker } from 'react-colorful';
 
 type FormData = {
   businessName: string;
@@ -35,18 +36,69 @@ type FormData = {
   keywordPhrases: string;
   additionalPreferences: string;
   upcomingPromotions: string;
+  fontSelect: {
+    heading: string;
+    subheading: string;
+    body: string;
+  };
+  colorSelect: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+  };
 };
 
 export default function ClientQuestioneryComponet() {
   const {
     register,
     handleSubmit,
+    setValue,
+    control,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      colorSelect: {
+        primary: '#34B6AF',
+        secondary: '#1C2323',
+        tertiary: '#D9D9D9'
+      }
+    }
+  });
 
+  const [colors, setColors] = useState({
+    primary: '#34B6AF',
+    secondary: '#1C2323',
+    tertiary: '#D9D9D9'
+  });
+
+  const [activeColorPicker, setActiveColorPicker] = useState<string | null>(null);
+
+  const handleColorChange = (key: 'primary' | 'secondary' | 'tertiary', value: string) => {
+    setColors(prev => ({
+      ...prev,
+      [key]: value
+    }));
+    setValue(`colorSelect.${key}`, value);
+  };
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
+
+  const dropRef = useRef(null);
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setValue("logo", file); // Set the file in react-hook-form
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 lg:py-[100px] md:py-[80px] py-[60px] px-5 2xl:px-0">
@@ -69,7 +121,7 @@ export default function ClientQuestioneryComponet() {
             {/* 1. Business Information */}
             <section>
               <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">1. Business Information</h2>
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 text bg-red ">
                 <div>
                   <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56] ">Business Name</label>
                   <input
@@ -228,33 +280,124 @@ export default function ClientQuestioneryComponet() {
                   <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
                     Are there specific colors, fonts, or styles we should follow?
                   </label>
-                  <textarea
+                  {/* <textarea
                     {...register("stylePreferences")}
                     rows={4}
                     className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                  />
+                  /> */}
                 </div>
-                <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Logo</label>
-                  <p className="text-sm text-gray-500">Your logo name is the name your customers use to refer to you.</p>
-                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                    <div className="space-y-1 text-center">
-                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                      <div className="flex text-sm text-gray-600">
-                        <label className="relative cursor-pointer rounded-md bg-white font-medium text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 hover:text-blue-500">
-                          <span>Upload a file</span>
-                          <input
-                            type="file"
-                            className="sr-only"
-                            {...register("logo")}
-                            accept="image/*"
-                          />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
+                <div className='border border-[#DFE1E7] rounded-[6px] p-4'>
+                  <div className='flex flex-col md:flex-row gap-4  items-center justify-between border-b border-[#DFE1E7] pb-4'>
+                    <div className='w-full md:max-w-[29%]'>
+                      <h4 className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Logo</h4>
+                      <p className="block text-sm leading-[150%] tracking-[.16px] text-[#4A4C56]">Your logo name is the name your customers use to refer to you.</p>
+                    </div>
+                    <div className="mt-1 w-full md:max-w-[52%] flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                      <div className="space-y-1 text-center" ref={dropRef}
+                        onDrop={handleDrop}
+                        onDragOver={handleDragOver}>
+                        <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                        <div className="flex text-sm items-center text-gray-600   ">
+                          <label className="relative border  hover:bg-green-100 px-2 py-1 cursor-pointer rounded-md bg-white font-medium text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 hover:text-blue-500">
+                            <span>Upload a file</span>
+                            <input
+                              type="file"
+                              className="sr-only"
+                              {...register("logo")}
+                              accept="image/*"
+                            />
+                          </label>
+                          <p className="pl-1">or drag and drop</p>
+                        </div>
+                        <p className="text-xs text-gray-500">PNG, JPG up to 10MB</p>
                       </div>
-                      <p className="text-xs text-gray-500">PNG, JPG up to 10MB</p>
+                      <div>
+                        {/* <Image src={formData} /> */}
+                      </div>
                     </div>
                   </div>
+                  <div className='flex flex-col md:flex-row gap-4 items-center justify-between border-b border-[#DFE1E7] py-5'>
+                    <div className='w-full md:max-w-[29%]'>
+                      <h4 className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Font</h4>
+                      <p className="block text-sm leading-[150%] tracking-[.16px] text-[#4A4C56]">Style of text that's printed on a page or
+                        displayed on a design,</p>
+                    </div>
+                    <div className=" w-full md:max-w-[52%] flex justify-center  rounded-md">
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                        {[
+                          ['Heading', 'heading'],
+                          ['Subheading', 'subheading'],
+                          ['Body', 'body'],
+                        ].map(([label, key]) => (
+                          <div key={key} className='flex flex-col gap-2'>
+                            <input
+                              type="text"
+                              {...register(`fontSelect.${key as keyof FormData["fontSelect"]}`)}
+                              className="block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-3 px-2 focus:border-blue-500 focus:ring-blue-500"
+                            />
+                            <label className="block text-sm leading-[150%] tracking-[.16px] text-[#4A4C56]">{label}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className='flex flex-col md:flex-row gap-4 items-center justify-between border-b border-[#DFE1E7]  py-5'>
+                    <div className='w-full md:max-w-[29%] '>
+                      <h4 className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">Colors</h4>
+                      <p className="block text-sm leading-[150%] tracking-[.16px] text-[#4A4C56]">Represent its brand identity of your
+                        company or organization.</p>
+                    </div>
+                    <div className=" w-full md:max-w-[52%] flex justify-center  rounded-md">
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                        {[
+                          ['Primary', 'primary'],
+                          ['Secondary', 'secondary'],
+                          ['Tertiary', 'tertiary'],
+                        ].map(([label, key]) => (
+                          <div key={key} className="flex flex-col gap-2 relative">
+                            <div className="flex px-4 py-3 gap-2
+                             items-center rounded-md border border-gray-200 overflow-hidden">
+                              <button
+                                type="button"
+                                className="w-5 h-5 rounded-[4px] flex-shrink-0 cursor-pointer  "
+                                style={{ backgroundColor: colors[key as keyof typeof colors] }}
+                                onClick={() => setActiveColorPicker(activeColorPicker === key ? null : key)}
+                              />
+                              <Controller
+                                control={control}
+                                name={`colorSelect.${key as 'primary' | 'secondary' | 'tertiary'}` as const}
+                                render={({ field }) => (
+                                  <input
+                                    type="text"
+                                    value={colors[key]}
+                                    onChange={(e) => {
+                                      handleColorChange(key as 'primary' | 'secondary' | 'tertiary', e.target.value);
+                                      field.onChange(e); // Update react-hook-form value too
+                                    }}
+                                    className="w-full border-none focus:outline-none focus:ring-0"
+                                  />
+                                )}
+                              />
+                            </div>
+                            {activeColorPicker === key && (
+                              <div className="absolute z-10 top-12 ">
+                                <div className="fixed inset-0 " onClick={() => setActiveColorPicker(null)} />
+                                <div className="relative z-20 ">
+                                  <HexColorPicker
+                                    className=''
+                                    color={colors[key as keyof typeof colors]}
+                                    onChange={(color) => handleColorChange(key as 'primary' | 'secondary' | 'tertiary', color)}
+                                  />
+                                </div>
+                              </div>
+                            )}
+                            <label className="block text-sm text-gray-700">{label}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </section>
@@ -264,7 +407,7 @@ export default function ClientQuestioneryComponet() {
               <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">6. Competitor & Inspiration Analysis</h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56] ">
                     Who are your competitors in your business?
                   </label>
                   <textarea
@@ -280,7 +423,7 @@ export default function ClientQuestioneryComponet() {
                   <textarea
                     {...register("competitorContent")}
                     rows={4}
-                   className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -290,7 +433,7 @@ export default function ClientQuestioneryComponet() {
                   <textarea
                     {...register("admirableContent")}
                     rows={4}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -307,7 +450,7 @@ export default function ClientQuestioneryComponet() {
                   <textarea
                     {...register("brandedHashtags")}
                     rows={4}
-                   className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -325,7 +468,7 @@ export default function ClientQuestioneryComponet() {
 
             {/* 8. Additional Information */}
             <section>
-              <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">8. Additional Information:</h2>
+              <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3  ">8. Additional Information:</h2>
               <div className="space-y-4">
                 <div>
                   <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
@@ -366,6 +509,6 @@ export default function ClientQuestioneryComponet() {
           </form>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
