@@ -354,7 +354,7 @@ export default function ClientQuestioneryComponet() {
                                 <div className="fixed inset-0 " onClick={() => setActiveColorPicker(null)} />
                                 <div className="relative z-20 ">
                                   <HexColorPicker
-                                  className=''
+                                    className=''
                                     color={colors[key as keyof typeof colors]}
                                     onChange={(color) => handleColorChange(key as 'primary' | 'secondary' | 'tertiary', color)}
                                   />
@@ -365,120 +365,120 @@ export default function ClientQuestioneryComponet() {
                           </div>
                         ))}
                       </div>
+                    </div>
                   </div>
+
                 </div>
-
               </div>
+            </section>
+
+            {/* 6. Competitor & Inspiration Analysis */}
+            <section>
+              <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">6. Competitor & Inspiration Analysis</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56] ">
+                    Who are your competitors in your business?
+                  </label>
+                  <textarea
+                    {...register("competitors")}
+                    rows={4}
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                    What do you like or dislike about their content?
+                  </label>
+                  <textarea
+                    {...register("competitorContent")}
+                    rows={4}
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                    Are there any brands/accounts you admire for their social media presence?
+                  </label>
+                  <textarea
+                    {...register("admirableContent")}
+                    rows={4}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* 7. Hashtags & Keywords */}
+            <section>
+              <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">7. Hashtags & Keywords:</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                    Do you have any branded hashtags you use?
+                  </label>
+                  <textarea
+                    {...register("brandedHashtags")}
+                    rows={4}
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                    Are there specific keywords or phrases you want included in posts?
+                  </label>
+                  <textarea
+                    {...register("keywordPhrases")}
+                    rows={4}
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* 8. Additional Information */}
+            <section>
+              <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3  ">8. Additional Information:</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                    Any other preferences or special requests?
+                  </label>
+                  <textarea
+                    {...register("additionalPreferences")}
+                    rows={4}
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
+                    Do you have any specific promotions or campaigns coming up?
+                  </label>
+                  <textarea
+                    {...register("upcomingPromotions")}
+                    rows={4}
+                    className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <div className="border-t border-gray-200 pt-6">
+              <p className="text-sm text-gray-600 mb-6">
+                Thank you for filling out this questionnaire! Our team will use this information to create an effective
+                social media strategy tailored to your brand.
+              </p>
+              <button
+                type="submit"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              >
+                <Send className="w-5 h-5 mr-2" />
+                Send
+              </button>
             </div>
-          </section>
-
-          {/* 6. Competitor & Inspiration Analysis */}
-          <section>
-            <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">6. Competitor & Inspiration Analysis</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56] ">
-                  Who are your competitors in your business?
-                </label>
-                <textarea
-                  {...register("competitors")}
-                  rows={4}
-                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                  What do you like or dislike about their content?
-                </label>
-                <textarea
-                  {...register("competitorContent")}
-                  rows={4}
-                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                  Are there any brands/accounts you admire for their social media presence?
-                </label>
-                <textarea
-                  {...register("admirableContent")}
-                  rows={4}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* 7. Hashtags & Keywords */}
-          <section>
-            <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">7. Hashtags & Keywords:</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                  Do you have any branded hashtags you use?
-                </label>
-                <textarea
-                  {...register("brandedHashtags")}
-                  rows={4}
-                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                  Are there specific keywords or phrases you want included in posts?
-                </label>
-                <textarea
-                  {...register("keywordPhrases")}
-                  rows={4}
-                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* 8. Additional Information */}
-          <section>
-            <h2 className="text-2xl font-semibold text-[#070707] lg:mb-6 md:mb-4 mb-3">8. Additional Information:</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                  Any other preferences or special requests?
-                </label>
-                <textarea
-                  {...register("additionalPreferences")}
-                  rows={4}
-                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-base leading-[150%] tracking-[.16px] text-[#4A4C56]">
-                  Do you have any specific promotions or campaigns coming up?
-                </label>
-                <textarea
-                  {...register("upcomingPromotions")}
-                  rows={4}
-                  className="mt-2 block w-full rounded-[6px] border border-[#DFE1E7] focus:outline-none py-2 px-2 focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-          </section>
-
-          <div className="border-t border-gray-200 pt-6">
-            <p className="text-sm text-gray-600 mb-6">
-              Thank you for filling out this questionnaire! Our team will use this information to create an effective
-              social media strategy tailored to your brand.
-            </p>
-            <button
-              type="submit"
-              className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-            >
-              <Send className="w-5 h-5 mr-2" />
-              Send
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
     </div >
   );
 }

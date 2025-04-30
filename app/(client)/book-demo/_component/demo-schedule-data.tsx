@@ -16,14 +16,14 @@ interface DemoScheduleDataProps {
 
 const DemoScheduleData: React.FC<DemoScheduleDataProps> = ({ dateFormat, selectedTime, selectedTimezone }) => {
 
-  
+
 
     return (
         <div className='flex gap-6'>
             <div className='mt-[64px]'>
                 <BookDemoCard dateFormat={dateFormat} selectedTime={selectedTime} selectedTimezone={selectedTimezone} />
             </div>
-            <ContactForm  />
+            <ContactForm />
         </div>
     );
 };
@@ -40,7 +40,7 @@ interface BookDemoCardProps {
 const BookDemoCard: React.FC<BookDemoCardProps> = ({ dateFormat, selectedTime, selectedTimezone }) => {
 
 
-
+    console.log(selectedTimezone)
 
 
     return (
@@ -64,7 +64,9 @@ const BookDemoCard: React.FC<BookDemoCardProps> = ({ dateFormat, selectedTime, s
                             <div className='flex flex-col gap-4'>
                                 <span className='flex items-center gap-3'> <Clock className='w-5 h-5' /> 20 min </span>
                                 <span className='flex items-center gap-3'> <Calendar className='w-5 h-5' />{selectedTime} , {dateFormat}</span>
-                                <span className='flex items-center gap-3'><Globe className='w-5 h-5' /> {selectedTimezone.toString()} </span>
+                                <span className='flex items-center gap-3'><Globe className='w-5 h-5' /> {typeof selectedTimezone === 'object' && 'value' in selectedTimezone
+                                    ? selectedTimezone.value.toString()
+                                    : selectedTimezone.toString()}</span>
                             </div>
                             <div>
                                 <p className='text-base leading-[150%] tracking-[.16px] text-[#4A4C56]'>Book a <span className='text-[#1D1F2C] font-medium'>free 20-min Google Meet call</span> to learn more about TagGrowth and get any of your
