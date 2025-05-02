@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 
 export interface ServicePlan {
-  value: string;
+  // value: string;
   label: string;
+  basePrice:number;
 }
 
 export interface Service {

@@ -37,7 +37,7 @@ const ServiceSummary = ({
                 <p className="text-sm font-medium text-[#1D1F2C]">{item.service.name}</p>
                 {item.plan && (
                   <p className="text-xs text-[#4A4C56]">
-                    {item.service.plans.find(p => p.value === item.plan)?.label || item.plan}
+                    {item.service.plans.find(p => p.label === item.plan)?.label || item.plan}
                   </p>
                 )}
               </div>
