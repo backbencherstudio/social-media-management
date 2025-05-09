@@ -1,6 +1,34 @@
+import ProfileIcon from "@/public/incons/landin-page/profileIcon";
 import ProcessCard from "./cards/process-card";
+import OnboardingIcon from "@/public/incons/landin-page/onboarding";
+import IdeationIcon from "@/public/incons/landin-page/ideation";
+import WritingIcon from "@/public/incons/landin-page/writingIcon";
+import PublishIcon from "@/public/incons/landin-page/publishIcon";
 
 export default function ProcessWorks() {
+  const contents = [
+    {
+      id: 1,
+      icon: <OnboardingIcon />,
+      text: "Complete a questionnaire to guide our content writing & keyword research",
+    },
+    {
+      id: 2,
+      icon: <IdeationIcon />,
+      text: "Complete a questionnaire to guide our content writing & keyword research",
+    },
+    {
+      id: 3,
+      icon: <WritingIcon />,
+      text: "Complete a questionnaire to guide our content writing & keyword research",
+    },
+    {
+      id: 4,
+      icon: <PublishIcon />,
+      text: "Complete a questionnaire to guide our content writing & keyword research",
+    },
+  ];
+
   return (
     <section
       className="mx-auto max-w-[1200px] flex flex-col gap-[48px] py-25 bg-[#F7F7F9]
@@ -19,10 +47,10 @@ export default function ProcessWorks() {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-col-2 md:grid-cols-4 gap-6 mt-12">
-          <ProcessCard />
-          <ProcessCard />
-          <ProcessCard />
-          <ProcessCard />
+          {/* <ProcessCard /> */}
+          {contents.map((content) => (
+            <ProcessCard content={content}></ProcessCard>
+          ))}
         </div>
       </div>
     </section>

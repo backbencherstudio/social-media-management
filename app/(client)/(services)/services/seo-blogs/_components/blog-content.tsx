@@ -3,6 +3,10 @@ import { CiCirclePlus } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import ContentCard from "./cards/content-card";
 import ProfileIcon from "@/public/incons/landin-page/profileIcon";
+import PeopleIcon from "@/public/incons/landin-page/peopleIcon";
+import MessengerIcon from "@/public/incons/landin-page/messengerIcon";
+import LikeIcon from "@/public/incons/like-icon";
+import StartupIcon from "@/public/incons/landin-page/startupIcon";
 
 export default function BlogContent() {
   const contents = [
@@ -11,19 +15,19 @@ export default function BlogContent() {
       text: "Establish your authorityand expertise in the field",
     },
     {
-      icon: <ProfileIcon />,
+      icon: <PeopleIcon  />,
       text: "Get more leads in a cost-effective way",
     },
     {
-      icon: profileIcon,
+      icon: <MessengerIcon/>,
       text: "Increase revenue,closed deals, and conversions.",
     },
     {
-      icon: profileIcon,
+      icon: <LikeIcon/>,
       text: "Google loves regular updates and new content",
     },
     {
-      icon: profileIcon,
+      icon: <StartupIcon/>,
       text: "More content increases traffic and keyword rankings",
     },
   ];
