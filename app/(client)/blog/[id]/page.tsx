@@ -5,6 +5,7 @@ import React from "react";
 import Heading from "../../_components/heading-text";
 import Image from "next/image";
 import BlogBody from "./_components/blog-body";
+import RelatedBlogs from "./_components/related-blogs";
 
 export default function BlogDetails() {
   const { id } = useParams();
@@ -78,6 +79,7 @@ export default function BlogDetails() {
       </section>
 
       <BlogBody/>
+      <RelatedBlogs/>
     </div>
   );
 }

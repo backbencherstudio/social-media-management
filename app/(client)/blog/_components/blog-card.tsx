@@ -21,7 +21,7 @@ const handleBlog = (id) => {
 }
 
   return (
-    <div className="max-w-sm rounded-xl overflow-hidden shadow-md bg-white transition-all duration-300 hover:shadow-lg" onClick={() => handleBlog(1)
+    <div className="max-w-sm rounded-xl overflow-hidden shadow bg-white transition-all duration-300 hover:shadow-lg" onClick={() => handleBlog(1)
     }>
       <Link href="" className="block">
         <div className="relative h-48 w-full overflow-hidden">
@@ -37,11 +37,11 @@ const handleBlog = (id) => {
         <div className="p-5">
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
             <span>{date}</span>
-            <span className="inline-block w-1 h-1 rounded-full bg-gray-400"></span>
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-gray-400"></span>
             <span>{readTime}</span>
           </div>
 
-          <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-2.5">{title}</h3>
 
           <p className="text-gray-600 text-sm">{description}</p>
         </div>
