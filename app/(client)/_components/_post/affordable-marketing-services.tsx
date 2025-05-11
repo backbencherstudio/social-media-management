@@ -9,18 +9,19 @@ import LinkdinIcon from '@/public/incons/landin-page/LinkdinIcon';
 import YoutubeIcon from '@/public/incons/landin-page/youtubeIcon';
 import TiktokIcon from '@/public/incons/landin-page/ToktokIcon';
 
-const socialMediaData = {
-  title: 'Social Media Posts',
-  description: 'Custom social media posts with your branding. Created & posted monthly to your social media channels. Includes strategy, engaging captions, and relevant hashtags tailored for your audience.',
+const affordableMarketingServices = {
+  title: "Social Media Posts",
+  description:
+    "Custom social media posts with your branding. Created & posted monthly to your social media channels. Includes strategy, engaging captions, and relevant hashtags tailored for your audience.",
   features: [
-    'Posts in your branding',
-    'Captions and hashtags',
-    'Posted for you (optional)',
+    "Posts in your branding",
+    "Captions and hashtags",
+    "Posted for you (optional)",
   ],
   additionalFeatures: [
-    'Onboarding call (optional)',
-    '1 social channel included',
-    '+$10/mo each extra channel',
+    "Onboarding call (optional)",
+    "1 social channel included",
+    "+$10/mo each extra channel",
   ],
   pricing: {
     basePrice: {
@@ -30,7 +31,7 @@ const socialMediaData = {
       25: 249,
       30: 299,
       35: 349,
-      40: 399
+      40: 399,
     },
     posts: [10, 15, 20, 25, 30, 35, 40],
   },
@@ -38,25 +39,25 @@ const socialMediaData = {
 
 const socialPlatforms = [<FacebookIcon/>, <TwitterIcon/>, <InstaIcon/>, <LinkdinIcon/>, <YoutubeIcon/>, <TiktokIcon/>];
 
-export default function SocialMediaPost() {
+export default function AffordableMarketingServices(                             ) {
   const [selectedPosts, setSelectedPosts] = useState(20);
-  const basePrice = socialMediaData.pricing.basePrice[selectedPosts];
+  const basePrice = affordableMarketingServices.pricing.basePrice[selectedPosts];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
       {/* Left Side */}
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <div className="flex items-start gap-4 mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl lg:text-[26px] text-[#1D1D1F] font-serotiva-semibold font-semibold">{socialMediaData.title}</h2>
+          <h2 className="text-xl sm:text-2xl lg:text-[26px] text-[#1D1D1F] font-serotiva-semibold font-semibold">{affordableMarketingServices.title}</h2>
         </div>
-        <p className="text-sm sm:text-base text-[#4A4C56] mb-4 sm:mb-6">{socialMediaData.description}</p>
+        <p className="text-sm sm:text-base text-[#4A4C56] mb-4 sm:mb-6">{affordableMarketingServices.description}</p>
 
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-6 sm:mb-8">
           <div className="flex-1">
-            <FeatureList features={socialMediaData.features} />
+            <FeatureList features={affordableMarketingServices.features} />
           </div>
           <div className="flex-1">
-            <FeatureList features={socialMediaData.additionalFeatures} />
+            <FeatureList features={affordableMarketingServices.additionalFeatures} />
           </div>
         </div>
 
@@ -73,7 +74,7 @@ export default function SocialMediaPost() {
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <PricingHeader selectedPosts={selectedPosts} basePrice={basePrice} />
         <PostSelector 
-          posts={socialMediaData.pricing.posts} 
+          posts={affordableMarketingServices.pricing.posts} 
           selectedPosts={selectedPosts} 
           setSelectedPosts={setSelectedPosts} 
         />
