@@ -4,9 +4,7 @@ interface HandShakeIconProps {
   className?: string;
 }
 
-const HandShakeIcon: React.FC<HandShakeIconProps> = ({
-  className = "",
-}) => {
+const HandShakeIcon: React.FC<HandShakeIconProps> = ({ className = "" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

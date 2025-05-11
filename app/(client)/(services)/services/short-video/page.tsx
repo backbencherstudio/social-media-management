@@ -6,7 +6,6 @@ import Pricing from "@/app/(client)/pricing-and-package/_components/pricing";
 import FrequentlyAsked from "@/app/(client)/_components/landing-page/frequently-asked";
 import SubscriptionBenefits from "../_components/subscription-benefits";
 import ShortVideoExample from "@/app/(client)/examples/_components/short-video";
-import ProcessSteps from "../seo-backlinks/_components/process-step";
 import RawVideos from "./_components/raw-videos";
 
 export default function ShortVideo() {
