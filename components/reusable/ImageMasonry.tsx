@@ -13,7 +13,7 @@ const ImageCard: React.FC<{ src: string; alt: string }> = ({ src, alt }) => (
 
 const ImageMasonry: React.FC<ImageMasonryProps> = ({ images }) => {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 items-start">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 items-start ">
             {/* Left Column */}
             <div className="md:col-span-1 grid grid-cols-1 gap-4">
                 <ImageCard src={images[0]} alt="image-0" />
@@ -21,7 +21,7 @@ const ImageMasonry: React.FC<ImageMasonryProps> = ({ images }) => {
             </div>
 
             {/* Center Column */}
-            <div className="md:col-span-2 md:mt-[50px] lg:mt-[95px] sm:grid flex flex-col grid-cols-1 gap-4">
+            <div className="md:col-span-2 md:mt-[40px] lg:mt-[75px] sm:grid flex flex-col grid-cols-1 gap-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <ImageCard src={images[1]} alt="image-1" />
                     <ImageCard src={images[2]} alt="image-2" />
