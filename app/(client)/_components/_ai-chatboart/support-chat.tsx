@@ -49,7 +49,6 @@ export default function SupportChatBoart() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
   const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [recognitionRef, setRecognitionRef] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [tick, setTick] = useState(0);
   const chatBoxRef = useRef<HTMLDivElement>(null);
@@ -128,7 +127,7 @@ export default function SupportChatBoart() {
       </div>
 
       <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="flex flex-col h-[600px] w-[500px] rounded-xl shadow-lg">
+        <div className="flex flex-col h-[594px] w-[382px] rounded-xl shadow-lg">
           <div className="flex items-center justify-between px-4 py-3 border-b">
             <div className="flex items-center gap-3">
               <ChatBotHeaderIcon className="w-10 h-10 rounded-full p-2 border border-black" />

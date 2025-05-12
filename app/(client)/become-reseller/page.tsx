@@ -5,12 +5,16 @@ import PostExample from "../examples/_components/post-content";
 import TrustedBrand from "../_components/trusted-brand";
 import FrequentlyAsked from "../_components/landing-page/frequently-asked";
 import ApplyReseller from "../pricing-and-package/_components/apply-reseller";
+import Hero from "./_components/hero";
+import BusinessTrustTagGrowth from "./_components/business-trust-tagGrowth";
 
 const BecomeResellerPage = () => {
   return (
     <div>
-      <HowToWork heading="How to Work TagGrowth" />
+      <Hero />
+      <BusinessTrustTagGrowth />
       <SocialMediaServices />
+      <HowToWork heading="How to Work TagGrowth" />
       <PostExample
         header="Examples of our work"
         para="Get your design & marketing work done without the hassle of unreliable freelancers, costly
