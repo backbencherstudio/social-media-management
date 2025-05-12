@@ -1,34 +1,33 @@
-"use client"
+"use client";
 
+import { Card } from "@/components/ui/card";
+import HashTagIcon from "@/public/incons/landin-page/HashTag";
+import UnionIcon from "@/public/incons/landin-page/Union";
+import HeartIcons from "@/public/incons/landin-page/Heart";
+import CommentIcon from "@/public/incons/landin-page/Comments";
+import SendIcons from "@/public/incons/landin-page/Send";
+import BookmarkIcon from "@/public/incons/landin-page/Bookmark";
 
-import { Card } from "@/components/ui/card"
-import HashTagIcon from "@/public/incons/landin-page/HashTag"
-import UnionIcon from "@/public/incons/landin-page/Union"
-import HeartIcons from "@/public/incons/landin-page/Heart"
-import CommentIcon from "@/public/incons/landin-page/Comments"
-import SendIcons from "@/public/incons/landin-page/Send"
-import BookmarkIcon from "@/public/incons/landin-page/Bookmark"
-
-import CategorySelector from "./category-selection"
+import CategorySelector from "./category-selection";
 
 type Category = {
-  id: string
-  name: string
-}
+  id: string;
+  name: string;
+};
 
 type ContentItem = {
-  id: string
-  title: string
-  image: string
-  likes: number
-  category: string
-}
+  id: string;
+  title: string;
+  image: string;
+  likes: number;
+  category: string;
+};
 
 interface PostsContentProps {
-  categories: Category[]
-  contentItems: ContentItem[]
-  activeCategory: string
-  setActiveCategory: (category: string) => void
+  categories: Category[];
+  contentItems: ContentItem[];
+  activeCategory: string;
+  setActiveCategory: (category: string) => void;
 }
 
 export default function PostsContent({
@@ -37,12 +36,14 @@ export default function PostsContent({
   activeCategory,
   setActiveCategory,
 }: PostsContentProps) {
- 
-
   return (
     <>
       {/* Categories */}
-      <CategorySelector categories={categories} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
+      <CategorySelector
+        categories={categories}
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
+      />
 
       {/* Content Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -57,7 +58,9 @@ export default function PostsContent({
                 <span>
                   <HashTagIcon />
                 </span>
-                <span className="text-[17.92px] font-serotiva font-medium text-[#1B1D28]">TagGrowth</span>
+                <span className="text-[17.92px] font-serotiva font-medium text-[#1B1D28]">
+                  TagGrowth
+                </span>
               </div>
               <button>
                 <span>
@@ -68,7 +71,11 @@ export default function PostsContent({
 
             {/* Card Image */}
             <div className="relative aspect-square">
-              <img src={item.image || "/placeholder.svg"} alt={item.title} className="w-full h-full object-cover" />
+              <img
+                src={item.image || "/placeholder.svg"}
+                alt={item.title}
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* Card Footer */}
@@ -92,5 +99,5 @@ export default function PostsContent({
         ))}
       </div>
     </>
-  )
+  );
 }
