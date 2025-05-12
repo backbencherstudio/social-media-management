@@ -22,7 +22,7 @@ export const ServicesDropdownContent = () => (
             text="Social Media Posts"
           />
           <NavLink
-            href="/services/short-form-videos"
+            href="/services/short-video"
             icon={<WatchIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
             text="Short-Form Videos"
           />

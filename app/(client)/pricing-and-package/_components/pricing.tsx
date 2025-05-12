@@ -18,7 +18,7 @@ export default function Pricing() {
     <div className={`bg-[#F7F7F9] py-[100px]`}>
       <div className='container mx-auto text-center  pb-14'>
         <Heading text="Affordable Marketing Services" className='text-[42px] mb-4' />
-        <ParagraphText paraText="Elite Creative Talent | 80% More Cost-Effective than Agencies | Work with Real Experts, Not AI" className='text-[1D1F2C] ' />
+        <ParagraphText paraText="Top 1% Creative Talent | 80% Cheaper than Agencies I Real People, Not AI" className='text-[1D1F2C] ' />
       </div>
 
       <div className="container mx-auto py-6 md:py-12">

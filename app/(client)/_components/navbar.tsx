@@ -225,7 +225,7 @@ const MobileServicesDropdown = ({ isOpen, onToggle }) => (
             text="Social Media Posts"
           />
           <MobileNavLink
-            href="/services/short-form-videos"
+            href="/services/short-videos"
             icon={<WatchIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Short-Form Videos"
           />
