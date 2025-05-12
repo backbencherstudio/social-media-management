@@ -102,20 +102,20 @@ const ServiceSelectionPage = () => {
           </h2>
           <div className="space-y-[32px] mt-6 ">
             {serviceOptions.map((service) => (
-                <ServiceOption
-                  key={service.id}
-                  service={service}
-                  onSelect={handleServiceSelect}
-                  onPlanChange={handlePlanChange}
-                  isSelected={selectedServices.some(
+              <ServiceOption
+                key={service.id}
+                service={service}
+                onSelect={handleServiceSelect}
+                onPlanChange={handlePlanChange}
+                isSelected={selectedServices.some(
+                  (item) => item.service.id === service.id
+                )}
+                selectedPlan={
+                  selectedServices.find(
                     (item) => item.service.id === service.id
-                  )}
-                  selectedPlan={
-                    selectedServices.find(
-                      (item) => item.service.id === service.id
-                    )?.plan || null
-                  }
-                />
+                  )?.plan || null
+                }
+              />
             ))}
           </div>
         </div>
