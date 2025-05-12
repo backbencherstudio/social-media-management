@@ -11,6 +11,7 @@ import LogoIcon from '@/public/incons/logo';
 
 const topMenuItems = [
   { title: "Home", icon: RiHome5Line, href: "/dashboard" },
+  { title: "Assets", icon: RiLayoutGridLine, href: "/dashboard/assets" },
   { title: "Services", icon: RiLayoutGridLine, href: "/dashboard/services" },
 ];
 
