@@ -26,7 +26,7 @@ export default function RecommendedResources() {
     console.log("Video played");
   };
   return (
-    <div className="flex flex-col md:flex-row w-full gap-4 py-10">
+    <div className="flex flex-col md:flex-row w-full gap-4 py-10 ">
       <div className="grid grid-cols-1 md:w-6/12 w-full gap-4">
         {data.map((item, index) => (
           <RecommendedResourcesCard

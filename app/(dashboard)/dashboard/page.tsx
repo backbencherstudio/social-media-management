@@ -7,6 +7,37 @@ import "react-date-range/dist/theme/default.css";
 import ActiveServicesTable from "@/components/UserDashboard/Home/ActiveServicesTable";
 import RecommendedResources from "@/components/UserDashboard/Home/RecommendedResources";
 import ServicesWeOffer from "@/components/UserDashboard/Home/ServicesWeOffer";
+import { usePurchase } from "@/app/context/PurchaseContext";
+import RecentActivity from "@/components/UserDashboard/Home/RecentActivity";
+import ServicesTable from "@/components/UserDashboard/Components/services-table";
+import { Service } from "@/components/UserDashboard/Components/services-table"; // Import the Service interface
+
+
+const servicesData: Service[] = [
+  {
+    id: "62A2AA44-2",
+    name: "Email Design",
+    started: "Sep 17",
+    status: "For Review",
+    nextPayment: "Oct 17",
+  },
+  {
+    id: "62A2AA44-3",
+    name: "Plus + 15 posts",
+    started: "Sep 17",
+    status: "In Progress",
+    nextPayment: "Oct 17",
+  },
+  {
+    id: "62A2AA44-3",
+    name: "Plus + 15 posts",
+    started: "Sep 17",
+    status: "Completed",
+    nextPayment: "Oct 17",
+  },
+];
+
+
 
 export default function DashboardHome() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +77,8 @@ export default function DashboardHome() {
       },
     ]);
   };
+
+  const { hasPurchased } = usePurchase();
 
   return (
     <>
@@ -189,12 +222,18 @@ export default function DashboardHome() {
         </div>
       </div>
 
-      <div>
-        <ActiveServicesTable />
+      <div className="mt-6">
+        <ServicesTable
+          services={servicesData}
+          emptyMessage="You're not subscribed to any services."
+          title="Services"
+        />
       </div>
 
+      <div>{hasPurchased && <RecentActivity />}</div>
+
       <div>
-        <h1 className="text-[24px] font-[700]">Recommended Resources</h1>
+        <h1 className="text-[20px] font-[700] mt-8">Recommended Resources</h1>
         <RecommendedResources />
       </div>
 
@@ -204,3 +243,6 @@ export default function DashboardHome() {
     </>
   );
 }
+
+
+
