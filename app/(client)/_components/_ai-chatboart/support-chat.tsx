@@ -127,7 +127,7 @@ export default function SupportChatBoart() {
       </div>
 
       <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="flex flex-col h-[594px] w-[382px] rounded-xl shadow-lg">
+        <div className="flex flex-col h-[520px] w-[440px] rounded-xl shadow-lg">
           <div className="flex items-center justify-between px-4 py-3 border-b">
             <div className="flex items-center gap-3">
               <ChatBotHeaderIcon className="w-10 h-10 rounded-full p-2 border border-black" />
@@ -151,16 +151,16 @@ export default function SupportChatBoart() {
                   msg.sender === "user" ? "items-end" : "items-start"
                 }`}
               >
-                <div className="flex items-start">
+                <div
+                  className={`flex items-start ${
+                    msg.sender === "user" ? "flex-row-reverse" : "flex-row"
+                  }`}
+                >
                   {msg.sender === "bot" && (
-                    <ChatBotHeaderIcon className="w-10 h-10 rounded-full p-2 border border-black mr-2" />
+                    <ChatBotHeaderIcon className="w-10 h-10 rounded-full p-2 border border-black mr-1" />
                   )}
                   <div
-                    className={`max-w-[70%] px-4 py-2 rounded-lg text-sm ${
-                      msg.sender === "user"
-                        ? "bg-black text-white"
-                        : "bg-gray-100 text-black"
-                    }`}
+                    className={`px-4 py-2 rounded-lg text-sm max-w-[240px] break-words whitespace-pre-wrap text-black`}
                     dangerouslySetInnerHTML={{ __html: msg.content }}
                   />
                 </div>
