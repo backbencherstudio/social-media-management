@@ -12,7 +12,9 @@ import LogoIcon from '@/public/incons/logo';
 const topMenuItems = [
   { title: "Home", icon: RiHome5Line, href: "/dashboard" },
   { title: "Assets", icon: RiLayoutGridLine, href: "/dashboard/assets" },
+  { title: "Service", icon: RiLayoutGridLine, href: "/dashboard/service" },
   { title: "Services", icon: RiLayoutGridLine, href: "/dashboard/services" },
+  { title: "Social Media", icon: RiLayoutGridLine, href: "/dashboard/social-media" },
 ];
 
 const bottomMenuItems = [
