@@ -1,6 +1,7 @@
 "use client";
 
 interface ScheduledPostCardProps {
+  
   title: string;
   scheduledFor: string;
   platforms: string[];
@@ -20,7 +21,7 @@ export function ScheduledPostCard({
   onViewDetails,
 }: ScheduledPostCardProps) {
   return (
-    <div className="flex h-full flex-col rounded-lg border border-gray-200 bg-white shadow-sm min-w-[420px] ">
+    <div className="flex h-full flex-col rounded-lg border border-gray-200 bg-white shadow-sm w-full max-w-full min-w-[380px] ">
       {/* Card Header with Badges */}
       <div className="flex items-center justify-between gap-2 p-4">
         <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
@@ -37,12 +38,12 @@ export function ScheduledPostCard({
       {/* Card Details */}
       <div className="mt-2 space-y-2 px-4">
         <div className="flex flex-col text-sm ">
-          <span className="font-medium text-gray-600">Scheduled for:</span>
+          <span className="font-medium text-[#777980]">Scheduled for:</span>
           <span>{scheduledFor}</span>
         </div>
 
         <div className="flex flex-col text-sm ">
-          <span className="font-medium text-gray-600">Platform:</span>
+          <span className="font-medium text-[#777980]">Platform:</span>
           <span>{platforms.join(", ")}</span>
         </div>
       </div>

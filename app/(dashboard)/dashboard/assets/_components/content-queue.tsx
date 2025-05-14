@@ -2,52 +2,46 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Search, Calendar, ChevronDown } from "lucide-react";
-// import DatePicker from "react-date-picker"
-// import "react-date-picker/dist/DatePicker.css"
-// import "react-calendar/dist/Calendar.css"
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function ContentQueueHeader() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState("All Types");
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 10, 7));
-  const [isTypeDropdownOpen, setIsTypeDropdownOpen] = useState(false);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
-  const datePickerRef = useRef<HTMLDivElement>(null);
   const typeDropdownRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
-  // Format date as "D MMM YYYY"
-  const formatDate = (date: Date) => {
-    return `${date.getDate()} ${date.toLocaleString("default", {
+  // Format date as "7 Nov 2024"
+  const formatDate = (date: Date) =>
+    `${date.getDate()} ${date.toLocaleString("default", {
       month: "short",
     })} ${date.getFullYear()}`;
-  };
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(e: MouseEvent) {
       if (
-        datePickerRef.current &&
-        !datePickerRef.current.contains(event.target as Node)
+        calendarRef.current &&
+        !calendarRef.current.contains(e.target as Node)
       ) {
-        setIsDatePickerOpen(false);
+        setCalendarOpen(false);
       }
       if (
         typeDropdownRef.current &&
-        !typeDropdownRef.current.contains(event.target as Node)
+        !typeDropdownRef.current.contains(e.target as Node)
       ) {
-        setIsTypeDropdownOpen(false);
+        setDropdownOpen(false);
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <div className="flex w-full flex-col  bg-gray-50  py-6 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex w-full flex-col bg-gray-50 py-6 sm:flex-row sm:items-center sm:justify-between">
       <h1 className="mb-3 text-xl font-semibold text-gray-900 sm:mb-0">
         Content Queue
       </h1>
@@ -70,37 +64,35 @@ export default function ContentQueueHeader() {
         {/* Type Dropdown */}
         <div className="relative" ref={typeDropdownRef}>
           <button
-            onClick={() => setIsTypeDropdownOpen(!isTypeDropdownOpen)}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
             className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 focus:outline-none sm:w-36"
           >
             <span>{selectedType}</span>
             <ChevronDown className="h-4 w-4 text-gray-500" />
           </button>
 
-          {isTypeDropdownOpen && (
-            <div className="absolute right-0 z-10 mt-1 w-full origin-top-right rounded-md border border-gray-200 bg-white shadow-lg">
-              <div className="py-1">
-                {["All Types", "Images", "Videos", "Documents"].map((type) => (
-                  <button
-                    key={type}
-                    onClick={() => {
-                      setSelectedType(type);
-                      setIsTypeDropdownOpen(false);
-                    }}
-                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
+          {dropdownOpen && (
+            <div className="absolute right-0 z-10 mt-1 w-full rounded-md border border-gray-200 bg-white shadow-lg">
+              {["All Types", "Images", "Videos", "Documents"].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => {
+                    setSelectedType(type);
+                    setDropdownOpen(false);
+                  }}
+                  className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  {type}
+                </button>
+              ))}
             </div>
           )}
         </div>
 
-        {/* Date Picker */}
-        <div className="relative" ref={datePickerRef}>
+        {/* Single Date Picker */}
+        <div className="relative" ref={calendarRef}>
           <button
-            onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+            onClick={() => setCalendarOpen(!calendarOpen)}
             className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 focus:outline-none"
           >
             <div className="flex items-center">
@@ -109,18 +101,16 @@ export default function ContentQueueHeader() {
             </div>
           </button>
 
-          {isDatePickerOpen && (
-            <div className="absolute right-0 z-10 mt-1 origin-top-right rounded-md border border-gray-200 bg-white p-3 shadow-lg">
-              {/* <DatePicker
+          {calendarOpen && (
+            <div className="absolute right-0 z-10 mt-1 rounded-md border border-gray-200 bg-white p-3 shadow-lg">
+              <ReactDatePicker
+                selected={selectedDate}
                 onChange={(date: Date) => {
-                  setSelectedDate(date)
-                  setIsDatePickerOpen(false)
+                  setSelectedDate(date);
+                  setCalendarOpen(false);
                 }}
-                value={selectedDate}
-                calendarIcon={null}
-                clearIcon={null}
-                format="d MMM y"
-              /> */}
+                inline
+              />
             </div>
           )}
         </div>

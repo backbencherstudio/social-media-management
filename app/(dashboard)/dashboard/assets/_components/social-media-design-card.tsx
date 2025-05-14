@@ -20,9 +20,9 @@ export function SocialMediaDesignCard({
   onViewDetails,
 }: SocialMediaDesignCardProps) {
   return (
-    <div className="flex h-full flex-col rounded-lg border border-gray-200 bg-white shadow-sm min-w-[420px] ">
+    <div className="flex h-full flex-col rounded-lg border border-gray-200 bg-white shadow-sm max-w-full min-w-[380px] ">
       {/* Card Header with Badges */}
-      <div className="flex items-center gap-2 p-4">
+      <div className="flex items-center justify-between gap-2 p-4">
         <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-700">
           Social Media Design
         </span>
@@ -36,14 +36,14 @@ export function SocialMediaDesignCard({
 
       {/* Card Details */}
       <div className="mt-2 space-y-2 px-4">
-        <div className="flex flex-col text-sm text-gray-600">
-          <span className="font-medium">Type:</span>
-          <span>{type}</span>
+        <div className="flex flex-col text-sm ">
+          <span className="font-medium text-[#777980]">Type:</span>
+          <span className="text-[#1D1F2C]">{type}</span>
         </div>
 
         <div className="flex flex-col text-sm text-gray-600">
-          <span className="font-medium">Submitted:</span>
-          <span>{submittedDate}</span>
+          <span className="font-medium  text-[#777980]">Submitted:</span>
+          <span className="text-[#1D1F2C]">{submittedDate}</span>
         </div>
       </div>
 
