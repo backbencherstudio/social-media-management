@@ -17,6 +17,14 @@ const topMenuItems = [
   { title: "Social Media", icon: RiLayoutGridLine, href: "/dashboard/social-media" },
 ];
 
+const isFreelancer = true;
+
+const freelancertopMenuItems = [
+  { title: "Dashboard", icon: RiHome5Line, href: "/dashboard/freelancer-dashboard" },
+  { title: "Analytics", icon: RiLayoutGridLine, href: "/dashboard/analytics" },
+  { title: "Compose", icon: RiLayoutGridLine, href: "/dashboard/compose" },
+];
+
 const bottomMenuItems = [
   {
     title: "Settings",
@@ -122,8 +130,13 @@ export default function Sidebar({ isMobileMenuOpen, onMobileMenuClose }: Sidebar
       </div>
 
       {/* Top Menu Items */}
-      <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? 'px-2' : ''}`}>
+      {/* <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? 'px-2' : ''}`}>
         {topMenuItems.map((item, index) => (
+          <NavLink key={index} item={item} />
+        ))} */}
+      {/* Top Menu Items */}
+      <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? 'px-2' : ''}`}>
+        {isFreelancer && freelancertopMenuItems.map((item, index) => (
           <NavLink key={index} item={item} />
         ))}
       </nav>
