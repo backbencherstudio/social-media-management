@@ -1,14 +1,24 @@
 "use client";
 
-import { User, BarChart3, Target, TrendingUp, Pencil, Shield, Settings, LineChart } from 'lucide-react';
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import FacebookIcon from '@/public/incons/landin-page/facebook';
-import TwitterIcon from '@/public/incons/landin-page/TwitterIcon';
-import InstaIcon from '@/public/incons/landin-page/insta-icon';
-import LinkdinIcon from '@/public/incons/landin-page/LinkdinIcon';
-import YoutubeIcon from '@/public/incons/landin-page/youtubeIcon';
-import TiktokIcon from '@/public/incons/landin-page/ToktokIcon';
+import {
+  User,
+  BarChart3,
+  Target,
+  TrendingUp,
+  Pencil,
+  Shield,
+  Settings,
+  LineChart,
+} from "lucide-react";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import FacebookIcon from "@/public/incons/landin-page/facebook";
+import TwitterIcon from "@/public/incons/landin-page/TwitterIcon";
+import InstaIcon from "@/public/incons/landin-page/insta-icon";
+import LinkdinIcon from "@/public/incons/landin-page/LinkdinIcon";
+import YoutubeIcon from "@/public/incons/landin-page/youtubeIcon";
+import TiktokIcon from "@/public/incons/landin-page/ToktokIcon";
+import TimelineModal from "../timeline-modal";
 
 const video = {
   title: "Short-Form Videos",
@@ -36,21 +46,39 @@ const video = {
   },
 };
 
+const socialPlatforms = [
+  <FacebookIcon />,
+  <TwitterIcon />,
+  <InstaIcon />,
+  <LinkdinIcon />,
+  <YoutubeIcon />,
+  <TiktokIcon />,
+];
 
-const socialPlatforms = [<FacebookIcon/>, <TwitterIcon/>, <InstaIcon/>, <LinkdinIcon/>, <YoutubeIcon/>, <TiktokIcon/>];
-
-export default function Video(                             ) {
+export default function Video() {
   const [selectedPosts, setSelectedPosts] = useState(6);
   const basePrice = video.pricing.basePrice[selectedPosts];
+
+  // for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const handleModal = (content: string) => {
+    setModalContent(content); // Set the content dynamically
+    setIsModalOpen(true); // Open the modal
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
       {/* Left Side */}
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <div className="flex items-start gap-4 mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl lg:text-[26px] text-[#1D1D1F] font-serotiva-semibold font-semibold">{video.title}</h2>
+          <h2 className="text-xl sm:text-2xl lg:text-[26px] text-[#1D1D1F] font-serotiva-semibold font-semibold">
+            {video.title}
+          </h2>
         </div>
-        <p className="text-sm sm:text-base text-[#4A4C56] mb-4 sm:mb-6">{video.description}</p>
+        <p className="text-sm sm:text-base text-[#4A4C56] mb-4 sm:mb-6">
+          {video.description}
+        </p>
 
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-6 sm:mb-8">
           <div className="flex-1">
@@ -62,7 +90,7 @@ export default function Video(                             ) {
         </div>
 
         <div className="overflow-x-auto">
-          <ActionButtons />
+          <ActionButtons handleModal={handleModal} />
         </div>
 
         <p className="text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6">
@@ -73,18 +101,28 @@ export default function Video(                             ) {
       {/* Right Side */}
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <PricingHeader selectedPosts={selectedPosts} basePrice={basePrice} />
-        <PostSelector 
-          posts={video.pricing.posts} 
-          selectedPosts={selectedPosts} 
-          setSelectedPosts={setSelectedPosts} 
+        <PostSelector
+          posts={video.pricing.posts}
+          selectedPosts={selectedPosts}
+          setSelectedPosts={setSelectedPosts}
         />
         <SocialPlatforms platforms={socialPlatforms} />
         <CheckoutButtons />
       </div>
+
+      {/* Modal */}
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="w-full fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 flex items-center justify-center">
+          <TimelineModal
+            content={modalContent}
+            setIsModalOpen={setIsModalOpen}
+          />
+        </div>
+      )}
     </div>
   );
 }
-
 
 // Sub-components
 function FeatureList({ features }: { features: string[] }) {
@@ -112,14 +150,52 @@ function FeatureList({ features }: { features: string[] }) {
   );
 }
 
-function ActionButtons() {
+function ActionButtons({
+  handleModal,
+}: {
+  handleModal: (content: string) => void;
+}) {
   return (
     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-8">
-      {['Timeline', 'Examples', 'How the service works'].map((text) => (
-        <Button key={text} variant="outline" className="w-full sm:w-auto flex items-center justify-center gap-2 text-sm">
+      <Button
+        onClick={() => handleModal("Video Content")}
+        variant="outline"
+        className="w-full sm:w-auto flex items-center justify-center gap-2 text-sm"
+      >
+        Timeline
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </Button>
+      {["Examples", "How the service works"].map((text) => (
+        <Button
+          key={text}
+          variant="outline"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 text-sm"
+        >
           {text}
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </Button>
       ))}
@@ -127,7 +203,13 @@ function ActionButtons() {
   );
 }
 
-function PricingHeader({ selectedPosts, basePrice }: { selectedPosts: number; basePrice: number }) {
+function PricingHeader({
+  selectedPosts,
+  basePrice,
+}: {
+  selectedPosts: number;
+  basePrice: number;
+}) {
   return (
     <div className="flex justify-between items-center mb-8">
       <span className="text-sm">{selectedPosts} Post</span>
@@ -136,13 +218,13 @@ function PricingHeader({ selectedPosts, basePrice }: { selectedPosts: number; ba
   );
 }
 
-function PostSelector({ 
-  posts, 
-  selectedPosts, 
-  setSelectedPosts 
-}: { 
-  posts: number[]; 
-  selectedPosts: number; 
+function PostSelector({
+  posts,
+  selectedPosts,
+  setSelectedPosts,
+}: {
+  posts: number[];
+  selectedPosts: number;
   setSelectedPosts: (count: number) => void;
 }) {
   return (
@@ -153,7 +235,9 @@ function PostSelector({
           <Button
             key={count}
             variant={selectedPosts === count ? "default" : "outline"}
-            className={`${selectedPosts === count ? 'bg-black text-white' : ''}`}
+            className={`${
+              selectedPosts === count ? "bg-black text-white" : ""
+            }`}
             onClick={() => setSelectedPosts(count)}
           >
             {count}
@@ -185,9 +269,7 @@ function SocialPlatforms({ platforms }: { platforms: any[] }) {
 function CheckoutButtons() {
   return (
     <>
-      <Button className="w-full bg-black text-white mb-4">
-        Checkout
-      </Button>
+      <Button className="w-full bg-black text-white mb-4">Checkout</Button>
       <Button variant="outline" className="w-full">
         Schedule a Demo
       </Button>

@@ -2,16 +2,13 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import TimelineModal from "../timeline-modal";
 
 const blogs = {
   title: "Blog Posts",
   description:
     "SEO-optimized, 1,000-word blog posts featuring premium images, strategic internal and external links. Starts with keyword research, and well-researched topic generation.",
-  features: [
-    "SEO Optimized",
-    "Premium Images",
-    "Topic Generation",
-  ],
+  features: ["SEO Optimized", "Premium Images", "Topic Generation"],
   additionalFeatures: [
     "1000-word Blog Posts",
     "Keyword Research",
@@ -32,6 +29,15 @@ const blogs = {
 export default function Blogs() {
   const [selectedPosts, setSelectedPosts] = useState(6);
   const basePrice = blogs.pricing.basePrice[selectedPosts];
+
+  // for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+
+  const handleModal = (content: string) => {
+    setModalContent(content); // Set the content dynamically
+    setIsModalOpen(true); // Open the modal
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
@@ -56,7 +62,7 @@ export default function Blogs() {
         </div>
 
         <div className="overflow-x-auto">
-          <ActionButtons />
+          <ActionButtons handleModal={handleModal} />
         </div>
 
         <p className="text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6">
@@ -75,6 +81,16 @@ export default function Blogs() {
         <SocialPlatforms />
         <CheckoutButtons />
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="w-full fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 flex items-center justify-center">
+          <TimelineModal
+            content={modalContent}
+            setIsModalOpen={setIsModalOpen}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -105,10 +121,35 @@ function FeatureList({ features }: { features: string[] }) {
   );
 }
 
-function ActionButtons() {
+function ActionButtons({
+  handleModal,
+}: {
+  handleModal: (content: string) => void;
+}) {
   return (
     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-8">
-      {["Timeline", "Examples", "How the service works"].map((text) => (
+      <Button
+        onClick={() => handleModal("Blog Content")}
+        variant="outline"
+        className="w-full sm:w-auto flex items-center justify-center gap-2 text-sm"
+      >
+        Timeline
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </Button>
+
+      {["Examples", "How the service works"].map((text) => (
         <Button
           key={text}
           variant="outline"
@@ -182,7 +223,9 @@ function PostSelector({
 function SocialPlatforms() {
   return (
     <div className="mb-8">
-      <p className="text-sm mb-4">Combine any services & add-ons during checkout</p>
+      <p className="text-sm mb-4">
+        Combine any services & add-ons during checkout
+      </p>
       <div className="flex flex-wrap gap-4"></div>
     </div>
   );

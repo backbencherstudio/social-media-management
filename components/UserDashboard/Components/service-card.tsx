@@ -1,52 +1,53 @@
-
-export default function ServiceCard({service}) {
+export default function ServiceCard({ service }) {
+//   console.log(service);
   return (
-    <div className="min-w-full bg-white border border-gray-100 rounded-lg p-5 flex flex-col  shadow-sm">
-      {/* Header with brain icon */}
-
-      <div className="w-12 h-12 mb-4">
-       {
-        service.icon
-       }
-      </div>
-      <h3 className="text-2xl font-semibold text-[#1d1d1f] mb-3">
-      {service?.title}
-      </h3>
-
-      {/* Article title - made smaller with proper spacing */}
-      <div className="mb-6">
-        <p className="text-[#1D1F2C]">
-         {service.info}
-        </p>
+    <div className="bg-white rounded-xl shadow-sm p-5 max-w-sm border border-gray-200 space-y-4 relative">
+      {/* Icon and badge */}
+      <div className="flex justify-between items-start ">
+        <div className="bg-gray-100 p-2 rounded-md ">
+          {/* Placeholder image icon */}
+          {service.icon}
+        </div>
       </div>
 
-      {/* Word count with more spacing */}
-      <div className="my-3">
-        <p className="text-[#1D1F2C] font-medium text-xl">{service.word} word</p>
+      {service.badge && (
+        <span className="bg-black text-white text-xs font-medium px-2 py-1 rounded-t rounded-bl absolute right-0 top-6">
+          {service.badge}
+        </span>
+      )}
+      {/* Content */}
+      <div>
+        <h3 className="text-lg font-semibold mb-2 mt-5">{service.title}</h3>
+        <p className="text-gray-600 text-sm mt-1">{service.description}</p>
       </div>
 
-      {/* Learn more link with arrow */}
-      <div className="mt-4 ">
-        <a    
-          href="#"
-          className="inline-flex items-center  font-medium hover:text-blue-800 border-b border-black "
+      {/* Pricing */}
+      <p className=" font-medium">
+        Starts from <span className="">{service.price}</span>
+      </p>
+
+<hr className="text-gray-200" />
+      {/* Learn more link */}
+      <a
+        href="#"
+        className="text-sm text-gray-600 hover:text-gray-800 flex items-center space-x-1 undlerline"
+      >
+     
+        <span>Learn more</span>
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          viewBox="0 0 24 24"
         >
-          Learn more
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            className="ml-1"
-          >
-            <path
-              d="M12.0079 7.0605L5.55269 13.5157L4.49219 12.4553L10.9467 6H5.25794V4.5H13.5079V12.75H12.0079V7.0605Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </div>
+          <path
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </a>
     </div>
-  )
+  );
 }
