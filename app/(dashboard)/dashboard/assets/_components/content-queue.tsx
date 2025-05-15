@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Search, Calendar, ChevronDown } from "lucide-react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../../../../../app/style/custom-datepicker.css"
 
 export default function ContentQueueHeader() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -102,7 +103,7 @@ export default function ContentQueueHeader() {
           </button>
 
           {calendarOpen && (
-            <div className="absolute right-0 z-10 mt-1 rounded-md border border-gray-200 bg-white p-3 shadow-lg">
+            <div className="absolute right-0 z-10 mt-1 rounded-md">
               <ReactDatePicker
                 selected={selectedDate}
                 onChange={(date: Date) => {

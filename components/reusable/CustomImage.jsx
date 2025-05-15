@@ -15,9 +15,9 @@ export default function CustomImage({
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <linearGradient id="g">
-      <stop stop-color="#dddddd" offset="20%" />
-      <stop stop-color="#b1b1b1" offset="50%" />
-      <stop stop-color="#dddddd" offset="70%" />
+      <stop stopColor="#dddddd" offset="20%" />
+      <stop stopColor="#b1b1b1" offset="50%" />
+      <stop stopColor="#dddddd" offset="70%" />
     </linearGradient>
   </defs>
   <rect width="${w}" height="${h}" fill="#dddddd" />
@@ -51,9 +51,9 @@ export default function CustomImage({
 // <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 //   <defs>
 //     <linearGradient id="g">
-//       <stop stop-color="#333" offset="20%" />
-//       <stop stop-color="#222" offset="50%" />
-//       <stop stop-color="#333" offset="70%" />
+//       <stop stopColor="#333" offset="20%" />
+//       <stop stopColor="#222" offset="50%" />
+//       <stop stopColor="#333" offset="70%" />
 //     </linearGradient>
 //   </defs>
 //   <rect width="${w}" height="${h}" fill="#333" />

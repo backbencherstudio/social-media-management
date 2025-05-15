@@ -24,7 +24,7 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({ className = "" }) => {
           fill="white"
           fill-opacity="0.1"
         />
-        <g id="Social page" clip-path="url(#clip0_5654_10979)">
+        <g id="Social page" clipPath="url(#clip0_5654_10979)">
           <rect
             width="1440"
             height="951"
@@ -52,7 +52,7 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({ className = "" }) => {
                   fill-opacity="0.72"
                 />
                 <g id="Socials">
-                  <g clip-path="url(#clip1_5654_10979)">
+                  <g clipPath="url(#clip1_5654_10979)">
                     <path
                       id="bg"
                       d="M18.0157 2.74219C11.4358 2.74219 9.51144 2.74898 9.13738 2.78001C7.78708 2.89225 6.94683 3.10485 6.03144 3.56061C5.32599 3.91091 4.76962 4.31698 4.22053 4.88619C3.22053 5.92425 2.61447 7.20134 2.39508 8.7194C2.28841 9.45637 2.25738 9.60667 2.25108 13.371C2.24865 14.6258 2.25108 16.2772 2.25108 18.4922C2.25108 25.0668 2.25835 26.9892 2.28987 27.3626C2.39896 28.6765 2.60502 29.5032 3.04138 30.4074C3.87532 32.1383 5.46805 33.4377 7.34441 33.9226C7.99411 34.0898 8.71168 34.1819 9.63289 34.2256C10.0232 34.2426 14.0014 34.2547 17.982 34.2547C21.9626 34.2547 25.9432 34.2498 26.3238 34.2304C27.3905 34.1803 28.0099 34.0971 28.6947 33.9201C30.5832 33.4329 32.1468 32.1529 32.9977 30.3977C33.4256 29.5153 33.6426 28.6571 33.7408 27.4118C33.7621 27.1402 33.7711 22.8113 33.7711 18.4881C33.7711 14.1642 33.7614 9.84328 33.74 9.57176C33.6407 8.30631 33.4237 7.4554 32.982 6.55601C32.6196 5.81976 32.2171 5.26995 31.6329 4.70776C30.5902 3.71188 29.3151 3.10582 27.7956 2.88667C27.0593 2.78025 26.9127 2.74873 23.1454 2.74219H18.0157Z"
@@ -92,10 +92,10 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({ className = "" }) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(10.6228 36.6818) rotate(-90) scale(31.2312 29.0554)"
         >
-          <stop stop-color="#FFDD55" />
-          <stop offset="0.1" stop-color="#FFDD55" />
-          <stop offset="0.5" stop-color="#FF543E" />
-          <stop offset="1" stop-color="#C837AB" />
+          <stop stopColor="#FFDD55" />
+          <stop offset="0.1" stopColor="#FFDD55" />
+          <stop offset="0.5" stopColor="#FF543E" />
+          <stop offset="1" stopColor="#C837AB" />
         </radialGradient>
         <radialGradient
           id="paint1_radial_5654_10979"
@@ -105,9 +105,9 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({ className = "" }) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-3.02995 5.01229) rotate(78.6776) scale(13.9606 57.5608)"
         >
-          <stop stop-color="#3771C8" />
-          <stop offset="0.128" stop-color="#3771C8" />
-          <stop offset="1" stop-color="#6600FF" stop-opacity="0" />
+          <stop stopColor="#3771C8" />
+          <stop offset="0.128" stopColor="#3771C8" />
+          <stop offset="1" stopColor="#6600FF" stopOpacity="0" />
         </radialGradient>
         <clipPath id="clip0_5654_10979">
           <rect

@@ -110,7 +110,7 @@ export default function Report() {
               d="M2 1.5V14.25C2 15.495 3.005 16.5 4.25 16.5H17"
               stroke="#35CE56"
               strokeWidth="1.125"
-              stroke-miterlimit="10"
+              strokeMiterlimit="10"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -118,7 +118,7 @@ export default function Report() {
               d="M4.25 12.75L7.6925 8.73001C8.2625 8.07001 9.275 8.025 9.89 8.6475L10.6025 9.36001C11.2175 9.97501 12.23 9.9375 12.8 9.2775L16.25 5.25"
               stroke="#35CE56"
               strokeWidth="1.125"
-              stroke-miterlimit="10"
+              strokeMiterlimit="10"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
