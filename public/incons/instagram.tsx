@@ -75,7 +75,7 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({ className = "" }) => {
                     width="33.601"
                     height="33.6"
                     stroke="white"
-                    stroke-width="1.6"
+                    strokeWidth="1.6"
                   />
                 </g>
               </g>

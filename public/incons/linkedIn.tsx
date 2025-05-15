@@ -38,7 +38,7 @@ const LinkedInIcon: React.FC<LinkedInIconProps> = ({ className = "" }) => {
         height="33.6"
         rx="6.8"
         stroke="white"
-        stroke-width="1.6"
+        strokeWidth="1.6"
       />
       <defs>
         <clipPath id="clip0_5654_43623">

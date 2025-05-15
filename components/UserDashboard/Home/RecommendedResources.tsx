@@ -166,9 +166,9 @@ export default function RecommendedResources() {
                   <path
                     d="M9 4.5V13.5M13.5 9L4.5 9"
                     stroke="#070707"
-                    stroke-width="1.125"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.125"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </div>

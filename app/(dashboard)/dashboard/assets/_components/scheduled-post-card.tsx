@@ -79,9 +79,9 @@ export function ScheduledPostCard({
               <path
                 d="M4.25 9.75L6.89482 11.8659C7.5153 12.3622 8.41524 12.2886 8.9468 11.698L14.75 5.25"
                 stroke="#119B70"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             Approve
@@ -100,9 +100,9 @@ export function ScheduledPostCard({
               <path
                 d="M12.6823 5.8184L6.31836 12.1824M12.6823 12.1823L6.31836 5.81836"
                 stroke="#DC2C2C"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             Reject
