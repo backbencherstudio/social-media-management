@@ -23,7 +23,11 @@ const topMenuItems = [
   { title: "Assets", icon: RiLayoutGridLine, href: "/dashboard/assets" },
   { title: "Service", icon: RiLayoutGridLine, href: "/dashboard/service" },
   { title: "Services", icon: RiLayoutGridLine, href: "/dashboard/services" },
-  { title: "Social Media", icon: RiLayoutGridLine, href: "/dashboard/social-media" },
+  {
+    title: "Social Media",
+    icon: RiLayoutGridLine,
+    href: "/dashboard/social-media",
+  },
 ];
 
 const isFreelancer = true;

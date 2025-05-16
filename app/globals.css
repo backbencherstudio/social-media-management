@@ -149,3 +149,33 @@
 
 }
 
+/* for calender */
+
+.react-datepicker {
+  @apply rounded-xl shadow-lg border border-gray-200;
+}
+
+.react-datepicker__header {
+  @apply bg-white border-b border-gray-200 rounded-t-xl;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  @apply text-gray-900 font-medium;
+}
+
+.react-datepicker__day {
+  @apply text-gray-700 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-100;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-gray-900 text-white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-gray-200;
+}
+
+.react-datepicker__day--today {
+  @apply font-semibold border border-gray-300;
+}
