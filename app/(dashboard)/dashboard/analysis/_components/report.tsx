@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Report() {
   return (
-    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 w-full">
+    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 w-full mt-6">
       <div className="p-5 bg-white rounded-xl shadow-md">
         <div className="flex items-center justify-between ">
           <p className="text-sm text-[#1d1f2c]">Total Posts</p>
