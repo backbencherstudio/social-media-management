@@ -5,6 +5,7 @@ import { IoSettingsOutline, IoLogOutOutline, IoNotificationsOutline } from "reac
 import { RiUserLine } from "react-icons/ri";
 import { ImPower } from "react-icons/im";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -93,10 +94,10 @@ export default function Navbar({
               </div>
 
               <div className="py-1">
-                <button className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
+                <Link href={'/dashboard/freelancer-profile'} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
                   <RiUserLine className="w-4 h-4" />
                   Profile
-                </button>
+                </Link>
                 <button className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
                   <IoSettingsOutline className="w-4 h-4" />
                   Settings
