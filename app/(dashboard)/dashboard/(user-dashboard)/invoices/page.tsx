@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { StartGesture, useState } from "react";
+import InvoiceModal from "./_components/invoice-modal";
 
 const services = [
   {
@@ -8,6 +11,7 @@ const services = [
     project: "Social Media Post Design",
     amount: "$150",
     date: "2024-01-15",
+    dueDate: "2024-01-30",
     status: "Pending",
   },
   {
@@ -16,11 +20,31 @@ const services = [
     project: "Social Media Post Design",
     amount: "$150",
     date: "2024-01-15",
+    dueDate: "2024-01-30",
     status: "Paid",
   },
 ];
 
+type service = {
+  id: number;
+  invoiceId: string;
+  project: string;
+  amount: string;
+  date: string;
+  dueDate: string;
+  status: string;
+};
+
 const Invoices = () => {
+  // for modal
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
+  const handleOpenModal = (item: service) => {
+    setIsOpen(true);
+    setModalData(item);
+  };
+
   return (
     <div className="overflow-x-auto w-full px-4 py-6 bg-white rounded-lg">
       <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
@@ -68,7 +92,10 @@ const Invoices = () => {
                 </div>
               </td>
               <td className="py-4 px-4 text-center">
-                <button className="text-[#2D50FF] underline">
+                <button
+                  onClick={() => handleOpenModal(service)}
+                  className="text-[#2D50FF] underline"
+                >
                   View Details
                 </button>
               </td>
@@ -76,6 +103,9 @@ const Invoices = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Show Modal */}
+      <InvoiceModal isOpen={isOpen} setIsOpen={setIsOpen} service={modalData} />
     </div>
   );
 };
