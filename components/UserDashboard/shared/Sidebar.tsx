@@ -30,6 +30,13 @@ const topMenuItems = [
   },
 ];
 
+const isFreelancer = true;
+
+const freelancertopMenuItems = [
+  { title: "Dashboard", icon: RiHome5Line, href: "/dashboard/freelancer-dashboard" },
+  { title: "Analytics", icon: RiLayoutGridLine, href: "/dashboard/analytics" },
+  { title: "Compose", icon: RiLayoutGridLine, href: "/dashboard/compose" },
+]
 // top menu items for purchased users
 const purchasedTopMenuItems = [
   { title: "Schedule", icon: RiCalendarCheckLine, href: "/dashboard/schedule" },
@@ -165,16 +172,22 @@ export default function Sidebar({
       </div>
 
       {/* Top Menu Items */}
+      {/* <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? 'px-2' : ''}`}>
       <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
         {topMenuItems.map((item, index) => (
+          <NavLink key={index} item={item} />
+        ))} */}
+      {/* Top Menu Items */}
+      <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? 'px-2' : ''}`}>
+        {isFreelancer && freelancertopMenuItems.map((item, index) => (
           <NavLink key={index} item={item} />
         ))}
 
         {/* Render purchased menu items if the user has purchased services */}
-        {hasPurchased &&
+        {/* {hasPurchased &&
           purchasedTopMenuItems.map((item, index) => (
             <NavLink key={`purchased-${index}`} item={item} />
-          ))}
+          ))} */}
       </nav>
 
       {/* Bottom Menu Items */}

@@ -4,6 +4,7 @@ import Navbar from "@/components/UserDashboard/shared/Navbar";
 import Sidebar from "@/components/UserDashboard/shared/Sidebar";
 
 import React, { useState } from "react";
+import AdminAndResellerSidebar from "./_components/admin-and-reseller-sidebar";
 
 export default function ClientLayout({
   children,
@@ -12,10 +13,16 @@ export default function ClientLayout({
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const role = ["user", "freelancer", "admin", "reseller"];
+
   return (
     <PurchaseProvider>
       <div className="flex h-screen overflow-hidden bg-[#F7F7F9] font-commissioner">
-        <Sidebar
+        {/* <Sidebar
+          isMobileMenuOpen={isMobileMenuOpen}
+          onMobileMenuClose={() => setIsMobileMenuOpen(false)}
+        /> */}
+        <AdminAndResellerSidebar
           isMobileMenuOpen={isMobileMenuOpen}
           onMobileMenuClose={() => setIsMobileMenuOpen(false)}
         />

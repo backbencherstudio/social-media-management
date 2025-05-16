@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 interface profileIconProps {
-    className?: string;
+  className?: string;
 }
 
 const ProfileIcon: React.FC<profileIconProps> = ({ className="" }) => {

@@ -4,7 +4,9 @@ interface NotificationIconProps {
   className?: string;
 }
 
-const NotificationIcon: React.FC<NotificationIconProps> = ({ className = "" }) => {
+const NotificationIcon: React.FC<NotificationIconProps> = ({
+  className = "",
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

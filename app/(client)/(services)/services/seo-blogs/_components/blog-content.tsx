@@ -15,19 +15,19 @@ export default function BlogContent() {
       text: "Establish your authorityand expertise in the field",
     },
     {
-      icon: <PeopleIcon  />,
+      icon: <PeopleIcon />,
       text: "Get more leads in a cost-effective way",
     },
     {
-      icon: <MessengerIcon/>,
+      icon: <MessengerIcon />,
       text: "Increase revenue,closed deals, and conversions.",
     },
     {
-      icon: <LikeIcon/>,
+      icon: <LikeIcon />,
       text: "Google loves regular updates and new content",
     },
     {
-      icon: <StartupIcon/>,
+      icon: <StartupIcon />,
       text: "More content increases traffic and keyword rankings",
     },
   ];

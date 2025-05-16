@@ -7,9 +7,7 @@ import React, { useState } from "react";
 import ContentQueue from "./_components/content-queue";
 import { ScheduledPostCard } from "./_components/scheduled-post-card";
 import { SocialMediaDesignCard } from "./_components/social-media-design-card";
-import { set } from "date-fns";
 import { ScheduledPostModal } from "./_components/ScheduledPostModal";
-import { hash } from "crypto";
 import { SocialMediaDesignModal } from "./_components/SocialMediaDesignModal";
 
 const assets: Asset[] = [

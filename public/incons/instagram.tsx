@@ -22,7 +22,7 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({ className = "" }) => {
         <path
           d="M-14047 -9064H10941V-9066H-14047V-9064ZM10942 -9063V5742H10944V-9063H10942ZM10941 5743H-14047V5745H10941V5743ZM-14048 5742V-9063H-14050V5742H-14048ZM-14047 5743C-14047.6 5743 -14048 5742.55 -14048 5742H-14050C-14050 5743.66 -14048.7 5745 -14047 5745V5743ZM10942 5742C10942 5742.55 10941.6 5743 10941 5743V5745C10942.7 5745 10944 5743.66 10944 5742H10942ZM10941 -9064C10941.6 -9064 10942 -9063.55 10942 -9063H10944C10944 -9064.66 10942.7 -9066 10941 -9066V-9064ZM-14047 -9066C-14048.7 -9066 -14050 -9064.66 -14050 -9063H-14048C-14048 -9063.55 -14047.6 -9064 -14047 -9064V-9066Z"
           fill="white"
-          fill-opacity="0.1"
+          fillOpacity="0.1"
         />
         <g id="Social page" clipPath="url(#clip0_5654_10979)">
           <rect
@@ -49,7 +49,7 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({ className = "" }) => {
                   height="67"
                   rx="8"
                   fill="#F6F8FA"
-                  fill-opacity="0.72"
+                  fillOpacity="0.72"
                 />
                 <g id="Socials">
                   <g clipPath="url(#clip1_5654_10979)">

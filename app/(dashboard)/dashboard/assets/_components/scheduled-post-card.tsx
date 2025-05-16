@@ -1,7 +1,6 @@
 "use client";
 
 interface ScheduledPostCardProps {
-  
   title: string;
   scheduledFor: string;
   platforms: string[];

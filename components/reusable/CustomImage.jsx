@@ -1,6 +1,5 @@
-import Image from 'next/image'
-import React from 'react'
-
+import Image from "next/image";
+import React from "react";
 
 export default function CustomImage({
   src = "",
@@ -23,29 +22,31 @@ export default function CustomImage({
   <rect width="${w}" height="${h}" fill="#dddddd" />
   <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-</svg>`
+</svg>`;
 
   const toBase64 = (str) =>
-    typeof window === 'undefined'
-      ? Buffer.from(str).toString('base64')
-      : window.btoa(str)
+    typeof window === "undefined"
+      ? Buffer.from(str).toString("base64")
+      : window.btoa(str);
   return (
     <Image
       crossOrigin="anonymous"
-      src={src} alt={alt}
+      src={src}
+      alt={alt}
       loading="lazy"
       width={width}
       height={height}
       unoptimized={false}
       layout={layout}
       placeholder="blur"
-      blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(width, height))}`}
+      blurDataURL={`data:image/svg+xml;base64,${toBase64(
+        shimmer(width, height)
+      )}`}
       loader={() => src}
       {...props}
     />
-  )
+  );
 }
-
 
 // const shimmer = (w, h) => `
 // <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

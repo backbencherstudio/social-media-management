@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 interface startupIconProps {
-    className?: string;
+  className?: string;
 }
 
 const StartupIcon: React.FC<startupIconProps> = ({ className="" }) => {
