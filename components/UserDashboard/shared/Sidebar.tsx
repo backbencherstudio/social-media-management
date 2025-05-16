@@ -180,10 +180,10 @@ export default function Sidebar({
         ))}
 
         {/* Render purchased menu items if the user has purchased services */}
-        {hasPurchased &&
+        {/* {hasPurchased &&
           purchasedTopMenuItems.map((item, index) => (
             <NavLink key={`purchased-${index}`} item={item} />
-          ))}
+          ))} */}
       </nav>
 
       {/* Bottom Menu Items */}
