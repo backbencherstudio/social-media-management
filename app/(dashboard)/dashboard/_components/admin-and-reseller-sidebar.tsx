@@ -60,7 +60,7 @@ const activityMenuItems = [
 ];
 // Configuration
 const configurationMenuItems = [
-  { title: "Socials", icon: RiLayoutGridLine, href: "/dashboard/socials" },
+  { title: "Socials", icon: RiLayoutGridLine, href: "/dashboard/social-media" },
 ];
 // Help
 const helpMenuItems = [
