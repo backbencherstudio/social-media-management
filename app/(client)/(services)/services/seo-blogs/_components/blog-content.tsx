@@ -15,19 +15,19 @@ export default function BlogContent() {
       text: "Establish your authorityand expertise in the field",
     },
     {
-      icon: <PeopleIcon  />,
+      icon: <PeopleIcon />,
       text: "Get more leads in a cost-effective way",
     },
     {
-      icon: <MessengerIcon/>,
+      icon: <MessengerIcon />,
       text: "Increase revenue,closed deals, and conversions.",
     },
     {
-      icon: <LikeIcon/>,
+      icon: <LikeIcon />,
       text: "Google loves regular updates and new content",
     },
     {
-      icon: <StartupIcon/>,
+      icon: <StartupIcon />,
       text: "More content increases traffic and keyword rankings",
     },
   ];
@@ -65,9 +65,9 @@ export default function BlogContent() {
             <path
               d="M10.4974 6.66675V13.3334M13.8307 10.0001H7.16406M10.4974 18.3334C15.0998 18.3334 18.8307 14.6025 18.8307 10.0001C18.8307 5.39771 15.0998 1.66675 10.4974 1.66675C5.89502 1.66675 2.16406 5.39771 2.16406 10.0001C2.16406 14.6025 5.89502 18.3334 10.4974 18.3334Z"
               stroke="#1D1D1F"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </button>
@@ -95,23 +95,23 @@ const profileIcon = (
     <path
       d="M19.6523 25.4L21.679 27.4266L25.7323 23.3733"
       stroke="#04060F"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M16.6139 14.4934C16.4805 14.4801 16.3205 14.4801 16.1739 14.4934C13.0005 14.3867 10.4805 11.7867 10.4805 8.58675C10.4672 5.32008 13.1205 2.66675 16.3872 2.66675C19.6539 2.66675 22.3072 5.32008 22.3072 8.58675C22.3072 11.7867 19.7739 14.3867 16.6139 14.4934Z"
       stroke="#04060F"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M16.3852 29.0799C13.9585 29.0799 11.5452 28.4666 9.70516 27.2399C6.47849 25.0799 6.47849 21.5599 9.70516 19.4132C13.3718 16.9599 19.3852 16.9599 23.0518 19.4132"
       stroke="#04060F"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
