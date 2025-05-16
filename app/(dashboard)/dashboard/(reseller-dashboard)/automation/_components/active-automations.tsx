@@ -16,8 +16,8 @@ export default function ActiveAutomations() {
         <div className="px-4 py-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* div-1 */}
-            <div>
-              <div className="flex justify-between border border-gray-200 p-5 hover:bg-gray-50 rounded-lg">
+            <div className=" border border-gray-200 p-5 hover:bg-gray-50 rounded-lg space-y-6">
+              <div className="flex justify-between">
                 <div className="flex items-start space-x-3 transition-colors">
                   <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
                     <svg
@@ -43,16 +43,22 @@ export default function ActiveAutomations() {
                     </p>
                   </div>
                 </div>
-                <div className="text-sm text-black flex items-center justify-center px-4 py-1 rounded-full bg-[#EBFBF5] gap-1">
+                <div className="text-sm text-black flex items-center justify-center h-8 px-4 rounded-full bg-[#EBFBF5] gap-1">
                   <div className="w-2 h-2 rounded-full bg-[#119B70] animate-pulse"></div>
                   <span className="font-medium text-gray-900">15</span>
                   &nbsp;Active
                 </div>
               </div>
               {/* div-2 */}
-              {/* <div>
-                
-              </div> */}
+              <div className="flex justify-between items-center">
+                <p className="text-sm text-gray-500">
+                  Last run: <span className="font-semibold">2h ago</span>
+                </p>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" className="sr-only peer" />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-green-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">gg</div>
+                </label>
+              </div>
             </div>
 
             <div className="flex items-start space-x-3 border border-gray-200 p-5 hover:bg-gray-50 rounded-lg transition-colors">
