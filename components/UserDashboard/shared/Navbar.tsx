@@ -53,9 +53,9 @@ export default function Navbar({
             <span>Add Services</span>
           </button>
           {/* <NotificationIcon  /> */}
-          <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
+          <Link href={'/dashboard/notification'} className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
             <IoNotificationsOutline className="w-6 h-6" />
-          </button>
+          </Link>
           <div className="relative" ref={dropdownRef}>
             <div
               className="flex items-center gap-3 p-2 rounded-full hover:bg-gray-100 cursor-pointer transition-colors duration-200"
