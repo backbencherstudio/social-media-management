@@ -65,11 +65,11 @@ const freelancerMenu: Section[] = [
   {
     label: "Activity",
     items: [
-      {
-        title: "Automotion",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/automation",
-      },
+      // {
+      //   title: "Automotion",
+      //   icon: RiLayoutGridLine,
+      //   href: "/dashboard/automation",
+      // },
       {
         title: "Social Inbox",
         icon: RiLayoutGridLine,
@@ -252,7 +252,7 @@ export default function AdminAndResellerSidebar({
   };
 
   // const role:Role = "freelancer";
-  const role: Role = "admin";
+  const role: Role = "freelancer";
 
   const isFreelancer = role === ROLE.FREELANCER;
 

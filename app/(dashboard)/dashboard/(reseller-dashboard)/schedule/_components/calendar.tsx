@@ -31,18 +31,11 @@ export default function Calendar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvents, setSelectedEvents] = useState<EventType[]>([]);
   const [currentView, setCurrentView] = useState("dayGridMonth");
-  const calendarRef = useRef<any>(null);
+
+  // ✅ Fix useRef typing for getApi
+  const calendarRef = useRef<null | { getApi: () => any }>(null);
 
   const events: EventType[] = [
-    {
-      id: "1",
-      name: "John Doe",
-      avatar: null,
-      timeFrom: "09:00",
-      timeTo: "10:00",
-      subtitle: "Breathing & Mindfulness",
-      date: "2025-05-20",
-    },
     {
       id: "1",
       name: "John Doe",
@@ -62,49 +55,31 @@ export default function Calendar() {
       date: "2025-05-20",
     },
     {
-      id: "6",
-      name: "Jane Smith",
-      avatar: null,
-      timeFrom: "11:00",
-      timeTo: "12:00",
-      subtitle: "Meditation Session",
-      date: "2025-05-20",
-    },
-    {
-      id: "7",
-      name: "Jane Smith",
-      avatar: null,
-      timeFrom: "11:00",
-      timeTo: "12:00",
-      subtitle: "Meditation Session",
-      date: "2025-05-20",
-    },
-    {
       id: "3",
       name: "Bob Lee",
       avatar: "User",
       timeFrom: "14:00",
       timeTo: "15:00",
       subtitle: "Wellbeing Discussion",
-      date: "2025-05-22",
+      date: "2025-05-20",
     },
     {
       id: "4",
-      name: "Bob Lee",
+      name: "John",
       avatar: "User",
-      timeFrom: "14:00",
-      timeTo: "15:00",
-      subtitle: "Wellbeing Discussion",
-      date: "2025-05-05",
+      timeFrom: "15:00",
+      timeTo: "16:00",
+      subtitle: "Stretch & Walk",
+      date: "2025-05-20",
     },
     {
       id: "5",
-      name: "Bob Lee",
+      name: "Daisy",
       avatar: "User",
-      timeFrom: "14:00",
-      timeTo: "15:00",
-      subtitle: "Wellbeing Discussion",
-      date: "2025-06-02",
+      timeFrom: "16:00",
+      timeTo: "17:00",
+      subtitle: "Nutrition Tips",
+      date: "2025-05-22",
     },
   ];
 
@@ -139,16 +114,13 @@ export default function Calendar() {
 
   const handleViewChange = (view: string) => {
     setCurrentView(view);
-    if (calendarRef.current) {
-      const api = calendarRef.current.getApi();
-      api.changeView(view);
-    }
+    calendarRef.current?.getApi()?.changeView(view);
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)]">
       <FullCalendar
-        ref={calendarRef}
+        // ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView={currentView}
         editable={false}
@@ -159,7 +131,7 @@ export default function Calendar() {
           center: "title",
           end: "dayGridMonth,timeGridWeek,dayGridDay",
         }}
-        dayMaxEvents={2} // ✅ Shows max 2, then "+n more"
+        dayMaxEvents={2} // ✅ show max 2 events per day with "+n more"
         height="auto"
         aspectRatio={2.5}
         eventClick={openModal}
@@ -179,8 +151,8 @@ export default function Calendar() {
         }}
       />
 
-      {/* Modal (optional) */}
-      {/* {isModalOpen && (
+      {/* ✅ Modal to show tasks of selected day */}
+      {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
           <div
             id="modal"
@@ -213,7 +185,7 @@ export default function Calendar() {
             </div>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 }
