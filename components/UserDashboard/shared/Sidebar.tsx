@@ -179,15 +179,15 @@ export default function Sidebar({
         ))} */}
       {/* Top Menu Items */}
       <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? 'px-2' : ''}`}>
-        {isFreelancer && freelancertopMenuItems.map((item, index) => (
+        {isFreelancer && topMenuItems.map((item, index) => (
           <NavLink key={index} item={item} />
         ))}
 
         {/* Render purchased menu items if the user has purchased services */}
-        {/* {hasPurchased &&
+        {hasPurchased &&
           purchasedTopMenuItems.map((item, index) => (
             <NavLink key={`purchased-${index}`} item={item} />
-          ))} */}
+          ))}
       </nav>
 
       {/* Bottom Menu Items */}

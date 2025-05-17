@@ -7,76 +7,243 @@ import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
 import { usePurchase } from "@/app/context/PurchaseContext";
 
-// const topMenuItems = [
-//   { title: "Home", icon: RiHome5Line, href: "/dashboard" },
-//   { title: "Assets", icon: RiLayoutGridLine, href: "/dashboard/assets" },
-//   { title: "Service", icon: RiLayoutGridLine, href: "/dashboard/service" },
-//   { title: "Services", icon: RiLayoutGridLine, href: "/dashboard/services" },
-//   {
-//     title: "Social Media",
-//     icon: RiLayoutGridLine,
-//     href: "/dashboard/social-media",
-//   },
-// ];
+// Define roles
+const ROLE = {
+  FREELANCER: "freelancer",
+  ADMIN: "admin",
+};
 
-const isFreelancer = true;
+type Role = "admin" | "freelancer";
 
-// Overview
-const overviewtopMenuItems = [
+// Menu item type
+interface MenuItem {
+  title: string;
+  icon: React.ElementType;
+  href: string;
+}
+
+// Section type
+interface Section {
+  label: string;
+  items: MenuItem[];
+}
+
+// Menu definitions
+const freelancerMenu: Section[] = [
   {
-    title: "Dashboard",
-    icon: RiHome5Line,
-    href: "/dashboard/freelancer-dashboard",
-  },
-  { title: "Analytics", icon: RiLayoutGridLine, href: "/dashboard/analytics" },
-];
-// Content
-const contentMenuItems = [
-  {
-    title: "Compose",
-    icon: RiHome5Line,
-    href: "/dashboard/compose",
-  },
-  { title: "Schedule", icon: RiLayoutGridLine, href: "/dashboard/schedule" },
-  { title: "Post", icon: RiLayoutGridLine, href: "/dashboard/posts" },
-  {
-    title: "Assets",
-    icon: RiLayoutGridLine,
-    href: "/dashboard/dashboard-assets",
-  },
-];
-// Activity
-const activityMenuItems = [
-  {
-    title: "Automotion",
-    icon: RiLayoutGridLine,
-    href: "/dashboard/automation",
+    label: "Overview",
+    items: [
+      {
+        title: "Dashboard",
+        icon: RiHome5Line,
+        href: "/dashboard/freelancer-dashboard",
+      },
+      {
+        title: "Analytics",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/analytics",
+      },
+    ],
   },
   {
-    title: "Social Inbox",
-    icon: RiLayoutGridLine,
-    href: "/dashboard/social-inbox",
+    label: "Content",
+    items: [
+      { title: "Compose", icon: RiHome5Line, href: "/dashboard/compose" },
+      {
+        title: "Schedule",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/schedule",
+      },
+      { title: "Post", icon: RiLayoutGridLine, href: "/dashboard/posts" },
+      {
+        title: "Assets",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/dashboard-assets",
+      },
+    ],
+  },
+  {
+    label: "Activity",
+    items: [
+      {
+        title: "Automotion",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/automation",
+      },
+      {
+        title: "Social Inbox",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/social-inbox",
+      },
+    ],
+  },
+  {
+    label: "Configuration",
+    items: [
+      { title: "Socials", icon: RiLayoutGridLine, href: "/dashboard/socials" },
+    ],
+  },
+  {
+    label: "Help",
+    items: [
+      { title: "Support", icon: RiLayoutGridLine, href: "/dashboard/support" },
+    ],
   },
 ];
-// Configuration
-const configurationMenuItems = [
-  { title: "Socials", icon: RiLayoutGridLine, href: "/dashboard/social-media" },
+
+const adminMenu: Section[] = [
+  {
+    label: "Overview",
+    items: [
+      { title: "A Dashboard", icon: RiHome5Line, href: "/dashboard" },
+      // { title: "Reports", icon: RiLayoutGridLine, href: "/dashboard/reports" },
+    ],
+  },
+  {
+    label: "Operation",
+    items: [
+      { title: "Order", icon: RiHome5Line, href: "/dashboard/order" },
+      {
+        title: "Task Management",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/task-management",
+      },
+      { title: "Client", icon: RiLayoutGridLine, href: "/dashboard/client" },
+      {
+        title: "Reseller",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/reseller",
+      },
+      { title: "Team", icon: RiLayoutGridLine, href: "/dashboard/team" },
+    ],
+  },
+  {
+    label: "Content Management",
+    items: [
+      {
+        title: "Services",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/services",
+      },
+      {
+        title: "blog",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/blog",
+      },
+    ],
+  },
+  {
+    label: "Finance",
+    items: [
+      {
+        title: "Payment",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/payment",
+      },
+    ],
+  },
+  {
+    label: "Help",
+    items: [
+      {
+        title: "Live Chat",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/live-chat",
+      },
+      {
+        title: "Support",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/support",
+      },
+    ],
+  },
+  {
+    label: "Settings",
+    items: [
+      {
+        title: "Settings",
+        icon: RiLayoutGridLine,
+        href: "/dashboard/settings",
+      },
+    ],
+  },
 ];
-// Help
-const helpMenuItems = [
-  { title: "Support", icon: RiLayoutGridLine, href: "/dashboard/support" },
-];
+
+// Helper to get menu based on role
+const getMenuByRole = (role: Role): Section[] => {
+  switch (role) {
+    case ROLE.FREELANCER:
+      return freelancerMenu;
+    case ROLE.ADMIN:
+      return adminMenu;
+    default:
+      return [];
+  }
+};
 
 interface SidebarProps {
   isMobileMenuOpen: boolean;
   onMobileMenuClose: () => void;
 }
 
+const SidebarSection = ({
+  label,
+  items,
+  isCollapsed,
+}: {
+  label: string;
+  items: MenuItem[];
+  isCollapsed: boolean;
+}) => (
+  <div>
+    <p className="text-sm text-gray-500 px-6">{label}</p>
+    <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
+      {items.map((item, index) => (
+        <NavLink key={index} item={item} isCollapsed={isCollapsed} />
+      ))}
+    </nav>
+  </div>
+);
+
+const NavLink = ({
+  item,
+  isCollapsed,
+}: {
+  item: MenuItem;
+  isCollapsed: boolean;
+}) => {
+  const pathname = usePathname();
+  const isActive = pathname === item.href;
+  return (
+    <Link
+      href={item.href}
+      className={`flex items-center text-[14px] transition-all duration-200 ${
+        isCollapsed ? "justify-center px-0" : "px-3 gap-3"
+      } p-3 rounded-lg ${
+        isActive
+          ? "bg-[#F5F5F7] text-black"
+          : "text-[#4A4C56] hover:bg-gray-100"
+      }`}
+      title={isCollapsed ? item.title : ""}
+    >
+      <item.icon
+        className={`w-5 h-5 shrink-0 ${isActive ? "" : "text-gray-500"}`}
+      />
+      <span
+        className={`transition-all duration-300 ${
+          isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+        } ${isActive ? "font-medium" : ""} whitespace-nowrap overflow-hidden`}
+      >
+        {item.title}
+      </span>
+    </Link>
+  );
+};
+
 export default function AdminAndResellerSidebar({
   isMobileMenuOpen,
   onMobileMenuClose,
 }: SidebarProps) {
-  const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { hasPurchased } = usePurchase();
 
@@ -84,42 +251,12 @@ export default function AdminAndResellerSidebar({
     setIsCollapsed(!isCollapsed);
   };
 
-  const NavLink = ({ item }: { item: (typeof overviewtopMenuItems)[0] }) => {
-    const isActive = pathname === item.href;
-    return (
-      <Link
-        href={item.href}
-        className={`
-          flex items-center text-[14px] transition-all duration-200
-          ${isCollapsed ? "justify-center px-0" : "px-3 gap-3"}
-          p-3 rounded-lg
-          ${
-            isActive
-              ? "bg-[#F5F5F7] text-black"
-              : "text-[#4A4C56] hover:bg-gray-100"
-          }
-        `}
-        title={isCollapsed ? item.title : ""}
-      >
-        <item.icon
-          className={`
-            w-5 h-5 shrink-0
-            ${isActive ? "" : "text-gray-500"}
-          `}
-        />
-        <span
-          className={`
-            transition-all duration-300
-            ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"}
-            ${isActive ? "font-medium" : ""}
-            whitespace-nowrap overflow-hidden
-          `}
-        >
-          {item.title}
-        </span>
-      </Link>
-    );
-  };
+  // const role:Role = "freelancer";
+  const role: Role = "admin";
+
+  const isFreelancer = role === ROLE.FREELANCER;
+
+  const menuSections = getMenuByRole(role);
 
   return (
     <aside
@@ -127,24 +264,21 @@ export default function AdminAndResellerSidebar({
         fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out
         ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
         md:relative md:translate-x-0
-        ${isCollapsed ? "md:w-16" : "w-64"} 
-        bg-white border-r border-[#E9E9EA] overflow-hidden
-        flex flex-col
+        ${isCollapsed ? "md:w-16" : "w-64"}
+        bg-white border-r border-[#E9E9EA] overflow-hidden flex flex-col
       `}
     >
       <div className="flex items-center justify-between p-5 pb-5">
         <div
-          className={`
-          transition-all duration-300 ease-in-out
-          ${isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"}
-        `}
+          className={`transition-all duration-300 ease-in-out ${
+            isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"
+          }`}
         >
           <div className="w-[120px] h-[22px] object-contain">
             <LogoIcon className="w-full h-full" />
           </div>
         </div>
 
-        {/* Toggle button for large screens */}
         <button
           className="hidden md:block cursor-pointer shrink-0 transition-transform duration-300"
           onClick={toggleCollapse}
@@ -162,19 +296,17 @@ export default function AdminAndResellerSidebar({
           </div>
         </button>
 
-        {/* Close button for mobile */}
         <button
-          className={`p-2 rounded-lg hover:bg-gray-100 md:hidden
-            transition-opacity duration-300
-            ${isCollapsed ? "opacity-0" : "opacity-100"}
-          `}
+          className={`p-2 rounded-lg hover:bg-gray-100 md:hidden transition-opacity duration-300 ${
+            isCollapsed ? "opacity-0" : "opacity-100"
+          }`}
           onClick={onMobileMenuClose}
         >
           <IoMdClose className="w-6 h-6" />
         </button>
       </div>
 
-      <div>
+      {isFreelancer && (
         <div className="px-6 mb-6">
           <p className="text-sm text-gray-500 mb-4">All Client</p>
           <div className="flex items-center justify-between">
@@ -195,68 +327,15 @@ export default function AdminAndResellerSidebar({
             </select>
           </div>
         </div>
-        {/* Top Menu Items */}
-        {/* <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? 'px-2' : ''}`}>
-      <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-        {topMenuItems.map((item, index) => (
-          <NavLink key={index} item={item} />
-        ))} */}
-
-        <div>
-          <p className="text-sm text-gray-500 px-6">Overview</p>
-          {/* Top Menu Items */}
-          <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-            {isFreelancer &&
-              overviewtopMenuItems.map((item, index) => (
-                <NavLink key={index} item={item} />
-              ))}
-          </nav>
-        </div>
-
-        <div>
-          <p className="text-sm text-gray-500 px-6">Content</p>
-          {/* Top Menu Items */}
-          <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-            {isFreelancer &&
-              contentMenuItems.map((item, index) => (
-                <NavLink key={index} item={item} />
-              ))}
-          </nav>
-        </div>
-
-        <div>
-          <p className="text-sm text-gray-500 px-6">Activity</p>
-          {/* Top Menu Items */}
-          <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-            {isFreelancer &&
-              activityMenuItems.map((item, index) => (
-                <NavLink key={index} item={item} />
-              ))}
-          </nav>
-        </div>
-
-        <div>
-          <p className="text-sm text-gray-500 px-6">Configuration</p>
-          {/* Top Menu Items */}
-          <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-            {isFreelancer &&
-              configurationMenuItems.map((item, index) => (
-                <NavLink key={index} item={item} />
-              ))}
-          </nav>
-        </div>
-
-        <div>
-          <p className="text-sm text-gray-500 px-6">Help</p>
-          {/* Top Menu Items */}
-          <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-            {isFreelancer &&
-              helpMenuItems.map((item, index) => (
-                <NavLink key={index} item={item} />
-              ))}
-          </nav>
-        </div>
-      </div>
+      )}
+      {menuSections.map((section, idx) => (
+        <SidebarSection
+          key={idx}
+          label={section.label}
+          items={section.items}
+          isCollapsed={isCollapsed}
+        />
+      ))}
     </aside>
   );
 }

@@ -15,17 +15,23 @@ export default function ClientLayout({
 
   const role = ["user", "freelancer", "admin", "reseller"];
 
+  const isUser = false;
   return (
     <PurchaseProvider>
       <div className="flex h-screen overflow-hidden bg-[#F7F7F9] font-commissioner">
-        {/* <Sidebar
-          isMobileMenuOpen={isMobileMenuOpen}
-          onMobileMenuClose={() => setIsMobileMenuOpen(false)}
-        /> */}
-        <AdminAndResellerSidebar
-          isMobileMenuOpen={isMobileMenuOpen}
-          onMobileMenuClose={() => setIsMobileMenuOpen(false)}
-        />
+        {isUser ? (
+          <Sidebar
+            isMobileMenuOpen={isMobileMenuOpen}
+            onMobileMenuClose={() => setIsMobileMenuOpen(false)}
+          />
+        ) : (
+          <AdminAndResellerSidebar
+            // role="freelancer"
+            // role="admin"
+            isMobileMenuOpen={isMobileMenuOpen}
+            onMobileMenuClose={() => setIsMobileMenuOpen(false)}
+          />
+        )}
 
         <div className="flex-1 flex flex-col overflow-hidden">
           <Navbar
