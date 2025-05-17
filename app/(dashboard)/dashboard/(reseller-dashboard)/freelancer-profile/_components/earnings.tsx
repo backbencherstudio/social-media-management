@@ -1,10 +1,11 @@
-import Link from "next/link";
-import React from "react";
-import DatePicker from "../../freelancer-dashboard/_components/date-picker";
-import { GrView } from "react-icons/gr";
-import { BsBoxArrowUpRight } from "react-icons/bs";
+"use client";
+import React, { useState } from "react";
+import EarningsModal from "./earnings-modal";
+import WithdrawModal from "./withdraw-modal";
 
-export default function AllTask() {
+export default function Earnings() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
   const services = [
     {
       id: 1,
@@ -29,19 +30,22 @@ export default function AllTask() {
     },
   ];
 
+  const handleViewDetails = (service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="overflow-x-auto w-full px-4 py-6 bg-white rounded-lg">
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6 px-1">
-        <div className="flex gap-3">
-          <h1 className="text-2xl font-bold text-gray-900">All Task</h1>
-
-          <div className="text-sm text-black flex items-center justify-center px-4 py-1 rounded-full bg-[#EBFBF5] gap-1">
-            <div className="w-2 h-2 rounded-full bg-[#119B70] animate-pulse"></div>
-            <span className="font-medium text-gray-900">15</span>&nbsp;Active
-          </div>
+        <div className="space-y-3">
+          <h1 className="text-2xl font-bold text-gray-900">Earningsk</h1>
+          <p className="text-gray-500">Total Available Balance: $1,500.00</p>
         </div>
-        <DatePicker />
+        <div>
+          <WithdrawModal />
+        </div>
       </div>
 
       <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
@@ -50,10 +54,10 @@ export default function AllTask() {
             <th className="py-3 px-4 text-left first:rounded-tl-lg">
               Client Namee
             </th>
-            <th className="py-3 px-4">Assign Date</th>
-            <th className="py-3 px-4">Assign by</th>
+            <th className="py-3 px-4">Project</th>
+            <th className="py-3 px-4">Earnings</th>
+            <th className="py-3 px-4">Date</th>
             <th className="py-3 px-4">Status</th>
-            <th className="py-3 px-4">Deadline</th>
             <th className="py-3 px-4">Actions</th>
           </tr>
         </thead>
@@ -101,18 +105,25 @@ export default function AllTask() {
               </td>
               <td className="py-4 px-4 text-center">
                 <div className="flex items-center justify-center gap-4">
-                  <Link href={`/dashboard/service/${service.id}`} className="">
-                    <BsBoxArrowUpRight />
-                  </Link>
-                  <Link href={`/dashboard/service/${service.id}`} className="">
-                    <GrView />
-                  </Link>
+                  <button
+                    onClick={() => handleViewDetails(service)}
+                    className="text-blue-600 underline hover:text-blue-800"
+                  >
+                    View Details
+                  </button>
                 </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Earnings Modal */}
+      <EarningsModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        selectedService={selectedService}
+      />
     </div>
   );
 }

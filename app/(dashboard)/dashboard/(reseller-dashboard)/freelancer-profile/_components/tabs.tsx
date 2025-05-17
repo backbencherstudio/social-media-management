@@ -1,6 +1,8 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import AllTask from './all-task'
+import PersonalInformation from './personal-information'
+import Earnings from './earnings'
 
 export default function ProfileTabs() {
   return (
@@ -32,17 +34,11 @@ export default function ProfileTabs() {
         </TabsContent>
 
         <TabsContent value="Account Settings" className="space-y-4">
-          <div>
-            <h3 className="text-lg font-semibold mb-4">My Work</h3>
-            <p className="text-gray-600">Account Settings content goes here...</p>
-          </div>
+           <PersonalInformation />
         </TabsContent>
 
         <TabsContent value="Earnings" className="space-y-4">
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Client Earnings</h3>
-            <p className="text-gray-600">Earnings content goes here...</p>
-          </div>
+          <Earnings />
         </TabsContent>
       </Tabs>
     </div>
