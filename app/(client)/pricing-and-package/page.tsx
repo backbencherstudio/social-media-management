@@ -14,16 +14,16 @@ export default function PricingAndPackage() {
       <div className="bg-[#F7F7F9]">
         {/* <Banner /> */}
         <div className="sm:px-6 lg:px-8 mb-20">
-          <Pricing  />
+          <Pricing />
         </div>
       </div>
       <div className="mb-20">
         <BusinessTrust />
       </div>
       <Packages scrollable={false} />
-      <AddOns/>
-      <SocialChannel/>
-      <ApplyReseller/>
+      <AddOns />
+      <SocialChannel />
+      <ApplyReseller />
       <TrustedBrand bgcolor={false} />
     </div>
   );
