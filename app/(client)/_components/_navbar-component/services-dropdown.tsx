@@ -22,7 +22,7 @@ export const ServicesDropdownContent = () => (
             text="Social Media Posts"
           />
           <NavLink
-            href="/services/short-form-videos"
+            href="/services/short-video"
             icon={<WatchIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
             text="Short-Form Videos"
           />
@@ -38,7 +38,7 @@ export const ServicesDropdownContent = () => (
         <p className="text-gray-500 serotiva-regular text-sm">CONTENT</p>
         <ul className="mt-2 space-y-2">
           <NavLink
-            href="/services/blog-post"
+            href="/services/seo-blogs"
             icon={<BookIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
             text="Blog Post"
           />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface LikeIconProps {
   className?: string;
@@ -6,17 +6,28 @@ interface LikeIconProps {
 
 const LikeIcon: React.FC<LikeIconProps> = ({ className }) => {
   return (
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width="26" 
-      height="26" 
-      viewBox="0 0 26 26" 
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="33"
+      height="32"
+      viewBox="0 0 33 32"
       fill="none"
-      className={className}
     >
-      <path d="M4.77182 16.8202L9.67932 21.7277C11.6943 23.7427 14.966 23.7427 16.9918 21.7277L21.7477 16.9719C23.7627 14.9569 23.7627 11.6852 21.7477 9.6594L16.8293 4.76273C15.8002 3.73356 14.381 3.18106 12.9293 3.2569L7.51265 3.5169C5.34599 3.6144 3.62349 5.3369 3.51515 7.49273L3.25515 12.9094C3.19015 14.3719 3.74265 15.7911 4.77182 16.8202Z" stroke="currentColor" strokeWidth="1.625" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M10.546 13.2452C12.0418 13.2452 13.2543 12.0327 13.2543 10.5369C13.2543 9.04113 12.0418 7.82857 10.546 7.82857C9.05021 7.82857 7.83765 9.04113 7.83765 10.5369C7.83765 12.0327 9.05021 13.2452 10.546 13.2452Z" stroke="currentColor" strokeWidth="1.625" strokeLinecap="round"/>
-      <path d="M14.3376 18.6619L18.671 14.3286" stroke="currentColor" strokeWidth="1.625" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+      <path
+        d="M24.8008 25.1466H23.7874C22.7208 25.1466 21.7074 25.5599 20.9608 26.3066L18.6808 28.5599C17.6408 29.5866 15.9474 29.5866 14.9074 28.5599L12.6274 26.3066C11.8808 25.5599 10.8541 25.1466 9.80078 25.1466H8.80078C6.58745 25.1466 4.80078 23.3733 4.80078 21.1866V6.63989C4.80078 4.45323 6.58745 2.67993 8.80078 2.67993H24.8008C27.0141 2.67993 28.8008 4.45323 28.8008 6.63989V21.1866C28.8008 23.3599 27.0141 25.1466 24.8008 25.1466Z"
+        stroke="#04060F"
+        strokeWidth="2"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17.1741 19.9466C16.9741 20.0133 16.6408 20.0133 16.4274 19.9466C14.6941 19.3466 10.8008 16.8799 10.8008 12.6799C10.8008 10.8266 12.2941 9.33325 14.1341 9.33325C15.2274 9.33325 16.1874 9.85325 16.8008 10.6666C17.4141 9.85325 18.3741 9.33325 19.4674 9.33325C21.3074 9.33325 22.8008 10.8266 22.8008 12.6799C22.7874 16.8799 18.9074 19.3466 17.1741 19.9466Z"
+        stroke="#04060F"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };

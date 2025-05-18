@@ -1,31 +1,37 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FaRegUser } from "react-icons/fa";
-import { IoSettingsOutline, IoLogOutOutline } from "react-icons/io5";
+import { IoSettingsOutline, IoLogOutOutline, IoNotificationsOutline } from "react-icons/io5";
 import { RiUserLine } from "react-icons/ri";
 import { ImPower } from "react-icons/im";
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
   isMobileMenuOpen: boolean;
 }
 
-
-export default function Navbar({ isMobileMenuOpen, onMobileMenuToggle }: NavbarProps) {
+export default function Navbar({
+  isMobileMenuOpen,
+  onMobileMenuToggle,
+}: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -46,9 +52,10 @@ export default function Navbar({ isMobileMenuOpen, onMobileMenuToggle }: NavbarP
             <ImPower />
             <span>Add Services</span>
           </button>
-          {/* <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
+          {/* <NotificationIcon  /> */}
+          <Link href={'/dashboard/notification'} className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
             <IoNotificationsOutline className="w-6 h-6" />
-          </button> */}
+          </Link>
           <div className="relative" ref={dropdownRef}>
             <div
               className="flex items-center gap-3 p-2 rounded-full hover:bg-gray-100 cursor-pointer transition-colors duration-200"
@@ -58,30 +65,39 @@ export default function Navbar({ isMobileMenuOpen, onMobileMenuToggle }: NavbarP
                 <FaRegUser className="w-5 h-5 text-gray-600" />
               </div>
               <ChevronDown
-                className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''
-                  }`}
+                className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${
+                  isDropdownOpen ? "rotate-180" : ""
+                }`}
               />
             </div>
 
             {/* Dropdown Menu with enhanced smooth transition */}
-            <div className={`
+            <div
+              className={`
               absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50
               transition-all duration-200 ease-out
               transform origin-top-right
-              ${isDropdownOpen
-                ? 'translate-y-0 scale-100 opacity-100 visible'
-                : 'translate-y-2 scale-95 opacity-0 invisible pointer-events-none'}
-            `}>
+              ${
+                isDropdownOpen
+                  ? "translate-y-0 scale-100 opacity-100 visible"
+                  : "translate-y-2 scale-95 opacity-0 invisible pointer-events-none"
+              }
+            `}
+            >
               <div className="px-4 py-3 border-b border-gray-200">
-                <p className="text-sm font-medium transition-colors duration-200">Katie Sims</p>
-                <p className="text-sm text-gray-500 transition-colors duration-200">katie@example.com</p>
+                <p className="text-sm font-medium transition-colors duration-200">
+                  Katie Sims
+                </p>
+                <p className="text-sm text-gray-500 transition-colors duration-200">
+                  katie@example.com
+                </p>
               </div>
 
               <div className="py-1">
-                <button className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
+                <Link href={'/dashboard/freelancer-profile'} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
                   <RiUserLine className="w-4 h-4" />
                   Profile
-                </button>
+                </Link>
                 <button className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
                   <IoSettingsOutline className="w-4 h-4" />
                   Settings
