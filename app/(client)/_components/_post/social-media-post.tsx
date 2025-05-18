@@ -1,26 +1,28 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import FacebookIcon from '@/public/incons/landin-page/facebook';
-import TwitterIcon from '@/public/incons/landin-page/TwitterIcon';
-import InstaIcon from '@/public/incons/landin-page/insta-icon';
-import LinkdinIcon from '@/public/incons/landin-page/LinkdinIcon';
-import YoutubeIcon from '@/public/incons/landin-page/youtubeIcon';
-import TiktokIcon from '@/public/incons/landin-page/ToktokIcon';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import FacebookIcon from "@/public/incons/landin-page/facebook";
+import TwitterIcon from "@/public/incons/landin-page/TwitterIcon";
+import InstaIcon from "@/public/incons/landin-page/insta-icon";
+import LinkdinIcon from "@/public/incons/landin-page/LinkdinIcon";
+import YoutubeIcon from "@/public/incons/landin-page/youtubeIcon";
+import TiktokIcon from "@/public/incons/landin-page/ToktokIcon";
+import Link from "next/link";
 
 const socialMediaData = {
-  title: 'Social Media Posts',
-  description: 'Custom social media posts with your branding. Created & posted monthly to your social media channels. Includes strategy, engaging captions, and relevant hashtags tailored for your audience.',
+  title: "Social Media Posts",
+  description:
+    "Custom social media posts with your branding. Created & posted monthly to your social media channels. Includes strategy, engaging captions, and relevant hashtags tailored for your audience.",
   features: [
-    'Posts in your branding',
-    'Captions and hashtags',
-    'Posted for you (optional)',
+    "Posts in your branding",
+    "Captions and hashtags",
+    "Posted for you (optional)",
   ],
   additionalFeatures: [
-    'Onboarding call (optional)',
-    '1 social channel included',
-    '+$10/mo each extra channel',
+    "Onboarding call (optional)",
+    "1 social channel included",
+    "+$10/mo each extra channel",
   ],
   pricing: {
     basePrice: {
@@ -30,26 +32,40 @@ const socialMediaData = {
       25: 249,
       30: 299,
       35: 349,
-      40: 399
+      40: 399,
     },
     posts: [10, 15, 20, 25, 30, 35, 40],
   },
 };
 
-const socialPlatforms = [<FacebookIcon/>, <TwitterIcon/>, <InstaIcon/>, <LinkdinIcon/>, <YoutubeIcon/>, <TiktokIcon/>];
+const socialPlatforms = [
+  <FacebookIcon />,
+  <TwitterIcon />,
+  <InstaIcon />,
+  <LinkdinIcon />,
+  <YoutubeIcon />,
+  <TiktokIcon />,
+];
 
 export default function SocialMediaPost() {
   const [selectedPosts, setSelectedPosts] = useState(20);
-  const basePrice = socialMediaData.pricing.basePrice[selectedPosts];
+  const basePrice =
+    socialMediaData.pricing.basePrice[
+      selectedPosts as keyof typeof socialMediaData.pricing.basePrice
+    ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
       {/* Left Side */}
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <div className="flex items-start gap-4 mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl lg:text-[26px] text-[#1D1D1F] font-serotiva-semibold font-semibold">{socialMediaData.title}</h2>
+          <h2 className="text-xl sm:text-2xl lg:text-[26px] text-[#1D1D1F] font-serotiva-semibold font-semibold">
+            {socialMediaData.title}
+          </h2>
         </div>
-        <p className="text-sm sm:text-base text-[#4A4C56] mb-4 sm:mb-6">{socialMediaData.description}</p>
+        <p className="text-sm sm:text-base text-[#4A4C56] mb-4 sm:mb-6">
+          {socialMediaData.description}
+        </p>
 
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-6 sm:mb-8">
           <div className="flex-1">
@@ -72,10 +88,10 @@ export default function SocialMediaPost() {
       {/* Right Side */}
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <PricingHeader selectedPosts={selectedPosts} basePrice={basePrice} />
-        <PostSelector 
-          posts={socialMediaData.pricing.posts} 
-          selectedPosts={selectedPosts} 
-          setSelectedPosts={setSelectedPosts} 
+        <PostSelector
+          posts={socialMediaData.pricing.posts}
+          selectedPosts={selectedPosts}
+          setSelectedPosts={setSelectedPosts}
         />
         <SocialPlatforms platforms={socialPlatforms} />
         <CheckoutButtons />
@@ -83,7 +99,6 @@ export default function SocialMediaPost() {
     </div>
   );
 }
-
 
 // Sub-components
 function FeatureList({ features }: { features: string[] }) {
@@ -114,11 +129,25 @@ function FeatureList({ features }: { features: string[] }) {
 function ActionButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-8">
-      {['Timeline', 'Examples', 'How the service works'].map((text) => (
-        <Button key={text} variant="outline" className="w-full sm:w-auto flex items-center justify-center gap-2 text-sm">
+      {["Timeline", "Examples", "How the service works"].map((text) => (
+        <Button
+          key={text}
+          variant="outline"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 text-sm"
+        >
           {text}
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </Button>
       ))}
@@ -126,7 +155,13 @@ function ActionButtons() {
   );
 }
 
-function PricingHeader({ selectedPosts, basePrice }: { selectedPosts: number; basePrice: number }) {
+function PricingHeader({
+  selectedPosts,
+  basePrice,
+}: {
+  selectedPosts: number;
+  basePrice: number;
+}) {
   return (
     <div className="flex justify-between items-center mb-8">
       <span className="text-sm">{selectedPosts} Post</span>
@@ -135,13 +170,13 @@ function PricingHeader({ selectedPosts, basePrice }: { selectedPosts: number; ba
   );
 }
 
-function PostSelector({ 
-  posts, 
-  selectedPosts, 
-  setSelectedPosts 
-}: { 
-  posts: number[]; 
-  selectedPosts: number; 
+function PostSelector({
+  posts,
+  selectedPosts,
+  setSelectedPosts,
+}: {
+  posts: number[];
+  selectedPosts: number;
   setSelectedPosts: (count: number) => void;
 }) {
   return (
@@ -152,7 +187,9 @@ function PostSelector({
           <Button
             key={count}
             variant={selectedPosts === count ? "default" : "outline"}
-            className={`${selectedPosts === count ? 'bg-black text-white' : ''}`}
+            className={`${
+              selectedPosts === count ? "bg-black text-white" : ""
+            }`}
             onClick={() => setSelectedPosts(count)}
           >
             {count}
@@ -184,9 +221,9 @@ function SocialPlatforms({ platforms }: { platforms: any[] }) {
 function CheckoutButtons() {
   return (
     <>
-      <Button className="w-full bg-black text-white mb-4">
-        Checkout
-      </Button>
+      <Link href="/dashboard/services/selected-service">
+        <Button className="w-full bg-black text-white mb-4">Checkout</Button>
+      </Link>
       <Button variant="outline" className="w-full">
         Schedule a Demo
       </Button>

@@ -121,7 +121,7 @@ const ServiceSelectionPage = () => {
         </div>
       </div>
 
-      <div className="lg:w-[20%] w-full lg:sticky lg:top-6 h-fit bg-white rounded-[12px] lg:p-6 md:p-4 p-3">
+      <div className="lg:w-[20%] w-full lg:sticky  h-fit bg-white rounded-[12px] lg:p-6 md:p-4 p-3  ">
         <ServiceSummary
           selectedServices={selectedServices}
           total={calculateTotal()}
