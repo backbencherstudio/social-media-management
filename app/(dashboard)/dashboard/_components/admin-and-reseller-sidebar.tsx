@@ -252,7 +252,7 @@ export default function AdminAndResellerSidebar({
   };
 
   // const role:Role = "freelancer";
-  const role: Role = "freelancer";
+  const role: Role = "admin";
 
   const isFreelancer = role === ROLE.FREELANCER;
 
