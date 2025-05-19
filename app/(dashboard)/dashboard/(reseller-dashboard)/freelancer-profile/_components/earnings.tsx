@@ -38,12 +38,16 @@ export default function Earnings() {
   return (
     <div className="overflow-x-auto w-full px-4 py-6 bg-white rounded-lg">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-6 px-1">
-        <div className="space-y-3">
-          <h1 className="text-2xl font-bold text-gray-900">Earningsk</h1>
-          <p className="text-gray-500">Total Available Balance: $1,500.00</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-6 px-1">
+        <div className="space-y-2 sm:space-y-3 w-full sm:w-auto">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+            Earnings
+          </h1>
+          <p className="text-sm sm:text-base text-gray-500">
+            Total Available Balance: $1,500.00
+          </p>
         </div>
-        <div>
+        <div className="w-full sm:w-auto">
           <WithdrawModal />
         </div>
       </div>

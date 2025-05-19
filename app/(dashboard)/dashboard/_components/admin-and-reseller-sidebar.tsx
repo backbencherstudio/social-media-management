@@ -65,11 +65,11 @@ const freelancerMenu: Section[] = [
   {
     label: "Activity",
     items: [
-      {
-        title: "Automotion",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/automation",
-      },
+      // {
+      //   title: "Automotion",
+      //   icon: RiLayoutGridLine,
+      //   href: "/dashboard/automation",
+      // },
       {
         title: "Social Inbox",
         icon: RiLayoutGridLine,
