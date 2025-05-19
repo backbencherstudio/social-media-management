@@ -153,7 +153,7 @@ const adminMenu: Section[] = [
       {
         title: "Support",
         icon: RiLayoutGridLine,
-        href: "/dashboard/support",
+        href: "/dashboard/admin-support",
       },
     ],
   },
