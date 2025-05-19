@@ -1,3 +1,6 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Eye, User } from "lucide-react";
 import React from "react";
 
 const OrderTable = () => {
@@ -36,10 +39,10 @@ const OrderTable = () => {
   ];
 
   return (
-    <div className="overflow-x-auto bg-white shadow-lg rounded-lg p-4">
+    <div className="overflow-x-auto bg-white shadow-lg rounded-lg p-4 mt-5">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">New Order</h2>
-        <button className="text-blue-500 hover:text-blue-700">View All</button>
+        <Button variant="outline" className="border-gray-200 text-gray-500">View All</Button>
       </div>
       <table className="min-w-full table-auto">
         <thead>
@@ -55,7 +58,7 @@ const OrderTable = () => {
         </thead>
         <tbody>
           {orders.map((order, index) => (
-            <tr key={index} className="border-b text-sm">
+            <tr key={index} className="border-b text-sm border-gray-200">
               <td className="px-4 py-2">{order.orderId}</td>
               <td className="px-4 py-2">
                 {order.clientName}
@@ -69,11 +72,20 @@ const OrderTable = () => {
               </td>
               <td className="px-4 py-2">${order.amount.toFixed(2)}</td>
               <td className="px-4 py-2">{order.orderDate}</td>
-              <td className="px-4 py-2 text-orange-500">{order.status}</td>
+            <td className="py-4">
+                    <Badge variant="outline" className="bg-amber-50 text-amber-600 hover:bg-amber-50 border-amber-200">
+                      Pending Assignment
+                    </Badge>
+                  </td>
               <td className="px-4 py-2">
-                <button className="text-blue-500 hover:text-blue-700">
-                  <i className="fas fa-eye"></i>
-                </button>
+                <div className="flex space-x-2">
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-600">
+                        <User className="h-4 w-4" />
+                      </Button>
+                    </div>
               </td>
             </tr>
           ))}

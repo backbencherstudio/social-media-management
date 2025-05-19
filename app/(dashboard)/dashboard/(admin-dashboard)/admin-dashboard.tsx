@@ -15,7 +15,7 @@ export default function AdminDashboard() {
       <StatsGrid />
       <ChartAndGraph />
       <ResellerActivity />
-      <OrderManagement />
+      {/* <OrderManagement /> */}
       <OrderTable />
     </section>
   );
