@@ -11,6 +11,7 @@ import {
 import { EyeIcon, PencilIcon } from "lucide-react";
 import Image from "next/image";
 import CustomSwitch from "../../_components/CustomSwitch";
+import { useRouter } from "next/navigation";
 
 export type Reseller = {
   id: number;
@@ -29,7 +30,10 @@ interface ResellerTableProps {
 }
 
 export function ResellerTable({ resellers }: ResellerTableProps) {
+  const router = useRouter();
   return (
+
+    
     <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm px-4">
       <Table>
         <TableHeader className="">
@@ -108,10 +112,20 @@ export function ResellerTable({ resellers }: ResellerTableProps) {
               {/* Actions */}
               <TableCell>
                 <div className="flex items-center gap-4">
-                  <button className="w-9 h-9 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200">
+                  <button
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 cursor-pointer"
+                    onClick={() =>
+                      router.push(`/dashboard/reseller/${reseller.id}`)
+                    }
+                  >
                     <EyeIcon className="w-4 h-4 text-gray-600" />
                   </button>
-                  <button className="w-9 h-9 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200">
+                  <button
+                    onClick={() =>
+                      router.push(`/dashboard/reseller/${reseller.id}/edit`)
+                    }
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200"
+                  >
                     <PencilIcon className="w-4 h-4 text-gray-600" />
                   </button>
                   <CustomSwitch
@@ -125,6 +139,8 @@ export function ResellerTable({ resellers }: ResellerTableProps) {
         </TableBody>
       </Table>
     </div>
+
+
   );
 }
 

@@ -89,3 +89,65 @@ export const fakeResellersList: Reseller[] = Array.from({ length: 80 }, (_, i) =
     enabled,
   };
 });
+
+
+// fakedata for applicant.ts
+
+export type Applicant = {
+  id: number;
+  name: string;
+  email: string;
+  number: string;
+  position: string;
+  portfolio: string;
+};
+
+// ...existing code...
+
+const applicantNames = [
+  "Brooklyn Simmons",
+  "Annette Black",
+  "Cody Fisher",
+  "Wade Warren",
+  "Esther Howard",
+  "Cameron Williams",
+  "Leslie Alexander",
+  "Ralph Edwards"
+];
+
+const positions = [
+  "Marketing Coordinator",
+  "Digital Marketing Specialist",
+  "Content Writer",
+  "SEO Specialist",
+  "Social Media Manager",
+  "Web Designer",
+  "Email Marketing Specialist",
+  "PPC Expert"
+];
+
+const portfolioSites = [
+  "donware.com",
+  "zoomit.com",
+  "labdrill.com",
+  "digitex.io",
+  "webify.net",
+  "contentpro.com",
+  "mediacraft.org",
+  "markethub.co"
+];
+
+export const applicantsList: Applicant[] = Array.from({ length: 50 }, (_, i) => {
+  const name = applicantNames[i % applicantNames.length];
+  const position = positions[i % positions.length];
+  const portfolio = `http://www.${portfolioSites[i % portfolioSites.length]}`;
+  
+  return {
+    id: i + 1,
+    name,
+    email: `${name.toLowerCase().split(' ')[0]}@example.com`,
+    number: `(${Math.floor(Math.random() * 900) + 100}) 555-${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`,
+    position,
+    portfolio,
+  };
+});
