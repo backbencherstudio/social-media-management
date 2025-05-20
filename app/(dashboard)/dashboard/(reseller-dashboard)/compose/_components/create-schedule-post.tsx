@@ -5,6 +5,7 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import FilesIcon from "@/public/incons/files";
 
 type FormValues = {
   platforms: string[];
@@ -16,13 +17,14 @@ type FormValues = {
 };
 
 export default function CreateSchedulePost() {
-  const { register, handleSubmit, setValue, getValues, watch } = useForm<FormValues>({
-    defaultValues: {
-      platforms: [],
-      hashtags: [],
-      timeZone: "UTC+06:00",
-    },
-  });
+  const { register, handleSubmit, setValue, getValues, watch } =
+    useForm<FormValues>({
+      defaultValues: {
+        platforms: [],
+        hashtags: [],
+        timeZone: "UTC+06:00",
+      },
+    });
 
   const editorRef = useRef<HTMLDivElement>(null);
   const quillInstance = useRef<Quill | undefined>(undefined);
@@ -50,7 +52,11 @@ export default function CreateSchedulePost() {
 
   // Add hashtag
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && inputValue.startsWith("#") && inputValue.length > 1) {
+    if (
+      e.key === "Enter" &&
+      inputValue.startsWith("#") &&
+      inputValue.length > 1
+    ) {
       e.preventDefault();
       const updated = [...hashtags, inputValue];
       setHashtags(updated);
@@ -83,24 +89,33 @@ export default function CreateSchedulePost() {
           <div className="bg-white p-6 rounded-lg shadow">
             <h1 className="text-xl font-semibold mb-4">Select Platforms</h1>
             <div className="flex flex-wrap gap-4">
-              {["Facebook", "Instagram", "Twitter", "LinkedIn"].map((platform) => (
-                <label key={platform} className="flex items-center gap-2 cursor-pointer border px-6 py-2 rounded-lg">
-                  <input
-                    type="checkbox"
-                    value={platform}
-                    {...register("platforms")}
-                    className="w-5 h-5 rounded border-gray-300"
-                  />
-                  <p className="text-gray-700">{platform}</p>
-                </label>
-              ))}
+              {["Facebook", "Instagram", "Twitter", "LinkedIn"].map(
+                (platform) => (
+                  <label
+                    key={platform}
+                    className="flex items-center gap-2 cursor-pointer border px-6 py-2 rounded-lg"
+                  >
+                    <input
+                      type="checkbox"
+                      value={platform}
+                      {...register("platforms")}
+                      className="w-5 h-5 rounded border-gray-300"
+                    />
+                    <p className="text-gray-700">{platform}</p>
+                  </label>
+                )
+              )}
             </div>
           </div>
 
           {/* Content */}
           <div className="bg-white p-4 rounded-lg shadow">
             <h1 className="text-xl font-semibold mb-4">Content</h1>
-            <div className="w-full rounded-b-lg" ref={editorRef} style={{ height: 200 }} />
+            <div
+              className="w-full rounded-b-lg"
+              ref={editorRef}
+              style={{ height: 200 }}
+            />
           </div>
 
           {/* Media */}
@@ -119,14 +134,12 @@ export default function CreateSchedulePost() {
                 className="flex flex-col items-center justify-center cursor-pointer"
               >
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                  </svg>
+                  <FilesIcon />
                 </div>
                 <p className="text-base text-gray-600 mb-1">
                   Drag and drop files here or click to upload
                 </p>
-                <p className="text-sm text-gray-500">Support JPG, PNG, MP4 (max 10MB)</p>
+                <p className="text-sm text-gray-500">Supports: JPG, PNG, MP4</p>
               </label>
             </div>
           </div>
@@ -144,7 +157,10 @@ export default function CreateSchedulePost() {
             />
             <div className="flex flex-wrap gap-2">
               {hashtags.map((tag, index) => (
-                <span key={index} className="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-2">
+                <span
+                  key={index}
+                  className="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-2"
+                >
                   <span className="text-sm">{tag}</span>
                   <button
                     onClick={() => removeHashtag(index)}
@@ -164,7 +180,7 @@ export default function CreateSchedulePost() {
               <div className="col-span-1 md:col-span-8">
                 {/* replace below with your real datepicker */}
                 <input
-                  type="datetime-local"
+                  type="date"
                   {...register("scheduleDate")}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 />

@@ -14,7 +14,7 @@ const services = [
     platform: "Instagram",
     date: 'Mar 15, 2024',
     likes: 25,
-    icon: <FacebookIcon/>,
+    icon: <FacebookIcon className="w-5 h-5 text-[#1877F2]" />,
     comments: 10,
     shares: 15,
     reach: 100,
@@ -26,7 +26,7 @@ const services = [
     platform: "Facebook",
     date: 'Mar 15, 2024',
     likes: 25,
-    icon: <InstagramIcon/>,
+    icon: <InstagramIcon className="w-5 h-5 text-[#E4405F]" />,
     comments: 10,
     shares: 15,
     reach: 100,
@@ -38,7 +38,7 @@ const services = [
     platform: "Instagram",
     date: 'Mar 15, 2024',
     likes: 25,
-    icon: <LinkedInIcon/>,
+    icon: <LinkedInIcon className="w-5 h-5 text-[#0A66C2]" />,
     comments: 10,
     shares: 15,
     reach: 100,
@@ -91,8 +91,8 @@ export default function RecentPostsPerformance() {
                 </div>
               </td>
 
-              <td className="py-4 px-4 text-center">
-                <div className="flex items-center pl-3 gap-2 rounded-full border py-1">
+              <td className="py-4 text-center">
+                <div className="flex items-center pl-4 gap-1 rounded-full border py-1">
                 {service.icon} {service.platform}
                 </div>
               </td>
