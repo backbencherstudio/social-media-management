@@ -85,7 +85,7 @@ const fakeOrders: Order[] = [
 
 // handle add user
 
-const Page = () => {
+const page = () => {
   // for paginaiton
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -114,7 +114,6 @@ const Page = () => {
 
       <div className="rounded-xl  p-4 shadow-sm bg-white my-5">
         <div className="flex items-center justify-between">
-
           <h2 className="text-xl font-semibold ">All Order</h2>
 
           <div className="flex flex-wrap items-center justify-center gap-4 ">
@@ -145,6 +144,8 @@ const Page = () => {
           onAssignClick={handleAssignClick}
         ></OrderTable>
       </div>
+
+
       {/* pagination controle div */}
 
       <div className="mt-6 flex items-center justify-between">
@@ -191,4 +192,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;

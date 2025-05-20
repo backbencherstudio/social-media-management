@@ -22,16 +22,16 @@ export type Task = {
 
 interface TaskTableProps {
   tasks: Task[];
-  onAssignClick: (TaskId: string) => void;
+  // onAssignClick: (TaskId: string) => void;
 }
 
-export function TaskTable({ tasks, onAssignClick }: TaskTableProps) {
+export function TaskTable({ tasks }: TaskTableProps) {
   return (
     <>
     
-      <Table>
+      <Table className="mt-6">
         <TableHeader>
-          <TableRow className="bTask-gray-300 bg-gray-50 text-sm text-[#44444A]">
+          <TableRow className="border-gray-300 bg-gray-50 text-sm text-[#44444A]">
             <TableHead>Task ID</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Assignee</TableHead>
@@ -43,7 +43,7 @@ export function TaskTable({ tasks, onAssignClick }: TaskTableProps) {
         {/* table body */}
         <TableBody>
           {tasks.map((task, i) => (
-            <TableRow className="bTask-b bTask-gray-100" key={i}>
+            <TableRow className="border-b border-gray-100" key={i}>
               <TableCell className="text-sm text-[#1D1F2C] font-medium">
                 {task.taskId}
               </TableCell>
@@ -73,10 +73,10 @@ export function TaskTable({ tasks, onAssignClick }: TaskTableProps) {
                   variant="outline"
                   className={
                     task.status === "Pending"
-                      ? "text-orange-500 bTask-orange-300 bg-orange-50"
+                      ? "text-orange-500 border-orange-300 bg-orange-50"
                       : task.status === "In Progress"
-                      ? "text-blue-500 bTask-blue-300 bg-blue-50"
-                      : "text-green-500 bTask-green-300 bg-green-50" 
+                      ? "text-blue-500 border-blue-300 bg-blue-50"
+                      : "text-green-500 border-green-300 bg-green-50" 
                   }
                 >
                   {task.status}
@@ -93,7 +93,7 @@ export function TaskTable({ tasks, onAssignClick }: TaskTableProps) {
                   <div className="flex">
                     
                     {/* Add User Button */}
-                    {/* <button onClick={()=> onAssignClick(task.taskId)} className="w-12 h-12 flex items-center justify-center rounded-[10px] bg-[#F3F3FF] text-indigo-600 hover:bg-indigo-100 cursor-pointer bTask bTask-4 bTask-white">
+                    {/* <button onClick={()=> onAssignClick(task.taskId)} className="w-12 h-12 flex items-center justify-center rounded-[10px] bg-[#F3F3FF] text-indigo-600 hover:bg-indigo-100 cursor-pointer border border-4 border-white">
                       <UserRoundPlus className="w-6 h-6 " />
                     </button> */}
                   </div>

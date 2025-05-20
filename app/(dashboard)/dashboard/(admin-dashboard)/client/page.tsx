@@ -1,48 +1,34 @@
 "use client";
+
 import React, { useState } from "react";
-import { taskStat, TaskStatCard } from "./_components/TaskStatCard";
-import { TaskTable } from "./_components/TasksTable";
-import { fakeTasks } from "./fakeTask";
+import { OrderStateCard } from "../order/_components/OrderStatCard";
+import { ClientStateCard } from "./_components/client-stat-cards";
+import { clientStatsData, fakeClientsList } from "./fakeClient";
+import { ClientTable } from "./_components/clientTable";
 import { Pagination } from "../_components/Pagination";
 import CustomSelect from "../../_components/custom-select";
-// taskstates
-const taskStats: taskStat[] = [
-  {
-    title: "Total tasks",
-    count: 245,
-  },
-  {
-    title: "Pending Assignment",
-    count: 245,
-  },
-  {
-    title: "In Progress",
-    count: 245,
-  },
-  {
-    title: "Completed",
-    count: 245,
-  },
-];
 
 export default function page() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
-  const totalPages = Math.ceil(fakeTasks.length / itemsPerPage);
-  const paginatedOrders = fakeTasks.slice(
+  const totalPages = Math.ceil(fakeClientsList.length / itemsPerPage);
+  const paginationList = fakeClientsList.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
+  // filter
   const [period, setPeriod] = useState("week");
   const [orderStatus, setOrderStatus] = useState("all");
-  return (
-    <>
-      <TaskStatCard taskstate={taskStats}></TaskStatCard>
 
-      <div className="rounded-xl  p-4 shadow-sm bg-white my-5">
-        <div className="flex items-center justify-between">
+  return (
+    <div className="max-w-[1480px] mx-auto">
+      client page
+      {/* stats */}
+      <ClientStateCard clientslate={clientStatsData} />
+      <div className=" rounded-xl mt-6  bg-white shadow">
+        <div className="flex items-center justify-between p-5">
           <h2 className="text-xl font-semibold ">All Order</h2>
 
           <div className="flex flex-wrap items-center justify-center gap-4 ">
@@ -65,24 +51,22 @@ export default function page() {
               ]}
             />
           </div>
-
-          {/* table */}
         </div>
-        <TaskTable tasks={paginatedOrders} />
+        {/* table */}
+        <ClientTable clients={paginationList} />
       </div>
-      {/* pagiantion */}
-      <div className="mt-6 flex items-center justify-between">
+      {/* pagination */}
+      <div className="mt-4 flex items-center justify-between">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
         />
-
         <div className="flex items-center gap-4">
           <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-            {Math.min(currentPage * itemsPerPage, fakeTasks.length)} of{" "}
-            {fakeTasks.length} entries
+            {Math.min(currentPage * itemsPerPage, fakeClientsList.length)} of{" "}
+            {fakeClientsList.length} entries
           </label>
           <select
             id="itemsPerPage"
@@ -100,6 +84,6 @@ export default function page() {
           </select>
         </div>
       </div>
-    </>
+    </div>
   );
 }
