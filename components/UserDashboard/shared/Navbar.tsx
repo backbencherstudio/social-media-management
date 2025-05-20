@@ -94,7 +94,7 @@ export default function Navbar({
               </div>
 
               <div className="py-1">
-                <Link href={'/dashboard/freelancer-profile'} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
+                <Link href={'/dashboard/admin-profile'} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
                   <RiUserLine className="w-4 h-4" />
                   Profile
                 </Link>
