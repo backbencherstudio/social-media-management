@@ -123,7 +123,7 @@ const adminMenu: Section[] = [
       {
         title: "Services",
         icon: RiLayoutGridLine,
-        href: "/dashboard/services",
+        href: "/dashboard/admin-services",
       },
       {
         title: "blog",
@@ -251,8 +251,8 @@ export default function AdminAndResellerSidebar({
     setIsCollapsed(!isCollapsed);
   };
 
-  const role:Role = "freelancer";
-  // const role: Role = "admin";
+  // const role:Role = "freelancer";
+  const role: Role = "admin";
 
   const isFreelancer = role === ROLE.FREELANCER;
 
