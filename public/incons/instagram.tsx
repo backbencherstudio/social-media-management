@@ -12,6 +12,7 @@ const InstagramIcon: React.FC<InstagramIconProps> = ({ className = "" }) => {
       height="37"
       viewBox="0 0 36 37"
       fill="none"
+      className={className}
     >
       <rect width="36" height="37" fill="#1E1E1E" />
       <g id="Client/company">

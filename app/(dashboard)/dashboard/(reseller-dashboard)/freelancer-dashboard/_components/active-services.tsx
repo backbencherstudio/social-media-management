@@ -68,10 +68,11 @@ export default function ActiveServices() {
               </td>
 
               <td className="py-4 px-4 text-center">{service.started}</td>
+
               <td className="py-4 px-4 text-center">
                 <div className="flex justify-center">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${
+                    className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-2 ${
                       service.status === "For Review" &&
                       "bg-[#FEF3C7] text-[#984917]"
                     } ${
@@ -81,6 +82,13 @@ export default function ActiveServices() {
                       service.status === "Complete" && "bg-[#ECEFF3] text-black"
                     }`}
                   >
+                    <div className={`w-1.5 h-1.5 rounded-full ${
+                      service.status === "For Review" && "bg-[#984917]"
+                    } ${
+                      service.status === "In Progress" && "bg-[#5B21B6]"
+                    } ${
+                      service.status === "Complete" && "bg-black"
+                    }`}></div>
                     {service.status}
                   </span>
                 </div>

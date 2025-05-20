@@ -80,13 +80,13 @@ const freelancerMenu: Section[] = [
   {
     label: "Configuration",
     items: [
-      { title: "Socials", icon: RiLayoutGridLine, href: "/dashboard/socials" },
+      { title: "Socials", icon: RiLayoutGridLine, href: "/dashboard/social-media" },
     ],
   },
   {
     label: "Help",
     items: [
-      { title: "Support", icon: RiLayoutGridLine, href: "/dashboard/support" },
+      { title: "Support", icon: RiLayoutGridLine, href: "/dashboard/help-and-support" },
     ],
   },
 ];
@@ -95,7 +95,7 @@ const adminMenu: Section[] = [
   {
     label: "Overview",
     items: [
-      { title: "A Dashboard", icon: RiHome5Line, href: "/dashboard" },
+      { title: "Dashboard", icon: RiHome5Line, href: "/dashboard" },
       // { title: "Reports", icon: RiLayoutGridLine, href: "/dashboard/reports" },
     ],
   },
@@ -251,8 +251,8 @@ export default function AdminAndResellerSidebar({
     setIsCollapsed(!isCollapsed);
   };
 
-  // const role:Role = "freelancer";
-  const role: Role = "admin";
+  const role:Role = "freelancer";
+  // const role: Role = "admin";
 
   const isFreelancer = role === ROLE.FREELANCER;
 
