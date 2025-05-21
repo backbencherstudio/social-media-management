@@ -57,7 +57,7 @@ export default function ApplicantTable({
             </div>
           </div>
         </div>
-        <table className="w-full text-sm text-left border-separate border-spacing-y-2">
+        <table className="w-full text-sm text-left ">
           <thead>
             <tr className="text-gray-500 text-sm font-medium bg-[#F9F9FB]">
               <th className="px-4 py-2">Name</th>
@@ -70,7 +70,10 @@ export default function ApplicantTable({
           </thead>
           <tbody>
             {paginationApplicants.map((applicant: Applicant) => (
-              <tr key={applicant.id} className="border-t border-gray-100">
+              <tr
+                key={applicant.id}
+                className=" border-b border-b-gray-100 hover:bg-gray-50"
+              >
                 <td className="px-4 py-3 text-gray-900 font-medium">
                   {applicant.name}
                 </td>
@@ -100,34 +103,34 @@ export default function ApplicantTable({
             ))}
           </tbody>
         </table>
-      </div>
 
-      <div className="mt-4 flex items-center justify-between">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-        <div className="flex items-center gap-4">
-          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
-            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-            {Math.min(currentPage * itemsPerPage, applicants.length)} of{" "}
-            {applicants.length} entries
-          </label>
-          <select
-            id="itemsPerPage"
-            className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
-            value={itemsPerPage}
-            onChange={(e) => {
-              setItemsPerPage(Number(e.target.value));
-              setCurrentPage(1);
-            }}
-          >
-            <option value={5}>Show 5</option>
-            <option value={8}>Show 8</option>
-            <option value={10}>Show 10</option>
-            <option value={20}>Show 20</option>
-          </select>
+        <div className="mt-4 flex items-center justify-between">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+          <div className="flex items-center gap-4">
+            <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
+              Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+              {Math.min(currentPage * itemsPerPage, applicants.length)} of{" "}
+              {applicants.length} entries
+            </label>
+            <select
+              id="itemsPerPage"
+              className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
+              value={itemsPerPage}
+              onChange={(e) => {
+                setItemsPerPage(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+            >
+              <option value={5}>Show 5</option>
+              <option value={8}>Show 8</option>
+              <option value={10}>Show 10</option>
+              <option value={20}>Show 20</option>
+            </select>
+          </div>
         </div>
       </div>
     </>
