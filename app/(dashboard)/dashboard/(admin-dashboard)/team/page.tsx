@@ -142,7 +142,7 @@ export default function page() {
             </div>
             <Button
               onClick={() => setIsAddModalOpen(true)}
-              className="mt-4 px-3 sm:px-4 bg-black text-white cursor-pointer"
+              className="mt-4 w-full px-3 sm:px-4 bg-black text-white cursor-pointer"
               variant="default"
             >
               Add User{" "}

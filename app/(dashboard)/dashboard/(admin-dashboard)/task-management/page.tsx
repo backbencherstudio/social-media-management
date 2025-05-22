@@ -29,12 +29,6 @@ export default function page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const totalPages = Math.ceil(fakeTasks.length / itemsPerPage);
-  const paginatedOrders = fakeTasks.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
   const [period, setPeriod] = useState("week");
   const [orderStatus, setOrderStatus] = useState("all");
   return (
@@ -42,63 +36,14 @@ export default function page() {
       <TaskStatCard taskstate={taskStats}></TaskStatCard>
 
       <div className="rounded-xl  p-4 shadow-sm bg-white my-5">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold ">All Order</h2>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 ">
-            <CustomSelect
-              value={period}
-              onChange={setPeriod}
-              options={[
-                { label: "This Week", value: "week" },
-                { label: "This Month", value: "month" },
-                { label: "This Year", value: "year" },
-              ]}
-            />
-            <CustomSelect
-              value={orderStatus}
-              onChange={setOrderStatus}
-              options={[
-                { label: "All", value: "all" },
-                { label: "Pending", value: "pending" },
-                { label: "Completed", value: "completed" },
-              ]}
-            />
-          </div>
-
-          {/* table */}
-        </div>
-        <TaskTable tasks={paginatedOrders} />
-      </div>
-      {/* pagiantion */}
-      <div className="mt-6 flex items-center justify-between">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
+        {/* table */}
+        <TaskTable
+          tasks={fakeTasks}
+          period={period}
+          setPeriod={setPeriod}
+          orderStatus={orderStatus}
+          setOrderStatus={setOrderStatus}
         />
-
-        <div className="flex items-center gap-4">
-          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
-            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-            {Math.min(currentPage * itemsPerPage, fakeTasks.length)} of{" "}
-            {fakeTasks.length} entries
-          </label>
-          <select
-            id="itemsPerPage"
-            className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
-            value={itemsPerPage}
-            onChange={(e) => {
-              setItemsPerPage(Number(e.target.value));
-              setCurrentPage(1);
-            }}
-          >
-            <option value={5}>Show 5</option>
-            <option value={8}>Show 8</option>
-            <option value={10}>Show 10</option>
-            <option value={20}>Show 20</option>
-          </select>
-        </div>
       </div>
     </>
   );

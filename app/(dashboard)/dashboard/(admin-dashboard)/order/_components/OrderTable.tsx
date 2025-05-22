@@ -1,3 +1,4 @@
+"use cient";
 import {
   Table,
   TableBody,
@@ -10,6 +11,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { EyeIcon, UserRoundPlus, Users2Icon } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import { Pagination } from "../../_components/Pagination";
+import CustomSelect from "../../../_components/custom-select";
 
 export type Order = {
   orderId: string;
@@ -25,13 +29,60 @@ export type Order = {
 
 interface OrderTableProps {
   orders: Order[];
+  period: string;
+  setPeriod: (value: string) => void;
+  orderStatus: string;
+  setOrderStatus: (value: string) => void;
   onAssignClick: (orderId: string) => void;
 }
 
-export function OrderTable({ orders, onAssignClick }: OrderTableProps) {
+// orderStatus, setOrderStatus
+// period, setPeriod
+
+export function OrderTable({
+  orders,
+  onAssignClick,
+  period,
+  setPeriod,
+  orderStatus,
+  setOrderStatus,
+}: OrderTableProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+
+  const totalPages = Math.ceil(orders.length / itemsPerPage);
+  const paginationOrders = orders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <>
-    
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold ">All Order</h2>
+
+        <div className="flex flex-wrap items-center justify-center gap-4 ">
+          <CustomSelect
+            value={period}
+            onChange={setPeriod}
+            options={[
+              { label: "This Week", value: "week" },
+              { label: "This Month", value: "month" },
+              { label: "This Year", value: "year" },
+            ]}
+          />
+          <CustomSelect
+            value={orderStatus}
+            onChange={setOrderStatus}
+            options={[
+              { label: "All", value: "all" },
+              { label: "Pending", value: "pending" },
+              { label: "Completed", value: "completed" },
+            ]}
+          />
+        </div>
+      </div>
+
       <Table>
         <TableHeader>
           <TableRow className="border-gray-300 bg-gray-50 text-sm text-[#44444A]">
@@ -46,7 +97,7 @@ export function OrderTable({ orders, onAssignClick }: OrderTableProps) {
         </TableHeader>
         {/* table body */}
         <TableBody>
-          {orders.map((order, i) => (
+          {paginationOrders.map((order, i) => (
             <TableRow className="border-b border-gray-100" key={i}>
               <TableCell className="text-sm text-[#1D1F2C] font-medium">
                 {order.orderId}
@@ -116,7 +167,10 @@ export function OrderTable({ orders, onAssignClick }: OrderTableProps) {
                         />
                       ))}
                     {/* Add User Button */}
-                    <button onClick={()=> onAssignClick(order.orderId)} className="w-12 h-12 flex items-center justify-center rounded-[10px] bg-[#F3F3FF] text-indigo-600 hover:bg-indigo-100 cursor-pointer border border-4 border-white">
+                    <button
+                      onClick={() => onAssignClick(order.orderId)}
+                      className="w-12 h-12 flex items-center justify-center rounded-[10px] bg-[#F3F3FF] text-indigo-600 hover:bg-indigo-100 cursor-pointer border border-4 border-white"
+                    >
                       <UserRoundPlus className="w-6 h-6 " />
                     </button>
                   </div>
@@ -126,6 +180,35 @@ export function OrderTable({ orders, onAssignClick }: OrderTableProps) {
           ))}
         </TableBody>
       </Table>
+
+      <div className="mt-4 flex items-center justify-between">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+        <div className="flex items-center gap-4">
+          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
+            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+            {Math.min(currentPage * itemsPerPage, orders.length)} of{" "}
+            {orders.length} entries
+          </label>
+          <select
+            id="itemsPerPage"
+            className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+          >
+            <option value={5}>Show 5</option>
+            <option value={8}>Show 8</option>
+            <option value={10}>Show 10</option>
+            <option value={20}>Show 20</option>
+          </select>
+        </div>
+      </div>
     </>
   );
 }

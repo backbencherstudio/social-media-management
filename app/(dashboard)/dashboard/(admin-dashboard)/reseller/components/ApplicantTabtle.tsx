@@ -31,6 +31,7 @@ export default function ApplicantTable({
   return (
     <>
       <div className="p-6 bg-white rounded-xl shadow-sm overflow-x-auto">
+        {/* filter data */}
         <div>
           <div className="flex items-center justify-between p-5">
             <h2 className="text-xl font-semibold ">All Order</h2>
@@ -57,6 +58,8 @@ export default function ApplicantTable({
             </div>
           </div>
         </div>
+
+        {/* table */}
         <table className="w-full text-sm text-left ">
           <thead>
             <tr className="text-gray-500 text-sm font-medium bg-[#F9F9FB]">
@@ -104,6 +107,7 @@ export default function ApplicantTable({
           </tbody>
         </table>
 
+        {/* pagination */}
         <div className="mt-4 flex items-center justify-between">
           <Pagination
             currentPage={currentPage}

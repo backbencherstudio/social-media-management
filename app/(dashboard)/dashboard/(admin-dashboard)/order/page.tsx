@@ -83,19 +83,9 @@ const fakeOrders: Order[] = [
   })),
 ];
 
-// handle add user
 
 const page = () => {
-  // for paginaiton
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
-
-  const totalPages = Math.ceil(fakeOrders.length / itemsPerPage);
-  const paginatedOrders = fakeOrders.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
+ 
   //   for modal
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -113,69 +103,20 @@ const page = () => {
       <OrderStateCard orderslate={orderStats} />
 
       <div className="rounded-xl  p-4 shadow-sm bg-white my-5">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold ">All Order</h2>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 ">
-            <CustomSelect
-              value={period}
-              onChange={setPeriod}
-              options={[
-                { label: "This Week", value: "week" },
-                { label: "This Month", value: "month" },
-                { label: "This Year", value: "year" },
-              ]}
-            />
-            <CustomSelect
-              value={orderStatus}
-              onChange={setOrderStatus}
-              options={[
-                { label: "All", value: "all" },
-                { label: "Pending", value: "pending" },
-                { label: "Completed", value: "completed" },
-              ]}
-            />
-          </div>
-        </div>
+   
 
         {/* table data */}
         <OrderTable
-          orders={paginatedOrders}
+          orders={fakeOrders}
           onAssignClick={handleAssignClick}
+          period={period}
+          setPeriod={setPeriod}
+          orderStatus={orderStatus}
+          setOrderStatus={setOrderStatus}
         ></OrderTable>
       </div>
 
-
-      {/* pagination controle div */}
-
-      <div className="mt-6 flex items-center justify-between">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-        <div className="flex items-center gap-4">
-          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
-            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-            {Math.min(currentPage * itemsPerPage, fakeOrders.length)} of{" "}
-            {fakeOrders.length} entries
-          </label>
-          <select
-            id="itemsPerPage"
-            className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
-            value={itemsPerPage}
-            onChange={(e) => {
-              setItemsPerPage(Number(e.target.value));
-              setCurrentPage(1);
-            }}
-          >
-            <option value={5}>Show 5</option>
-            <option value={8}>Show 8</option>
-            <option value={10}>Show 10</option>
-            <option value={20}>Show 20</option>
-          </select>
-        </div>
-      </div>
+      
 
       {/* for modal */}
       {selectedOrderId && (
