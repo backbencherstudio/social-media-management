@@ -9,6 +9,7 @@ import LinkdinIcon from "@/public/incons/landin-page/LinkdinIcon";
 import YoutubeIcon from "@/public/incons/landin-page/youtubeIcon";
 import TiktokIcon from "@/public/incons/landin-page/ToktokIcon";
 import TimelineModal from "../timeline-modal";
+import Link from "next/link";
 
 const affordableMarketingServices = {
   title: "Social Media Posts",
@@ -105,8 +106,6 @@ export default function AffordableMarketingServices() {
         <SocialPlatforms platforms={socialPlatforms} />
         <CheckoutButtons />
       </div>
-
-     
 
       {/* Modal */}
       {isModalOpen && (
@@ -267,7 +266,9 @@ function SocialPlatforms({ platforms }: { platforms: any[] }) {
 function CheckoutButtons() {
   return (
     <>
-      <Button className="w-full bg-black text-white mb-4">Checkout</Button>
+      <Link href={"/dashboard/services/service-selection"}>
+        <Button className="w-full bg-black text-white mb-4">Checkout</Button>
+      </Link>
       <Button variant="outline" className="w-full">
         Schedule a Demo
       </Button>
