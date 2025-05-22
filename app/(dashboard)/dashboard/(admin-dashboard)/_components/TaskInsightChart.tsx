@@ -1,5 +1,6 @@
 import { PieChart, Pie, Cell, Legend } from "recharts";
 import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 const data = [
   { name: "Completed", value: 275, color: "#22C55E" },
@@ -37,9 +38,8 @@ const services = [
 
 function TaskInsightChart() {
   const total = data.reduce((sum, d) => sum + d.value, 0);
-
   return (
-    <div className="p-4 rounded-lg shadow bg-white col-span-5">
+    <div className="p-4 rounded-lg shadow bg-white col-span-5 h-full">
       <h3 className="font-semibold text-gray-800">Task Insight</h3>
       <p className="text-2xl font-bold mt-2">
         {total}{" "}
@@ -85,16 +85,23 @@ function TaskInsightChart() {
 }
 
 function TopPerformingServices() {
+  const [period, setPeriod] = useState("week");
+
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md  w-3/5 col-span-7">
+    <div className="bg-white p-6 rounded-xl shadow-md h-full">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-800">
           Top Performing Services
         </h3>
-        <button className="flex items-center text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-md">
-          This week
-          <ChevronDown className="w-4 h-4 ml-1" />
-        </button>
+        <select
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+          className="flex items-center text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-md outline-none border-none"
+        >
+          <option value="week">This week</option>
+          <option value="month">This month</option>
+          <option value="year">This year</option>
+        </select>
       </div>
 
       <div className="space-y-5">
@@ -122,9 +129,13 @@ function TopPerformingServices() {
 
 export default function ChartAndGraph() {
   return (
-    <div className="grid grid-cols-12">
-      <TaskInsightChart />
-      <TopPerformingServices />
+    <div className="grid grid-cols-12 gap-4 my-5 ">
+      <div className="col-span-5">
+        <TaskInsightChart />
+      </div>
+      <div className="col-span-7 h-full">
+        <TopPerformingServices />
+      </div>
     </div>
   );
 }
