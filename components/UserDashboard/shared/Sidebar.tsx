@@ -5,18 +5,15 @@ import { IoMdClose } from "react-icons/io";
 import {
   RiHome5Line,
   RiLayoutGridLine,
-  RiCalendarCheckLine, // Example for Schedule
-  RiFolderLine, // Example for Assets
-  RiSettings3Line, // Example for Service
-  RiBarChart2Line, // Example for Analysis
-  RiShareLine,
+  RiCalendarCheckLine,
+  RiFolderLine,
+  RiBarChart2Line,
 } from "react-icons/ri";
 import { BsPerson } from "react-icons/bs";
 import { HiOutlineCreditCard } from "react-icons/hi2";
 import { TbFileInvoice } from "react-icons/tb";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
-import { usePurchase } from "@/app/context/PurchaseContext";
 
 // top menu items for after purchased users
 const afterPurchasedTopMenuItems = [
@@ -39,6 +36,7 @@ const beforePurchasedTopMenuItems = [
   { title: "Services", icon: RiLayoutGridLine, href: "/dashboard/services" },
 ];
 
+const hasPurchased = true;
 // bottomMenuItems
 const bottomMenuItems = [
   {
@@ -50,7 +48,13 @@ const bottomMenuItems = [
         icon: HiOutlineCreditCard,
         href: "/dashboard/payment",
       },
+      {
+        title: "Payment",
+        icon: HiOutlineCreditCard,
+        href: "/dashboard/payment-method",
+      },
       { title: "Invoices", icon: TbFileInvoice, href: "/dashboard/invoices" },
+      { title: "Payment Invoices", icon: TbFileInvoice, href: "/dashboard/payment-invoices" },
     ],
   },
 ];
@@ -66,7 +70,7 @@ export default function Sidebar({
 }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const hasPurchased = true;
+
   // const { hasPurchased } = usePurchase();
 
   const toggleCollapse = () => {
@@ -78,6 +82,7 @@ export default function Sidebar({
   }: {
     item:
       | (typeof afterPurchasedTopMenuItems)[0]
+      | (typeof beforePurchasedTopMenuItems)[0]
       | (typeof bottomMenuItems)[0]["subItems"][0];
   }) => {
     const isActive = pathname === item.href;
