@@ -12,6 +12,7 @@ const LinkedInIcon: React.FC<LinkedInIconProps> = ({ className = "" }) => {
       height="37"
       viewBox="0 0 36 37"
       fill="none"
+      className={className}
     >
       <g clipPath="url(#clip0_5654_43623)">
         <path
