@@ -48,10 +48,10 @@ export default function Navbar({
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
+          {/* <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
             <ImPower />
             <span>Add Services</span>
-          </button>
+          </button> */}
           {/* <NotificationIcon  /> */}
           <Link href={'/dashboard/notification'} className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
             <IoNotificationsOutline className="w-6 h-6" />
