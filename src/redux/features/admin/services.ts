@@ -1,14 +1,14 @@
 import { baseApi } from "../../api/baseApi";
 
-const data = baseApi.injectEndpoints({
+const services = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getData: builder.query<any[], void>({
       query: () => ({
-        url: "/posts",
-        method: "GET",
+        url: "/services/allServices",
+        method: "GET",   
       }),
     }),
   }),
 });
 
-export const {useGetDataQuery} = data
+export const { useGetDataQuery } = services;
