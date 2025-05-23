@@ -1,48 +1,52 @@
 "use client";
 import TrashIcon from "@/public/incons/trash";
+import { useGetDataQuery } from "@/src/redux/features/admin/services";
 import Link from "next/link";
 import React, { useState } from "react";
 
 export default function ActiveServices() {
+  const { data } = useGetDataQuery();
+  console.log(data);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [isActive, setIsActive] = useState(true);
 
-  const services = [
-    {
-      id: 1,
-      name: "Email Designg",
-      category: "Design",
-      price: "$200",
-      sale: "$100",
-      started: "2024-12-01",
-      status: "Active",
-      approval: "Approved",
-    },
-    {
-      id: 2,
-      name: "Plus • 15 posts",
-      category: "Marketing",
-      price: "$500",
-      sale: "$100",
-      started: "2025-01-15",
-      status: "Disable",
-      approval: "Pending",
-    },
-    {
-      id: 3,
-      name: "Email Marketing",
-      category: "Marketing",
-      price: "$700",
-      sale: "$100",
-      started: "2025-01-15",
-      status: "Active",
-      approval: "Pending",
-    },
-  ];
+  // const services = [
+  //   {
+  //     id: 1,
+  //     name: "Email Designg",
+  //     category: "Design",
+  //     price: "$200",
+  //     sale: "$100",
+  //     started: "2024-12-01",
+  //     status: "Active",
+  //     approval: "Approved",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Plus • 15 posts",
+  //     category: "Marketing",
+  //     price: "$500",
+  //     sale: "$100",
+  //     started: "2025-01-15",
+  //     status: "Disable",
+  //     approval: "Pending",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Email Marketing",
+  //     category: "Marketing",
+  //     price: "$700",
+  //     sale: "$100",
+  //     started: "2025-01-15",
+  //     status: "Active",
+  //     approval: "Pending",
+  //   },
+  // ];
 
-  const handleViewDetails = (service) => {
-    setSelectedService(service);
+  const handleViewDetails = (data) => {
+    setSelectedService(data);
     setIsModalOpen(true);
   };
 
@@ -56,7 +60,12 @@ export default function ActiveServices() {
           </h1>
         </div>
         <div className="w-full sm:w-auto">
-          <Link href={'/dashboard/admin-services/create-new-service'} className="bg-black text-white px-4 py-3 rounded-lg">+ Create New Service</Link>
+          <Link
+            href={"/dashboard/admin-services/create-new-service"}
+            className="bg-black text-white px-4 py-3 rounded-lg"
+          >
+            + Create New Service
+          </Link>
         </div>
       </div>
 
@@ -74,7 +83,7 @@ export default function ActiveServices() {
           </tr>
         </thead>
         <tbody>
-          {services.map((service) => (
+          {data?.map((service) => (
             <tr key={service.id} className="">
               {/* Service cell with left side text & status */}
               <td className="py-4 px-4">
@@ -112,7 +121,10 @@ export default function ActiveServices() {
 
               <td className="py-4 px-4">
                 <div className="flex items-center justify-center gap-6">
-                  <Link href={"/dashboard/admin-services/edit-service"} className="bg-gray-100 p-2 rounded-lg">
+                  <Link
+                    href={"/dashboard/admin-services/edit-service"}
+                    className="bg-gray-100 p-2 rounded-lg"
+                  >
                     <TrashIcon />
                   </Link>
                   <div className="flex items-center gap-2">
@@ -139,7 +151,6 @@ export default function ActiveServices() {
           ))}
         </tbody>
       </table>
-
     </div>
   );
 }
