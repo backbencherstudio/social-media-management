@@ -19,21 +19,27 @@ const services = [
 const ReuseablePricing = () => {
   const pathname = usePathname();
   const match = pathname.match(/^\/services\/([^\/]+)$/);
-  const slug = match ? match[1] : null; // "short-video"
+  const slug = match ? match[1] : null;
 
-  const defaultValues = `${
-    (slug === "short-video" && "videos") ||
-    (slug === "social-media-posts" && "post") ||
-    (slug === "email-marketing" && "email") ||
-    (slug === "blogs" && "blogs")
-  }`;
+  // Simplified defaultValue logic
+  const getDefaultValue = () => {
+    if (!slug) return "post";
+    
+    switch(slug) {
+      case "short-video": return "videos";
+      case "social-media-posts": return "post";
+      case "email-marketing": return "email";
+      case "blogs": return "blogs";
+      default: return "post";
+    }
+  };
 
-  const [activeTab, setActiveTab] = useState(defaultValues || "post"); // Default to "post"
+  const [activeTab, setActiveTab] = useState(getDefaultValue());
 
   return (
     <div>
       <Tabs
-        defaultValue={defaultValues || "post"}
+        defaultValue={getDefaultValue()}
         className="w-full"
         onValueChange={setActiveTab}
       >
