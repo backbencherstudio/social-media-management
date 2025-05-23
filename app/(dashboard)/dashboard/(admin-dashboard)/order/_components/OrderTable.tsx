@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Pagination } from "../../_components/Pagination";
 import CustomSelect from "../../../_components/custom-select";
+import { useRouter } from "next/navigation";
 
 export type Order = {
   orderId: string;
@@ -55,6 +56,8 @@ export function OrderTable({
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const router = useRouter();
 
   return (
     <>
@@ -148,8 +151,20 @@ export function OrderTable({
               <TableCell>
                 <div className="flex items-center space-x-3">
                   {/* View Icon */}
-                  <div className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-200 cursor-pointer">
-                    <EyeIcon className="w-5 h-5 text-gray-600" />
+                  <div className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-800 cursor-pointer">
+                    <button
+                      onClick={() =>
+                        router.push(
+                          `/dashboard/order/${encodeURIComponent(
+                            order.orderId
+                          )}`
+                        )
+                      }
+                      className="text-blue-500"
+                    >
+                      {/* Eye icon here */}
+                      <EyeIcon className="w-4 h-4" />
+                    </button>
                   </div>
 
                   {/* Assigned Avatars */}
