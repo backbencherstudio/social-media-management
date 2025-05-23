@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 import { Service, ServiceSelection } from "@/types/services";
-import { serviceOptions } from "./_components/data";
-import ServiceOption from "./_components/service-option";
-import ServiceSummary from "./_components/service-summary";
+import { serviceOptions } from "../services/service-selection/_components/data";
+import ServiceOption from "../services/service-selection/_components/service-option";
+import ServiceSummary from "../services/service-selection/_components/service-summary";
 
 const ServiceSelectionPage = () => {
   const [selectedServices, setSelectedServices] = useState<ServiceSelection[]>(

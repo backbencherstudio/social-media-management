@@ -12,6 +12,9 @@ import { EyeIcon, PencilIcon } from "lucide-react";
 import Image from "next/image";
 import CustomSwitch from "../../_components/CustomSwitch";
 import { useRouter } from "next/navigation";
+import CustomSelect from "../../../_components/custom-select";
+import { useState } from "react";
+import { Pagination } from "../../_components/Pagination";
 
 export type Reseller = {
   id: number;
@@ -27,14 +30,59 @@ export type Reseller = {
 
 interface ResellerTableProps {
   resellers: Reseller[];
+  period: string;
+  setPeriod: (value: string) => void;
+  orderStatus: string;
+  setOrderStatus: (value: string) => void;
 }
 
-export function ResellerTable({ resellers }: ResellerTableProps) {
+export function ResellerTable({
+  resellers,
+  period,
+  setPeriod,
+  orderStatus,
+  setOrderStatus,
+}: ResellerTableProps) {
   const router = useRouter();
-  return (
 
-    
-    <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm px-4">
+  // for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+
+  const totalPages = Math.ceil(resellers.length / itemsPerPage);
+  const paginationResellersList = resellers.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+
+  return (
+    <div className=" overflow-hidden border border-gray-100 shadow-sm px-4">
+      <div className="flex items-center justify-between p-5">
+        <h2 className="text-xl font-semibold ">Resellers</h2>
+
+        <div className="flex flex-wrap items-center justify-center gap-4 ">
+          <CustomSelect
+            value={period}
+            onChange={setPeriod}
+            options={[
+              { label: "This Week", value: "week" },
+              { label: "This Month", value: "month" },
+              { label: "This Year", value: "year" },
+            ]}
+          />
+          <CustomSelect
+            value={orderStatus}
+            onChange={setOrderStatus}
+            options={[
+              { label: "All", value: "all" },
+              { label: "Pending", value: "pending" },
+              { label: "Completed", value: "completed" },
+            ]}
+          />
+        </div>
+      </div>
+
       <Table>
         <TableHeader className="">
           <TableRow className="bg-gray-50 text-sm text-[#44444A] border-gray-200 ">
@@ -47,7 +95,7 @@ export function ResellerTable({ resellers }: ResellerTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {resellers.map((reseller) => (
+          {paginationResellersList.map((reseller) => (
             <TableRow key={reseller.id} className="hover:bg-gray-50">
               {/* Reseller Info */}
               <TableCell>
@@ -138,9 +186,37 @@ export function ResellerTable({ resellers }: ResellerTableProps) {
           ))}
         </TableBody>
       </Table>
+
+       {/* pagination */}
+              <div className="mt-4 flex items-center justify-between">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+                <div className="flex items-center gap-4">
+                  <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
+                    Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+                    {Math.min(currentPage * itemsPerPage, resellers.length)}{" "}
+                    of {resellers.length} entries
+                  </label>
+                  <select
+                    id="itemsPerPage"
+                    className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
+                    value={itemsPerPage}
+                    onChange={(e) => {
+                      setItemsPerPage(Number(e.target.value));
+                      setCurrentPage(1);
+                    }}
+                  >
+                    <option value={5}>Show 5</option>
+                    <option value={8}>Show 8</option>
+                    <option value={10}>Show 10</option>
+                    <option value={20}>Show 20</option>
+                  </select>
+                </div>
+              </div>
     </div>
-
-
   );
 }
 
