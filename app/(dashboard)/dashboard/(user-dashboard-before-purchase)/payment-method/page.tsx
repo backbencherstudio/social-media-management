@@ -3,12 +3,14 @@ import React from "react";
 export default function PaymentMethod() {
   return (
     <div className="max-w-[741px] mx-auto bg-white p-4 md:p-6 lg:p-8 rounded-xl shadow-sm">
-      <h1 className="text-2xl md:text-3xl font-bold mb-6">Add payment method</h1>
+      <h1 className="text-2xl md:text-3xl font-bold mb-6">
+        Add payment method
+      </h1>
       <form className="space-y-6">
         <h2 className="text-xl md:text-2xl font-semibold mb-4">Payment</h2>
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 border border-gray-100 p-4 rounded-lg">
+        <div className="grid grid-cols-1 xl:grid-cols-6 gap-4 border border-gray-100 p-4 rounded-lg">
           {/* Card Number */}
-          <div className="md:col-span-4">
+          <div className="xl:col-span-4">
             <label
               htmlFor="cardNumber"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -26,7 +28,7 @@ export default function PaymentMethod() {
           </div>
 
           {/* Expiration Date */}
-          <div className="md:col-span-1">
+          <div className="xl:col-span-1">
             <label
               htmlFor="expirationDate"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -44,7 +46,7 @@ export default function PaymentMethod() {
           </div>
 
           {/* Security Code */}
-          <div className="md:col-span-1">
+          <div className="xl:col-span-1">
             <label
               htmlFor="securityCode"
               className="block text-sm font-medium text-gray-700 mb-2"
