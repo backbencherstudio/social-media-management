@@ -1,54 +1,23 @@
 "use client";
 import TrashIcon from "@/public/incons/trash";
-import { useGetDataQuery } from "@/src/redux/features/admin/services";
+import { useGetAllServicesQuery, useToggleServiceStatusMutation } from "@/src/redux/features/admin/services";
 import Link from "next/link";
 import React, { useState } from "react";
 
 export default function ActiveServices() {
-  const { data } = useGetDataQuery();
-  console.log(data);
+  // data fetching
+  const { data } = useGetAllServicesQuery();
+  const [toogleServiceStatus] = useToggleServiceStatusMutation()
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [isActive, setIsActive] = useState(true);
 
-  // const services = [
-  //   {
-  //     id: 1,
-  //     name: "Email Designg",
-  //     category: "Design",
-  //     price: "$200",
-  //     sale: "$100",
-  //     started: "2024-12-01",
-  //     status: "Active",
-  //     approval: "Approved",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Plus • 15 posts",
-  //     category: "Marketing",
-  //     price: "$500",
-  //     sale: "$100",
-  //     started: "2025-01-15",
-  //     status: "Disable",
-  //     approval: "Pending",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Email Marketing",
-  //     category: "Marketing",
-  //     price: "$700",
-  //     sale: "$100",
-  //     started: "2025-01-15",
-  //     status: "Active",
-  //     approval: "Pending",
-  //   },
-  // ];
 
-  const handleViewDetails = (data) => {
-    setSelectedService(data);
-    setIsModalOpen(true);
-  };
+  // const handleViewDetails = (data) => {
+  //   setSelectedService(data);
+  //   setIsModalOpen(true);
+  // };
 
   return (
     <div className="overflow-x-auto w-full px-4 py-6 bg-white rounded-lg">
@@ -129,7 +98,7 @@ export default function ActiveServices() {
                   </Link>
                   <div className="flex items-center gap-2">
                     <div
-                      onClick={() => setIsActive(!isActive)}
+                      onClick={() => toogleServiceStatus(service.id)}
                       className={`relative inline-flex h-6 w-11 cursor-pointer rounded-full transition-colors ${
                         service.status === "Active"
                           ? "bg-green-500"

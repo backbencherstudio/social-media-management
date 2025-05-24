@@ -1,21 +1,20 @@
 "use client";
+import { useCreateServiceMutation } from "@/src/redux/features/admin/services";
 import React from "react";
 import { useForm } from "react-hook-form";
 
 interface ServiceFormData {
-  serviceName: string;
+  name: string;
   description: string;
-  includes: string;
-  category: string;
-  packages: {
-    quantity: string;
+  features: string;
+  category_id: string;
+  tiers: {
+    max_post: string;
     price: number;
   }[];
-  socialMedia: string[];
-  additionalPlatforms: {
-    platforms: string[];
-    price: number;
-  };
+  primary_platform: string[];
+  extra_platforms: string[];
+  extra_platform_Price: number;
 }
 
 export default function CreateNewService() {
@@ -25,9 +24,18 @@ export default function CreateNewService() {
     formState: { errors },
   } = useForm<ServiceFormData>();
 
-  const onSubmit = (data: ServiceFormData) => {
-    console.log(data);
+  const [createService, { isLoading, error, isSuccess }] =
+    useCreateServiceMutation();
+
+  const onSubmit =async (data: ServiceFormData) => {
     // Handle form submission
+    const allService = {
+      ...data,
+      features: data.features.split("\n"),
+    };
+    console.log(allService)
+    // const getData = await createService(allService);
+    // console.log(getData);
   };
 
   return (
@@ -42,17 +50,15 @@ export default function CreateNewService() {
               Service Name
             </label>
             <input
-              {...register("serviceName", {
+              {...register("name", {
                 required: "Service name is required",
               })}
               type="text"
               placeholder="Enter service name"
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.serviceName && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.serviceName.message}
-              </p>
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
             )}
           </div>
 
@@ -82,16 +88,16 @@ export default function CreateNewService() {
               Includes
             </label>
             <textarea
-              {...register("includes", {
+              {...register("features", {
                 required: "Includes field is required",
               })}
               rows={3}
               placeholder="Enter what's included in the service"
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.includes && (
+            {errors.features && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.includes.message}
+                {errors.features.message}
               </p>
             )}
           </div>
@@ -102,7 +108,7 @@ export default function CreateNewService() {
               Category
             </label>
             <select
-              {...register("category", {
+              {...register("category_id", {
                 required: "Please select a category",
               })}
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
@@ -114,9 +120,9 @@ export default function CreateNewService() {
               <option value="content">Content Creation</option>
               <option value="analytics">Analytics</option>
             </select>
-            {errors.category && (
+            {errors.category_id && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.category.message}
+                {errors.category_id.message}
               </p>
             )}
           </div>
@@ -134,7 +140,7 @@ export default function CreateNewService() {
                 </label>
                 <div className="grid grid-cols-12 gap-4">
                   <input
-                    {...register(`packages.${packageNum - 1}.quantity`)}
+                    {...register(`tiers.${packageNum - 1}.max_post`)}
                     type="text"
                     placeholder={`Enter quantity (e.g., ${
                       packageNum * 5
@@ -142,7 +148,7 @@ export default function CreateNewService() {
                     className="col-span-8 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   <input
-                    {...register(`packages.${packageNum - 1}.price`, {
+                    {...register(`tiers.${packageNum - 1}.price`, {
                       valueAsNumber: true,
                     })}
                     type="number"
@@ -171,7 +177,7 @@ export default function CreateNewService() {
                   className="flex items-center gap-3 border border-gray-200 px-4 py-2 rounded-md"
                 >
                   <input
-                    {...register("socialMedia")}
+                    {...register("primary_platform")}
                     type="checkbox"
                     id={platform.toLowerCase()}
                     value={platform}
@@ -208,7 +214,7 @@ export default function CreateNewService() {
                     className="flex items-center gap-3 border border-gray-200 px-4 py-2 rounded-md"
                   >
                     <input
-                      {...register("additionalPlatforms.platforms")}
+                      {...register("extra_platforms")}
                       type="checkbox"
                       id={`additional-${platform.toLowerCase()}`}
                       value={platform}
@@ -229,7 +235,7 @@ export default function CreateNewService() {
                 Set Price
               </label>
               <input
-                {...register("additionalPlatforms.price", {
+                {...register("extra_platform_Price", {
                   valueAsNumber: true,
                   required: "Price is required for additional platforms",
                 })}
@@ -237,9 +243,9 @@ export default function CreateNewService() {
                 placeholder="Enter price"
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
               />
-              {errors.additionalPlatforms?.price && (
+              {errors.extra_platform_Price && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.additionalPlatforms.price.message}
+                  {errors.extra_platform_Price.message}
                 </p>
               )}
             </div>
