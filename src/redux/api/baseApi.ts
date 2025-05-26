@@ -4,7 +4,14 @@ export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_URL,
+    credentials: "include",
   }),
-  endpoints: (builder) => ({ }),
-  tagTypes: ["services"]
+  endpoints: (builder) => ({}),
+  tagTypes: [
+    "services",
+    "blogs",
+    "categorys",
+    "blog-categories",
+    "general-settings",
+  ],
 });
