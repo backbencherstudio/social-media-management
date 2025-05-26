@@ -1,4 +1,5 @@
 "use client";
+import { useGetAllCategoriesQuery } from "@/src/redux/features/admin/blog/categorys";
 import { useCreateServiceMutation } from "@/src/redux/features/admin/services";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -6,13 +7,13 @@ import { useForm } from "react-hook-form";
 interface ServiceFormData {
   name: string;
   description: string;
-  features: string;
   category_id: string;
+  features: string;
   tiers: {
-    max_post: string;
+    max_post: number;
     price: number;
   }[];
-  primary_platform: string[];
+  primary_platform: string;
   extra_platforms: string[];
   extra_platform_Price: number;
 }
@@ -26,16 +27,47 @@ export default function CreateNewService() {
 
   const [createService, { isLoading, error, isSuccess }] =
     useCreateServiceMutation();
+  const { data } = useGetAllCategoriesQuery();
 
-  const onSubmit =async (data: ServiceFormData) => {
-    // Handle form submission
-    const allService = {
+  // Handle form submission
+  const onSubmit = async (data: ServiceFormData) => {
+    const validTiers = [
+      {
+        max_post: data.tiers[0]?.max_post || 0,
+        price: data.tiers[0]?.price || 0,
+      },
+      {
+        max_post: data.tiers[1]?.max_post || 0,
+        price: data.tiers[1]?.price || 0,
+      },
+      {
+        max_post: data.tiers[2]?.max_post || 0,
+        price: data.tiers[2]?.price || 0,
+      },
+      {
+        max_post: data.tiers[3]?.max_post || 0,
+        price: data.tiers[3]?.price || 0,
+      },
+      {
+        max_post: data.tiers[4]?.max_post || 0,
+        price: data.tiers[4]?.price || 0,
+      },
+      {
+        max_post: data.tiers[5]?.max_post || 0,
+        price: data.tiers[5]?.price || 0,
+      },
+      {
+        max_post: data.tiers[6]?.max_post || 0,
+        price: data.tiers[6]?.price || 0,
+      },
+    ].filter((tier) => tier.max_post > 0 && tier.price > 0);
+
+    const allServices = {
       ...data,
       features: data.features.split("\n"),
+      tiers: validTiers,
     };
-    console.log(allService)
-    // const getData = await createService(allService);
-    // console.log(getData);
+    await createService(allServices);
   };
 
   return (
@@ -113,12 +145,11 @@ export default function CreateNewService() {
               })}
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             >
-              <option value="">Select a category</option>
-              <option value="marketing">Marketing</option>
-              <option value="design">Design</option>
-              <option value="development">Development</option>
-              <option value="content">Content Creation</option>
-              <option value="analytics">Analytics</option>
+              {data?.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
             </select>
             {errors.category_id && (
               <p className="text-red-500 text-sm mt-1">
@@ -133,23 +164,25 @@ export default function CreateNewService() {
             </h1>
 
             {/* Packages */}
-            {[1, 2, 3, 4, 5, 6, 7].map((packageNum) => (
+            {[1, 2, 3, 4, 5, 6, 7].map((packageNum, index) => (
               <div key={packageNum} className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   Package {packageNum}
                 </label>
                 <div className="grid grid-cols-12 gap-4">
                   <input
-                    {...register(`tiers.${packageNum - 1}.max_post`)}
-                    type="text"
-                    placeholder={`Enter quantity (e.g., ${
-                      packageNum * 5
-                    } posts)`}
+                    {...register(`tiers.${index}.max_post`, {
+                      valueAsNumber: true,
+                      required: true,
+                    })}
+                    type="number"
+                    placeholder={`Enter quantity posts`}
                     className="col-span-8 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   <input
-                    {...register(`tiers.${packageNum - 1}.price`, {
+                    {...register(`tiers.${index}.price`, {
                       valueAsNumber: true,
+                      required: true,
                     })}
                     type="number"
                     placeholder="Price"
@@ -177,8 +210,10 @@ export default function CreateNewService() {
                   className="flex items-center gap-3 border border-gray-200 px-4 py-2 rounded-md"
                 >
                   <input
-                    {...register("primary_platform")}
-                    type="checkbox"
+                    {...register("primary_platform", {
+                      required: "Please select a primary platform",
+                    })}
+                    type="radio"
                     id={platform.toLowerCase()}
                     value={platform}
                     className="w-4 h-4 text-black rounded border-gray-300 focus:ring-black"
@@ -192,6 +227,11 @@ export default function CreateNewService() {
                 </div>
               ))}
             </div>
+            {errors.primary_platform && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.primary_platform.message}
+              </p>
+            )}
           </div>
 
           {/* Select Additional Platforms */}

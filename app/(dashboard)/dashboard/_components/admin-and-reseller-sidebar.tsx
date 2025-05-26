@@ -126,7 +126,7 @@ const adminMenu: Section[] = [
         href: "/dashboard/admin-services",
       },
       {
-        title: "blog",
+        title: "Blog",
         icon: RiLayoutGridLine,
         href: "/dashboard/blog",
       },

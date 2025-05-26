@@ -2,41 +2,48 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import FacebookIcon from "@/public/incons/landin-page/facebook";
+import TwitterIcon from "@/public/incons/landin-page/TwitterIcon";
+import InstaIcon from "@/public/incons/landin-page/insta-icon";
+import LinkdinIcon from "@/public/incons/landin-page/LinkdinIcon";
+import YoutubeIcon from "@/public/incons/landin-page/youtubeIcon";
+import TiktokIcon from "@/public/incons/landin-page/ToktokIcon";
 import TimelineModal from "../timeline-modal";
+import Link from "next/link";
+import { useGetSingleServiceQuery } from "@/src/redux/features/admin/services";
 
-const blogs = {
-  title: "Blog Posts",
-  description:
-    "SEO-optimized, 1,000-word blog posts featuring premium images, strategic internal and external links. Starts with keyword research, and well-researched topic generation.",
-  features: ["SEO Optimized", "Premium Images", "Topic Generation"],
-  additionalFeatures: [
-    "1000-word Blog Posts",
-    "Keyword Research",
-    "Internal & External Links",
-  ],
-  pricing: {
-    basePrice: {
-      2: 99,
-      4: 149,
-      6: 199,
-      8: 249,
-      10: 299,
-    },
-    posts: [2, 4, 6, 8, 10],
-  },
-};
 
-export default function Blogs() {
-  const [selectedPosts, setSelectedPosts] = useState(6);
-  const basePrice = blogs.pricing.basePrice[selectedPosts];
+// const socialPlatforms = [
+//   <FacebookIcon />,
+//   <TwitterIcon />,
+//   <InstaIcon />,
+//   <LinkdinIcon />,
+//   <YoutubeIcon />,
+//   <TiktokIcon />,
+// ];
+
+export default function Blogs({ service }) {
+  const { data } = useGetSingleServiceQuery(service?.id);
+  console.log(data)
+
+  // Extract max_post values from service_tiers
+  const posts = data?.service_tiers?.map((tier) => tier.max_post) || [
+    10, 15, 20, 25, 30, 35, 40,
+  ];
+  const [selectedPosts, setSelectedPosts] = useState(posts[2] || 20); // Default to third option or 20
+
+  // Calculate base price based on selected posts
+  const basePrice = data?.service_tiers?.find(
+    (tier) => tier.max_post === selectedPosts
+  )?.price;
 
   // for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
   const handleModal = (content: string) => {
-    setModalContent(content); // Set the content dynamically
-    setIsModalOpen(true); // Open the modal
+    setModalContent(content);
+    setIsModalOpen(true);
   };
 
   return (
@@ -45,20 +52,15 @@ export default function Blogs() {
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <div className="flex items-start gap-4 mb-4 sm:mb-6">
           <h2 className="text-xl sm:text-2xl lg:text-[26px] text-[#1D1D1F] font-serotiva-semibold font-semibold">
-            {blogs.title}
+            {data?.name}
           </h2>
         </div>
         <p className="text-sm sm:text-base text-[#4A4C56] mb-4 sm:mb-6">
-          {blogs.description}
+          {data?.description}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-6 sm:mb-8">
-          <div className="flex-1">
-            <FeatureList features={blogs.features} />
-          </div>
-          <div className="flex-1">
-            <FeatureList features={blogs.additionalFeatures} />
-          </div>
+        <div className="">
+          <FeatureList features={service?.features || []} />
         </div>
 
         <div className="overflow-x-auto">
@@ -74,11 +76,11 @@ export default function Blogs() {
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <PricingHeader selectedPosts={selectedPosts} basePrice={basePrice} />
         <PostSelector
-          posts={blogs.pricing.posts}
+          posts={posts}
           selectedPosts={selectedPosts}
           setSelectedPosts={setSelectedPosts}
         />
-        <SocialPlatforms />
+        {/* <SocialPlatforms platforms={socialPlatforms} /> */}
         <CheckoutButtons />
       </div>
 
@@ -86,7 +88,7 @@ export default function Blogs() {
       {isModalOpen && (
         <div className="w-full fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 flex items-center justify-center">
           <TimelineModal
-            content={modalContent}
+            content={"Posts Content"}
             setIsModalOpen={setIsModalOpen}
           />
         </div>
@@ -97,17 +99,31 @@ export default function Blogs() {
 
 // Sub-components
 function FeatureList({ features }: { features: string[] }) {
-  const leftFeatures = features.slice(0, 3);
-  const rightFeatures = features.slice(3);
+  const midPoint = Math.ceil(features.length / 2);
+  const firstRowFeatures = features.slice(0, midPoint);
+  const secondRowFeatures = features.slice(midPoint);
 
   return (
     <div className="mb-8">
-      <div className="">
-        {/* Left Column */}
+      <div className="grid grid-cols-2 justify-between gap-4">
+        {/* First Row */}
         <div className="space-y-3">
-          {leftFeatures.map((feature, index) => (
+          {firstRowFeatures.map((feature, index) => (
             <div key={index} className="flex items-center gap-2">
-              <div className=" rounded-full bg-black flex items-center justify-center flex-shrink-0">
+              <div className="rounded-full bg-black flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" />
+                </svg>
+              </div>
+              <span className="text-[#4A4C56] text-sm">{feature}</span>
+            </div>
+          ))}
+        </div>
+        {/* Second Row */}
+        <div className="space-y-3">
+          {secondRowFeatures.map((feature, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <div className="rounded-full bg-black flex items-center justify-center flex-shrink-0">
                 <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none">
                   <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" />
                 </svg>
@@ -129,7 +145,7 @@ function ActionButtons({
   return (
     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-8">
       <Button
-        onClick={() => handleModal("Blog Content")}
+        onClick={() => handleModal("Timeline Content")}
         variant="outline"
         className="w-full sm:w-auto flex items-center justify-center gap-2 text-sm"
       >
@@ -220,13 +236,20 @@ function PostSelector({
   );
 }
 
-function SocialPlatforms() {
+function SocialPlatforms({ platforms }: { platforms: any[] }) {
   return (
     <div className="mb-8">
-      <p className="text-sm mb-4">
-        Combine any services & add-ons during checkout
-      </p>
-      <div className="flex flex-wrap gap-4"></div>
+      <p className="text-sm mb-4">Social media including</p>
+      <div className="flex flex-wrap gap-4">
+        {platforms.map((platform, index) => (
+          <div
+            key={index}
+            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+          >
+            {platform}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -234,7 +257,9 @@ function SocialPlatforms() {
 function CheckoutButtons() {
   return (
     <>
-      <Button className="w-full bg-black text-white mb-4">Checkout</Button>
+      <Link href={"/dashboard/services/service-selection"}>
+        <Button className="w-full bg-black text-white mb-4">Checkout</Button>
+      </Link>
       <Button variant="outline" className="w-full">
         Schedule a Demo
       </Button>

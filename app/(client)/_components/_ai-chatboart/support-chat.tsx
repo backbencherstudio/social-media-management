@@ -73,7 +73,7 @@ export default function SupportChatBoart() {
 
     try {
       const res = await fetch(
-        "https://5ace-137-59-180-113.ngrok-free.app/api/chat",
+        "https://bird-first-axis-fuzzy.trycloudflare.com/api/chat",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

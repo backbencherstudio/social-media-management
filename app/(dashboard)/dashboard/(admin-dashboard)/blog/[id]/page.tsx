@@ -19,7 +19,7 @@ type FormData = {
 };
 
 
-export default function CreateBlog() {
+export default function EditBlog() {
   const { data } = useGetBlogCategoriesQuery();
   const [createBlog, { isError, isLoading }] = useCreateBlogMutation();
 
@@ -33,7 +33,6 @@ export default function CreateBlog() {
   const editorRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const [editors, setEditors] = useState<Record<number, Quill>>({});
   const [isOpen, setIsOpen] = useState(false);
-  const [newCategory, setNewCategory] = useState("");
 
   // Add new text block
   const addTextBlock = () => {
@@ -338,3 +337,4 @@ export default function CreateBlog() {
     </form>
   );
 }
+

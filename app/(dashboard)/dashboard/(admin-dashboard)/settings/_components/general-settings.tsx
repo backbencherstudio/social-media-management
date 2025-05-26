@@ -1,25 +1,38 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-
+import { useUpdateGeneralSettingsMutation } from "@/src/redux/features/admin/settings/general-settings";
+import React from "react";
+import { useForm } from "react-hook-form";
 
 interface GeneralSettingsFormData {
-  siteName: string;
-  siteDescription: string;
-  contactEmail: string;
-  contactPhone: string;
-  timezone: string;
+  site_name: string;
+  site_description: string;
+  email: string;
+  phone_number: string;
+  time_zone: string;
 }
 
 export default function GeneralSettings() {
+  const [updateGeneralSetting, { isError, isLoading }] =
+    useUpdateGeneralSettingsMutation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<GeneralSettingsFormData>();
+  } = useForm<GeneralSettingsFormData>({
+    defaultValues: {
+      site_name: "tag-growth Sitea_",
+      site_description: "Default description",
+      email: "admin@example.com",
+      phone_number: "1234567890",
+      time_zone: "UTC",
+    },
+  });
 
-  const onSubmit = (data: GeneralSettingsFormData) => {
+  const onSubmit =async (data: GeneralSettingsFormData) => {
     console.log(data);
     // Handle form submission here
+    const response = await updateGeneralSetting(data);
+    console.log(response);
   };
 
   return (
@@ -31,94 +44,91 @@ export default function GeneralSettings() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Site Name */}
         <div className="space-y-1">
-          <label className="text-sm font-medium">
-            Site Name
-          </label>
+          <label className="text-sm font-medium">Site Name</label>
           <input
-            {...register("siteName", {
+            {...register("site_name", {
               required: "Site name is required",
-              minLength: { value: 2, message: "Site name is too short" }
+              minLength: { value: 2, message: "Site name is too short" },
             })}
             type="text"
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
             placeholder="Enter site name"
           />
-          {errors.siteName && (
-            <p className="text-sm text-red-500">{errors.siteName.message}</p>
+          {errors.site_name && (
+            <p className="text-sm text-red-500">{errors.site_name.message}</p>
           )}
         </div>
 
         {/* Site Description */}
         <div className="space-y-1">
-          <label className="text-sm font-medium">
-            Site Description
-          </label>
+          <label className="text-sm font-medium">Site Description</label>
           <textarea
-            {...register("siteDescription", {
+            {...register("site_description", {
               required: "Site description is required",
-              minLength: { value: 10, message: "Description is too short" }
+              minLength: { value: 10, message: "Description is too short" },
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
             rows={3}
             placeholder="Enter site description"
           />
-          {errors.siteDescription && (
-            <p className="text-sm text-red-500">{errors.siteDescription.message}</p>
+          {errors.site_description && (
+            <p className="text-sm text-red-500">
+              {errors.site_description.message}
+            </p>
           )}
         </div>
 
-        {/* Contact Email */}
-        <div className="space-y-1">
-          <label className="text-sm font-medium">
-            Contact Email
-          </label>
-          <input
-            {...register("contactEmail", {
-              required: "Contact email is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address"
-              }
-            })}
-            type="email"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter contact email"
-          />
-          {errors.contactEmail && (
-            <p className="text-sm text-red-500">{errors.contactEmail.message}</p>
-          )}
-        </div>
+        <div className="flex gap-3 lg:gap-5">
+          {/* Email */}
+          <div className="space-y-1 flex-1">
+            <label className="text-sm font-medium">Email</label>
+            <input
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              type="email"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              placeholder="Enter email"
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
+          </div>
 
-        {/* Contact Phone */}
-        <div className="space-y-1">
-          <label className="text-sm font-medium">
-            Contact Phone
-          </label>
-          <input
-            {...register("contactPhone", {
-              required: "Contact phone is required",
-              pattern: {
-                value: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
-                message: "Invalid phone number"
-              }
-            })}
-            type="tel"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Enter contact phone"
-          />
-          {errors.contactPhone && (
-            <p className="text-sm text-red-500">{errors.contactPhone.message}</p>
-          )}
+          {/* Phone Number */}
+          <div className="space-y-1 flex-1">
+            <label className="text-sm font-medium">Phone Number</label>
+            <input
+              {...register("phone_number", {
+                required: "Phone number is required",
+                pattern: {
+                  value:
+                    /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
+                  message: "Invalid phone number",
+                },
+              })}
+              type="tel"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              placeholder="Enter phone number"
+            />
+            {errors.phone_number && (
+              <p className="text-sm text-red-500">
+                {errors.phone_number.message}
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Timezone */}
         <div className="space-y-1">
-          <label className="text-sm font-medium">
-            Timezone
-          </label>
+          <label className="text-sm font-medium">Timezone</label>
           <select
-            {...register("timezone", {
-              required: "Timezone is required"
+            {...register("time_zone", {
+              required: "Timezone is required",
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
           >
@@ -131,8 +141,8 @@ export default function GeneralSettings() {
             <option value="Asia/Dubai">Dubai</option>
             <option value="Asia/Dhaka">Dhaka</option>
           </select>
-          {errors.timezone && (
-            <p className="text-sm text-red-500">{errors.timezone.message}</p>
+          {errors.time_zone && (
+            <p className="text-sm text-red-500">{errors.time_zone.message}</p>
           )}
         </div>
 
