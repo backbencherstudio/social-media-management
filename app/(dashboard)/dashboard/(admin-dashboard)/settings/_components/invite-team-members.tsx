@@ -50,7 +50,6 @@ export default function InviteTeamMembers() {
     role: string;
   }
 
-  // Inside your component, add this before the return statement
   const {
     register,
     handleSubmit,

@@ -1,9 +1,7 @@
 import { baseApi } from "@/src/redux/api/baseApi";
 
-
-
 interface UserRoleResponse {
-  data: any[];
+  data: any;
   success: boolean;
   message: string;
 }
@@ -24,8 +22,8 @@ const userRole = baseApi.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["user-role-management"],
-    })
-  })
-})
+    }),
+  }),
+});
 
 export const { useGetUserRoleQuery, useUpdateUserAndRoleMutation } = userRole;

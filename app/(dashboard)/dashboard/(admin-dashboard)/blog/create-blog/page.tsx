@@ -3,8 +3,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
+// import Quill from "quill";
+// import "quill/dist/quill.snow.css";
 
 import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
 import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
@@ -31,7 +31,7 @@ export default function CreateBlog() {
   const [mediaBlocks, setMediaBlocks] = useState<number[]>([]);
   const [mediaPreview, setMediaPreview] = useState<string | null>(null); // State for image preview
   const editorRefs = useRef<Record<number, HTMLDivElement | null>>({});
-  const [editors, setEditors] = useState<Record<number, Quill>>({});
+  // const [editors, setEditors] = useState<Record<number, Quill>>({});
   const [isOpen, setIsOpen] = useState(false);
   const [newCategory, setNewCategory] = useState("");
 
@@ -48,32 +48,32 @@ export default function CreateBlog() {
   };
 
   // Initialize Quill editors
-  useEffect(() => {
-    textBlocks.forEach((id) => {
-      const container = editorRefs.current[id];
-      if (container && !container.querySelector(".ql-editor")) {
-        const quill = new Quill(container, {
-          theme: "snow",
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, false] }],
-              ["bold", "italic", "underline", "strike"],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["link"],
-              ["clean"],
-            ],
-          },
-        });
+  // useEffect(() => {
+  //   textBlocks.forEach((id) => {
+  //     const container = editorRefs.current[id];
+  //     if (container && !container.querySelector(".ql-editor")) {
+  //       const quill = new Quill(container, {
+  //         theme: "snow",
+  //         modules: {
+  //           toolbar: [
+  //             [{ header: [1, 2, 3, false] }],
+  //             ["bold", "italic", "underline", "strike"],
+  //             [{ list: "ordered" }, { list: "bullet" }],
+  //             ["link"],
+  //             ["clean"],
+  //           ],
+  //         },
+  //       });
 
-        quill.on("text-change", () => {
-          const plainText = quill.getText();
-          setValue(`content_${id}`, plainText as any);
-        });
+  //       quill.on("text-change", () => {
+  //         const plainText = quill.getText();
+  //         setValue(`content_${id}`, plainText as any);
+  //       });
 
-        setEditors((prev) => ({ ...prev, [id]: quill }));
-      }
-    });
-  }, [textBlocks, setValue]);
+  //       setEditors((prev) => ({ ...prev, [id]: quill }));
+  //     }
+  //   });
+  // }, [textBlocks, setValue]);
 
   // Handle hashtag input
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

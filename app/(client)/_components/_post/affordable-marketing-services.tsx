@@ -12,7 +12,6 @@ import TimelineModal from "../timeline-modal";
 import Link from "next/link";
 import { useGetSingleServiceQuery } from "@/src/redux/features/admin/services";
 
-
 const socialPlatforms = [
   <FacebookIcon />,
   <TwitterIcon />,
@@ -22,9 +21,9 @@ const socialPlatforms = [
   <TiktokIcon />,
 ];
 
-export default function AffordableMarketingServices({ service }) {
+export default function AffordableMarketingServices({ service }: any) {
   const { data } = useGetSingleServiceQuery(service?.id);
-  console.log(data)
+  console.log(data);
 
   // Extract max_post values from service_tiers
   const posts = data?.service_tiers?.map((tier) => tier.max_post) || [
@@ -240,11 +239,11 @@ function SocialPlatforms({ platforms }: { platforms: any[] }) {
   return (
     <div className="mb-8">
       <p className="text-sm mb-4">Social media including</p>
-      <div className="flex flex-wrap gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 ">
         {platforms.map((platform, index) => (
           <div
             key={index}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors mx-auto"
           >
             {platform}
           </div>

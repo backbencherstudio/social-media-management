@@ -257,7 +257,7 @@ export default function ContentTabs() {
       </div>
 
       {/* Render the content for the active tab */}
-      <div>
+      <div className="pt-10 md:pt-0">
         {renderTabContent()}
       </div>
     </div>

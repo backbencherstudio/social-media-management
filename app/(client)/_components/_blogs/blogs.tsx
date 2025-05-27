@@ -22,7 +22,7 @@ import { useGetSingleServiceQuery } from "@/src/redux/features/admin/services";
 //   <TiktokIcon />,
 // ];
 
-export default function Blogs({ service }) {
+export default function Blogs({ service }: any) {
   const { data } = useGetSingleServiceQuery(service?.id);
   console.log(data)
 
