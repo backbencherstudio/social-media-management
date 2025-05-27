@@ -61,7 +61,7 @@ const ReuseablePricing = () => {
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="flex p-[6px] flex-col bg-white h-full sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-20 md:mb-8">
+        <TabsList className="bg-white h-full sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-8">
           {services.map((service) => (
             <TabsTrigger
               key={service.id}

@@ -1,19 +1,48 @@
-import Link from "next/link";
 import React, { useState } from "react";
-import { GrView } from "react-icons/gr";
 import { useForm } from "react-hook-form";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
-import { Label } from "@/components/ui/label";
 import ManageUserModal from "./manage-user-modal";
+
+const services = [
+  {
+    id: 1,
+    name: "Email Designg",
+    email: "dmail@gmail",
+    started: "2024-12-01",
+    status: 1,
+    approval: "Approved",
+    role: "Super Admin",
+  },
+  {
+    id: 2,
+    name: "Plus • 15 posts",
+    email: "fmail@gmail",
+    started: "2025-01-15",
+    status: 0,
+    approval: "Pending",
+    role: "Admin",
+  },
+  {
+    id: 3,
+    name: "Email Marketing",
+    email: "gmail@gmail",
+    started: "2025-01-15",
+    status: 1,
+    approval: "Pending",
+    role: "Manager",
+  },
+];
 
 export default function InviteTeamMembers() {
   const [showModal, setShowModal] = useState(false);
+  const [selectedService, setSelectedService] = useState<{
+    id: number;
+    name: string;
+    email: string;
+    started: string;
+    status: number;
+    approval: string;
+    role: string;
+  } | null>(null);
 
   // Add this interface after imports
   interface InviteFormData {
@@ -21,7 +50,6 @@ export default function InviteTeamMembers() {
     role: string;
   }
 
-  // Inside your component, add this before the return statement
   const {
     register,
     handleSubmit,
@@ -33,30 +61,6 @@ export default function InviteTeamMembers() {
     console.log(data);
     reset();
   };
-
-  const services = [
-    {
-      id: 1,
-      name: "Email Designg",
-      started: "2024-12-01",
-      status: "For Review",
-      approval: "Approved",
-    },
-    {
-      id: 2,
-      name: "Plus • 15 posts",
-      started: "2025-01-15",
-      status: "In Progress",
-      approval: "Pending",
-    },
-    {
-      id: 3,
-      name: "Email Marketing",
-      started: "2025-01-15",
-      status: "Complete",
-      approval: "Pending",
-    },
-  ];
 
   // Add new form interface for manage modal
   interface ManageFormData {
@@ -71,6 +75,7 @@ export default function InviteTeamMembers() {
     handleSubmit: handleSubmitManage,
     formState: { errors: errorsManage },
   } = useForm<ManageFormData>();
+
 
   return (
     <div>
@@ -174,17 +179,14 @@ export default function InviteTeamMembers() {
                   <div className="flex justify-center">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        service.status === "For Review" &&
-                        "bg-[#FEF3C7] text-[#984917]"
+                        service.status === 1 &&
+                        "bg-[#EBFBF5] text-[#07811E]"
                       } ${
-                        service.status === "In Progress" &&
-                        "bg-[#F5F1FF] text-[#5B21B6]"
-                      } ${
-                        service.status === "Complete" &&
-                        "bg-[#ECEFF3] text-black"
+                        service.status === 0 &&
+                        "bg-[#E8F1FE] text-[#1877F2]"
                       }`}
                     >
-                      {service.status}
+                      {service.status === 1 ? 'Active' : 'Inactive'}
                     </span>
                   </div>
                 </td>
@@ -199,8 +201,11 @@ export default function InviteTeamMembers() {
                 <td className="py-4 px-4 text-center">
                   <div className="flex items-center justify-center gap-4">
                     <button
-                      onClick={() => setShowModal(true)}
-                      className="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      onClick={() => {
+                        setSelectedService(service);
+                        setShowModal(true);
+                      }}
+                      className="px-4 py-2 text-blue-700 underline rounded-lg transition-colors cursor-pointer"
                     >
                       Manage
                     </button>
@@ -214,7 +219,19 @@ export default function InviteTeamMembers() {
         {/* Manage Modal */}
         <ManageUserModal
           isOpen={showModal}
-          onClose={() => setShowModal(false)}
+          onClose={() => {
+            setShowModal(false);
+            setSelectedService(null);
+          }}
+          defaultData={
+            selectedService
+              ? {
+                  name: selectedService.name,
+                  email: selectedService.email,
+                  role: selectedService.role,
+                }
+              : null
+          }
         />
       </div>
     </div>

@@ -23,11 +23,11 @@ const Compose = () => {
         </TabsList>
         {/* CreateSchedulePost */}
         <TabsContent value="CreateSchedulePost">
-          <CreateSchedulePost />
+          {/* <CreateSchedulePost /> */}
         </TabsContent>
         {/* SendDesignFile */}
         <TabsContent value="SendDesignFile">
-          <SendDesignFile />
+          {/* <SendDesignFile /> */}
         </TabsContent>
       </Tabs>
     </div>

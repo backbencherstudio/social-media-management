@@ -21,6 +21,7 @@ import GithubIcon from "@/public/incons/landin-page/GithubIcon";
 import MazeIcon from "@/public/incons/landin-page/MazeIcon";
 import GumroadIcon from "@/public/incons/landin-page/GumroadIcon";
 import RipplingIcon from "@/public/incons/landin-page/RippklingIcon";
+import Marquee from 'react-fast-marquee';
 
 const images = [
   img1.src,
@@ -130,26 +131,16 @@ const Hero: React.FC = () => {
               <path d="M1 0V83.5" stroke="#4A4C56" />
             </svg>
           </div>
-          <div className="flex md:flex-row flex-col md:gap-2 gap-2 items-center w-full justify-between">
-            <span>
-              <DocuSignIcon />
-            </span>
-            <span>
-              <AfterPayIcon />
-            </span>
-            <span>
-              <GithubIcon />
-            </span>
-            <span>
-              <MazeIcon />
-            </span>
-            <span>
-              <GumroadIcon />
-            </span>
-            <span>
-              <RipplingIcon />
-            </span>
-          </div>
+          <Marquee speed={100} gradient={false} className="w-full">
+            <div className="flex items-center">
+              <span className="mx-12"><DocuSignIcon /></span>
+              <span className="mx-12"><AfterPayIcon /></span>
+              <span className="mx-12"><GithubIcon /></span>
+              <span className="mx-12"><MazeIcon /></span>
+              <span className="mx-12"><GumroadIcon /></span>
+              <span className="mx-12"><RipplingIcon /></span>
+            </div>
+          </Marquee>
         </div>
       </div>
     </div>

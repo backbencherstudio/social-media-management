@@ -303,7 +303,7 @@ export function Navbar() {
               <NavigationMenuTrigger className="bg-transparent p-0 hover:bg-transparent serotiva-regular">
                 Services
               </NavigationMenuTrigger>
-              <NavigationMenuContent 
+              <NavigationMenuContent
                 className="data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out absolute left-0 top-0 w-[700px]"
                 onClick={(e) => e.stopPropagation()}
               >
@@ -367,7 +367,10 @@ export function Navbar() {
                 <Link href="get-startd" className="serotiva-regular">
                   Get Started
                 </Link>
-                <Link href="" className="bg-black hover:bg-gray-800 text-white serotiva-regular">
+                <Link
+                  href=""
+                  className="flex items-center py-1 px-4 rounded-md bg-black hover:bg-gray-800 text-white serotiva-regular"
+                >
                   Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </div>
@@ -387,10 +390,10 @@ export function Navbar() {
             href="/book-demo"
             className="hover:text-black transition serotiva-regular"
           >
-            Book a Demo 
+            Get Starded
           </Link>
           <Button className="bg-black hover:bg-gray-800 text-white serotiva-regular">
-            Get Starded  <BsArrowUpRightCircle className="ml-2 w-5 h-5 "/>
+            Book a Demo <BsArrowUpRightCircle className="ml-2 w-5 h-5 " />
           </Button>
         </div>
       </div>

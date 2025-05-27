@@ -122,7 +122,7 @@ export default function SupportChatBoart() {
             borderRadius: 8,
           }}
         >
-          <SupportChatBoartIcon />
+          <SupportChatBoartIcon className={'w-14 h-14 md:w-full md:h-full'} />
         </button>
       </div>
 

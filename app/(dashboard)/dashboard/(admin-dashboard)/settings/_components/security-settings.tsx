@@ -2,9 +2,9 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 
 interface SecuritySettingsForm {
-  dataExportBackup: string;
+  dataExportBackup: number;
   sessionTimeout: number;
-  failedLoginAttempts: string;
+  failedLoginAttempts: number;
   passwordExpiry: number;
 }
 
@@ -15,9 +15,16 @@ export default function SecuritySettings() {
     formState: { errors },
   } = useForm<SecuritySettingsForm>()
 
-  const onSubmit = (data: SecuritySettingsForm) => {
-    console.log('Security Settings Data:', data)
-    // Handle form submission here
+  const onSubmit = async (data: SecuritySettingsForm) => {
+    const formattedData = {
+      dataExportBackup: Number(data.dataExportBackup),
+      sessionTimeout: Number(data.sessionTimeout),
+      failedLoginAttempts: Number(data.failedLoginAttempts),
+      passwordExpiry: Number(data.passwordExpiry)
+    }
+    
+    console.log(formattedData)
+    // Handle API call here
   }
 
   return (
@@ -34,18 +41,19 @@ export default function SecuritySettings() {
           </label>
           <select
             {...register("dataExportBackup", {
-              required: "Please select backup frequency"
+              required: "Please select backup frequency",
             })}
             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">Select backup frequency</option>
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-            <option value="quarterly">Quarterly</option>
+            <option value="1">Every 1 day</option>
+            <option value="7">Every 7 days</option>
+            <option value="30">Every 30 days</option>
+            <option value="90">Every 90 days</option>
           </select>
           {errors.dataExportBackup && (
-            <p className="text-red-500 text-sm">{errors.dataExportBackup.message}</p>
+            <p className="text-red-500 text-sm">
+              {errors.dataExportBackup.message}
+            </p>
           )}
         </div>
 
@@ -59,13 +67,18 @@ export default function SecuritySettings() {
             {...register("sessionTimeout", {
               required: "Session timeout is required",
               min: { value: 1, message: "Minimum timeout is 1 minute" },
-              max: { value: 1440, message: "Maximum timeout is 1440 minutes (24 hours)" }
+              max: {
+                value: 1440,
+                message: "Maximum timeout is 1440 minutes (24 hours)",
+              },
             })}
             placeholder="Enter timeout duration"
             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.sessionTimeout && (
-            <p className="text-red-500 text-sm">{errors.sessionTimeout.message}</p>
+            <p className="text-red-500 text-sm">
+              {errors.sessionTimeout.message}
+            </p>
           )}
         </div>
 
@@ -76,18 +89,19 @@ export default function SecuritySettings() {
           </label>
           <select
             {...register("failedLoginAttempts", {
-              required: "Please select maximum attempts"
+              required: "Please select maximum attempts",
             })}
             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">Select maximum attempts</option>
-            <option value="3">3 attempts</option>
-            <option value="5">5 attempts</option>
-            <option value="7">7 attempts</option>
-            <option value="10">10 attempts</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="10">10</option>
           </select>
           {errors.failedLoginAttempts && (
-            <p className="text-red-500 text-sm">{errors.failedLoginAttempts.message}</p>
+            <p className="text-red-500 text-sm">
+              {errors.failedLoginAttempts.message}
+            </p>
           )}
         </div>
 
@@ -101,13 +115,15 @@ export default function SecuritySettings() {
             {...register("passwordExpiry", {
               required: "Password expiry is required",
               min: { value: 30, message: "Minimum expiry is 30 days" },
-              max: { value: 365, message: "Maximum expiry is 365 days" }
+              max: { value: 365, message: "Maximum expiry is 365 days" },
             })}
             placeholder="Enter password expiry days"
             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.passwordExpiry && (
-            <p className="text-red-500 text-sm">{errors.passwordExpiry.message}</p>
+            <p className="text-red-500 text-sm">
+              {errors.passwordExpiry.message}
+            </p>
           )}
         </div>
 
@@ -122,5 +138,5 @@ export default function SecuritySettings() {
         </div>
       </form>
     </div>
-  )
+  );
 }

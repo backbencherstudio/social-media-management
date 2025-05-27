@@ -1,6 +1,13 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useState } from "react";
 import HashTagIcon from "@/public/incons/landin-page/HashTag";
 import UnionIcon from "@/public/incons/landin-page/Union";
 import HeartIcons from "@/public/incons/landin-page/Heart";
@@ -36,6 +43,12 @@ export default function PostsContent({
   activeCategory,
   setActiveCategory,
 }: PostsContentProps) {
+  const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null);
+
+  const handleCardClick = (item: ContentItem) => {
+    setSelectedItem(item);
+  };
+
   return (
     <>
       {/* Categories */}
@@ -50,7 +63,8 @@ export default function PostsContent({
         {contentItems.map((item) => (
           <Card
             key={item.id}
-            className="overflow-hidden py-0 gap-0 rounded-xl border-[1.28px] border-[#F0F6FD] bg-white shadow-[0px_12.8px_51.2px_0px_rgba(222,230,237,0.40)]"
+            className="overflow-hidden py-0 gap-0 rounded-xl border-[1.28px] border-[#F0F6FD] bg-white shadow-[0px_12.8px_51.2px_0px_rgba(222,230,237,0.40)] hover:scale-102 transition-transform duration-500 cursor-pointer"
+            onClick={() => handleCardClick(item)}
           >
             {/* Card Header */}
             <div className="flex items-center justify-between px-5 pt-5 pb-4">
@@ -70,12 +84,17 @@ export default function PostsContent({
             </div>
 
             {/* Card Image */}
-            <div className="relative aspect-square">
+            <div className="relative aspect-square group">
               <img
                 src={item.image || "/placeholder.svg"}
                 alt={item.title}
                 className="w-full h-full object-cover"
               />
+              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <button className="px-6 py-2 bg-white text-black rounded-full font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  View Details
+                </button>
+              </div>
             </div>
 
             {/* Card Footer */}
@@ -98,6 +117,39 @@ export default function PostsContent({
           </Card>
         ))}
       </div>
+
+      {/* Details Modal */}
+      <Dialog open={!!selectedItem} onOpenChange={() => setSelectedItem(null)}>
+        <DialogContent className="sm:max-w-[1200px] sm:max-h-[500px] bg-white rounded-3xl border-0 overflow-hidden p-0">
+          <div className="flex flex-col sm:flex-row h-full">
+            <div className="w-full h-[400px] sm:w-1/2 sm:h-full sm:pt-5 md:pt-0">
+              <img
+                src={selectedItem?.image || "/placeholder.svg"}
+                alt={selectedItem?.title || "Post image"}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="w-full sm:w-1/2 p-4 sm:p-6 space-y-3 sm:space-y-4">
+              <DialogHeader>
+                <DialogTitle className="text-xl sm:text-2xl font-bold">
+                  {selectedItem?.title}
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex items-center justify-between">
+                <span className="text-xs sm:text-sm text-gray-500">
+                  Category: {selectedItem?.category}
+                </span>
+                <span className="text-xs sm:text-sm text-gray-500">
+                  Likes: {selectedItem?.likes}
+                </span>
+              </div>
+              <p className="text-sm sm:text-base text-gray-700">
+                {selectedItem?.title}
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

@@ -13,5 +13,8 @@ export const baseApi = createApi({
     "categorys",
     "blog-categories",
     "general-settings",
+    "payment-and-transactions",
+    "security-settings",
+    "user-role-management",
   ],
 });

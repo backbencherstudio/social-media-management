@@ -1,5 +1,7 @@
-export default function ServiceCard({ service }) {
-//   console.log(service);
+
+export function ServiceCard({ service }: any) {
+
+
   return (
     <div className="bg-white rounded-xl shadow-sm p-5 max-w-sm border border-gray-200 space-y-4 relative">
       {/* Icon and badge */}
