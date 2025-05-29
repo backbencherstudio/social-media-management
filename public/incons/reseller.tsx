@@ -1,0 +1,34 @@
+import React from "react";
+
+interface ResellerIconProps {
+  className?: string;
+}
+
+const ResellerIcon: React.FC<ResellerIconProps> = ({ className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="19"
+      viewBox="0 0 18 19"
+      fill="none"
+    >
+      <path
+        d="M9.11992 8.6525C9.04492 8.645 8.95492 8.645 8.87242 8.6525C7.08742 8.5925 5.66992 7.13 5.66992 5.33C5.66992 3.4925 7.15492 2 8.99992 2C10.8374 2 12.3299 3.4925 12.3299 5.33C12.3224 7.13 10.9049 8.5925 9.11992 8.6525Z"
+        stroke="#4A4C56"
+        strokeWidth="1.125"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5.37102 11.42C3.55602 12.635 3.55602 14.615 5.37102 15.8225C7.43352 17.2025 10.816 17.2025 12.8785 15.8225C14.6935 14.6075 14.6935 12.6275 12.8785 11.42C10.8235 10.0475 7.44102 10.0475 5.37102 11.42Z"
+        stroke="#4A4C56"
+        strokeWidth="1.125"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export default ResellerIcon;

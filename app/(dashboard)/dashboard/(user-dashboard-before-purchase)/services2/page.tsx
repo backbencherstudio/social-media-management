@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 import { Service, ServiceSelection } from "@/types/services";
-import { serviceOptions } from "./_components/data";
-import ServiceSummary from "./_components/service-summery";
-import ServiceOption from "./_components/service-option";
+import { serviceOptions } from "../services/service-selection/_components/data";
+import ServiceOption from "../services/service-selection/_components/service-option";
+import ServiceSummary from "../services/service-selection/_components/service-summary";
 
 const ServiceSelectionPage = () => {
   const [selectedServices, setSelectedServices] = useState<ServiceSelection[]>(
@@ -121,7 +121,7 @@ const ServiceSelectionPage = () => {
         </div>
       </div>
 
-      <div className="lg:w-[20%] w-full lg:sticky lg:top-6 h-fit bg-white rounded-[12px] lg:p-6 md:p-4 p-3">
+      <div className="lg:w-[20%] w-full lg:sticky  h-fit bg-white rounded-[12px] lg:p-6 md:p-4 p-3  ">
         <ServiceSummary
           selectedServices={selectedServices}
           total={calculateTotal()}

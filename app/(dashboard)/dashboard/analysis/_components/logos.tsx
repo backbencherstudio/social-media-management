@@ -123,22 +123,22 @@ export const imageLogo = (
       d="M9.25 22.5001H15.25C20.25 22.5001 22.25 20.5001 22.25 15.5001V9.50012C22.25 4.50012 20.25 2.50012 15.25 2.50012H9.25C4.25 2.50012 2.25 4.50012 2.25 9.50012V15.5001C2.25 20.5001 4.25 22.5001 9.25 22.5001Z"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M9.25 10.5001C10.3546 10.5001 11.25 9.60469 11.25 8.50012C11.25 7.39555 10.3546 6.50012 9.25 6.50012C8.14543 6.50012 7.25 7.39555 7.25 8.50012C7.25 9.60469 8.14543 10.5001 9.25 10.5001Z"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M2.91998 19.4501L7.84998 16.1401C8.63998 15.6101 9.77998 15.6701 10.49 16.2801L10.82 16.5701C11.6 17.2401 12.86 17.2401 13.64 16.5701L17.8 13.0001C18.58 12.3301 19.84 12.3301 20.62 13.0001L22.25 14.4001"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -154,37 +154,37 @@ export const videoLogo = (
       d="M22.75 15.5001V9.50012C22.75 4.50012 20.75 2.50012 15.75 2.50012H9.75C4.75 2.50012 2.75 4.50012 2.75 9.50012V15.5001C2.75 20.5001 4.75 22.5001 9.75 22.5001H15.75C20.75 22.5001 22.75 20.5001 22.75 15.5001Z"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M3.27002 7.61011H22.23"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M9.27002 2.61011V7.47011"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M16.23 2.61011V7.02011"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M10.5 14.9501V13.7501C10.5 12.2101 11.59 11.5801 12.92 12.3501L13.96 12.9501L15 13.5501C16.33 14.3201 16.33 15.5801 15 16.3501L13.96 16.9501L12.92 17.5501C11.59 18.3201 10.5 17.6901 10.5 16.1501V14.9501V14.9501Z"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-miterlimit="10"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -200,22 +200,22 @@ export const linkLogo = (
       d="M15.24 18.0001H16.75C19.77 18.0001 22.25 15.5301 22.25 12.5001C22.25 9.48012 19.78 7.00012 16.75 7.00012H15.24"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M9.25 7.00012H7.75C4.72 7.00012 2.25 9.47012 2.25 12.5001C2.25 15.5201 4.72 18.0001 7.75 18.0001H9.25"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M8.25 12.5001H16.25"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -231,43 +231,43 @@ export const textLogo = (
       d="M2.73999 6.43013V4.92013C2.73999 3.90013 3.56999 3.07013 4.58999 3.07013H17.51C18.53 3.07013 19.36 3.90013 19.36 4.92013V6.43013"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M11.05 18.6001V3.82013"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M7.65002 18.6001H13.23"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M14.4301 10.8401H21.4401C22.1701 10.8401 22.7601 11.4301 22.7601 12.1601V12.9601"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M16.83 21.9301V11.3701"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M14.6899 21.9301H18.9699"
       stroke="#04060F"
       strokeWidth="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
