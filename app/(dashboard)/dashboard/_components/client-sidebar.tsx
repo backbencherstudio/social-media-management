@@ -2,29 +2,20 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
-import {
-  RiHome5Line,
-  RiLayoutGridLine,
-  RiCalendarCheckLine,
-  RiFolderLine,
-  RiBarChart2Line,
-} from "react-icons/ri";
-import { BsPerson } from "react-icons/bs";
-import { HiOutlineCreditCard } from "react-icons/hi2";
-import { TbFileInvoice } from "react-icons/tb";
 import { Home, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
 import UserServicesIcon from "@/public/incons/user-services";
+import InvoicesIcon from "@/public/incons/invoices";
+import ProfileIcon from "@/public/incons/profile";
+import PaymentIcon from "@/public/incons/payment";
 import ScheduleIcon from "@/public/incons/schedule";
 import AssetsIcon from "@/public/incons/assets";
 import AnalysisIcon from "@/public/incons/analysis-icon";
 import SocialsIcon from "@/public/incons/socials";
-import InvoicesIcon from "@/public/incons/invoices";
-import ProfileIcon from "@/public/incons/profile";
-import PaymentIcon from "@/public/incons/payment";
 
-// top menu items for after purchased users
-const afterPurchasedTopMenuItems = [
+
+
+const clientTopMenuItems = [
   { title: "Home", icon: Home, href: "/dashboard" },
   { title: "Schedule", icon: ScheduleIcon, href: "/dashboard/schedule" },
   { title: "Assets", icon: AssetsIcon, href: "/dashboard/assets" },
@@ -37,20 +28,15 @@ const afterPurchasedTopMenuItems = [
   },
 ];
 
-// top menu items for purchased users
-const beforePurchasedTopMenuItems = [
-  ,
-  { title: "Home", icon: Home, href: "/dashboard/home" },
-  { title: "Services", icon: UserServicesIcon, href: "/dashboard/services" },
-];
-
-const hasPurchased = false;
-// bottomMenuItems
 const bottomMenuItems = [
   {
     title: "Settings",
     subItems: [
-      { title: "Profile/account", icon: ProfileIcon, href: "/dashboard/profile" },
+      {
+        title: "Profile/account",
+        icon: ProfileIcon,
+        href: "/dashboard/profile",
+      },
       {
         title: "Payment",
         icon: PaymentIcon,
@@ -62,7 +48,11 @@ const bottomMenuItems = [
         href: "/dashboard/payment-method",
       },
       { title: "Invoices", icon: InvoicesIcon, href: "/dashboard/invoices" },
-      { title: "Payment Invoices", icon: InvoicesIcon, href: "/dashboard/payment-invoices" },
+      {
+        title: "Payment Invoices",
+        icon: InvoicesIcon,
+        href: "/dashboard/payment-invoices",
+      },
     ],
   },
 ];
@@ -72,14 +62,12 @@ interface SidebarProps {
   onMobileMenuClose: () => void;
 }
 
-export default function Sidebar({
+export default function ClientSidebar({
   isMobileMenuOpen,
   onMobileMenuClose,
 }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
-
-  // const { hasPurchased } = usePurchase();
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -89,8 +77,7 @@ export default function Sidebar({
     item,
   }: {
     item:
-      | (typeof afterPurchasedTopMenuItems)[0]
-      | (typeof beforePurchasedTopMenuItems)[0]
+      | (typeof clientTopMenuItems)[0]
       | (typeof bottomMenuItems)[0]["subItems"][0];
   }) => {
     const isActive = pathname === item.href;
@@ -184,13 +171,9 @@ export default function Sidebar({
 
       {/* Top Menu Items */}
       <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-        {hasPurchased
-          ? beforePurchasedTopMenuItems.map((item, index) => (
-              <NavLink key={index} item={item} />
-            ))
-          : afterPurchasedTopMenuItems.map((item, index) => (
-              <NavLink key={index} item={item} />
-            ))}
+        {clientTopMenuItems.map((item, index) => (
+          <NavLink key={index} item={item} />
+        ))}
       </nav>
 
       {/* Bottom Menu Items */}

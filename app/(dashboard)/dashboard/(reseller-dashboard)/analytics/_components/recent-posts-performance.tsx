@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import DatePicker from "../../freelancer-dashboard/_components/date-picker";
+import DatePicker from "../../reseller-dashboard/_components/date-picker";
 import ActionIcon from "@/public/incons/actions";
 import FacebookIcon from "@/public/incons/facebook";
 import InstagramIcon from "@/public/incons/instagram";
@@ -68,15 +68,33 @@ export default function RecentPostsPerformance() {
       <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
         <thead className="bg-gray-100 text-gray-700 text-center rounded-t-lg">
           <tr>
-            <th className="py-3 px-4 text-left first:rounded-tl-lg whitespace-nowrap overflow-hidden text-ellipsis">Post</th>
-            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">Platform</th>
-            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">Date</th>
-            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">Likes</th>
-            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">Comments</th>
-            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">Shares</th>
-            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">Reach</th>
-            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">Engagement Rate</th>
-            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">Actions</th>
+            <th className="py-3 px-4 text-left first:rounded-tl-lg whitespace-nowrap overflow-hidden text-ellipsis">
+              Post
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+              Platform
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+              Date
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+              Likes
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+              Comments
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+              Shares
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+              Reach
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+              Engagement Rate
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap overflow-hidden text-ellipsis">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -84,24 +102,26 @@ export default function RecentPostsPerformance() {
             <tr key={service.id} className="">
               {/* Service cell with left side text & status */}
               <td className="py-4 px-4">
-                  <div className="flex items-center justify-between flex-wrap gap-2">
-                    <div className="max-w-full overflow-hidden">
-                      <h1 className="font-semibold text-gray-900 truncate whitespace-nowrap">
-                        {service.post}
-                      </h1>
-                      <span className="text-sm text-gray-500 block truncate">
-                        62A2AA44-2
-                      </span>
-                    </div>
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="max-w-full overflow-hidden">
+                    <h1 className="font-semibold text-gray-900 truncate whitespace-nowrap">
+                      {service.post}
+                    </h1>
+                    <span className="text-sm text-gray-500 block truncate">
+                      62A2AA44-2
+                    </span>
                   </div>
-                </td>
+                </div>
+              </td>
 
               <td className="py-4 px-4 text-center">
                 <div className="flex items-center px-3 gap-2 rounded-full border py-1">
                   {service.icon} {service.platform}
                 </div>
               </td>
-              <td className="py-4 px-4 text-center whitespace-nowrap">{service.date}</td>
+              <td className="py-4 px-4 text-center whitespace-nowrap">
+                {service.date}
+              </td>
               <td className="py-4 px-4 text-center">{service.likes}</td>
               <td className="py-4 px-4 text-center">{service.comments}</td>
               <td className="py-4 px-4 text-center">{service.shares}</td>

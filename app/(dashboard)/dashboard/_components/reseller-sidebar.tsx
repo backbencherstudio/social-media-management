@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
-import { RiHome5Line, RiLayoutGridLine } from "react-icons/ri";
-import { PanelLeftClose, PanelLeftOpen, SettingsIcon } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
 import DashboardIcon from "@/public/incons/dashboard";
 import AnalysisIcon from "@/public/incons/analysis-icon";
@@ -14,23 +13,6 @@ import AssetsIcon from "@/public/incons/assets";
 import SocialInboxIcon from "@/public/incons/social-inbox";
 import SocialsIcon from "@/public/incons/socials";
 import SupportIcon from "@/public/incons/support";
-import OrderIcon from "@/public/incons/order";
-import TaskManagementIcon from "@/public/incons/task-management";
-import ClientIcon from "@/public/incons/client";
-import ResellerIcon from "@/public/incons/reseller";
-import TeamIcon from "@/public/incons/team";
-import ServicesIcon from "@/public/incons/services";
-import BlogIcon from "@/public/incons/blog";
-import PaymentIcon from "@/public/incons/payment";
-import LiveChatIcon from "@/public/incons/live-chat";
-
-// Define roles
-const ROLE = {
-  FREELANCER: "freelancer",
-  ADMIN: "admin",
-};
-
-type Role = "admin" | "freelancer";
 
 // Menu item type
 interface MenuItem {
@@ -46,14 +28,14 @@ interface Section {
 }
 
 // Menu definitions
-const freelancerMenu: Section[] = [
+const resellerSidebarMenu: Section[] = [
   {
     label: "Overview",
     items: [
       {
         title: "Dashboard",
         icon: DashboardIcon,
-        href: "/dashboard/freelancer-dashboard",
+        href: "/dashboard",
       },
       {
         title: "Analytics",
@@ -115,96 +97,6 @@ const freelancerMenu: Section[] = [
     ],
   },
 ];
-
-const adminMenu: Section[] = [
-  {
-    label: "Overview",
-    items: [
-      { title: "Dashboard", icon: DashboardIcon, href: "/dashboard" },
-      // { title: "Reports", icon: RiLayoutGridLine, href: "/dashboard/reports" },
-    ],
-  },
-  {
-    label: "Operation",
-    items: [
-      { title: "Order", icon: OrderIcon, href: "/dashboard/order" },
-      {
-        title: "Task Management",
-        icon: TaskManagementIcon,
-        href: "/dashboard/task-management",
-      },
-      { title: "Client", icon: ClientIcon, href: "/dashboard/client" },
-      {
-        title: "Reseller",
-        icon: ResellerIcon,
-        href: "/dashboard/reseller",
-      },
-      { title: "Team", icon: TeamIcon, href: "/dashboard/team" },
-    ],
-  },
-  {
-    label: "Content Management",
-    items: [
-      {
-        title: "Services",
-        icon: ServicesIcon,
-        href: "/dashboard/admin-services",
-      },
-      {
-        title: "Blog",
-        icon: BlogIcon,
-        href: "/dashboard/blog",
-      },
-    ],
-  },
-  {
-    label: "Finance",
-    items: [
-      {
-        title: "Payment",
-        icon: PaymentIcon,
-        href: "/dashboard/payment",
-      },
-    ],
-  },
-  {
-    label: "Help",
-    items: [
-      {
-        title: "Live Chat",
-        icon: LiveChatIcon,
-        href: "/dashboard/live-chat",
-      },
-      {
-        title: "Support",
-        icon: SupportIcon,
-        href: "/dashboard/admin-support",
-      },
-    ],
-  },
-  {
-    label: "Settings",
-    items: [
-      {
-        title: "Settings",
-        icon: SettingsIcon,
-        href: "/dashboard/settings",
-      },
-    ],
-  },
-];
-
-// Helper to get menu based on role
-const getMenuByRole = (role: Role): Section[] => {
-  switch (role) {
-    case ROLE.FREELANCER:
-      return freelancerMenu;
-    case ROLE.ADMIN:
-      return adminMenu;
-    default:
-      return [];
-  }
-};
 
 interface SidebarProps {
   isMobileMenuOpen: boolean;
@@ -271,7 +163,7 @@ const NavLink = ({
   );
 };
 
-export default function AdminAndResellerSidebar({
+export default function ResellerSidebar({
   isMobileMenuOpen,
   onMobileMenuClose,
 }: SidebarProps) {
@@ -280,14 +172,6 @@ export default function AdminAndResellerSidebar({
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
-
-  // const role: Role = "freelancer";
-  const role: Role = "admin";
-
-  const isFreelancer = role === ROLE.FREELANCER;
-  console.log(isFreelancer);
-
-  const menuSections = getMenuByRole(role);
 
   return (
     <aside
@@ -337,29 +221,28 @@ export default function AdminAndResellerSidebar({
         </button>
       </div>
 
-      {isFreelancer && (
-        <div className={`px-6 mb-6 ${isCollapsed ? "hidden" : "block"}`}>
-          <p className="text-sm text-gray-500 mb-4">All Client</p>
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-sm font-medium text-gray-900 p-3 rounded-full bg-[#DAFF05]">
-                SC
-              </span>
-            </div>
-            <select className="bg-transparent border-none text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer pr-8">
-              <option value="">Select Client</option>
-              <option value="city-shop">City Shop</option>
-              <option value="bank-asia">Bank Asia</option>
-              <option value="louis-vuitton">Louis Vuitton</option>
-              <option value="nintendo">Nintendo</option>
-              <option value="louis-roberto">Louis Roberto</option>
-              <option value="bank-of-america">Bank of America</option>
-              <option value="walt-disney">Walt Disney</option>
-            </select>
+      <div className={`px-6 mb-6 ${isCollapsed ? "hidden" : "block"}`}>
+        <p className="text-sm text-gray-500 mb-4">All Client</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-sm font-medium text-gray-900 p-3 rounded-full bg-[#DAFF05]">
+              SC
+            </span>
           </div>
+          <select className="bg-transparent border-none text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer pr-8">
+            <option value="">Select Client</option>
+            <option value="city-shop">City Shop</option>
+            <option value="bank-asia">Bank Asia</option>
+            <option value="louis-vuitton">Louis Vuitton</option>
+            <option value="nintendo">Nintendo</option>
+            <option value="louis-roberto">Louis Roberto</option>
+            <option value="bank-of-america">Bank of America</option>
+            <option value="walt-disney">Walt Disney</option>
+          </select>
         </div>
-      )}
-      {menuSections.map((section, idx) => (
+      </div>
+
+      {resellerSidebarMenu.map((section, idx) => (
         <SidebarSection
           key={idx}
           label={section.label}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import DatePicker from "../../freelancer-dashboard/_components/date-picker";
+import DatePicker from "../../reseller-dashboard/_components/date-picker";
 import { GrView } from "react-icons/gr";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 

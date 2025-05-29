@@ -5,21 +5,23 @@ import React from "react";
 
 import UserDashboard from "./(user-dashboard)/UserDashboard";
 import AdminDashboard from "./(admin-dashboard)/admin-dashboard";
-
+import UserHome from "./(user-dashboard-before-purchase)/UserHome";
+import ResellerDashboard from "./(reseller-dashboard)/ResellerDashboard";
 
 // ✅ Define roles with literal types
 const ROLE = {
   USER: "user",
-  FREELANCER: "freelancer",
+  CLIENT: "client",
+  RESELLER: "reseller",
   ADMIN: "admin",
 } as const;
 
 // ✅ Dynamically derive Role type
-type Role = typeof ROLE[keyof typeof ROLE];
+type Role = (typeof ROLE)[keyof typeof ROLE];
 
 export default function DashboardHome() {
   // This would usually come from auth context:
-  const role = ROLE.USER as Role;
+  const role = ROLE.ADMIN as Role;
 
   if (!role) {
     return (
@@ -29,14 +31,17 @@ export default function DashboardHome() {
     );
   }
 
-  // ✅ Compare with ROLE constant to avoid type mismatch
+  // Compare with ROLE constant to avoid type mismatch
   if (role === ROLE.ADMIN) {
     return <AdminDashboard />;
   }
 
-  if (role === ROLE.FREELANCER) {
-    return <h2>Freelance Dashboard</h2>;
+  if (role === ROLE.RESELLER) {
+    return <ResellerDashboard />;
+  }
+  if (role === ROLE.CLIENT) {
+    return <UserDashboard />;
   }
 
-  return <UserDashboard />;
+  return <UserHome />;
 }
