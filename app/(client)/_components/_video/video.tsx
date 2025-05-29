@@ -15,10 +15,10 @@ import { useGetSingleServiceQuery } from "@/src/redux/features/admin/services";
 
 const socialPlatforms = [
   <FacebookIcon />,
-  <TwitterIcon />,
+  // <TwitterIcon />,
   <InstaIcon />,
   <LinkdinIcon />,
-  <YoutubeIcon />,
+  // <YoutubeIcon />,
   <TiktokIcon />,
 ];
 

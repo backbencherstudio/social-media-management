@@ -239,11 +239,11 @@ function SocialPlatforms({ platforms }: { platforms: any[] }) {
   return (
     <div className="mb-8">
       <p className="text-sm mb-4">Social media including</p>
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 ">
+      <div className="flex flex-wrap gap-4">
         {platforms.map((platform, index) => (
           <div
             key={index}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors mx-auto"
+            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
           >
             {platform}
           </div>

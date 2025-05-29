@@ -128,11 +128,11 @@ export default function HelpAndSupport() {
             Contact Information
           </h2>
 
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-gray-50 rounded-lg">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex items-start gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-gray-50 rounded-lg">
                 <svg
-                  className="w-5 h-5 text-gray-600"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -147,20 +147,20 @@ export default function HelpAndSupport() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700">
+                <h3 className="text-xs sm:text-sm font-medium text-gray-700">
                   Email Support
                 </h3>
-                <p className="text-gray-600">support@taggrowth.com</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-xs sm:text-sm text-gray-600">support@taggrowth.com</p>
+                <p className="text-[11px] sm:text-sm text-gray-500">
                   Response within 24 hours
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-gray-50 rounded-lg">
+            <div className="flex items-start gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-gray-50 rounded-lg">
                 <svg
-                  className="w-5 h-5 text-gray-600"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -175,18 +175,18 @@ export default function HelpAndSupport() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700">
+                <h3 className="text-xs sm:text-sm font-medium text-gray-700">
                   Phone Support
                 </h3>
-                <p className="text-gray-600">+1 (555) 123-4567</p>
-                <p className="text-sm text-gray-500">Mon-Fri, 9AM-6PM EST</p>
+                <p className="text-xs sm:text-sm text-gray-600">+1 (555) 123-4567</p>
+                <p className="text-[11px] sm:text-sm text-gray-500">Mon-Fri, 9AM-6PM EST</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-gray-50 rounded-lg">
+            <div className="flex items-start gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-gray-50 rounded-lg">
                 <svg
-                  className="w-5 h-5 text-gray-600"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -207,11 +207,11 @@ export default function HelpAndSupport() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700">
+                <h3 className="text-xs sm:text-sm font-medium text-gray-700">
                   Office Address
                 </h3>
-                <p className="text-gray-600">123 Business Street</p>
-                <p className="text-gray-600">Suite 100, New York, NY 10001</p>
+                <p className="text-xs sm:text-sm text-gray-600">123 Business Street</p>
+                <p className="text-xs sm:text-sm text-gray-600">Suite 100, New York, NY 10001</p>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { RiUserLine } from "react-icons/ri";
 import { ImPower } from "react-icons/im";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -18,6 +19,9 @@ export default function Navbar({
 }: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const pathName = usePathname();
+  const activePath = pathName.split("/")[2] || "Dashboard";
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -44,7 +48,7 @@ export default function Navbar({
           >
             <HiMenuAlt3 className="w-6 h-6" />
           </button>
-          {/* <h1 className="text-xl font-semibold">Overview</h1> */}
+          <h1 className="text-xl font-semibold">{activePath}</h1>
         </div>
 
         <div className="flex items-center gap-4">

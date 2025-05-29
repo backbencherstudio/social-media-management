@@ -12,19 +12,27 @@ import {
 import { BsPerson } from "react-icons/bs";
 import { HiOutlineCreditCard } from "react-icons/hi2";
 import { TbFileInvoice } from "react-icons/tb";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Home, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
+import UserServicesIcon from "@/public/incons/user-services";
+import ScheduleIcon from "@/public/incons/schedule";
+import AssetsIcon from "@/public/incons/assets";
+import AnalysisIcon from "@/public/incons/analysis-icon";
+import SocialsIcon from "@/public/incons/socials";
+import InvoicesIcon from "@/public/incons/invoices";
+import ProfileIcon from "@/public/incons/profile";
+import PaymentIcon from "@/public/incons/payment";
 
 // top menu items for after purchased users
 const afterPurchasedTopMenuItems = [
-  { title: "Home", icon: RiHome5Line, href: "/dashboard" },
-  { title: "Schedule", icon: RiCalendarCheckLine, href: "/dashboard/schedule" },
-  { title: "Assets", icon: RiLayoutGridLine, href: "/dashboard/assets" },
-  { title: "Analysis", icon: RiBarChart2Line, href: "/dashboard/analysis" },
-  { title: "Service", icon: RiLayoutGridLine, href: "/dashboard/service" },
+  { title: "Home", icon: Home, href: "/dashboard" },
+  { title: "Schedule", icon: ScheduleIcon, href: "/dashboard/schedule" },
+  { title: "Assets", icon: AssetsIcon, href: "/dashboard/assets" },
+  { title: "Analysis", icon: AnalysisIcon, href: "/dashboard/analysis" },
+  { title: "Service", icon: UserServicesIcon, href: "/dashboard/service" },
   {
     title: "Social Media",
-    icon: RiLayoutGridLine,
+    icon: SocialsIcon,
     href: "/dashboard/social-media",
   },
 ];
@@ -32,29 +40,29 @@ const afterPurchasedTopMenuItems = [
 // top menu items for purchased users
 const beforePurchasedTopMenuItems = [
   ,
-  { title: "Home", icon: RiFolderLine, href: "/dashboard/home" },
-  { title: "Services", icon: RiLayoutGridLine, href: "/dashboard/services" },
+  { title: "Home", icon: Home, href: "/dashboard/home" },
+  { title: "Services", icon: UserServicesIcon, href: "/dashboard/services" },
 ];
 
-const hasPurchased = true;
+const hasPurchased = false;
 // bottomMenuItems
 const bottomMenuItems = [
   {
     title: "Settings",
     subItems: [
-      { title: "Profile/account", icon: BsPerson, href: "/dashboard/profile" },
+      { title: "Profile/account", icon: ProfileIcon, href: "/dashboard/profile" },
       {
         title: "Payment",
-        icon: HiOutlineCreditCard,
+        icon: PaymentIcon,
         href: "/dashboard/payment",
       },
       {
         title: "Payment",
-        icon: HiOutlineCreditCard,
+        icon: PaymentIcon,
         href: "/dashboard/payment-method",
       },
-      { title: "Invoices", icon: TbFileInvoice, href: "/dashboard/invoices" },
-      { title: "Payment Invoices", icon: TbFileInvoice, href: "/dashboard/payment-invoices" },
+      { title: "Invoices", icon: InvoicesIcon, href: "/dashboard/invoices" },
+      { title: "Payment Invoices", icon: InvoicesIcon, href: "/dashboard/payment-invoices" },
     ],
   },
 ];

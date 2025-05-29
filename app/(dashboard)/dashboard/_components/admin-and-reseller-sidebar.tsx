@@ -3,9 +3,26 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
 import { RiHome5Line, RiLayoutGridLine } from "react-icons/ri";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, SettingsIcon } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
-import { usePurchase } from "@/app/context/PurchaseContext";
+import DashboardIcon from "@/public/incons/dashboard";
+import AnalysisIcon from "@/public/incons/analysis-icon";
+import ComposeIcon from "@/public/incons/compose";
+import ScheduleIcon from "@/public/incons/schedule";
+import PostIcon from "@/public/incons/post";
+import AssetsIcon from "@/public/incons/assets";
+import SocialInboxIcon from "@/public/incons/social-inbox";
+import SocialsIcon from "@/public/incons/socials";
+import SupportIcon from "@/public/incons/support";
+import OrderIcon from "@/public/incons/order";
+import TaskManagementIcon from "@/public/incons/task-management";
+import ClientIcon from "@/public/incons/client";
+import ResellerIcon from "@/public/incons/reseller";
+import TeamIcon from "@/public/incons/team";
+import ServicesIcon from "@/public/incons/services";
+import BlogIcon from "@/public/incons/blog";
+import PaymentIcon from "@/public/incons/payment";
+import LiveChatIcon from "@/public/incons/live-chat";
 
 // Define roles
 const ROLE = {
@@ -35,12 +52,12 @@ const freelancerMenu: Section[] = [
     items: [
       {
         title: "Dashboard",
-        icon: RiHome5Line,
+        icon: DashboardIcon,
         href: "/dashboard/freelancer-dashboard",
       },
       {
         title: "Analytics",
-        icon: RiLayoutGridLine,
+        icon: AnalysisIcon,
         href: "/dashboard/analytics",
       },
     ],
@@ -48,16 +65,16 @@ const freelancerMenu: Section[] = [
   {
     label: "Content",
     items: [
-      { title: "Compose", icon: RiHome5Line, href: "/dashboard/compose" },
+      { title: "Compose", icon: ComposeIcon, href: "/dashboard/compose" },
       {
         title: "Schedule",
-        icon: RiLayoutGridLine,
+        icon: ScheduleIcon,
         href: "/dashboard/schedule",
       },
-      { title: "Post", icon: RiLayoutGridLine, href: "/dashboard/posts" },
+      { title: "Post", icon: PostIcon, href: "/dashboard/posts" },
       {
         title: "Assets",
-        icon: RiLayoutGridLine,
+        icon: AssetsIcon,
         href: "/dashboard/dashboard-assets",
       },
     ],
@@ -72,7 +89,7 @@ const freelancerMenu: Section[] = [
       // },
       {
         title: "Social Inbox",
-        icon: RiLayoutGridLine,
+        icon: SocialInboxIcon,
         href: "/dashboard/social-inbox",
       },
     ],
@@ -80,13 +97,21 @@ const freelancerMenu: Section[] = [
   {
     label: "Configuration",
     items: [
-      { title: "Socials", icon: RiLayoutGridLine, href: "/dashboard/social-media" },
+      {
+        title: "Socials",
+        icon: SocialsIcon,
+        href: "/dashboard/social-media",
+      },
     ],
   },
   {
     label: "Help",
     items: [
-      { title: "Support", icon: RiLayoutGridLine, href: "/dashboard/help-and-support" },
+      {
+        title: "Support",
+        icon: SupportIcon,
+        href: "/dashboard/help-and-support",
+      },
     ],
   },
 ];
@@ -95,26 +120,26 @@ const adminMenu: Section[] = [
   {
     label: "Overview",
     items: [
-      { title: "Dashboard", icon: RiHome5Line, href: "/dashboard" },
+      { title: "Dashboard", icon: DashboardIcon, href: "/dashboard" },
       // { title: "Reports", icon: RiLayoutGridLine, href: "/dashboard/reports" },
     ],
   },
   {
     label: "Operation",
     items: [
-      { title: "Order", icon: RiHome5Line, href: "/dashboard/order" },
+      { title: "Order", icon: OrderIcon, href: "/dashboard/order" },
       {
         title: "Task Management",
-        icon: RiLayoutGridLine,
+        icon: TaskManagementIcon,
         href: "/dashboard/task-management",
       },
-      { title: "Client", icon: RiLayoutGridLine, href: "/dashboard/client" },
+      { title: "Client", icon: ClientIcon, href: "/dashboard/client" },
       {
         title: "Reseller",
-        icon: RiLayoutGridLine,
+        icon: ResellerIcon,
         href: "/dashboard/reseller",
       },
-      { title: "Team", icon: RiLayoutGridLine, href: "/dashboard/team" },
+      { title: "Team", icon: TeamIcon, href: "/dashboard/team" },
     ],
   },
   {
@@ -122,12 +147,12 @@ const adminMenu: Section[] = [
     items: [
       {
         title: "Services",
-        icon: RiLayoutGridLine,
+        icon: ServicesIcon,
         href: "/dashboard/admin-services",
       },
       {
         title: "Blog",
-        icon: RiLayoutGridLine,
+        icon: BlogIcon,
         href: "/dashboard/blog",
       },
     ],
@@ -137,7 +162,7 @@ const adminMenu: Section[] = [
     items: [
       {
         title: "Payment",
-        icon: RiLayoutGridLine,
+        icon: PaymentIcon,
         href: "/dashboard/payment",
       },
     ],
@@ -147,12 +172,12 @@ const adminMenu: Section[] = [
     items: [
       {
         title: "Live Chat",
-        icon: RiLayoutGridLine,
+        icon: LiveChatIcon,
         href: "/dashboard/live-chat",
       },
       {
         title: "Support",
-        icon: RiLayoutGridLine,
+        icon: SupportIcon,
         href: "/dashboard/admin-support",
       },
     ],
@@ -162,7 +187,7 @@ const adminMenu: Section[] = [
     items: [
       {
         title: "Settings",
-        icon: RiLayoutGridLine,
+        icon: SettingsIcon,
         href: "/dashboard/settings",
       },
     ],
@@ -196,8 +221,14 @@ const SidebarSection = ({
   isCollapsed: boolean;
 }) => (
   <div>
-    <p className="text-sm text-gray-500 px-6">{label}</p>
-    <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
+    <p
+      className={`${
+        isCollapsed ? "hidden" : "block"
+      } text-sm text-gray-500 px-6`}
+    >
+      {label}
+    </p>
+    <nav className={`flex-1 px-3 py-2 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
       {items.map((item, index) => (
         <NavLink key={index} item={item} isCollapsed={isCollapsed} />
       ))}
@@ -245,16 +276,16 @@ export default function AdminAndResellerSidebar({
   onMobileMenuClose,
 }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { hasPurchased } = usePurchase();
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  // const role:Role = "freelancer";
+  // const role: Role = "freelancer";
   const role: Role = "admin";
 
   const isFreelancer = role === ROLE.FREELANCER;
+  console.log(isFreelancer);
 
   const menuSections = getMenuByRole(role);
 
@@ -307,7 +338,7 @@ export default function AdminAndResellerSidebar({
       </div>
 
       {isFreelancer && (
-        <div className="px-6 mb-6">
+        <div className={`px-6 mb-6 ${isCollapsed ? "hidden" : "block"}`}>
           <p className="text-sm text-gray-500 mb-4">All Client</p>
           <div className="flex items-center justify-between">
             <div>

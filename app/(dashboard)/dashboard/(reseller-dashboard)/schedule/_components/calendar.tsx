@@ -127,8 +127,7 @@ export default function Calendar() {
         selectable={true}
         events={formatEventsForCalendar()}
         headerToolbar={{
-          start: "prev,next today",
-          center: "title",
+          start: "prev,next",
           end: "dayGridMonth,timeGridWeek,dayGridDay",
         }}
         dayMaxEvents={2} // ✅ show max 2 events per day with "+n more"

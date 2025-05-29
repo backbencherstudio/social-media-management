@@ -9,6 +9,8 @@ import StarIcon from "@/public/incons/star-icon";
 import CameraIcon from "@/public/incons/camera-icon";
 import AnalysisIcon from "@/public/incons/analysis-icon";
 import EditIcon from "@/public/incons/edit";
+import UGCVideosIcon from "@/public/incons/ugc-videos";
+import InstagramGrowthIcon from "@/public/incons/instagram-growth";
 
 export const ServicesDropdownContent = () => (
   <div className="bg-white w-full p-6 rounded-xl">
@@ -44,7 +46,9 @@ export const ServicesDropdownContent = () => (
           />
           <NavLink
             href="/services/instagram-growth"
-            icon={<LikeIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            icon={
+              <InstagramGrowthIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />
+            }
             text="Instagram Growth"
           />
           <NavLink
@@ -65,7 +69,9 @@ export const ServicesDropdownContent = () => (
           />
           <NavLink
             href="/services/ugc-videos"
-            icon={<CameraIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            icon={
+              <UGCVideosIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />
+            }
             text="UGC Videos"
           />
           <NavLink

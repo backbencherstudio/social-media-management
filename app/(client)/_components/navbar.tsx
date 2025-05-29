@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, ChevronDown, ArrowRight, ArrowBigRightIcon } from "lucide-react";
+import { Menu, ChevronDown, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -14,10 +14,8 @@ import {
 } from "@/components/ui/navigation-menu";
 
 // Custom Components
-import CustomImage from "@/components/reusable/CustomImage";
 
 // Assets
-import logo from "@/public/logo.png";
 import PricingIcon from "@/public/incons/pricing";
 import EditIcon from "@/public/incons/edit";
 import EmojiIcon from "@/public/incons/emoji";
@@ -291,7 +289,7 @@ export function Navbar() {
         <NavigationMenu className="relative hidden lg:block">
           <NavigationMenuList className="hidden md:flex space-x-6 text-base text-gray-700">
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent p-0 hover:bg-transparent cursor-pointer serotiva-regular">
+              <NavigationMenuTrigger className="bg-transparent p-0 hover:text-blue-500 cursor-pointer serotiva-regular">
                 About us
               </NavigationMenuTrigger>
               <NavigationMenuContent className="data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out absolute left-0 top-0 w-[700px]">
@@ -300,7 +298,7 @@ export function Navbar() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent p-0 hover:bg-transparent serotiva-regular">
+              <NavigationMenuTrigger className="bg-transparent p-0 hover:text-blue-500 serotiva-regular">
                 Services
               </NavigationMenuTrigger>
               <NavigationMenuContent
@@ -314,7 +312,7 @@ export function Navbar() {
             <NavigationMenuItem>
               <Link
                 href="examples"
-                className="hover:text-black transition serotiva-regular"
+                className="hover:text-blue-500 transition serotiva-regular"
               >
                 Examples
               </Link>
@@ -323,7 +321,7 @@ export function Navbar() {
             <NavigationMenuItem>
               <Link
                 href="/pricing-and-package"
-                className="hover:text-black transition serotiva-regular"
+                className="hover:text-blue-500 transition serotiva-regular"
               >
                 Pricing
               </Link>
@@ -368,7 +366,7 @@ export function Navbar() {
                   Get Started
                 </Link>
                 <Link
-                  href=""
+                  href="book-demo"
                   className="flex items-center py-1 px-4 rounded-md bg-black hover:bg-gray-800 text-white serotiva-regular"
                 >
                   Book a Demo <ArrowRight className="ml-2 w-4 h-4" />
@@ -382,19 +380,19 @@ export function Navbar() {
         <div className="hidden lg:flex items-center space-x-4 text-base text-gray-700">
           <Link
             href="/auth/login"
-            className="hover:text-black transition serotiva-regular"
+            className="hover:text-blue-500 transition serotiva-regular"
           >
             Log in
           </Link>
-          <Link
-            href="/book-demo"
-            className="hover:text-black transition serotiva-regular"
-          >
-            Get Starded
+          <Link href="/" className="hover:text-blue-500 serotiva-regular">
+            Get Started
           </Link>
-          <Button className="bg-black hover:bg-gray-800 text-white serotiva-regular">
+          <Link
+            href="book-demo"
+            className="flex items-center py-1 px-4 rounded-md bg-black hover:bg-gray-800 text-white serotiva-regular"
+          >
             Book a Demo <BsArrowUpRightCircle className="ml-2 w-5 h-5 " />
-          </Button>
+          </Link>
         </div>
       </div>
     </header>
