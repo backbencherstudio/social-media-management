@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
-import { RiHome5Line, RiLayoutGridLine } from "react-icons/ri";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
-import { usePurchase } from "@/app/context/PurchaseContext";
-
-// Define roles
-const ROLE = {
-  FREELANCER: "freelancer",
-  ADMIN: "admin",
-};
-
-type Role = "admin" | "freelancer";
+import DashboardIcon from "@/public/incons/dashboard";
+import AnalysisIcon from "@/public/incons/analysis-icon";
+import ComposeIcon from "@/public/incons/compose";
+import ScheduleIcon from "@/public/incons/schedule";
+import PostIcon from "@/public/incons/post";
+import AssetsIcon from "@/public/incons/assets";
+import SocialInboxIcon from "@/public/incons/social-inbox";
+import SocialsIcon from "@/public/incons/socials";
+import SupportIcon from "@/public/incons/support";
 
 // Menu item type
 interface MenuItem {
@@ -29,18 +28,18 @@ interface Section {
 }
 
 // Menu definitions
-const freelancerMenu: Section[] = [
+const resellerSidebarMenu: Section[] = [
   {
     label: "Overview",
     items: [
       {
         title: "Dashboard",
-        icon: RiHome5Line,
-        href: "/dashboard/freelancer-dashboard",
+        icon: DashboardIcon,
+        href: "/dashboard",
       },
       {
         title: "Analytics",
-        icon: RiLayoutGridLine,
+        icon: AnalysisIcon,
         href: "/dashboard/analytics",
       },
     ],
@@ -48,16 +47,16 @@ const freelancerMenu: Section[] = [
   {
     label: "Content",
     items: [
-      { title: "Compose", icon: RiHome5Line, href: "/dashboard/compose" },
+      { title: "Compose", icon: ComposeIcon, href: "/dashboard/compose" },
       {
         title: "Schedule",
-        icon: RiLayoutGridLine,
+        icon: ScheduleIcon,
         href: "/dashboard/schedule",
       },
-      { title: "Post", icon: RiLayoutGridLine, href: "/dashboard/posts" },
+      { title: "Post", icon: PostIcon, href: "/dashboard/posts" },
       {
         title: "Assets",
-        icon: RiLayoutGridLine,
+        icon: AssetsIcon,
         href: "/dashboard/dashboard-assets",
       },
     ],
@@ -72,7 +71,7 @@ const freelancerMenu: Section[] = [
       // },
       {
         title: "Social Inbox",
-        icon: RiLayoutGridLine,
+        icon: SocialInboxIcon,
         href: "/dashboard/social-inbox",
       },
     ],
@@ -80,106 +79,24 @@ const freelancerMenu: Section[] = [
   {
     label: "Configuration",
     items: [
-      { title: "Socials", icon: RiLayoutGridLine, href: "/dashboard/social-media" },
-    ],
-  },
-  {
-    label: "Help",
-    items: [
-      { title: "Support", icon: RiLayoutGridLine, href: "/dashboard/help-and-support" },
-    ],
-  },
-];
-
-const adminMenu: Section[] = [
-  {
-    label: "Overview",
-    items: [
-      { title: "Dashboard", icon: RiHome5Line, href: "/dashboard" },
-      // { title: "Reports", icon: RiLayoutGridLine, href: "/dashboard/reports" },
-    ],
-  },
-  {
-    label: "Operation",
-    items: [
-      { title: "Order", icon: RiHome5Line, href: "/dashboard/order" },
       {
-        title: "Task Management",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/task-management",
-      },
-      { title: "Client", icon: RiLayoutGridLine, href: "/dashboard/client" },
-      {
-        title: "Reseller",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/reseller",
-      },
-      { title: "Team", icon: RiLayoutGridLine, href: "/dashboard/team" },
-    ],
-  },
-  {
-    label: "Content Management",
-    items: [
-      {
-        title: "Services",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/admin-services",
-      },
-      {
-        title: "blog",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/blog",
-      },
-    ],
-  },
-  {
-    label: "Finance",
-    items: [
-      {
-        title: "Payment",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/payment",
+        title: "Socials",
+        icon: SocialsIcon,
+        href: "/dashboard/social-media",
       },
     ],
   },
   {
     label: "Help",
     items: [
-      {
-        title: "Live Chat",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/live-chat",
-      },
       {
         title: "Support",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/admin-support",
-      },
-    ],
-  },
-  {
-    label: "Settings",
-    items: [
-      {
-        title: "Settings",
-        icon: RiLayoutGridLine,
-        href: "/dashboard/settings",
+        icon: SupportIcon,
+        href: "/dashboard/help-and-support",
       },
     ],
   },
 ];
-
-// Helper to get menu based on role
-const getMenuByRole = (role: Role): Section[] => {
-  switch (role) {
-    case ROLE.FREELANCER:
-      return freelancerMenu;
-    case ROLE.ADMIN:
-      return adminMenu;
-    default:
-      return [];
-  }
-};
 
 interface SidebarProps {
   isMobileMenuOpen: boolean;
@@ -196,8 +113,14 @@ const SidebarSection = ({
   isCollapsed: boolean;
 }) => (
   <div>
-    <p className="text-sm text-gray-500 px-6">{label}</p>
-    <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
+    <p
+      className={`${
+        isCollapsed ? "hidden" : "block"
+      } text-sm text-gray-500 px-6`}
+    >
+      {label}
+    </p>
+    <nav className={`flex-1 px-3 py-2 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
       {items.map((item, index) => (
         <NavLink key={index} item={item} isCollapsed={isCollapsed} />
       ))}
@@ -240,23 +163,15 @@ const NavLink = ({
   );
 };
 
-export default function AdminAndResellerSidebar({
+export default function ResellerSidebar({
   isMobileMenuOpen,
   onMobileMenuClose,
 }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { hasPurchased } = usePurchase();
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
-
-  // const role:Role = "freelancer";
-  const role: Role = "admin";
-
-  const isFreelancer = role === ROLE.FREELANCER;
-
-  const menuSections = getMenuByRole(role);
 
   return (
     <aside
@@ -274,9 +189,9 @@ export default function AdminAndResellerSidebar({
             isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"
           }`}
         >
-          <div className="w-[120px] h-[22px] object-contain">
+          <Link href={'/'} className="w-[120px] h-[22px] object-contain">
             <LogoIcon className="w-full h-full" />
-          </div>
+          </Link>
         </div>
 
         <button
@@ -306,29 +221,28 @@ export default function AdminAndResellerSidebar({
         </button>
       </div>
 
-      {isFreelancer && (
-        <div className="px-6 mb-6">
-          <p className="text-sm text-gray-500 mb-4">All Client</p>
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-sm font-medium text-gray-900 p-3 rounded-full bg-[#DAFF05]">
-                SC
-              </span>
-            </div>
-            <select className="bg-transparent border-none text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer pr-8">
-              <option value="">Select Client</option>
-              <option value="city-shop">City Shop</option>
-              <option value="bank-asia">Bank Asia</option>
-              <option value="louis-vuitton">Louis Vuitton</option>
-              <option value="nintendo">Nintendo</option>
-              <option value="louis-roberto">Louis Roberto</option>
-              <option value="bank-of-america">Bank of America</option>
-              <option value="walt-disney">Walt Disney</option>
-            </select>
+      <div className={`px-6 mb-6 ${isCollapsed ? "hidden" : "block"}`}>
+        <p className="text-sm text-gray-500 mb-4">All Client</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-sm font-medium text-gray-900 p-3 rounded-full bg-[#DAFF05]">
+              SC
+            </span>
           </div>
+          <select className="bg-transparent border-none text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer pr-8">
+            <option value="">Select Client</option>
+            <option value="city-shop">City Shop</option>
+            <option value="bank-asia">Bank Asia</option>
+            <option value="louis-vuitton">Louis Vuitton</option>
+            <option value="nintendo">Nintendo</option>
+            <option value="louis-roberto">Louis Roberto</option>
+            <option value="bank-of-america">Bank of America</option>
+            <option value="walt-disney">Walt Disney</option>
+          </select>
         </div>
-      )}
-      {menuSections.map((section, idx) => (
+      </div>
+
+      {resellerSidebarMenu.map((section, idx) => (
         <SidebarSection
           key={idx}
           label={section.label}

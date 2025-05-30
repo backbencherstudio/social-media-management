@@ -2,61 +2,55 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
-import {
-  RiHome5Line,
-  RiLayoutGridLine,
-  RiCalendarCheckLine,
-  RiFolderLine,
-  RiBarChart2Line,
-} from "react-icons/ri";
-import { BsPerson } from "react-icons/bs";
-import { HiOutlineCreditCard } from "react-icons/hi2";
-import { TbFileInvoice } from "react-icons/tb";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Home, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
+import UserServicesIcon from "@/public/incons/user-services";
+import InvoicesIcon from "@/public/incons/invoices";
+import ProfileIcon from "@/public/incons/profile";
+import PaymentIcon from "@/public/incons/payment";
+import ScheduleIcon from "@/public/incons/schedule";
+import AssetsIcon from "@/public/incons/assets";
+import AnalysisIcon from "@/public/incons/analysis-icon";
+import SocialsIcon from "@/public/incons/socials";
 
-// top menu items for after purchased users
-const afterPurchasedTopMenuItems = [
-  { title: "Home", icon: RiHome5Line, href: "/dashboard" },
-  { title: "Schedule", icon: RiCalendarCheckLine, href: "/dashboard/schedule" },
-  { title: "Assets", icon: RiLayoutGridLine, href: "/dashboard/assets" },
-  { title: "Analysis", icon: RiBarChart2Line, href: "/dashboard/analysis" },
-  { title: "Service", icon: RiLayoutGridLine, href: "/dashboard/service" },
+
+
+const clientTopMenuItems = [
+  { title: "Home", icon: Home, href: "/dashboard" },
+  { title: "Schedule", icon: ScheduleIcon, href: "/dashboard/schedule" },
+  { title: "Assets", icon: AssetsIcon, href: "/dashboard/assets" },
+  { title: "Analysis", icon: AnalysisIcon, href: "/dashboard/analysis" },
+  { title: "Service", icon: UserServicesIcon, href: "/dashboard/service" },
   {
     title: "Social Media",
-    icon: RiLayoutGridLine,
+    icon: SocialsIcon,
     href: "/dashboard/social-media",
   },
 ];
 
-// top menu items for purchased users
-const beforePurchasedTopMenuItems = [
-  ,
-  { title: "Home", icon: RiFolderLine, href: "/dashboard/home" },
-  { title: "Services", icon: RiLayoutGridLine, href: "/dashboard/services" },
-];
-
-const hasPurchased = true;
-// bottomMenuItems
 const bottomMenuItems = [
   {
     title: "Settings",
     subItems: [
-      { title: "Profile/account", icon: BsPerson, href: "/dashboard/profile" },
+      {
+        title: "Profile/account",
+        icon: ProfileIcon,
+        href: "/dashboard/profile",
+      },
       {
         title: "Payment",
-        icon: HiOutlineCreditCard,
+        icon: PaymentIcon,
         href: "/dashboard/payment",
       },
       {
         title: "Payment",
-        icon: HiOutlineCreditCard,
+        icon: PaymentIcon,
         href: "/dashboard/payment-method",
       },
-      { title: "Invoices", icon: TbFileInvoice, href: "/dashboard/invoices" },
+      { title: "Invoices", icon: InvoicesIcon, href: "/dashboard/invoices" },
       {
         title: "Payment Invoices",
-        icon: TbFileInvoice,
+        icon: InvoicesIcon,
         href: "/dashboard/payment-invoices",
       },
     ],
@@ -68,14 +62,12 @@ interface SidebarProps {
   onMobileMenuClose: () => void;
 }
 
-export default function Sidebar({
+export default function ClientSidebar({
   isMobileMenuOpen,
   onMobileMenuClose,
 }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
-
-  // const { hasPurchased } = usePurchase();
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -85,8 +77,7 @@ export default function Sidebar({
     item,
   }: {
     item:
-      | (typeof afterPurchasedTopMenuItems)[0]
-      | (typeof beforePurchasedTopMenuItems)[0]
+      | (typeof clientTopMenuItems)[0]
       | (typeof bottomMenuItems)[0]["subItems"][0];
   }) => {
     const isActive = pathname === item.href;
@@ -143,9 +134,9 @@ export default function Sidebar({
           ${isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"}
         `}
         >
-          <div className="w-[120px] h-[22px] object-contain">
+          <Link href={'/'} className="w-[120px] h-[22px] object-contain">
             <LogoIcon className="w-full h-full" />
-          </div>
+          </Link>
         </div>
 
         {/* Toggle button for large screens */}
@@ -180,13 +171,9 @@ export default function Sidebar({
 
       {/* Top Menu Items */}
       <nav className={`flex-1 p-4 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-        {hasPurchased
-          ? beforePurchasedTopMenuItems.map((item, index) => (
-              <NavLink key={index} item={item} />
-            ))
-          : afterPurchasedTopMenuItems.map((item, index) => (
-              <NavLink key={index} item={item} />
-            ))}
+        {clientTopMenuItems.map((item, index) => (
+          <NavLink key={index} item={item} />
+        ))}
       </nav>
 
       {/* Bottom Menu Items */}

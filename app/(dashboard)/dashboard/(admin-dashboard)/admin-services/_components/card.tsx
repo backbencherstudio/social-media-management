@@ -22,7 +22,6 @@ export default function Card() {
     return sum + numericPrice;
   }, 0);
 
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="bg-white p-6 rounded-lg shadow-sm space-y-4">

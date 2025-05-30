@@ -1,11 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FaRegUser } from "react-icons/fa";
-import { IoSettingsOutline, IoLogOutOutline, IoNotificationsOutline } from "react-icons/io5";
+import {
+  IoSettingsOutline,
+  IoLogOutOutline,
+  IoNotificationsOutline,
+} from "react-icons/io5";
 import { RiUserLine } from "react-icons/ri";
 import { ImPower } from "react-icons/im";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -18,6 +23,9 @@ export default function Navbar({
 }: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const pathName = usePathname();
+  const activePath = pathName.split("/")[2] || "Dashboard";
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -44,7 +52,7 @@ export default function Navbar({
           >
             <HiMenuAlt3 className="w-6 h-6" />
           </button>
-          {/* <h1 className="text-xl font-semibold">Overview</h1> */}
+          <h1 className="text-xl font-semibold">{activePath}</h1>
         </div>
 
         <div className="flex items-center gap-4">
@@ -53,7 +61,10 @@ export default function Navbar({
             <span>Add Services</span>
           </button> */}
           {/* <NotificationIcon  /> */}
-          <Link href={'/dashboard/notification'} className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
+          <Link
+            href={"/dashboard/notification"}
+            className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200"
+          >
             <IoNotificationsOutline className="w-6 h-6" />
           </Link>
           <div className="relative" ref={dropdownRef}>
@@ -94,7 +105,10 @@ export default function Navbar({
               </div>
 
               <div className="py-1">
-                <Link href={'/dashboard/freelancer-profile'} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
+                <Link
+                  href={"/dashboard/reseller-profile"}
+                  className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200"
+                >
                   <RiUserLine className="w-4 h-4" />
                   Profile
                 </Link>

@@ -7,9 +7,6 @@ import OrderTable from "./_components/OrderTable";
 
 export default function AdminDashboard() {
 
-
-
-
   return (
     <section className="max-w-[1400px] mx-auto">
       {/* admin slate section */}

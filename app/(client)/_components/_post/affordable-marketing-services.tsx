@@ -10,34 +10,7 @@ import YoutubeIcon from "@/public/incons/landin-page/youtubeIcon";
 import TiktokIcon from "@/public/incons/landin-page/ToktokIcon";
 import TimelineModal from "../timeline-modal";
 import Link from "next/link";
-
-const affordableMarketingServices = {
-  title: "Social Media Posts",
-  description:
-    "Custom social media posts with your branding. Created & posted monthly to your social media channels. Includes strategy, engaging captions, and relevant hashtags tailored for your audience.",
-  features: [
-    "Posts in your branding",
-    "Captions and hashtags",
-    "Posted for you (optional)",
-  ],
-  additionalFeatures: [
-    "Onboarding call (optional)",
-    "1 social channel included",
-    "+$10/mo each extra channel",
-  ],
-  pricing: {
-    basePrice: {
-      10: 99,
-      15: 149,
-      20: 199,
-      25: 249,
-      30: 299,
-      35: 349,
-      40: 399,
-    },
-    posts: [10, 15, 20, 25, 30, 35, 40],
-  },
-};
+import { useGetSingleServiceQuery } from "@/src/redux/features/admin/services";
 
 const socialPlatforms = [
   <FacebookIcon />,
@@ -48,18 +21,28 @@ const socialPlatforms = [
   <TiktokIcon />,
 ];
 
-export default function AffordableMarketingServices() {
-  const [selectedPosts, setSelectedPosts] = useState(20);
-  const basePrice =
-    affordableMarketingServices.pricing.basePrice[selectedPosts];
+export default function AffordableMarketingServices({ service }: any) {
+  const { data } = useGetSingleServiceQuery(service?.id);
+  console.log(data);
+
+  // Extract max_post values from service_tiers
+  const posts = data?.service_tiers?.map((tier) => tier.max_post) || [
+    10, 15, 20, 25, 30, 35, 40,
+  ];
+  const [selectedPosts, setSelectedPosts] = useState(posts[2] || 20); // Default to third option or 20
+
+  // Calculate base price based on selected posts
+  const basePrice = data?.service_tiers?.find(
+    (tier) => tier.max_post === selectedPosts
+  )?.price;
 
   // for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
   const handleModal = (content: string) => {
-    setModalContent(content); // Set the content dynamically
-    setIsModalOpen(true); // Open the modal
+    setModalContent(content);
+    setIsModalOpen(true);
   };
 
   return (
@@ -68,22 +51,15 @@ export default function AffordableMarketingServices() {
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <div className="flex items-start gap-4 mb-4 sm:mb-6">
           <h2 className="text-xl sm:text-2xl lg:text-[26px] text-[#1D1D1F] font-serotiva-semibold font-semibold">
-            {affordableMarketingServices.title}
+            {data?.name}
           </h2>
         </div>
         <p className="text-sm sm:text-base text-[#4A4C56] mb-4 sm:mb-6">
-          {affordableMarketingServices.description}
+          {data?.description}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-6 sm:mb-8">
-          <div className="flex-1">
-            <FeatureList features={affordableMarketingServices.features} />
-          </div>
-          <div className="flex-1">
-            <FeatureList
-              features={affordableMarketingServices.additionalFeatures}
-            />
-          </div>
+        <div className="">
+          <FeatureList features={service?.features || []} />
         </div>
 
         <div className="overflow-x-auto">
@@ -99,7 +75,7 @@ export default function AffordableMarketingServices() {
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg border border-[#D2D2D5]">
         <PricingHeader selectedPosts={selectedPosts} basePrice={basePrice} />
         <PostSelector
-          posts={affordableMarketingServices.pricing.posts}
+          posts={posts}
           selectedPosts={selectedPosts}
           setSelectedPosts={setSelectedPosts}
         />
@@ -122,17 +98,31 @@ export default function AffordableMarketingServices() {
 
 // Sub-components
 function FeatureList({ features }: { features: string[] }) {
-  const leftFeatures = features.slice(0, 3);
-  const rightFeatures = features.slice(3);
+  const midPoint = Math.ceil(features.length / 2);
+  const firstRowFeatures = features.slice(0, midPoint);
+  const secondRowFeatures = features.slice(midPoint);
 
   return (
     <div className="mb-8">
-      <div className="">
-        {/* Left Column */}
+      <div className="grid grid-cols-2 justify-between gap-4">
+        {/* First Row */}
         <div className="space-y-3">
-          {leftFeatures.map((feature, index) => (
+          {firstRowFeatures.map((feature, index) => (
             <div key={index} className="flex items-center gap-2">
-              <div className=" rounded-full bg-black flex items-center justify-center flex-shrink-0">
+              <div className="rounded-full bg-black flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" />
+                </svg>
+              </div>
+              <span className="text-[#4A4C56] text-sm">{feature}</span>
+            </div>
+          ))}
+        </div>
+        {/* Second Row */}
+        <div className="space-y-3">
+          {secondRowFeatures.map((feature, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <div className="rounded-full bg-black flex items-center justify-center flex-shrink-0">
                 <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none">
                   <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" />
                 </svg>

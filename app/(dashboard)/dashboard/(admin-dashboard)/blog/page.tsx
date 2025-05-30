@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Blog() {
   const router = useRouter();
@@ -89,14 +90,16 @@ export default function Blog() {
               </div>
               <div>
                 <div className="flex items-center gap-2 px-6">
+                  <Link href={`/dashboard/blog/${post.id}`}>
                   <button
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                     title="Edit post"
                   >
                     <FaEdit className="w-5 h-5 text-gray-600" />
                   </button>
+                  </Link>
                   <button
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                     title="Delete post"
                   >
                     <FaTrash className="w-5 h-5 text-red-600" />

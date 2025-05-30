@@ -16,6 +16,12 @@ const services = baseApi.injectEndpoints({
       }),
       providesTags: ["services"],
     }),
+    getSingleService: builder.query<any, string>({
+      query: (id) => ({
+        url: `/services/${id}`,
+        method: "GET",
+      })
+    }),
     createService: builder.mutation<void, any>({
       query: (data) => ({
         url: "/services",
@@ -31,12 +37,22 @@ const services = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["services"],
     }),
+    editService: builder.mutation<any, { id; data }>({
+      query: ({ id, data }) => ({
+        url: `/services/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["services"],
+    }),
   }),
 });
 
 export const {
   useGetAllServicesQuery,
   useGetActiveServicesQuery,
+  useGetSingleServiceQuery,
   useCreateServiceMutation,
   useToggleServiceStatusMutation,
+  useEditServiceMutation,
 } = services;

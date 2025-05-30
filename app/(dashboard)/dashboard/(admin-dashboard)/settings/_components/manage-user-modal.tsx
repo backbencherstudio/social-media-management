@@ -1,40 +1,68 @@
-"Use Client"
+"Use Client";
+
+import {
+  useGetUserRoleQuery,
+  useUpdateUserAndRoleMutation,
+} from "@/src/redux/features/admin/settings/user-role-management";
 import React, { useState } from "react"; // Update this line
 import { useForm } from "react-hook-form";
-import { MdOutlineEmojiEmotions } from "react-icons/md";
 
 interface EmailModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultData?: {
+    name: string;
+    email: string;
+    role: string;
+  } | null;
 }
 
 interface EmailFormData {
-  name: string;
-  role: string;
+  // name: string;
+  roleId: number;
   email: string;
 }
 
-export default function ManageUserModal({ isOpen, onClose }: EmailModalProps) {
-  const [isActive, setIsActive] = useState(true); 
+export default function ManageUserModal({
+  isOpen,
+  onClose,
+  defaultData,
+}: EmailModalProps) {
+  const { data } = useGetUserRoleQuery();
+
+  const [updateUserAndRole] = useUpdateUserAndRoleMutation();
+
+  const [isActive, setIsActive] = useState(true);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<EmailFormData>({
     defaultValues: {
-      name: "",
-      role: "",
-      email: "",
+      // name: defaultData?.name || "",
+      email: defaultData?.email || "",
     },
   });
 
-  const onSubmit = (data: EmailFormData) => {
-    console.log("Form Data:", data);
-    reset();
-    onClose();
-  };
+  // Update form values when defaultData changes
+  React.useEffect(() => {
+    if (defaultData) {
+      // setValue("name", defaultData.name);
+      setValue("email", defaultData.email);
+    }
+  }, [defaultData, setValue]);
 
+  const onSubmit = async (data: EmailFormData) => {
+    const formData = {
+      ...data,
+      status: isActive ? 1 : 0,
+    };
+    const result = await updateUserAndRole(formData);
+    console.log(result);
+    reset();
+  };
   if (!isOpen) return null;
 
   return (
@@ -52,7 +80,7 @@ export default function ManageUserModal({ isOpen, onClose }: EmailModalProps) {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Name Type */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               User Name
             </label>
@@ -67,7 +95,7 @@ export default function ManageUserModal({ isOpen, onClose }: EmailModalProps) {
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
             )}
-          </div>
+          </div> */}
 
           {/* Email */}
           <div>
@@ -95,20 +123,21 @@ export default function ManageUserModal({ isOpen, onClose }: EmailModalProps) {
               Recipients
             </label>
             <select
-              {...register("role", {
+              {...register("roleId", {
                 required: "Please select a role",
               })}
               className="w-full border border-gray-200 rounded-lg px-3 py-2"
             >
-              <option value="">Select role</option>
-              <option value="super_admin">Super Admin</option>
-              <option value="admin">Admin</option>
-              <option value="manager">Manager</option>
-              <option value="editor">Editor</option>
-              <option value="viewer">Viewer</option>
+              {data?.data?.roles?.map((item: any) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
             </select>
-            {errors.role && (
-              <p className="text-red-500 text-sm mt-1">{errors.role.message}</p>
+            {errors.roleId && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.roleId.message}
+              </p>
             )}
           </div>
 
@@ -116,20 +145,21 @@ export default function ManageUserModal({ isOpen, onClose }: EmailModalProps) {
 
           <div className="flex items-center justify-between">
             <label className="block text-sm font-medium text-gray-700">
-              Status (<span className="text-sm text-gray-600">
-                {isActive ? 'Active' : 'Inactive'})
+              Status (
+              <span className="text-sm text-gray-600">
+                {isActive ? "Active" : "Inactive"})
               </span>
             </label>
             <div className="flex items-center gap-2">
-              <div 
+              <div
                 onClick={() => setIsActive(!isActive)}
                 className={`relative inline-flex h-6 w-11 cursor-pointer rounded-full transition-colors ${
-                  isActive ? 'bg-green-500' : 'bg-gray-200'
+                  isActive ? "bg-green-500" : "bg-gray-200"
                 }`}
               >
                 <span
                   className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform shadow-lg m-0.5 ${
-                    isActive ? 'translate-x-5' : 'translate-x-0'
+                    isActive ? "translate-x-5" : "translate-x-0"
                   }`}
                 />
               </div>

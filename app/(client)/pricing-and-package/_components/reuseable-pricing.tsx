@@ -8,11 +8,12 @@ import Video from "../../_components/_video/video";
 import Email from "../../_components/_email/email";
 import Blogs from "../../_components/_blogs/blogs";
 import { usePathname } from "next/navigation";
+import { useGetAllServicesQuery } from "@/src/redux/features/admin/services";
 
 const services = [
-  { id: "post", title: "Posts" },
-  { id: "videos", title: "Videos" },
-  { id: "email", title: "Email" },
+  { id: "social-media-posts", title: "Posts" },
+  { id: "short-video", title: "Videos" },
+  { id: "email-marketing", title: "Email" },
   { id: "blogs", title: "Blogs" },
 ];
 
@@ -23,18 +24,35 @@ const ReuseablePricing = () => {
 
   // Simplified defaultValue logic
   const getDefaultValue = () => {
-    if (!slug) return "post";
-    
-    switch(slug) {
-      case "short-video": return "videos";
-      case "social-media-posts": return "post";
-      case "email-marketing": return "email";
-      case "blogs": return "blogs";
-      default: return "post";
+    if (!slug) return "social-media-posts";
+
+    switch (slug) {
+      case "short-video":
+        return "short-video";
+      case "social-media-posts":
+        return "social-media-posts";
+      case "email-marketing":
+        return "email-marketing";
+      case "blogs":
+        return "blogs";
+      default:
+        return "social-media-posts";
     }
   };
 
   const [activeTab, setActiveTab] = useState(getDefaultValue());
+
+  const { data: serviceData, isLoading } = useGetAllServicesQuery();
+
+  // Filter services based on activeTab
+  const filteredService = React.useMemo(() => {
+    if (!serviceData) return null;
+    return serviceData.find(
+      (service) => service?.category === activeTab
+    );
+  }, [serviceData, activeTab]);
+  
+
 
   return (
     <div>
@@ -43,7 +61,7 @@ const ReuseablePricing = () => {
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="flex p-[6px] flex-col bg-white h-full sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-20 md:mb-8">
+        <TabsList className="bg-white h-full sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-8">
           {services.map((service) => (
             <TabsTrigger
               key={service.id}
@@ -58,17 +76,17 @@ const ReuseablePricing = () => {
         </TabsList>
 
         <div className="w-full overflow-x-hidden">
-          <TabsContent value="post">
-            <AffordableMarketingServices />
+          <TabsContent value="social-media-posts">
+            <AffordableMarketingServices service={filteredService} />
           </TabsContent>
-          <TabsContent value="videos">
-            <Video />
+          <TabsContent value="short-video">
+            <Video  service={filteredService} />
           </TabsContent>
-          <TabsContent value="email">
-            <Email />
+          <TabsContent value="email-marketing">
+            <Email service={filteredService} />
           </TabsContent>
           <TabsContent value="blogs">
-            <Blogs />
+            <Blogs service={filteredService} />
           </TabsContent>
         </div>
       </Tabs>

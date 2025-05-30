@@ -7,7 +7,7 @@ import FacebookInfo from "./_components/facebook-info";
 
 export default function SocialInbox() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+    <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
       <div className="p-4 lg:p-6 col-span-1 lg:col-span-8">
         <Tabs
           defaultValue="General Settings"
@@ -18,7 +18,7 @@ export default function SocialInbox() {
             <TabsList className="flex flex-row lg:flex-col gap-2 w-full h-fit p-3 lg:p-4 overflow-x-auto lg:overflow-x-visible">
               <TabsTrigger
                 value="General Settings"
-                className="justify-start w-full min-w-[120px] lg:min-w-0 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-3 lg:px-4 py-2 text-sm lg:text-base flex items-center gap-2"
+                className="justify-start w-full min-w-[120px] lg:min-w-0 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-3 lg:px-4 py-2 ml-60 md:ml-28 lg:ml-0 text-sm lg:text-base flex items-center gap-2"
               >
                 <FaFacebook className="w-4 h-4 lg:w-5 lg:h-5" />
                 <span>Facebook</span>

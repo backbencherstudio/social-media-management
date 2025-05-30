@@ -91,7 +91,7 @@ export default function ActiveServices() {
               <td className="py-4 px-4">
                 <div className="flex items-center justify-center gap-6">
                   <Link
-                    href={"/dashboard/admin-services/edit-service"}
+                    href={`/dashboard/admin-services/${service.id}`}
                     className="bg-gray-100 p-2 rounded-lg"
                   >
                     <TrashIcon />
