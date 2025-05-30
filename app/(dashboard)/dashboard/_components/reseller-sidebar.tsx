@@ -189,9 +189,9 @@ export default function ResellerSidebar({
             isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"
           }`}
         >
-          <div className="w-[120px] h-[22px] object-contain">
+          <Link href={'/'} className="w-[120px] h-[22px] object-contain">
             <LogoIcon className="w-full h-full" />
-          </div>
+          </Link>
         </div>
 
         <button

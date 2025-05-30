@@ -200,6 +200,7 @@ const MobileNavLink = ({ href, icon, text }) => (
 import { ServicesDropdownContent } from "./_navbar-component/services-dropdown";
 import LogoIcon from "@/public/incons/logo";
 import { BsArrowUpRightCircle } from "react-icons/bs";
+import InstagramGrowthIcon from "@/public/incons/instagram-growth";
 
 // services dropdown mobile
 const MobileServicesDropdown = ({ isOpen, onToggle }) => (
@@ -241,7 +242,7 @@ const MobileServicesDropdown = ({ isOpen, onToggle }) => (
           />
           <MobileNavLink
             href="/services/instagram-growth"
-            icon={<LikeIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
+            icon={<InstagramGrowthIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Instagram Growth"
           />
           <MobileNavLink
@@ -298,7 +299,7 @@ export function Navbar() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent p-0 hover:text-blue-500 serotiva-regular">
+              <NavigationMenuTrigger className="bg-transparent p-0 hover:text-blue-500 serotiva-regular cursor-pointer">
                 Services
               </NavigationMenuTrigger>
               <NavigationMenuContent

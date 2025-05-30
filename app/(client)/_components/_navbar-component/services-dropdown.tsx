@@ -4,11 +4,8 @@ import EmailIcon from "@/public/incons/email-icon";
 import WatchIcon from "@/public/incons/watch-icon";
 import BookIcon from "@/public/incons/book-icon";
 import LinkIcon from "@/public/incons/link-icon";
-import LikeIcon from "@/public/incons/like-icon";
 import StarIcon from "@/public/incons/star-icon";
-import CameraIcon from "@/public/incons/camera-icon";
 import AnalysisIcon from "@/public/incons/analysis-icon";
-import EditIcon from "@/public/incons/edit";
 import UGCVideosIcon from "@/public/incons/ugc-videos";
 import InstagramGrowthIcon from "@/public/incons/instagram-growth";
 
@@ -60,24 +57,27 @@ export const ServicesDropdownContent = () => (
       </div>
 
       <div>
-        <p className="text-gray-500 serotiva-regular text-sm">COMING SOON</p>
+        <p className="text-gray-500 serotiva-regular text-sm truncate">COMING SOON</p>
         <ul className="mt-2 space-y-2">
           <NavLink
             href="/services/review-management"
-            icon={<StarIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            icon={<StarIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded flex-shrink-0" />}
             text="Review Management"
+            className="whitespace-nowrap overflow-hidden text-ellipsis"
           />
           <NavLink
             href="/services/ugc-videos"
             icon={
-              <UGCVideosIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />
+              <UGCVideosIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded flex-shrink-0" />
             }
             text="UGC Videos"
+            className="whitespace-nowrap overflow-hidden text-ellipsis"
           />
           <NavLink
             href="/services/meta-ads"
-            icon={<AnalysisIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
+            icon={<AnalysisIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded flex-shrink-0" />}
             text="Meta Ads Management"
+            className="whitespace-nowrap overflow-hidden text-ellipsis"
           />
         </ul>
       </div>

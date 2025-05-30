@@ -5,13 +5,6 @@ import { IoMdClose } from "react-icons/io";
 import { PanelLeftClose, PanelLeftOpen, SettingsIcon } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
 import DashboardIcon from "@/public/incons/dashboard";
-import AnalysisIcon from "@/public/incons/analysis-icon";
-import ComposeIcon from "@/public/incons/compose";
-import ScheduleIcon from "@/public/incons/schedule";
-import PostIcon from "@/public/incons/post";
-import AssetsIcon from "@/public/incons/assets";
-import SocialInboxIcon from "@/public/incons/social-inbox";
-import SocialsIcon from "@/public/incons/socials";
 import SupportIcon from "@/public/incons/support";
 import OrderIcon from "@/public/incons/order";
 import TaskManagementIcon from "@/public/incons/task-management";
@@ -210,9 +203,9 @@ export default function AdminSidebar({
             isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"
           }`}
         >
-          <div className="w-[120px] h-[22px] object-contain">
+          <Link href={'/'} className="w-[120px] h-[22px] object-contain">
             <LogoIcon className="w-full h-full" />
-          </div>
+          </Link>
         </div>
 
         <button
