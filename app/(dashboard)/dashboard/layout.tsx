@@ -15,7 +15,7 @@ export default function ClientLayout({
 
   const role = ["user", "freelancer", "admin", "reseller"];
 
-  const isUser = false;
+  const isUser = !true;
   return (
     <PurchaseProvider>
       <div className="flex h-screen overflow-hidden bg-[#F7F7F9] font-commissioner">

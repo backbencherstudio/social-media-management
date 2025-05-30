@@ -54,7 +54,11 @@ const bottomMenuItems = [
         href: "/dashboard/payment-method",
       },
       { title: "Invoices", icon: TbFileInvoice, href: "/dashboard/invoices" },
-      { title: "Payment Invoices", icon: TbFileInvoice, href: "/dashboard/payment-invoices" },
+      {
+        title: "Payment Invoices",
+        icon: TbFileInvoice,
+        href: "/dashboard/payment-invoices",
+      },
     ],
   },
 ];
