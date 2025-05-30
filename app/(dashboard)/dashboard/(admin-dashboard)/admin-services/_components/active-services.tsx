@@ -1,18 +1,20 @@
 "use client";
 import TrashIcon from "@/public/incons/trash";
-import { useGetAllServicesQuery, useToggleServiceStatusMutation } from "@/src/redux/features/admin/services";
+import {
+  useGetAllServicesQuery,
+  useToggleServiceStatusMutation,
+} from "@/src/redux/features/admin/services";
 import Link from "next/link";
 import React, { useState } from "react";
 
 export default function ActiveServices() {
   // data fetching
   const { data } = useGetAllServicesQuery();
-  const [toogleServiceStatus] = useToggleServiceStatusMutation()
+  const [toogleServiceStatus] = useToggleServiceStatusMutation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [isActive, setIsActive] = useState(true);
-
 
   // const handleViewDetails = (data) => {
   //   setSelectedService(data);
@@ -41,40 +43,56 @@ export default function ActiveServices() {
       <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
         <thead className="bg-gray-100 text-gray-700 text-center rounded-t-lg">
           <tr>
-            <th className="py-3 px-4 text-left first:rounded-tl-lg">
+            <th className="py-3 px-4 text-left first:rounded-tl-lg whitespace-nowrap text-xs md:text-sm font-medium">
               Service Name
             </th>
-            <th className="py-3 px-4">Category</th>
-            <th className="py-3 px-4">Price</th>
-            <th className="py-3 px-4">Sale</th>
-            <th className="py-3 px-4">Status</th>
-            <th className="py-3 px-4">Actions</th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              Category
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              Price
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              Sale
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              Status
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
           {data?.map((service) => (
             <tr key={service.id} className="">
               {/* Service cell with left side text & status */}
-              <td className="py-4 px-4">
+              <td className="py-4 px-4 whitespace-nowrap">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <div>
-                    <p className="">{service.name}</p>
+                    <p className="text-xs md:text-sm">{service.name}</p>
                   </div>
                 </div>
               </td>
 
-              <td className="py-4 px-4 text-center">{service.category}</td>
-              <td className="py-4 px-4 text-center">{service.price}</td>
+              <td className="py-4 px-4 text-center whitespace-nowrap text-xs md:text-sm">
+                {service.category}
+              </td>
+              <td className="py-4 px-4 text-center whitespace-nowrap text-xs md:text-sm">
+                {service.price}
+              </td>
 
-              <td className="py-4 px-4 text-center">
+              <td className="py-4 px-4 text-center whitespace-nowrap">
                 <div className="flex justify-center">
-                  <span className={`px-3 py-1 rounded-full font-medium`}>
+                  <span
+                    className={`px-3 py-1 rounded-full font-medium text-xs md:text-sm`}
+                  >
                     {"Oct 17"}
                   </span>
                 </div>
               </td>
 
-              <td className="py-4 px-4 text-center">
+              <td className="py-4 px-4 text-center whitespace-nowrap">
                 <div className="flex justify-center">
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -88,7 +106,7 @@ export default function ActiveServices() {
                 </div>
               </td>
 
-              <td className="py-4 px-4">
+              <td className="py-4 px-4 whitespace-nowrap">
                 <div className="flex items-center justify-center gap-6">
                   <Link
                     href={`/dashboard/admin-services/${service.id}`}

@@ -16,14 +16,6 @@ import BlogIcon from "@/public/incons/blog";
 import PaymentIcon from "@/public/incons/payment";
 import LiveChatIcon from "@/public/incons/live-chat";
 
-// Define roles
-const ROLE = {
-  FREELANCER: "freelancer",
-  ADMIN: "admin",
-};
-
-type Role = "admin" | "freelancer";
-
 // Menu item type
 interface MenuItem {
   title: string;
@@ -37,84 +29,10 @@ interface Section {
   items: MenuItem[];
 }
 
-const adminSidebarMenu: Section[] = [
-  {
-    label: "Overview",
-    items: [{ title: "Dashboard", icon: DashboardIcon, href: "/dashboard" }],
-  },
-  {
-    label: "Operation",
-    items: [
-      { title: "Order", icon: OrderIcon, href: "/dashboard/order" },
-      {
-        title: "Task Management",
-        icon: TaskManagementIcon,
-        href: "/dashboard/task-management",
-      },
-      { title: "Client", icon: ClientIcon, href: "/dashboard/client" },
-      {
-        title: "Reseller",
-        icon: ResellerIcon,
-        href: "/dashboard/reseller",
-      },
-      { title: "Team", icon: TeamIcon, href: "/dashboard/team" },
-    ],
-  },
-  {
-    label: "Content Management",
-    items: [
-      {
-        title: "Services",
-        icon: ServicesIcon,
-        href: "/dashboard/admin-services",
-      },
-      {
-        title: "Blog",
-        icon: BlogIcon,
-        href: "/dashboard/blog",
-      },
-    ],
-  },
-  {
-    label: "Finance",
-    items: [
-      {
-        title: "Payment",
-        icon: PaymentIcon,
-        href: "/dashboard/payment",
-      },
-    ],
-  },
-  {
-    label: "Help",
-    items: [
-      {
-        title: "Live Chat",
-        icon: LiveChatIcon,
-        href: "/dashboard/live-chat",
-      },
-      {
-        title: "Support",
-        icon: SupportIcon,
-        href: "/dashboard/admin-support",
-      },
-    ],
-  },
-  {
-    label: "Settings",
-    items: [
-      {
-        title: "Settings",
-        icon: SettingsIcon,
-        href: "/dashboard/settings",
-      },
-    ],
-  },
-];
-
 interface SidebarProps {
   isMobileMenuOpen: boolean;
   onMobileMenuClose: () => void;
+  role: string;
 }
 
 const SidebarSection = ({
@@ -180,12 +98,88 @@ const NavLink = ({
 export default function AdminSidebar({
   isMobileMenuOpen,
   onMobileMenuClose,
+  role,
 }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
+
+  const adminSidebarMenu: Section[] = [
+    {
+      label: role,
+      items: [{ title: "Dashboard", icon: DashboardIcon, href: "/dashboard" }],
+    },
+    {
+      label: "Operation",
+      items: [
+        { title: "Order", icon: OrderIcon, href: "/dashboard/order" },
+        {
+          title: "Task Management",
+          icon: TaskManagementIcon,
+          href: "/dashboard/task-management",
+        },
+        { title: "Client", icon: ClientIcon, href: "/dashboard/client" },
+        {
+          title: "Reseller",
+          icon: ResellerIcon,
+          href: "/dashboard/reseller",
+        },
+        { title: "Team", icon: TeamIcon, href: "/dashboard/team" },
+      ],
+    },
+    {
+      label: "Content Management",
+      items: [
+        {
+          title: "Services",
+          icon: ServicesIcon,
+          href: "/dashboard/admin-services",
+        },
+        {
+          title: "Blog",
+          icon: BlogIcon,
+          href: "/dashboard/blog",
+        },
+      ],
+    },
+    {
+      label: "Finance",
+      items: [
+        {
+          title: "Payment",
+          icon: PaymentIcon,
+          href: "/dashboard/payment",
+        },
+      ],
+    },
+    {
+      label: "Help",
+      items: [
+        {
+          title: "Live Chat",
+          icon: LiveChatIcon,
+          href: "/dashboard/live-chat",
+        },
+        {
+          title: "Support",
+          icon: SupportIcon,
+          href: "/dashboard/admin-support",
+        },
+      ],
+    },
+    {
+      label: "Settings",
+      items: [
+        {
+          title: "Settings",
+          icon: SettingsIcon,
+          href: "/dashboard/settings",
+        },
+      ],
+    },
+  ];
 
   return (
     <aside
@@ -203,7 +197,7 @@ export default function AdminSidebar({
             isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"
           }`}
         >
-          <Link href={'/'} className="w-[120px] h-[22px] object-contain">
+          <Link href={"/"} className="w-[120px] h-[22px] object-contain">
             <LogoIcon className="w-full h-full" />
           </Link>
         </div>

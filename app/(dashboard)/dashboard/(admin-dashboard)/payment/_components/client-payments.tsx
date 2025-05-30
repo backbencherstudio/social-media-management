@@ -91,7 +91,9 @@ export default function ClientPayments() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 px-1">
         <div>
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">Client Payments</h1>
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">
+            Client Payments
+          </h1>
         </div>
         <div className="w-full md:w-auto">
           <select
@@ -111,15 +113,27 @@ export default function ClientPayments() {
         <table className="min-w-full table-auto">
           <thead className="bg-gray-100 text-gray-700 text-left">
             <tr>
-              <th className="py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium first:rounded-tl-lg">
+              <th className="py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium first:rounded-tl-lg whitespace-nowrap">
                 Order ID
               </th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium">Client</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium">Package</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium">Amount</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium">Due Date</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium">Status</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium">Actions</th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Client
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Package
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Amount
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Due Date
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Status
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -128,13 +142,13 @@ export default function ClientPayments() {
                 key={service.id}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
-                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm">
+                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <span>{service.orderId}</span>
                   </div>
                 </td>
 
-                <td className="py-3 md:py-4 px-2 md:px-4">
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
                     <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
                       {service.name}
@@ -144,7 +158,7 @@ export default function ClientPayments() {
                     </span>
                   </div>
                 </td>
-                <td className="py-3 md:py-4 px-2 md:px-4">
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
                     <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
                       {service.package}
@@ -155,13 +169,13 @@ export default function ClientPayments() {
                   </div>
                 </td>
 
-                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm">
+                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
                   <span>{service.amount}</span>
                 </td>
-                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm">
+                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
                   <span>{service.started}</span>
                 </td>
-                <td className="py-3 md:py-4 px-2 md:px-4">
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
                     <span
                       className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium ${
@@ -171,14 +185,15 @@ export default function ClientPayments() {
                         service.status === "In Progress" &&
                         "bg-[#F5F1FF] text-[#5B21B6]"
                       } ${
-                        service.status === "Complete" && "bg-[#ECEFF3] text-black"
+                        service.status === "Complete" &&
+                        "bg-[#ECEFF3] text-black"
                       }`}
                     >
                       {service.status}
                     </span>
                   </div>
                 </td>
-                <td className="py-3 md:py-4 px-2 md:px-4">
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div className="flex items-center gap-2 md:gap-4">
                     <button
                       onClick={() => {
@@ -205,7 +220,10 @@ export default function ClientPayments() {
         />
 
         <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
-          <label htmlFor="itemsPerPage" className="text-xs md:text-sm text-gray-600">
+          <label
+            htmlFor="itemsPerPage"
+            className="text-xs md:text-sm text-gray-600"
+          >
             Showing 1 to 8 of 50 entries
           </label>
           <select

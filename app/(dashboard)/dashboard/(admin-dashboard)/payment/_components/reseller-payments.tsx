@@ -94,7 +94,9 @@ export default function ResellerPayments() {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">Client Payments</h1>
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">
+            Client Payments
+          </h1>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 ">
           <select
@@ -107,7 +109,7 @@ export default function ResellerPayments() {
             <option value="last_month">Last month</option>
             <option value="this_year">This year</option>
           </select>
-          <button 
+          <button
             onClick={() => setShowPayoutModal(true)}
             className="px-4 py-2 rounded-lg bg-blue-700 flex items-center justify-center gap-3 text-white hover:bg-blue-800 transition-colors"
           >
@@ -120,13 +122,27 @@ export default function ResellerPayments() {
         <table className="min-w-full table-auto">
           <thead className="bg-gray-100 text-gray-700 text-left">
             <tr>
-              <th className="py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium whitespace-nowrap">Order ID</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">Client</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">Package</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">Amount</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">Due Date</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">Status</th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">Actions</th>
+              <th className="py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium whitespace-nowrap">
+                Order ID
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Client
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Package
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Amount
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Due Date
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Status
+              </th>
+              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -135,11 +151,13 @@ export default function ResellerPayments() {
                 key={service.id}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
-                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm">
-                  <span className="whitespace-nowrap">{service.orderId}</span>
+                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <span>{service.orderId}</span>
+                  </div>
                 </td>
 
-                <td className="py-3 md:py-4 px-2 md:px-4">
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
                     <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
                       {service.name}
@@ -149,8 +167,7 @@ export default function ResellerPayments() {
                     </span>
                   </div>
                 </td>
-
-                <td className="py-3 md:py-4 px-2 md:px-4">
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
                     <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
                       {service.package}
@@ -161,13 +178,13 @@ export default function ResellerPayments() {
                   </div>
                 </td>
 
-                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm">
+                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
                   <span>{service.amount}</span>
                 </td>
-                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm">
+                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
                   <span>{service.started}</span>
                 </td>
-                <td className="py-3 md:py-4 px-2 md:px-4">
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
                     <span
                       className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium ${
@@ -177,14 +194,15 @@ export default function ResellerPayments() {
                         service.status === "In Progress" &&
                         "bg-[#F5F1FF] text-[#5B21B6]"
                       } ${
-                        service.status === "Complete" && "bg-[#ECEFF3] text-black"
+                        service.status === "Complete" &&
+                        "bg-[#ECEFF3] text-black"
                       }`}
                     >
                       {service.status}
                     </span>
                   </div>
                 </td>
-                <td className="py-3 md:py-4 px-2 md:px-4">
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div className="flex items-center gap-2 md:gap-4">
                     <button
                       onClick={() => {
@@ -195,8 +213,8 @@ export default function ResellerPayments() {
                     >
                       <GrView className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
-                    <Link 
-                      href={`/dashboard/service/${service.id}`} 
+                    <Link
+                      href={`/dashboard/service/${service.id}`}
                       className="hover:text-gray-700 transition-colors p-1"
                     >
                       <CiCreditCard1 className="w-4 h-4 md:w-5 md:h-5" />
@@ -217,7 +235,10 @@ export default function ResellerPayments() {
         />
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4">
-          <label htmlFor="itemsPerPage" className="text-xs md:text-sm text-gray-600 whitespace-nowrap">
+          <label
+            htmlFor="itemsPerPage"
+            className="text-xs md:text-sm text-gray-600 whitespace-nowrap"
+          >
             Showing 1 to 8 of 50 entries
           </label>
           <select
@@ -243,8 +264,8 @@ export default function ResellerPayments() {
         selectedService={selectedService}
         setIsModalOpen={setIsModalOpen}
       />
-      
-      <PayoutModal 
+
+      <PayoutModal
         isOpen={showPayoutModal}
         onClose={() => setShowPayoutModal(false)}
       />

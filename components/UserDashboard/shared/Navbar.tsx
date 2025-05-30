@@ -52,7 +52,7 @@ export default function Navbar({
           >
             <HiMenuAlt3 className="w-6 h-6" />
           </button>
-          <h1 className="text-xl font-semibold">{activePath}</h1>
+          {/* <h1 className="text-xl font-semibold">{activePath}</h1> */}
         </div>
 
         <div className="flex items-center gap-4">

@@ -25,12 +25,92 @@ interface MenuItem {
 interface Section {
   label: string;
   items: MenuItem[];
+  
 }
 
-// Menu definitions
+
+
+interface SidebarProps {
+  isMobileMenuOpen: boolean;
+  onMobileMenuClose: () => void;
+  role: string;
+}
+
+const SidebarSection = ({
+  label,
+  items,
+  isCollapsed,
+}: {
+  label: string;
+  items: MenuItem[];
+  isCollapsed: boolean;
+}) => (
+  <div>
+    <p
+      className={`${
+        isCollapsed ? "hidden" : "block"
+      } text-sm text-gray-500 px-6`}
+    >
+      {label}
+    </p>
+    <nav className={`flex-1 px-3 py-2 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
+      {items.map((item, index) => (
+        <NavLink key={index} item={item} isCollapsed={isCollapsed} />
+      ))}
+    </nav>
+  </div>
+);
+
+const NavLink = ({
+  item,
+  isCollapsed,
+}: {
+  item: MenuItem;
+  isCollapsed: boolean;
+}) => {
+  const pathname = usePathname();
+  const isActive = pathname === item.href;
+  return (
+    <Link
+      href={item.href}
+      className={`flex items-center text-[14px] transition-all duration-200 ${
+        isCollapsed ? "justify-center px-0" : "px-3 gap-3"
+      } p-3 rounded-lg ${
+        isActive
+          ? "bg-[#F5F5F7] text-black"
+          : "text-[#4A4C56] hover:bg-gray-100"
+      }`}
+      title={isCollapsed ? item.title : ""}
+    >
+      <item.icon
+        className={`w-5 h-5 shrink-0 ${isActive ? "" : "text-gray-500"}`}
+      />
+      <span
+        className={`transition-all duration-300 ${
+          isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+        } ${isActive ? "font-medium" : ""} whitespace-nowrap overflow-hidden`}
+      >
+        {item.title}
+      </span>
+    </Link>
+  );
+};
+
+export default function ResellerSidebar({
+  isMobileMenuOpen,
+  onMobileMenuClose,
+  role,
+}: SidebarProps) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  // Menu definitions
 const resellerSidebarMenu: Section[] = [
   {
-    label: "Overview",
+    label: role,
     items: [
       {
         title: "Dashboard",
@@ -97,81 +177,6 @@ const resellerSidebarMenu: Section[] = [
     ],
   },
 ];
-
-interface SidebarProps {
-  isMobileMenuOpen: boolean;
-  onMobileMenuClose: () => void;
-}
-
-const SidebarSection = ({
-  label,
-  items,
-  isCollapsed,
-}: {
-  label: string;
-  items: MenuItem[];
-  isCollapsed: boolean;
-}) => (
-  <div>
-    <p
-      className={`${
-        isCollapsed ? "hidden" : "block"
-      } text-sm text-gray-500 px-6`}
-    >
-      {label}
-    </p>
-    <nav className={`flex-1 px-3 py-2 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
-      {items.map((item, index) => (
-        <NavLink key={index} item={item} isCollapsed={isCollapsed} />
-      ))}
-    </nav>
-  </div>
-);
-
-const NavLink = ({
-  item,
-  isCollapsed,
-}: {
-  item: MenuItem;
-  isCollapsed: boolean;
-}) => {
-  const pathname = usePathname();
-  const isActive = pathname === item.href;
-  return (
-    <Link
-      href={item.href}
-      className={`flex items-center text-[14px] transition-all duration-200 ${
-        isCollapsed ? "justify-center px-0" : "px-3 gap-3"
-      } p-3 rounded-lg ${
-        isActive
-          ? "bg-[#F5F5F7] text-black"
-          : "text-[#4A4C56] hover:bg-gray-100"
-      }`}
-      title={isCollapsed ? item.title : ""}
-    >
-      <item.icon
-        className={`w-5 h-5 shrink-0 ${isActive ? "" : "text-gray-500"}`}
-      />
-      <span
-        className={`transition-all duration-300 ${
-          isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
-        } ${isActive ? "font-medium" : ""} whitespace-nowrap overflow-hidden`}
-      >
-        {item.title}
-      </span>
-    </Link>
-  );
-};
-
-export default function ResellerSidebar({
-  isMobileMenuOpen,
-  onMobileMenuClose,
-}: SidebarProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-  };
 
   return (
     <aside

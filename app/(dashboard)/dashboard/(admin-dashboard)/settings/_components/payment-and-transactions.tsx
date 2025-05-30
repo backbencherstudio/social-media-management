@@ -63,12 +63,14 @@ export default function PaymentAndTransactions() {
   }, [isFlat, setValue]);
 
   return (
-    <div className="space-y-6 p-6 bg-white rounded-lg">
+    <div className="space-y-6 p-4 md:p-6 bg-white rounded-lg">
       <div>
-        <h2 className="text-xl font-semibold mb-4">Payment & Transactions</h2>
+        <h2 className="text-lg md:text-xl font-semibold mb-4">
+          Payment & Transactions
+        </h2>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
         {/* Minimum Withdrawal Amount */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
@@ -78,7 +80,7 @@ export default function PaymentAndTransactions() {
             {...register("minimumWithdrawalAmount", {
               required: "This field is required",
             })}
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
           >
             <option value="50">$50</option>
             <option value="100">$100</option>
@@ -101,13 +103,13 @@ export default function PaymentAndTransactions() {
               min: { value: 0, message: "Must be greater than or equal to 0" },
               max: { value: 100, message: "Must be less than or equal to 100" },
             })}
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
           />
         </div>
 
         {/* Commission Type and Value */}
-        <div className="flex justify-between">
-          <div className="flex-1 flex items-center pt-6 gap-16">
+        <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-8">
+          <div className="w-full lg:flex-1 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 pt-2">
             <div className="flex items-center gap-2">
               <input
                 type="radio"
@@ -127,7 +129,7 @@ export default function PaymentAndTransactions() {
               <label className="text-sm text-gray-600">Percentage (%)</label>
             </div>
           </div>
-          <div className="flex-1 space-y-2">
+          <div className="w-full lg:flex-1 space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Value
             </label>
@@ -141,7 +143,7 @@ export default function PaymentAndTransactions() {
                 }
               )}
               placeholder={isFlat ? "Enter flat rate" : "Enter percentage"}
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
             />
           </div>
         </div>
@@ -151,7 +153,7 @@ export default function PaymentAndTransactions() {
           <label className="block text-sm font-medium text-gray-700">
             Payment Methods
           </label>
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {["PayPal", "Payoneer", "Visa/MasterCard", "Bank Transfer"].map(
               (method) => (
                 <div key={method} className="flex items-center gap-2">
@@ -171,7 +173,7 @@ export default function PaymentAndTransactions() {
         <div className="pt-4">
           <button
             type="submit"
-            className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+            className="sm:w-auto px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm md:text-base"
           >
             Save Changes
           </button>

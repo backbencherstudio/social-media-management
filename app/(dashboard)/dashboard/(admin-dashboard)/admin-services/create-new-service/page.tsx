@@ -71,11 +71,16 @@ export default function CreateNewService() {
   };
 
   return (
-    <div className="p-6">
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <h1 className="text-2xl font-semibold mb-6">Create New Service</h1>
+    <div className="p-4 md:p-6">
+      <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
+        <h1 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
+          Create New Service
+        </h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4 md:space-y-6"
+        >
           {/* Service Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -87,10 +92,12 @@ export default function CreateNewService() {
               })}
               type="text"
               placeholder="Enter service name"
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
             />
             {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+              <p className="text-red-500 text-xs md:text-sm mt-1">
+                {errors.name.message}
+              </p>
             )}
           </div>
 
@@ -105,10 +112,10 @@ export default function CreateNewService() {
               })}
               rows={4}
               placeholder="Enter service description"
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
             />
             {errors.description && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-red-500 text-xs md:text-sm mt-1">
                 {errors.description.message}
               </p>
             )}
@@ -125,10 +132,10 @@ export default function CreateNewService() {
               })}
               rows={3}
               placeholder="Enter what's included in the service"
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
             />
             {errors.features && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-red-500 text-xs md:text-sm mt-1">
                 {errors.features.message}
               </p>
             )}
@@ -143,7 +150,7 @@ export default function CreateNewService() {
               {...register("category_id", {
                 required: "Please select a category",
               })}
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
             >
               {data?.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -152,14 +159,14 @@ export default function CreateNewService() {
               ))}
             </select>
             {errors.category_id && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-red-500 text-xs md:text-sm mt-1">
                 {errors.category_id.message}
               </p>
             )}
           </div>
 
-          <div className="space-y-4 mt-10">
-            <h1 className="font-semibold text-gray-700">
+          <div className="space-y-4 mt-6 md:mt-10">
+            <h1 className="font-semibold text-gray-700 text-base md:text-lg">
               Set Quantity & Price
             </h1>
 
@@ -169,7 +176,7 @@ export default function CreateNewService() {
                 <label className="block text-sm font-medium text-gray-700">
                   Package {packageNum}
                 </label>
-                <div className="grid grid-cols-12 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
                   <input
                     {...register(`tiers.${index}.max_post`, {
                       valueAsNumber: true,
@@ -177,7 +184,7 @@ export default function CreateNewService() {
                     })}
                     type="number"
                     placeholder={`Enter quantity posts`}
-                    className="col-span-8 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    className="sm:col-span-8 px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
                   />
                   <input
                     {...register(`tiers.${index}.price`, {
@@ -186,7 +193,7 @@ export default function CreateNewService() {
                     })}
                     type="number"
                     placeholder="Price"
-                    className="col-span-4 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    className="sm:col-span-4 px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
                   />
                 </div>
               </div>
@@ -195,8 +202,10 @@ export default function CreateNewService() {
 
           {/* Social Media Selection */}
           <div>
-            <h1 className="font-semibold text-gray-700">Select Social Media</h1>
-            <div className="flex flex-wrap gap-4 mt-5">
+            <h1 className="font-semibold text-gray-700 text-base md:text-lg">
+              Select Social Media
+            </h1>
+            <div className="flex flex-wrap gap-2 md:gap-4 mt-4 md:mt-5">
               {[
                 "Instagram",
                 "Twitter",
@@ -207,7 +216,7 @@ export default function CreateNewService() {
               ].map((platform) => (
                 <div
                   key={platform}
-                  className="flex items-center gap-3 border border-gray-200 px-4 py-2 rounded-md"
+                  className="flex items-center gap-2 md:gap-3 border border-gray-200 px-3 md:px-4 py-2 rounded-md"
                 >
                   <input
                     {...register("primary_platform", {
@@ -228,19 +237,19 @@ export default function CreateNewService() {
               ))}
             </div>
             {errors.primary_platform && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-red-500 text-xs md:text-sm mt-1">
                 {errors.primary_platform.message}
               </p>
             )}
           </div>
 
           {/* Select Additional Platforms */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
             <div className="md:col-span-8">
-              <h1 className="font-semibold text-gray-700">
+              <h1 className="font-semibold text-gray-700 text-base md:text-lg">
                 Select Additional Platforms
               </h1>
-              <div className="flex flex-wrap gap-4 mt-5">
+              <div className="flex flex-wrap gap-2 md:gap-4 mt-4 md:mt-5">
                 {[
                   "Instagram",
                   "Twitter",
@@ -251,7 +260,7 @@ export default function CreateNewService() {
                 ].map((platform) => (
                   <div
                     key={platform}
-                    className="flex items-center gap-3 border border-gray-200 px-4 py-2 rounded-md"
+                    className="flex items-center gap-2 md:gap-3 border border-gray-200 px-3 md:px-4 py-2 rounded-md"
                   >
                     <input
                       {...register("extra_platforms")}
@@ -281,10 +290,10 @@ export default function CreateNewService() {
                 })}
                 type="number"
                 placeholder="Enter price"
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
               />
               {errors.extra_platform_Price && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-red-500 text-xs md:text-sm mt-1">
                   {errors.extra_platform_Price.message}
                 </p>
               )}
@@ -295,7 +304,7 @@ export default function CreateNewService() {
           <div className="pt-4">
             <button
               type="submit"
-              className="w-full md:w-auto px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+              className="w-full md:w-auto px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm md:text-base"
             >
               Create Service
             </button>

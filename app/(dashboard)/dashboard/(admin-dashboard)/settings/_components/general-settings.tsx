@@ -28,7 +28,7 @@ export default function GeneralSettings() {
     },
   });
 
-  const onSubmit =async (data: GeneralSettingsFormData) => {
+  const onSubmit = async (data: GeneralSettingsFormData) => {
     console.log(data);
     // Handle form submission here
     const response = await updateGeneralSetting(data);
@@ -78,9 +78,9 @@ export default function GeneralSettings() {
           )}
         </div>
 
-        <div className="flex gap-3 lg:gap-5">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-5">
           {/* Email */}
-          <div className="space-y-1 flex-1">
+          <div className="space-y-1 w-full">
             <label className="text-sm font-medium">Email</label>
             <input
               {...register("email", {
@@ -91,16 +91,18 @@ export default function GeneralSettings() {
                 },
               })}
               type="email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               placeholder="Enter email"
             />
             {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
+              <p className="text-xs md:text-sm text-red-500">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
           {/* Phone Number */}
-          <div className="space-y-1 flex-1">
+          <div className="space-y-1 w-full">
             <label className="text-sm font-medium">Phone Number</label>
             <input
               {...register("phone_number", {
@@ -112,11 +114,11 @@ export default function GeneralSettings() {
                 },
               })}
               type="tel"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               placeholder="Enter phone number"
             />
             {errors.phone_number && (
-              <p className="text-sm text-red-500">
+              <p className="text-xs md:text-sm text-red-500">
                 {errors.phone_number.message}
               </p>
             )}
