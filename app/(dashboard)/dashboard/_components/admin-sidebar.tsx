@@ -50,7 +50,7 @@ const SidebarSection = ({
         isCollapsed ? "hidden" : "block"
       } text-sm text-gray-500 px-6`}
     >
-      {label}
+      {label} {label === "Admin" && "Dashboard"}
     </p>
     <nav className={`flex-1 px-3 py-2 space-y-2 ${isCollapsed ? "px-2" : ""}`}>
       {items.map((item, index) => (
@@ -108,7 +108,7 @@ export default function AdminSidebar({
 
   const adminSidebarMenu: Section[] = [
     {
-      label: role,
+      label: role ,
       items: [{ title: "Dashboard", icon: DashboardIcon, href: "/dashboard" }],
     },
     {
