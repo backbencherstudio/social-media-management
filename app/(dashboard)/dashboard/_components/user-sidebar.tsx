@@ -29,16 +29,10 @@ const bottomMenuItems = [
       {
         title: "Payment",
         icon: PaymentIcon,
-        href: "/dashboard/payment",
-      },
-      {
-        title: "Payment",
-        icon: PaymentIcon,
         href: "/dashboard/payment-method",
       },
-      { title: "Invoices", icon: InvoicesIcon, href: "/dashboard/invoices" },
       {
-        title: "Payment Invoices",
+        title: "Invoices",
         icon: InvoicesIcon,
         href: "/dashboard/payment-invoices",
       },
@@ -148,7 +142,7 @@ export default function UserSidebar({
 
         {/* Close button for mobile */}
         <button
-          className={`            p-2 rounded-lg hover:bg-gray-100 md:hidden
+          className={`p-2 rounded-lg hover:bg-gray-100 md:hidden
             transition-opacity duration-300
             ${isCollapsed ? "opacity-0" : "opacity-100"}
           `}

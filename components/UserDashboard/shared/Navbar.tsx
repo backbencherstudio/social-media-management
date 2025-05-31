@@ -52,7 +52,7 @@ export default function Navbar({
           >
             <HiMenuAlt3 className="w-6 h-6" />
           </button>
-          <h1 className="text-xl font-semibold">{activePath}</h1>
+          {/* <h1 className="text-xl font-semibold">{activePath}</h1> */}
         </div>
 
         <div className="flex items-center gap-4">
@@ -60,13 +60,18 @@ export default function Navbar({
             <ImPower />
             <span>Add Services</span>
           </button> */}
+
           {/* <NotificationIcon  /> */}
           <Link
             href={"/dashboard/notification"}
-            className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200"
+            className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200 relative"
           >
             <IoNotificationsOutline className="w-6 h-6" />
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center">
+              2
+            </span>
           </Link>
+
           <div className="relative" ref={dropdownRef}>
             <div
               className="flex items-center gap-3 p-2 rounded-full hover:bg-gray-100 cursor-pointer transition-colors duration-200"

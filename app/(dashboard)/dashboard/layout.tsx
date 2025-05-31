@@ -18,22 +18,24 @@ export default function ClientLayout({
   // Function to render appropriate sidebar based on role
   const renderSidebar = () => {
     switch (currentRole) {
-      case "admin":
+      case "Admin":
         return (
           <AdminSidebar
             isMobileMenuOpen={isMobileMenuOpen}
+            role={currentRole}
             onMobileMenuClose={() => setIsMobileMenuOpen(false)}
           />
         );
-      case "reseller":
+      case "Reseller":
         return (
           <ResellerSidebar
 
             isMobileMenuOpen={isMobileMenuOpen}
+            role={currentRole}
             onMobileMenuClose={() => setIsMobileMenuOpen(false)}
           />
         );
-      case "client":
+      case "Client":
         return (
           <ClientSidebar
             isMobileMenuOpen={isMobileMenuOpen}

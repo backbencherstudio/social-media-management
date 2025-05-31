@@ -13,8 +13,6 @@ import AssetsIcon from "@/public/incons/assets";
 import AnalysisIcon from "@/public/incons/analysis-icon";
 import SocialsIcon from "@/public/incons/socials";
 
-
-
 const clientTopMenuItems = [
   { title: "Home", icon: Home, href: "/dashboard" },
   { title: "Schedule", icon: ScheduleIcon, href: "/dashboard/schedule" },
@@ -40,19 +38,9 @@ const bottomMenuItems = [
       {
         title: "Payment",
         icon: PaymentIcon,
-        href: "/dashboard/payment",
-      },
-      {
-        title: "Payment",
-        icon: PaymentIcon,
         href: "/dashboard/payment-method",
       },
       { title: "Invoices", icon: InvoicesIcon, href: "/dashboard/invoices" },
-      {
-        title: "Payment Invoices",
-        icon: InvoicesIcon,
-        href: "/dashboard/payment-invoices",
-      },
     ],
   },
 ];
@@ -134,7 +122,7 @@ export default function ClientSidebar({
           ${isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"}
         `}
         >
-          <Link href={'/'} className="w-[120px] h-[22px] object-contain">
+          <Link href={"/"} className="w-[120px] h-[22px] object-contain">
             <LogoIcon className="w-full h-full" />
           </Link>
         </div>

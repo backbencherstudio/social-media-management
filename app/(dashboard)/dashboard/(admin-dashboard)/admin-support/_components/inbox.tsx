@@ -92,13 +92,13 @@ export default function Inbox() {
   return (
     <div className="overflow-x-auto w-full px-4 py-6 bg-white rounded-lg">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-6 px-1">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 px-1">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Inbox</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900">Inbox</h1>
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <select
-            className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
+            className="w-full sm:w-auto border border-gray-200 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black"
             defaultValue="this_week"
           >
             <option value="this_week">This week</option>
@@ -109,7 +109,7 @@ export default function Inbox() {
           </select>
           <button
             onClick={() => setShowModal(true)}
-            className="px-4 py-2 rounded-lg bg-black flex items-center gap-3 text-white"
+            className="w-full sm:w-auto px-4 py-2 rounded-lg bg-black flex items-center justify-center gap-3 text-white hover:bg-gray-800 transition-colors"
           >
             <CiCreditCard1 /> Create New
           </button>
@@ -119,13 +119,21 @@ export default function Inbox() {
       <table className="min-w-full table-auto ">
         <thead className="bg-gray-100 text-gray-700 text-left rounded-t-lg">
           <tr>
-            <th className="py-3 px-4 text-left first:rounded-tl-lg">
+            <th className="py-3 px-4 text-left first:rounded-tl-lg whitespace-nowrap text-xs md:text-sm font-medium">
               Email Type
             </th>
-            <th className="py-3 px-4">Subject</th>
-            <th className="py-3 px-4">From</th>
-            <th className="py-3 px-4">Date</th>
-            <th className="py-3 px-4">Actions</th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              Subject
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              From
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              Date
+            </th>
+            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -134,44 +142,44 @@ export default function Inbox() {
               key={service.id}
               className="border-b border-gray-100 hover:bg-gray-50"
             >
-              <td className="py-4 px-4">
+              <td className="py-4 px-4 whitespace-nowrap text-xs md:text-sm">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <span>{service.orderId}</span>
                 </div>
               </td>
 
-              <td className="py-4 px-4">
+              <td className="py-4 px-4 whitespace-nowrap">
                 <div>
-                  <h1 className="font-semibold text-gray-900">
+                  <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
                     {service.name}
                   </h1>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-xs text-gray-500">
                     {service.orderId}
                   </span>
                 </div>
               </td>
-              <td className="py-4 px-4">
+              <td className="py-4 px-4 whitespace-nowrap">
                 <div>
-                  <h1 className="font-semibold text-gray-900">
+                  <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
                     {service.package}
                   </h1>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-xs text-gray-500">
                     {service.orderId}
                   </span>
                 </div>
               </td>
 
-              <td className="py-4 px-4">
+              <td className="py-4 px-4 whitespace-nowrap text-xs md:text-sm">
                 <span>{service.started}</span>
               </td>
 
-              <td className="py-4 px-4">
+              <td className="py-4 px-4 whitespace-nowrap">
                 <div className="flex items-center gap-4">
                   <Link
                     href={`/dashboard/admin-support/${service.id}`}
                     className="hover:text-gray-700 transition-colors"
                   >
-                    <GrView />
+                    <GrView className="w-4 h-4 md:w-5 md:h-5" />
                   </Link>
                 </div>
               </td>
@@ -180,32 +188,34 @@ export default function Inbox() {
         </tbody>
       </table>
 
-      <div className="mt-6 flex items-center justify-between">
+      <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
 
-        <div className="flex items-center gap-4">
-          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4">
+          <label
+            htmlFor="itemsPerPage"
+            className="text-xs md:text-sm text-gray-600 whitespace-nowrap"
+          >
             Showing 1 to 8 of 50 entries
           </label>
           <select
             id="itemsPerPage"
-            className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
+            className="w-full sm:w-auto border border-gray-200 rounded-md px-2 md:px-3 py-1.5 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-black"
             value={itemsPerPage}
             onChange={(e) => {
               const newItemsPerPage = parseInt(e.target.value);
               setItemsPerPage(newItemsPerPage);
-              setCurrentPage(1); // Reset to first page when changing items per page
+              setCurrentPage(1);
             }}
           >
             <option value="5">Show 5</option>
             <option value="10">Show 10</option>
             <option value="20">Show 20</option>
             <option value="50">Show 50</option>
-            {/* <option value="100">Show 100</option> */}
           </select>
         </div>
       </div>

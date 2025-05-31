@@ -76,7 +76,7 @@ export default function PaymentDetailsModalReseller({
                       Download Invoice
                     </button>
                     <button className="flex-1 px-4 py-3 rounded-lg bg-blue-700 flex items-center gap-3 text-white justify-center">
-                      <CiCreditCard1 /> Process Payout
+                      <CiCreditCard1 /> Release Payment
                     </button>
                   </div>
                 </div>
