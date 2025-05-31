@@ -179,7 +179,7 @@ function RecentActivities() {
 
 export default function ResellerActivity() {
   return (
-    <section className="grid grid-cols-2 gap-5">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
       <TopResellers />
 
       <RecentActivities />

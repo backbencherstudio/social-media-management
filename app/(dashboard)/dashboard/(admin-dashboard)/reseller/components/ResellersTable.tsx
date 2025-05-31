@@ -58,7 +58,7 @@ export function ResellerTable({
 
   return (
     <div className=" overflow-hidden border border-gray-100 shadow-sm px-4">
-      <div className="flex items-center justify-between p-5">
+      <div className="flex items-center justify-between p-2.5 md:p-5">
         <h2 className="text-xl font-semibold ">Resellers</h2>
 
         <div className="flex flex-wrap items-center justify-center gap-4 ">

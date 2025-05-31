@@ -33,7 +33,7 @@ export default function ApplicantTable({
       <div className="p-6 bg-white rounded-xl shadow-sm overflow-x-auto">
         {/* filter data */}
         <div>
-          <div className="flex items-center justify-between p-5">
+          <div className="flex items-center justify-between p-2.5 md:p-5">
             <h2 className="text-xl font-semibold ">All Order</h2>
 
             <div className="flex flex-wrap items-center justify-center gap-4 ">
