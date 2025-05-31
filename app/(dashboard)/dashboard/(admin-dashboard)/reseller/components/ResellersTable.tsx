@@ -55,10 +55,9 @@ export function ResellerTable({
     currentPage * itemsPerPage
   );
 
-
   return (
     <div className=" overflow-hidden border border-gray-100 shadow-sm px-4">
-      <div className="flex items-center justify-between p-2.5 md:p-5">
+      <div className="flex items-center justify-between p-2 md:p-5">
         <h2 className="text-xl font-semibold ">Resellers</h2>
 
         <div className="flex flex-wrap items-center justify-center gap-4 ">
@@ -187,35 +186,35 @@ export function ResellerTable({
         </TableBody>
       </Table>
 
-       {/* pagination */}
-              <div className="mt-4 flex items-center justify-between">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
-                <div className="flex items-center gap-4">
-                  <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
-                    Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-                    {Math.min(currentPage * itemsPerPage, resellers.length)}{" "}
-                    of {resellers.length} entries
-                  </label>
-                  <select
-                    id="itemsPerPage"
-                    className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
-                    value={itemsPerPage}
-                    onChange={(e) => {
-                      setItemsPerPage(Number(e.target.value));
-                      setCurrentPage(1);
-                    }}
-                  >
-                    <option value={5}>Show 5</option>
-                    <option value={8}>Show 8</option>
-                    <option value={10}>Show 10</option>
-                    <option value={20}>Show 20</option>
-                  </select>
-                </div>
-              </div>
+      {/* pagination */}
+      <div className="mt-4 flex flex-wrap gap-2 items-center justify-between">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+        <div className="flex items-center gap-4">
+          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
+            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+            {Math.min(currentPage * itemsPerPage, resellers.length)} of{" "}
+            {resellers.length} entries
+          </label>
+          <select
+            id="itemsPerPage"
+            className="border border-gray-200 rounded-md px-3 py-1.5 text-sm"
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+          >
+            <option value={5}>Show 5</option>
+            <option value={8}>Show 8</option>
+            <option value={10}>Show 10</option>
+            <option value={20}>Show 20</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 }

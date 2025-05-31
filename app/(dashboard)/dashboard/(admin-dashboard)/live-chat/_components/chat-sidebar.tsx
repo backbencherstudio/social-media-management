@@ -5,17 +5,22 @@ import { User } from "../types";
 import { cn } from "@/lib/utils";
 import { se } from "date-fns/locale";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface ChatSidebarProps {
   users: User[];
   selectedUser: User | null;
   onUserSelect: (user: User) => void;
+  role: "admin" | "user" | "reseller";
+  setRole: (role: "admin" | "user" | "reseller") => void;
 }
 
 export default function ChatSidebar({
   users,
   selectedUser,
   onUserSelect,
+  role,
+  setRole,
 }: ChatSidebarProps) {
   console.log("ChatSidebar :", selectedUser.id);
   if (selectedUser.id === users[0].id) {
@@ -23,12 +28,30 @@ export default function ChatSidebar({
   }
   return (
     <div className="w-[330px] border-r border-gray-200 bg-card bg-white rounded-l-lg shadow-lg  overflow-hidden">
-      <div className="p-4 border-b border-gray-200 ">
-        <h2 className="text-lg font-semibold text-gray-800">Live Chats</h2>
+      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+        <h2 className="text-lg font-semibold text-gray-800 ">Live Chats</h2>
+      
+        <Select
+        
+          value={role}
+          onValueChange={(value) => setRole(value as "admin" | "user" | "reseller")}
+          
+          defaultValue="admin"
+        >
+          <SelectTrigger className="w-24 border border-gray-200 bg-white rounded-lg ">
+            <SelectValue placeholder="Select Role" />
+          </SelectTrigger>
+          <SelectContent className="bg-white border-gray-300 b">
+            <SelectItem value="admin">Admin</SelectItem>
+            <SelectItem value="user">User</SelectItem>
+            <SelectItem value="reseller">Reseller</SelectItem>
+          </SelectContent>
+        </Select>
+
       </div>
       {/* users */}
       <ScrollArea>
-        <div className="overflow-y-auto h- full h-[calc(100vh-200px)] px-3 space-y-1">
+        <div className="overflow-y-auto h- full h-[calc(100vh-200px)] px-3 space-y-1 mt-2">
           {users.map((user) => (
             <div
               key={user.id}

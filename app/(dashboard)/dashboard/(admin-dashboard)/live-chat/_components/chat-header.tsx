@@ -27,11 +27,7 @@ export function ChatHeader({ user }: ChatHeaderProps) {
         <div>
           <div className="flex items-center gap-2">
             <h3 className="font-semibold">{user.name}</h3>
-            {user.role && (
-              <Badge variant="secondary" className="text-xs">
-                {user.role}
-              </Badge>
-            )}
+            
           </div>
           {user.responseTime && <p className="text-xs text-muted-foreground">Response time {user.responseTime}</p>}
         </div>

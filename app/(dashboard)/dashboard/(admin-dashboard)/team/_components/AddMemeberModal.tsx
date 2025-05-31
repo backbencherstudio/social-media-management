@@ -28,7 +28,6 @@ export default function AddMemeberModal({
   onClose,
   onSubmit,
 }: AddMemberModalProps) {
-    
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -56,7 +55,7 @@ export default function AddMemeberModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="md:min-w-[720px] bg-white border-gray-200">
+      <DialogContent className="md:min-w-[620px] bg-white border-gray-200">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             Add New Team Member
@@ -75,6 +74,7 @@ export default function AddMemeberModal({
               <Label htmlFor="firstName">First name</Label>
               <Input
                 id="firstName"
+                className="flex-1 border border-gray-300 focus:ring-transparent "
                 placeholder="Md."
                 value={formData.firstName}
                 onChange={(e) =>
@@ -90,6 +90,7 @@ export default function AddMemeberModal({
               <Label htmlFor="lastName">Last name</Label>
               <Input
                 id="lastName"
+                className="flex-1 border border-gray-300 focus:ring-transparent focus:outline-none focus:ring-0"
                 placeholder="Mansur"
                 value={formData.lastName}
                 onChange={(e) =>
@@ -108,6 +109,7 @@ export default function AddMemeberModal({
               id="email"
               type="email"
               placeholder="name@domain.com"
+              className="border border-gray-300 focus:ring-transparent"
               value={formData.email}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -128,7 +130,7 @@ export default function AddMemeberModal({
                 }))
               }
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full border border-gray-300 focus:ring-transparent">
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
               <SelectContent className="bg-white">
@@ -142,7 +144,7 @@ export default function AddMemeberModal({
           <div className="flex gap-3 pt-4">
             <Button
               type="submit"
-              className="flex-1 bg-black text-white hover:bg-black/90"
+              className=" bg-black text-white hover:bg-black/90"
               disabled={isLoading}
             >
               {isLoading ? "Adding..." : "Add User"}
@@ -151,7 +153,7 @@ export default function AddMemeberModal({
               type="button"
               variant="outline"
               onClick={onClose}
-              className="flex-1"
+              className=""
             >
               Close
             </Button>

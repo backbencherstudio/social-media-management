@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
 
-
 export default function ResellerDetailsPage() {
   const router = useRouter();
   const params = useParams();
@@ -47,82 +46,99 @@ export default function ResellerDetailsPage() {
           </span>
         </p>
       </p>
-      {/* Applicant Details Section */}
-      <section className="">
-        <h1 className="text-xl md:text-2xl font-semibold mb-6">
-          Applicant Details
-        </h1>
-        <div className="bg-[#F9F9FB] p-6 md:p-10 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 text-sm text-gray-800 shadow">
-          <Detail label="Name" value={applicant.name} />
-          <Detail label="Mail" value={applicant.email} />
-          <Detail label="Location" value={applicant.location} />
-          <Detail label="Number" value={applicant.number} />
-          <Detail label="Position Applying For" value={applicant.position} />
-          <Detail label="Years of Experience" value={applicant.experience} />
-          <Detail
-            label="Portfolio/LinkedIn (Optional)"
-            value={applicant.portfolio}
-          />
-          <Detail label="Relevant Skills" value={applicant.skills} />
-        </div>
-      </section>
+      <div className="space-y-10 bg-white rounded-xl shadow-sm p-6 ">
+        {/* Applicant Details Section */}
+        <section className="">
+          <div className="flex items-center justify-between mb-2 md:mb-6 mb-4">
+            <h1 className="text-xl md:text-2xl font-semibold ">
+              Applicant Details
+            </h1>
 
-      {/* Cover Letter Section */}
-      <section className="bg-white rounded-xl shadow-sm p-6 md:p-10">
-        <h2 className="text-xl font-semibold mb-6 border-b-2 border-gray-200  pb-2">
-          Cover Letter
-        </h2>
-        <div className="text-sm text-gray-700 space-y-5 leading-relaxed">
-          <p>
-            <strong>Subject:</strong> Application for Social Media Manager
-            Position
-          </p>
-          <p>Dear Hiring Manager’s,</p>
-          <p>
-            I am excited to apply for the Social Media Manager position at
-            [Company Name]. With a passion for digital engagement and a track
-            record of creating impactful social media strategies, I am confident
-            in my ability to enhance your brand’s online presence and drive
-            meaningful audience interactions.
-          </p>
-          <p>
-            In my previous role at [Previous Company], I successfully managed
-            multi-platform social media campaigns that increased brand
-            engagement by [X]%. My expertise in content creation, community
-            management, and data-driven decision-making has allowed me to
-            develop and execute campaigns that align with business goals. I am
-            proficient in using tools like [mention relevant tools, e.g.,
-            Hootsuite, Buffer, or Meta Business Suite] to analyze performance
-            metrics and optimize content strategies.
-          </p>
-          <p>
-            What excites me about [Company Name] is your commitment to [mention
-            a value or initiative of the company that resonates with you]. I am
-            eager to bring my creativity and analytical skills to your team to
-            further amplify your brand’s digital footprint.
-          </p>
-          <p>
-            I would love the opportunity to discuss how my experience and skills
-            can contribute to your social media success. Please feel free to
-            contact me at your convenience to schedule a conversation.
-          </p>
-          <p>
-            Thank you for your time and consideration. I look forward to hearing
-            from you.
-          </p>
-          <p>
-            Best regards,
-            <br />
-            Md. Mansur
-          </p>
-        </div>
+            <div className="flex items-center  gap-2">
+              <Button className="bg-red-100 text-red-400" variant="destructive">
+                Reject
+              </Button>
+              <Button className="bg-green-600 text-white" variant="destructive">
+                Accept
+              </Button>
+            </div>
+          </div>
+          <div className="bg-[#F9F9FB] p-6 md:p-10 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 text-sm text-gray-800 shadow">
+            <Detail label="Name" value={applicant.name} />
+            <Detail label="Mail" value={applicant.email} />
+            <Detail label="Location" value={applicant.location} />
+            <Detail label="Number" value={applicant.number} />
+            <Detail label="Position Applying For" value={applicant.position} />
+            <Detail label="Years of Experience" value={applicant.experience} />
+            <Detail
+              label="Portfolio/LinkedIn (Optional)"
+              value={applicant.portfolio}
+            />
+            <Detail label="Relevant Skills" value={applicant.skills} />
+          </div>
+        </section>
 
+        {/* Cover Letter Section */}
+        <section className=" rounded-xl p-6 md:p-10">
+          <h2 className="text-xl font-semibold mb-6 border-b-2 border-gray-200  pb-2">
+            Cover Letter
+          </h2>
+          <div className="text-sm text-gray-700 space-y-5 leading-relaxed">
+            <p>
+              <strong>Subject:</strong> Application for Social Media Manager
+              Position
+            </p>
+            <p>Dear Hiring Manager’s,</p>
+            <p>
+              I am excited to apply for the Social Media Manager position at
+              [Company Name]. With a passion for digital engagement and a track
+              record of creating impactful social media strategies, I am
+              confident in my ability to enhance your brand’s online presence
+              and drive meaningful audience interactions.
+            </p>
+            <p>
+              In my previous role at [Previous Company], I successfully managed
+              multi-platform social media campaigns that increased brand
+              engagement by [X]%. My expertise in content creation, community
+              management, and data-driven decision-making has allowed me to
+              develop and execute campaigns that align with business goals. I am
+              proficient in using tools like [mention relevant tools, e.g.,
+              Hootsuite, Buffer, or Meta Business Suite] to analyze performance
+              metrics and optimize content strategies.
+            </p>
+            <p>
+              What excites me about [Company Name] is your commitment to
+              [mention a value or initiative of the company that resonates with
+              you]. I am eager to bring my creativity and analytical skills to
+              your team to further amplify your brand’s digital footprint.
+            </p>
+            <p>
+              I would love the opportunity to discuss how my experience and
+              skills can contribute to your social media success. Please feel
+              free to contact me at your convenience to schedule a conversation.
+            </p>
+            <p>
+              Thank you for your time and consideration. I look forward to
+              hearing from you.
+            </p>
+            <p>
+              Best regards,
+              <br />
+              Md. Mansur
+            </p>
+          </div>
 
-          <Button onClick={() => router.back()} className="mt-8 bg-[#F5F5F7] text-[#4A4C56] cursor-pointer" variant="secondary">Back</Button>
-      </section>
+          <Button
+            onClick={() => router.back()}
+            className="mt-8 bg-[#F5F5F7] text-[#4A4C56] cursor-pointer"
+            variant="secondary"
+          >
+            Back
+          </Button>
+        </section>
+      </div>
 
       {/* back button */}
-    
     </div>
   );
 }

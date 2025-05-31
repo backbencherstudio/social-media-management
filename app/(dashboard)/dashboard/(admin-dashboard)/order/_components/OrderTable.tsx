@@ -151,17 +151,15 @@ export function OrderTable({
               <TableCell>
                 <div className="flex items-center space-x-3">
                   {/* View Icon */}
-                  <div className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-800 cursor-pointer">
-                    <button
-                      onClick={() =>
-                        router.push(
-                          `/dashboard/order/${encodeURIComponent(
-                            order.orderId
-                          )}`
-                        )
-                      }
-                      className="text-blue-500"
-                    >
+                  <div
+                    onClick={() =>
+                      router.push(
+                        `/dashboard/order/${encodeURIComponent(order.orderId)}`
+                      )
+                    }
+                    className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-300 cursor-pointer"
+                  >
+                    <button className="text-blue-500">
                       {/* Eye icon here */}
                       <EyeIcon className="w-4 h-4" />
                     </button>
