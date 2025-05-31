@@ -7,14 +7,100 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 
-export default function ActiveServices() {
-  // data fetching
-  const { data } = useGetAllServicesQuery();
-  const [toogleServiceStatus] = useToggleServiceStatusMutation();
+// Mock service data
+const mockServices = [
+  {
+    id: 1,
+    name: "Social Media Management",
+    category: "Social Media",
+    price: "$299",
+    status: "Active",
+    saleDate: "Oct 17",
+    description: "Complete social media management service for businesses",
+    features: [
+      "Content Creation",
+      "Post Scheduling",
+      "Analytics",
+      "Engagement Management",
+    ],
+  },
+  {
+    id: 2,
+    name: "Content Writing",
+    category: "Content",
+    price: "$199",
+    status: "Active",
+    saleDate: "Oct 16",
+    description: "Professional content writing services",
+    features: [
+      "Blog Posts",
+      "Articles",
+      "Social Media Content",
+      "SEO Optimization",
+    ],
+  },
+  {
+    id: 3,
+    name: "SEO Optimization",
+    category: "Marketing",
+    price: "$399",
+    status: "Inactive",
+    saleDate: "Oct 15",
+    description: "Search engine optimization services",
+    features: [
+      "Keyword Research",
+      "On-page SEO",
+      "Technical SEO",
+      "Performance Tracking",
+    ],
+  },
+  {
+    id: 4,
+    name: "Email Marketing",
+    category: "Marketing",
+    price: "$249",
+    status: "Active",
+    saleDate: "Oct 14",
+    description: "Email marketing campaign management",
+    features: ["Campaign Design", "List Management", "Automation", "Analytics"],
+  },
+  {
+    id: 5,
+    name: "Graphic Design",
+    category: "Design",
+    price: "$349",
+    status: "Active",
+    saleDate: "Oct 13",
+    description: "Professional graphic design services",
+    features: [
+      "Logo Design",
+      "Social Media Graphics",
+      "Print Materials",
+      "Brand Identity",
+    ],
+  },
+];
 
+export default function ActiveServices() {
+  // Use mock data instead of API call
+  const [services, setServices] = useState(mockServices);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [isActive, setIsActive] = useState(true);
+
+  // Toggle service status
+  const toggleServiceStatus = (serviceId: number) => {
+    setServices((prevServices) =>
+      prevServices.map((service) =>
+        service.id === serviceId
+          ? {
+              ...service,
+              status: service.status === "Active" ? "Inactive" : "Active",
+            }
+          : service
+      )
+    );
+  };
 
   // const handleViewDetails = (data) => {
   //   setSelectedService(data);
@@ -64,7 +150,7 @@ export default function ActiveServices() {
           </tr>
         </thead>
         <tbody>
-          {data?.map((service) => (
+          {services.map((service) => (
             <tr key={service.id} className="">
               {/* Service cell with left side text & status */}
               <td className="py-4 px-4 whitespace-nowrap">
@@ -87,7 +173,7 @@ export default function ActiveServices() {
                   <span
                     className={`px-3 py-1 rounded-full font-medium text-xs md:text-sm`}
                   >
-                    {"Oct 17"}
+                    {service.saleDate}
                   </span>
                 </div>
               </td>
@@ -116,7 +202,7 @@ export default function ActiveServices() {
                   </Link>
                   <div className="flex items-center gap-2">
                     <div
-                      onClick={() => toogleServiceStatus(service.id)}
+                      onClick={() => toggleServiceStatus(service.id)}
                       className={`relative inline-flex h-6 w-11 cursor-pointer rounded-full transition-colors ${
                         service.status === "Active"
                           ? "bg-green-500"
