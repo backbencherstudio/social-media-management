@@ -156,7 +156,7 @@ export function ClientTable({
 
      
       {/* pagination */}
-      <div className="mt-4 flex items-center justify-between px-4 pb-4">
+      <div className="mt-4 flex items-center justify-between px-4 pb-4 flex-wrap">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

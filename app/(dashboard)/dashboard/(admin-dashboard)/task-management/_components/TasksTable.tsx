@@ -157,7 +157,7 @@ export function TaskTable({
       </Table>
 
       {/* pagiantion */}
-      <div className="mt-6 flex items-center justify-between">
+      <div className="mt-6 flex items-center justify-between flex-wrap gap-4">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

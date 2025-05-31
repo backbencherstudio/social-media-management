@@ -196,13 +196,13 @@ export function OrderTable({
         </TableBody>
       </Table>
 
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between flex-wrap ">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
         />
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mt-4 sm:mt-0">
           <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
             {Math.min(currentPage * itemsPerPage, orders.length)} of{" "}

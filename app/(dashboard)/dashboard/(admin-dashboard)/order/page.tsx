@@ -99,7 +99,7 @@ const page = () => {
   const [orderStatus, setOrderStatus] = useState("all");
 
   return (
-    <div className="max-w-[1500px] mx-auto p-6">
+    <div className=" mx-auto p-2 md:p-6 ">
       <OrderStateCard orderslate={orderStats} />
 
       <div className="rounded-xl  p-4 shadow-sm bg-white my-5">

@@ -57,7 +57,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           key={index}
           onClick={() => typeof page === 'number' ? onPageChange(page) : null}
           disabled={typeof page !== 'number'}
-          className={`w-8 h-8 rounded-lg ${
+          className={`h-8 w-8 rounded-lg ${
             currentPage === page 
               ? "bg-gray-100 text-black" 
               : page === '...' 
