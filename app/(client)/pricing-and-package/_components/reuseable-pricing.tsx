@@ -77,16 +77,16 @@ const ReuseablePricing = () => {
 
         <div className="w-full overflow-x-hidden">
           <TabsContent value="social-media-posts">
-            <AffordableMarketingServices service={filteredService} />
+            <AffordableMarketingServices  />
           </TabsContent>
           <TabsContent value="short-video">
-            <Video  service={filteredService} />
+            <Video   />
           </TabsContent>
           <TabsContent value="email-marketing">
-            <Email service={filteredService} />
+            <Email  />
           </TabsContent>
           <TabsContent value="blogs">
-            <Blogs service={filteredService} />
+            <Blogs  />
           </TabsContent>
         </div>
       </Tabs>

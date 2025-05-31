@@ -113,7 +113,7 @@ export default function ResellerPayments() {
             onClick={() => setShowPayoutModal(true)}
             className="px-4 py-2 rounded-lg bg-blue-700 flex items-center justify-center gap-3 text-white hover:bg-blue-800 transition-colors"
           >
-            <CiCreditCard1 className="w-5 h-5" /> Process Payout
+            <CiCreditCard1 className="w-5 h-5" /> Release Payment
           </button>
         </div>
       </div>
