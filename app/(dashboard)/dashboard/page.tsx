@@ -21,7 +21,7 @@ type Role = (typeof ROLE)[keyof typeof ROLE];
 
 export default function DashboardHome() {
   // This would usually come from auth context:
-  const role = ROLE.CLIENT as Role;
+  const role = ROLE.ADMIN as Role;
 
   if (!role) {
     return (

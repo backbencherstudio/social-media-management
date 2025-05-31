@@ -15,7 +15,7 @@ export default function ClientPayments() {
       id: 1,
       name: "Email Design",
       started: "2024-12-01",
-      status: "For Review",
+      status: "Pending",
       approval: "Approved",
       orderId: "62A2AA44-2",
       amount: "$245.00",
@@ -25,7 +25,7 @@ export default function ClientPayments() {
       id: 2,
       name: "Plus • 15 posts",
       started: "2025-01-15",
-      status: "In Progress",
+      status: "Paid",
       approval: "Pending",
       orderId: "62A2AA44-3",
       amount: "$350.00",
@@ -35,7 +35,7 @@ export default function ClientPayments() {
       id: 3,
       name: "Email Marketing",
       started: "2025-01-15",
-      status: "Complete",
+      status: "Pending",
       approval: "Pending",
       orderId: "62A2AA44-4",
       amount: "$199.00",
@@ -56,7 +56,7 @@ export default function ClientPayments() {
       started: new Date(2024, Math.floor(i / 30), (i % 30) + 1)
         .toISOString()
         .split("T")[0],
-      status: ["For Review", "In Progress", "Complete"][i % 3],
+      status: ["Paid", "Pending"][i % 2],
       approval: ["Pending", "Approved"][i % 2],
       orderId: `62A2AA44-${i + 5}`,
       amount: `$${(Math.random() * 900 + 100).toFixed(2)}`,
@@ -179,14 +179,11 @@ export default function ClientPayments() {
                   <div>
                     <span
                       className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium ${
-                        service.status === "For Review" &&
-                        "bg-[#FEF3C7] text-[#984917]"
+                        service.status === "Pending" &&
+                        "bg-[#FFF9E9] text-[#ED7600]"
                       } ${
-                        service.status === "In Progress" &&
-                        "bg-[#F5F1FF] text-[#5B21B6]"
-                      } ${
-                        service.status === "Complete" &&
-                        "bg-[#ECEFF3] text-black"
+                        service.status === "Paid" &&
+                        "bg-[#EBFBF5] text-[#07811E]"
                       }`}
                     >
                       {service.status}
