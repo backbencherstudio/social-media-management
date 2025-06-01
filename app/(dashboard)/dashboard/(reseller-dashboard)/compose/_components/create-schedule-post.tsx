@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import FilesIcon from "@/public/incons/files";
+import { Editor } from "@tinymce/tinymce-react";
 
 type FormValues = {
   platforms: string[];
@@ -26,29 +25,10 @@ export default function CreateSchedulePost() {
       },
     });
 
-  const editorRef = useRef<HTMLDivElement>(null);
-  const quillInstance = useRef<Quill | undefined>(undefined);
+  const editorRef = useRef<any>(null);
 
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
-
-  // Initialize Quill
-  useEffect(() => {
-    if (editorRef.current && !editorRef.current.querySelector(".ql-editor")) {
-      quillInstance.current = new Quill(editorRef.current, {
-        theme: "snow",
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, 3, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "image"],
-            ["clean"],
-          ],
-        },
-      });
-    }
-  }, []);
 
   // Add hashtag
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -72,10 +52,10 @@ export default function CreateSchedulePost() {
   };
 
   const onSubmit = (data: FormValues) => {
-    const content = quillInstance.current?.root.innerHTML || "";
+    const editorContent = editorRef.current?.getContent();
     const fullData = {
       ...data,
-      content,
+      content: editorContent,
     };
 
     console.log("Scheduled Post Data:", fullData);
@@ -109,14 +89,31 @@ export default function CreateSchedulePost() {
           </div>
 
           {/* Content */}
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h1 className="text-xl font-semibold mb-4">Content</h1>
-            <div
-              className="w-full rounded-b-lg"
-              ref={editorRef}
-              style={{ height: 200 }}
-            />
-          </div>
+          <Editor
+            apiKey="v165paum3r2kwvwl9yfg9md27pv69hd11c2bjcu6yjaxgye9"
+            onInit={(_evt, editor) => (editorRef.current = editor)}
+            init={{
+              plugins: [
+                // Core editing features
+                "emoticons",
+                "image",
+                "link",
+                "lists",
+              ],
+              toolbar:
+                "undo redo  | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+              tinycomments_mode: "embedded",
+              tinycomments_author: "Author name",
+              mergetags_list: [
+                { value: "First.Name", title: "First Name" },
+                { value: "Email", title: "Email" },
+              ],
+              ai_request: (request, respondWith) =>
+                respondWith.string(() =>
+                  Promise.reject("See docs to implement AI Assistant")
+                ),
+            }}
+          />
 
           {/* Media */}
           <div className="bg-white p-4 rounded-lg shadow">

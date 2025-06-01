@@ -3,21 +3,18 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
-
 import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
 import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
 import CategorModal from "../_components/categor-modal";
+import { Editor } from "@tinymce/tinymce-react";
 
 type FormData = {
   title: string;
-  categoryIds: string[];
+  // categoryIds: string[];
   hashtags: string[];
   [key: `content_${number}`]: string;
   [key: `media_${number}`]: FileList;
 };
-
 
 export default function EditBlog() {
   const { data } = useGetBlogCategoriesQuery();
@@ -27,13 +24,11 @@ export default function EditBlog() {
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
 
-  const [textBlocks, setTextBlocks] = useState<number[]>([]);
-  const [mediaBlocks, setMediaBlocks] = useState<number[]>([]);
+  const [textBlocks, setTextBlocks] = useState<number[]>([Date.now()]);
+  const [mediaBlocks, setMediaBlocks] = useState<number[]>([Date.now()]);
   const [mediaPreview, setMediaPreview] = useState<string | null>(null); // State for image preview
-  const editorRefs = useRef<Record<number, HTMLDivElement | null>>({});
-  const [editors, setEditors] = useState<Record<number, Quill>>({});
+  const editorRef = useRef<any>(null);
   const [isOpen, setIsOpen] = useState(false);
-
   // Add new text block
   const addTextBlock = () => {
     const id = Date.now() + Math.floor(Math.random() * 100);
@@ -45,34 +40,6 @@ export default function EditBlog() {
     const id = Date.now() + Math.floor(Math.random() * 100);
     setMediaBlocks((prev) => [...prev, id]);
   };
-
-  // Initialize Quill editors
-  useEffect(() => {
-    textBlocks.forEach((id) => {
-      const container = editorRefs.current[id];
-      if (container && !container.querySelector(".ql-editor")) {
-        const quill = new Quill(container, {
-          theme: "snow",
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, false] }],
-              ["bold", "italic", "underline", "strike"],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["link"],
-              ["clean"],
-            ],
-          },
-        });
-
-        quill.on("text-change", () => {
-          const plainText = quill.getText();
-          setValue(`content_${id}`, plainText as any);
-        });
-
-        setEditors((prev) => ({ ...prev, [id]: quill }));
-      }
-    });
-  }, [textBlocks, setValue]);
 
   // Handle hashtag input
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -114,13 +81,6 @@ export default function EditBlog() {
 
   // Form submit handler
   const onSubmit = async (data: FormData) => {
-    const contents = Object.entries(data)
-      .filter(([key]) => key.startsWith("content_"))
-      .map(([key, value]) => ({
-        id: key,
-        content: value,
-      }));
-
     const mediaFiles = Object.entries(data)
       .filter(([key]) => key.startsWith("media_"))
       .map(([key, value]) => ({
@@ -128,21 +88,24 @@ export default function EditBlog() {
         content: (value as FileList)[0]?.name || "image.jpg",
       }));
 
+    const editorContent = editorRef.current?.getContent();
+
     const formData = {
       title: data.title,
-      categoryIds: [data.categoryIds],
+      // categoryIds: [data.categoryIds],
       hashtags: data.hashtags,
       contents: [
-        { contentType: "text", content: contents[0]?.content || "" },
+        { contentType: "text", content: editorContent },
         {
           contentType: "media",
           content: mediaFiles[0]?.content || "image.jpg",
         },
       ],
     };
+    console.log(formData);
 
-    const result = await createBlog(formData);
-    console.log(result);
+    // const result = await createBlog(formData);
+    // console.log(result);
   };
 
   return (
@@ -175,14 +138,18 @@ export default function EditBlog() {
               Text Content - {index + 1}
             </h1>
             <div className="w-full">
-              <div
-                ref={(el: HTMLDivElement | null) => {
-                  if (el) {
-                    editorRefs.current[id] = el;
-                  }
+              <Editor
+                apiKey="v165paum3r2kwvwl9yfg9md27pv69hd11c2bjcu6yjaxgye9"
+                onInit={(_evt, editor) => (editorRef.current = editor)}
+                init={{
+                  plugins: ["emoticons", "image", "link", "lists"],
+                  toolbar:
+                    "undo redo | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+                  height: 400,
+                  menubar: false,
+                  content_style:
+                    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
                 }}
-                className="rounded-lg border border-gray-200"
-                style={{ height: "200px" }}
               />
             </div>
           </div>
@@ -274,7 +241,7 @@ export default function EditBlog() {
             <CategorModal isOpen={isOpen} setIsOpen={setIsOpen} />
           </div>
           {/* Category Selector */}
-          <div>
+          {/* <div>
             <select
               {...register("categoryIds", { required: "Category is required" })}
               className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
@@ -285,7 +252,7 @@ export default function EditBlog() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {/* Hashtags */}
           <div className="border-t border-gray-200 pt-4 md:pt-5">
@@ -337,4 +304,3 @@ export default function EditBlog() {
     </form>
   );
 }
-
