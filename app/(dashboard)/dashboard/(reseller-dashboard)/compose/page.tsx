@@ -1,7 +1,8 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CreateSchedulePost from "./_components/create-schedule-post";
+
 import SendDesignFile from "./_components/send-design-file";
+import CreateSchedulePost from "./_components/create-schedule-post";
 
 const Compose = () => {
   return (
@@ -23,11 +24,11 @@ const Compose = () => {
         </TabsList>
         {/* CreateSchedulePost */}
         <TabsContent value="CreateSchedulePost">
-          {/* <CreateSchedulePost /> */}
+          <CreateSchedulePost />
         </TabsContent>
         {/* SendDesignFile */}
         <TabsContent value="SendDesignFile">
-          {/* <SendDesignFile /> */}
+          <SendDesignFile />
         </TabsContent>
       </Tabs>
     </div>
