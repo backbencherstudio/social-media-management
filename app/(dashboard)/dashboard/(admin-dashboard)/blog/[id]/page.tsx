@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
@@ -10,7 +10,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 type FormData = {
   title: string;
-  // categoryIds: string[];
+  categoryIds: string;
   hashtags: string[];
   [key: `content_${number}`]: string;
   [key: `media_${number}`]: FileList;
@@ -26,9 +26,10 @@ export default function EditBlog() {
 
   const [textBlocks, setTextBlocks] = useState<number[]>([Date.now()]);
   const [mediaBlocks, setMediaBlocks] = useState<number[]>([Date.now()]);
-  const [mediaPreview, setMediaPreview] = useState<string | null>(null); // State for image preview
+  const [mediaPreviews, setMediaPreviews] = useState<string[]>([]); // Array to store previews per media block
   const editorRef = useRef<any>(null);
   const [isOpen, setIsOpen] = useState(false);
+
   // Add new text block
   const addTextBlock = () => {
     const id = Date.now() + Math.floor(Math.random() * 100);
@@ -39,6 +40,7 @@ export default function EditBlog() {
   const addMediaBlock = () => {
     const id = Date.now() + Math.floor(Math.random() * 100);
     setMediaBlocks((prev) => [...prev, id]);
+    setMediaPreviews((prev) => [...prev, ""]); // Add a placeholder for new media preview
   };
 
   // Handle hashtag input
@@ -72,7 +74,9 @@ export default function EditBlog() {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setMediaPreview(reader.result as string);
+        const newPreviews = [...mediaPreviews];
+        newPreviews[id] = reader.result as string;
+        setMediaPreviews(newPreviews); // Update preview for the specific block
       };
       reader.readAsDataURL(file);
       setValue(`media_${id}`, e.target.files);
@@ -92,7 +96,7 @@ export default function EditBlog() {
 
     const formData = {
       title: data.title,
-      // categoryIds: [data.categoryIds],
+      categoryIds: data.categoryIds,
       hashtags: data.hashtags,
       contents: [
         { contentType: "text", content: editorContent },
@@ -166,12 +170,12 @@ export default function EditBlog() {
             </h1>
             <div
               className={`w-full border-2 border-dashed border-gray-300 rounded-lg overflow-hidden relative ${
-                mediaPreview ? "h-[200px] md:h-[300px]" : "p-4 md:p-8"
+                mediaPreviews[index] ? "h-[200px] md:h-[300px]" : "p-4 md:p-8"
               }`}
               style={
-                mediaPreview
+                mediaPreviews[index]
                   ? {
-                      backgroundImage: `url(${mediaPreview})`,
+                      backgroundImage: `url(${mediaPreviews[index]})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                     }
@@ -183,24 +187,26 @@ export default function EditBlog() {
                 id={`media_${id}`}
                 accept="image/*,video/*"
                 className="hidden"
-                onChange={(e) => handleFileChange(e, id)}
+                onChange={(e) => handleFileChange(e, index)}
               />
               <label
                 htmlFor={`media_${id}`}
                 className={`flex flex-col items-center justify-center cursor-pointer ${
-                  mediaPreview
+                  mediaPreviews[index]
                     ? "absolute inset-0 bg-black/30 hover:bg-black/40 transition-all duration-300"
                     : ""
                 }`}
               >
                 <p
                   className={`px-3 md:px-5 py-2 md:py-3 rounded-lg text-sm md:text-base ${
-                    mediaPreview
+                    mediaPreviews[index]
                       ? "text-white border-2 border-white hover:bg-white/10 transition-all duration-300"
                       : "bg-gray-50 border-2 border-dashed border-gray-300"
                   }`}
                 >
-                  {mediaPreview ? "Change Image +" : "Upload Image/Video"}
+                  {mediaPreviews[index]
+                    ? "Change Image +"
+                    : "Upload Image/Video"}
                 </p>
               </label>
             </div>
@@ -241,7 +247,7 @@ export default function EditBlog() {
             <CategorModal isOpen={isOpen} setIsOpen={setIsOpen} />
           </div>
           {/* Category Selector */}
-          {/* <div>
+          <div>
             <select
               {...register("categoryIds", { required: "Category is required" })}
               className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
@@ -252,7 +258,7 @@ export default function EditBlog() {
                 </option>
               ))}
             </select>
-          </div> */}
+          </div>
 
           {/* Hashtags */}
           <div className="border-t border-gray-200 pt-4 md:pt-5">

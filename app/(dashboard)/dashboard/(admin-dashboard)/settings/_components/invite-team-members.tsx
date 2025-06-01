@@ -96,12 +96,11 @@ export default function InviteTeamMembers() {
             </button>
           </div>
         </div>
-
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end mb-6"
+          className="grid grid-cols-1 md:grid-cols-12 gap-3 mb-6"
         >
-          <div className="md:col-span-8">
+          <div className="md:col-span-8" style={{ minHeight: "60px" }}>
             <input
               {...register("email", {
                 required: "Email is required",
@@ -113,6 +112,7 @@ export default function InviteTeamMembers() {
               type="email"
               placeholder="Enter work email"
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ minHeight: "48px" }} // Ensures height remains consistent
             />
             {errors.email && (
               <p className="text-xs md:text-sm text-red-500 mt-1">
@@ -120,12 +120,14 @@ export default function InviteTeamMembers() {
               </p>
             )}
           </div>
-          <div className="md:col-span-2">
+
+          <div className="md:col-span-2" style={{ minHeight: "60px" }}>
             <select
               {...register("role", {
                 required: "Please select a role",
               })}
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ minHeight: "48px" }} // Ensures height remains consistent
             >
               <option value="">Select role</option>
               <option value="super_admin">Super Admin</option>
@@ -138,7 +140,8 @@ export default function InviteTeamMembers() {
               </p>
             )}
           </div>
-          <div className="md:col-span-2">
+
+          <div className="md:col-span-2" style={{ minHeight: "60px" }}>
             <button
               type="submit"
               className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
