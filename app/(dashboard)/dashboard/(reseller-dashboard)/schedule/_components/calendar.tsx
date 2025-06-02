@@ -3,12 +3,12 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { EventClickArg } from "@fullcalendar/core";
-import { User, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X } from "lucide-react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { FaInstagram, FaFacebook, FaRegCalendarAlt } from "react-icons/fa";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { DatePickerDemo } from "./calenderComponent";
 // import "@fullcalendar/common/main.css";
 // import "@fullcalendar/daygrid/main.css";
 
@@ -48,9 +48,7 @@ export default function Calendar() {
   const [selectedEvents, setSelectedEvents] = useState<EventType[]>([]);
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [currentDate, setCurrentDate] = useState(new Date());
-  const dateRange = "15 Oct - 22 Oct 2024";
 
-  // ✅ Fix useRef typing for getApi
   const calendarRef = useRef<null | { getApi: () => any }>(null);
 
   const events: EventType[] = [
@@ -61,7 +59,7 @@ export default function Calendar() {
       timeFrom: "09:00",
       timeTo: "10:00",
       subtitle: "Breathing & Mindfulness",
-      date: "2025-05-20",
+      date: "2025-06-04",
       type: "instagram",
       time: "10:30 PM",
     },
@@ -72,7 +70,7 @@ export default function Calendar() {
       timeFrom: "11:00",
       timeTo: "12:00",
       subtitle: "Meditation Session",
-      date: "2025-05-20",
+      date: "2025-06-01",
       type: "facebook",
       time: "10:30 PM",
     },
@@ -83,7 +81,7 @@ export default function Calendar() {
       timeFrom: "14:00",
       timeTo: "15:00",
       subtitle: "Wellbeing Discussion",
-      date: "2025-05-20",
+      date: "2025-06-20",
       type: "instagram",
       time: "10:30 PM",
     },
@@ -94,7 +92,7 @@ export default function Calendar() {
       timeFrom: "15:00",
       timeTo: "16:00",
       subtitle: "Stretch & Walk",
-      date: "2025-05-20",
+      date: "2025-06-20",
       type: "facebook",
       time: "10:30 PM",
     },
@@ -105,7 +103,7 @@ export default function Calendar() {
       timeFrom: "16:00",
       timeTo: "17:00",
       subtitle: "Nutrition Tips",
-      date: "2025-05-22",
+      date: "2025-06-22",
       type: "instagram",
       time: "10:30 PM",
     },
@@ -145,23 +143,23 @@ export default function Calendar() {
     calendarRef.current?.getApi()?.changeView(view);
   };
 
-  const handlePrev = () => {
-    const calendarApi = calendarRef.current?.getApi();
-    calendarApi?.prev();
-    setCurrentDate(new Date(calendarApi?.getDate()));
-  };
+  // const handlePrev = () => {
+  //   const calendarApi = calendarRef.current?.getApi();
+  //   calendarApi?.prev();
+  //   setCurrentDate(new Date(calendarApi?.getDate()));
+  // };
 
-  const handleNext = () => {
-    const calendarApi = calendarRef.current?.getApi();
-    calendarApi?.next();
-    setCurrentDate(new Date(calendarApi?.getDate()));
-  };
+  // const handleNext = () => {
+  //   const calendarApi = calendarRef.current?.getApi();
+  //   calendarApi?.next();
+  //   setCurrentDate(new Date(calendarApi?.getDate()));
+  // };
 
-  const handleToday = () => {
-    const calendarApi = calendarRef.current?.getApi();
-    calendarApi?.today();
-    setCurrentDate(new Date());
-  };
+  // const handleToday = () => {
+  //   const calendarApi = calendarRef.current?.getApi();
+  //   calendarApi?.today();
+  //   setCurrentDate(new Date());
+  // };
 
   return (
     <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
@@ -181,10 +179,8 @@ export default function Calendar() {
             <option value="timeGridWeek">Week</option>
             <option value="timeGridDay">Day</option>
           </select>
-          <div className="flex items-center border rounded-lg px-3 py-1 text-sm font-medium bg-white hover:bg-gray-50">
-            <FaRegCalendarAlt className="mr-2 w-4 h-4" />
-            {dateRange}
-          </div>
+
+          <DatePickerDemo />
         </div>
       </div>
 
@@ -206,7 +202,6 @@ export default function Calendar() {
         />
       </div>
 
-      {/* ✅ Modal to show tasks of selected day */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
           <div
