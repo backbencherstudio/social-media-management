@@ -1,5 +1,4 @@
 // app/settings/page.tsx or wherever you want
-
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -10,6 +9,7 @@ import EmailAndNotificationSettings from "./_components/email-and-notification-s
 import SecuritySettings from "./_components/security-settings";
 
 export default function Settings() {
+
   return (
     <div className="p-6">
       <Tabs
