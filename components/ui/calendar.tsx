@@ -12,7 +12,7 @@ function Calendar(props: any) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   const handleDayClick = (date: Date) => {
-    setSelectedDate(date); // Update the selected date
+    setSelectedDate(date);
   };
 
   return (
@@ -54,9 +54,8 @@ function Calendar(props: any) {
             "day-range-start aria-selected:bg-primary aria-selected:text-primary-foreground",
           day_range_end:
             "day-range-end aria-selected:bg-primary aria-selected:text-primary-foreground",
-          day_selected:
-            "bg-[#004D49] text-white rounded-full", // Custom background and rounded styling for selected days
-          day_today: "bg-blue-500 text-white rounded-full", // Highlight current day with blue
+          day_selected: "bg-[#004D49] text-white rounded-full",
+          day_today: "bg-blue-500 text-white rounded-full",
           day_outside: "day-outside text-[#A5B4CB]",
           day_disabled: "text-muted-foreground opacity-50",
           day_range_middle:

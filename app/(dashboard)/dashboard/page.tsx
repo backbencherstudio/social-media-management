@@ -19,8 +19,7 @@ const ROLE = {
 type Role = (typeof ROLE)[keyof typeof ROLE];
 
 export default function DashboardHome() {
-  // This would usually come from auth context:
-  const role = ROLE.RESELLER as Role;
+  const role = ROLE.CLIENT as Role;
 
   if (!role) {
     return (
@@ -30,7 +29,6 @@ export default function DashboardHome() {
     );
   }
 
-  // Compare with ROLE constant to avoid type mismatch
   if (role === ROLE.ADMIN) {
     return <AdminDashboard />;
   }

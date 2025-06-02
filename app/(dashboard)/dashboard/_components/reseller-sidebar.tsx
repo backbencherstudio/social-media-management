@@ -175,6 +175,32 @@ export default function ResellerSidebar({
     },
   ];
 
+  const clients = [
+    { value: "city-shop", name: "City Shop" },
+    { value: "bank-asia", name: "Bank Asia" },
+    { value: "louis-vuitton", name: "Louis Vuitton" },
+    { value: "nintendo", name: "Nintendo" },
+    { value: "louis-roberto", name: "Louis Roberto" },
+    { value: "bank-of-america", name: "Bank of America" },
+    { value: "walt-disney", name: "Walt Disney" },
+  ];
+
+  const [selectedClientValue, setSelectedClientValue] = useState(
+    clients[0].value
+  );
+
+  const handleClientChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedClientValue(event.target.value);
+  };
+
+  const selectedClient = clients.find(
+    (client) => client.value === selectedClientValue
+  );
+
+  const clientInitials = selectedClient
+    ? selectedClient.name.substring(0, 2).toUpperCase()
+    : "";
+
   return (
     <aside
       className={`
@@ -228,18 +254,19 @@ export default function ResellerSidebar({
         <div className="flex items-center justify-between">
           <div>
             <span className="text-sm font-medium text-gray-900 p-3 rounded-full bg-[#DAFF05]">
-              SC
+              {clientInitials}
             </span>
           </div>
-          <select className="bg-transparent border-none text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer pr-8">
-            <option value="">Select Client</option>
-            <option value="city-shop">City Shop</option>
-            <option value="bank-asia">Bank Asia</option>
-            <option value="louis-vuitton">Louis Vuitton</option>
-            <option value="nintendo">Nintendo</option>
-            <option value="louis-roberto">Louis Roberto</option>
-            <option value="bank-of-america">Bank of America</option>
-            <option value="walt-disney">Walt Disney</option>
+          <select
+            className="bg-transparent border-none text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer pr-8"
+            value={selectedClientValue}
+            onChange={handleClientChange}
+          >
+            {clients.map((client) => (
+              <option key={client.value} value={client.value}>
+                {client.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>

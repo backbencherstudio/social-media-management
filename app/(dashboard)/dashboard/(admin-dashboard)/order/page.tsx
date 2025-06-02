@@ -3,9 +3,7 @@
 import React, { useState } from "react";
 import { OrderStat, OrderStateCard } from "./_components/OrderStatCard";
 import { Order, OrderTable } from "./_components/OrderTable";
-import { Pagination } from "../_components/Pagination";
 import { AssignOrderModal } from "./_components/AssignOrderModal";
-import CustomSelect from "../../_components/custom-select";
 
 // orderstates
 const orderStats: OrderStat[] = [
@@ -66,7 +64,6 @@ const fakeOrders: Order[] = [
     status: "In Progress",
     assignedTo: baseAssignedAvatars,
   },
-  // 🔽 Add 100 more fake orders for pagination
   ...Array.from({ length: 100 }, (_, i) => ({
     orderId: `#ORD-2024${(i + 4).toString().padStart(3, "0")}`,
     clientName: `Client ${i + 4}`,
@@ -83,9 +80,7 @@ const fakeOrders: Order[] = [
   })),
 ];
 
-
 const page = () => {
- 
   //   for modal
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -103,8 +98,6 @@ const page = () => {
       <OrderStateCard orderslate={orderStats} />
 
       <div className="rounded-xl  p-4 shadow-sm bg-white my-5">
-   
-
         {/* table data */}
         <OrderTable
           orders={fakeOrders}
@@ -115,8 +108,6 @@ const page = () => {
           setOrderStatus={setOrderStatus}
         ></OrderTable>
       </div>
-
-      
 
       {/* for modal */}
       {selectedOrderId && (
