@@ -99,6 +99,7 @@ interface TrustedProps {
 
 
 export default function TrustedBrand({bgcolor = false}:TrustedProps) {
+  
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
