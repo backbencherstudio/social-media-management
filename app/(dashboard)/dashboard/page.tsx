@@ -19,7 +19,7 @@ const ROLE = {
 type Role = (typeof ROLE)[keyof typeof ROLE];
 
 export default function DashboardHome() {
-  const role = ROLE.CLIENT as Role;
+  const role = ROLE.RESELLER as Role;
 
   if (!role) {
     return (
