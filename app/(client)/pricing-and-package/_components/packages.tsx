@@ -143,7 +143,6 @@ interface PackagesProps {
 
 export default function Packages({ scrollable }: PackagesProps) {
   const { data } = useGetAllServicesQuery();
-  console.log(data);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",

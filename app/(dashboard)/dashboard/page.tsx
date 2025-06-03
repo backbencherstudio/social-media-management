@@ -30,7 +30,6 @@ export default function DashboardHome() {
     );
   }
 
-  // Compare with ROLE constant to avoid type mismatch
   if (role === ROLE.ADMIN) {
     return <AdminDashboard />;
   }
