@@ -11,10 +11,10 @@ const blogCategory = baseApi.injectEndpoints({
     }),
     createBlogCategory: builder.mutation({
       query: (data) => ({
-          url: "/blog-categories",
-          method: "POST",
-          body: data,
-        }),
+        url: "/blog-categories",
+        method: "POST",
+        body: data,
+      }),
       invalidatesTags: ["blog-categories"],
     }),
     deleteBlogCategory: builder.mutation({

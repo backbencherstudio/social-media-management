@@ -13,7 +13,6 @@ import DeleteConfirmationModal from "./_components/DeleteMemberModal";
 export default function page() {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [isDetailsModal, setIsDetailsModal] = useState<TeamMember | null>(null);
-
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
