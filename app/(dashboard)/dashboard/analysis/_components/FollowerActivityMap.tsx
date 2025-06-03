@@ -1,46 +1,48 @@
-"use client"
-import { useState } from "react"
-import { ChevronDown, Calendar } from "lucide-react"
-import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
-import { format } from "date-fns"
+"use client";
+import { useState } from "react";
+import { ChevronDown, Calendar } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 
 // Define the data structure for our heatmap
 type ActivityData = {
-  day: number // 0-6 (Sunday to Saturday)
-  hour: number // 0-23
-  value: number // Activity level (0-100)
-}
+  day: number;
+  hour: number;
+  value: number;
+};
 
 export default function FollowerActivityMap() {
   // Sample data - in a real app, you'd fetch this from your API
-  const [activityData, setActivityData] = useState<ActivityData[]>(generateSampleData())
-  const [platform, setPlatform] = useState("Facebook")
+  const [activityData, setActivityData] = useState<ActivityData[]>(
+    generateSampleData()
+  );
+  const [platform, setPlatform] = useState("Facebook");
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
-    new Date(2024, 9, 15), // Oct 15, 2024
-    new Date(2024, 9, 22), // Oct 22, 2024
-  ])
-  const [startDate, endDate] = dateRange
-  const [showPlatformDropdown, setShowPlatformDropdown] = useState(false)
+    new Date(2024, 9, 15),
+    new Date(2024, 9, 22),
+  ]);
+  const [startDate, endDate] = dateRange;
+  const [showPlatformDropdown, setShowPlatformDropdown] = useState(false);
 
   // Get the maximum value for normalization
-  const maxValue = Math.max(...activityData.map((item) => item.value))
+  const maxValue = Math.max(...activityData.map((item) => item.value));
 
   // Days and hours for labels
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-  const hours = Array.from({ length: 24 }, (_, i) => i)
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const hours = Array.from({ length: 24 }, (_, i) => i);
 
   // Function to get color based on value
   const getColor = (value: number) => {
-    const normalizedValue = value / maxValue
+    const normalizedValue = value / maxValue;
 
-    if (normalizedValue === 0) return "bg-gray-100"
-    if (normalizedValue < 0.2) return "bg-blue-100"
-    if (normalizedValue < 0.4) return "bg-blue-200"
-    if (normalizedValue < 0.6) return "bg-blue-300"
-    if (normalizedValue < 0.8) return "bg-blue-400"
-    return "bg-blue-500"
-  }
+    if (normalizedValue === 0) return "bg-gray-100";
+    if (normalizedValue < 0.2) return "bg-blue-100";
+    if (normalizedValue < 0.4) return "bg-blue-200";
+    if (normalizedValue < 0.6) return "bg-blue-300";
+    if (normalizedValue < 0.8) return "bg-blue-400";
+    return "bg-blue-500";
+  };
 
   return (
     <section className="bg-white p-6 rounded-lg shadow-sm">
@@ -48,7 +50,9 @@ export default function FollowerActivityMap() {
         {/* info */}
         <div className="flex flex-col">
           <h3 className="font-semibold text-[20px]">Follower activity</h3>
-          <p className="text-sm text-[#5B5A64]">See when your followers are most active</p>
+          <p className="text-sm text-[#5B5A64]">
+            See when your followers are most active
+          </p>
         </div>
 
         {/* dropdown and Date */}
@@ -69,8 +73,8 @@ export default function FollowerActivityMap() {
                     key={p}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                     onClick={() => {
-                      setPlatform(p)
-                      setShowPlatformDropdown(false)
+                      setPlatform(p);
+                      setShowPlatformDropdown(false);
                     }}
                   >
                     {p}
@@ -91,7 +95,10 @@ export default function FollowerActivityMap() {
                 <button className="flex items-center gap-2 px-4 py-2 border rounded-md bg-white">
                   <Calendar className="h-4 w-4" />
                   {startDate && endDate
-                    ? `${format(startDate, "d MMM")} - ${format(endDate, "d MMM yyyy")}`
+                    ? `${format(startDate, "d MMM")} - ${format(
+                        endDate,
+                        "d MMM yyyy"
+                      )}`
                     : "Select date range"}
                 </button>
               }
@@ -108,7 +115,10 @@ export default function FollowerActivityMap() {
           <div className="grid grid-cols-[30px_repeat(24,1fr)]">
             <div className=""></div> {/* Empty cell for alignment */}
             {hours.map((hour) => (
-              <div key={hour} className="text-center text-xs text-gray-500 py-1">
+              <div
+                key={hour}
+                className="text-center text-xs text-gray-500 py-1"
+              >
                 {hour}
               </div>
             ))}
@@ -117,17 +127,21 @@ export default function FollowerActivityMap() {
           {/* Heatmap grid */}
           {days.map((day, dayIndex) => (
             <div key={day} className="grid grid-cols-[60px_repeat(24,1fr)]">
-              <div className="flex items-center text-sm text-gray-500">{day}</div>
+              <div className="flex items-center text-sm text-gray-500">
+                {day}
+              </div>
               {hours.map((hour) => {
-                const dataPoint = activityData.find((d) => d.day === dayIndex && d.hour === hour)
-                const value = dataPoint ? dataPoint.value : 0
+                const dataPoint = activityData.find(
+                  (d) => d.day === dayIndex && d.hour === hour
+                );
+                const value = dataPoint ? dataPoint.value : 0;
                 return (
                   <div
                     key={hour}
                     className={`${getColor(value)} m-0.5 h-6 rounded-sm`}
                     title={`${day} ${hour}:00 - Activity: ${value}`}
                   ></div>
-                )
+                );
               })}
             </div>
           ))}
@@ -141,46 +155,46 @@ export default function FollowerActivityMap() {
         <div className="text-sm text-gray-500">Engagement</div>
       </div>
     </section>
-  )
+  );
 }
 
 // Helper function to generate sample data
 function generateSampleData(): ActivityData[] {
-  const data: ActivityData[] = []
+  const data: ActivityData[] = [];
 
   // Generate data for each day and hour
   for (let day = 0; day < 7; day++) {
     for (let hour = 0; hour < 24; hour++) {
       // Generate more activity during working hours and less at night
-      let baseValue = 0
+      let baseValue = 0;
 
       // Working hours (9-17) have higher base values
       if (hour >= 9 && hour <= 17 && day >= 1 && day <= 5) {
-        baseValue = 30 + Math.random() * 70
+        baseValue = 30 + Math.random() * 70;
       }
       // Evening hours (18-22) have medium values
       else if (hour >= 18 && hour <= 22) {
-        baseValue = 20 + Math.random() * 50
+        baseValue = 20 + Math.random() * 50;
       }
       // Weekend days have different patterns
       else if ((day === 0 || day === 6) && hour >= 10 && hour <= 20) {
-        baseValue = 25 + Math.random() * 60
+        baseValue = 25 + Math.random() * 60;
       }
       // Early morning and late night have lower values
       else {
-        baseValue = Math.random() * 25
+        baseValue = Math.random() * 25;
       }
 
       // Add some randomness to make the pattern less uniform
-      const value = Math.floor(baseValue + (Math.random() * 20 - 10))
+      const value = Math.floor(baseValue + (Math.random() * 20 - 10));
 
       data.push({
         day,
         hour,
         value: Math.max(0, value), // Ensure no negative values
-      })
+      });
     }
   }
 
-  return data
+  return data;
 }

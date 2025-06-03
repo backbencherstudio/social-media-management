@@ -1,4 +1,3 @@
-// app/settings/page.tsx or wherever you want
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -20,31 +19,31 @@ export default function Settings() {
         <TabsList className="flex flex-col gap-2 w-full h-fit rounded-lg p-4 bg-white">
           <TabsTrigger
             value="General Settings"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black  transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
           >
             General Settings
           </TabsTrigger>
           <TabsTrigger
             value="User & Role Management"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black  transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
           >
             User & Role Management
           </TabsTrigger>
           <TabsTrigger
             value="Payment & Transactions"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black  transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
           >
             Payment & Transactions
           </TabsTrigger>
           <TabsTrigger
             value="Email & Notification Settings"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black  transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
           >
             Email & Notification Settings
           </TabsTrigger>
           <TabsTrigger
             value="Security Settings"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black  transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
           >
             Security Settings
           </TabsTrigger>

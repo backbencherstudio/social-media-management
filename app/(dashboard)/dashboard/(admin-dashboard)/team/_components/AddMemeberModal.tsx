@@ -147,7 +147,7 @@ export default function AddMemeberModal({
               className=" bg-black text-white hover:bg-black/90"
               disabled={isLoading}
             >
-              {isLoading ? "Adding..." : "Add User"}
+              {isLoading ? "Inviting..." : "Send Invite"}
             </Button>
             <Button
               type="button"

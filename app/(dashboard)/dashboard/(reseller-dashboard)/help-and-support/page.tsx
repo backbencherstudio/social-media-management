@@ -1,4 +1,3 @@
-import SupportChatBoart from "@/app/(client)/_components/_ai-chatboart/support-chat";
 import React from "react";
 import SupportChat from "./_components/support-chat";
 

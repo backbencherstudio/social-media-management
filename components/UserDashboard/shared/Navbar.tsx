@@ -7,7 +7,6 @@ import {
   IoNotificationsOutline,
 } from "react-icons/io5";
 import { RiUserLine } from "react-icons/ri";
-import { ImPower } from "react-icons/im";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,7 +17,6 @@ interface NavbarProps {
 }
 
 export default function Navbar({
-  isMobileMenuOpen,
   onMobileMenuToggle,
 }: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
