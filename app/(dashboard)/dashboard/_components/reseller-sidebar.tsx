@@ -25,10 +25,7 @@ interface MenuItem {
 interface Section {
   label: string;
   items: MenuItem[];
-  
 }
-
-
 
 interface SidebarProps {
   isMobileMenuOpen: boolean;
@@ -108,75 +105,75 @@ export default function ResellerSidebar({
   };
 
   // Menu definitions
-const resellerSidebarMenu: Section[] = [
-  {
-    label: role,
-    items: [
-      {
-        title: "Dashboard",
-        icon: DashboardIcon,
-        href: "/dashboard",
-      },
-      {
-        title: "Analytics",
-        icon: AnalysisIcon,
-        href: "/dashboard/analytics",
-      },
-    ],
-  },
-  {
-    label: "Content",
-    items: [
-      { title: "Compose", icon: ComposeIcon, href: "/dashboard/compose" },
-      {
-        title: "Schedule",
-        icon: ScheduleIcon,
-        href: "/dashboard/schedule",
-      },
-      { title: "Post", icon: PostIcon, href: "/dashboard/posts" },
-      {
-        title: "Assets",
-        icon: AssetsIcon,
-        href: "/dashboard/dashboard-assets",
-      },
-    ],
-  },
-  {
-    label: "Activity",
-    items: [
-      // {
-      //   title: "Automotion",
-      //   icon: RiLayoutGridLine,
-      //   href: "/dashboard/automation",
-      // },
-      {
-        title: "Social Inbox",
-        icon: SocialInboxIcon,
-        href: "/dashboard/social-inbox",
-      },
-    ],
-  },
-  {
-    label: "Configuration",
-    items: [
-      {
-        title: "Socials",
-        icon: SocialsIcon,
-        href: "/dashboard/social-media",
-      },
-    ],
-  },
-  {
-    label: "Help",
-    items: [
-      {
-        title: "Support",
-        icon: SupportIcon,
-        href: "/dashboard/help-and-support",
-      },
-    ],
-  },
-];
+  const resellerSidebarMenu: Section[] = [
+    {
+      label: role,
+      items: [
+        {
+          title: "Dashboard",
+          icon: DashboardIcon,
+          href: "/dashboard",
+        },
+        {
+          title: "Analytics",
+          icon: AnalysisIcon,
+          href: "/dashboard/analytics",
+        },
+      ],
+    },
+    {
+      label: "Content",
+      items: [
+        { title: "Compose", icon: ComposeIcon, href: "/dashboard/compose" },
+        {
+          title: "Schedule",
+          icon: ScheduleIcon,
+          href: "/dashboard/schedule",
+        },
+        { title: "Post", icon: PostIcon, href: "/dashboard/posts" },
+        {
+          title: "Assets",
+          icon: AssetsIcon,
+          href: "/dashboard/dashboard-assets",
+        },
+      ],
+    },
+    {
+      label: "Activity",
+      items: [
+        // {
+        //   title: "Automotion",
+        //   icon: RiLayoutGridLine,
+        //   href: "/dashboard/automation",
+        // },
+        {
+          title: "Social Inbox",
+          icon: SocialInboxIcon,
+          href: "/dashboard/social-inbox",
+        },
+      ],
+    },
+    {
+      label: "Configuration",
+      items: [
+        {
+          title: "Socials",
+          icon: SocialsIcon,
+          href: "/dashboard/social-media",
+        },
+      ],
+    },
+    {
+      label: "Help",
+      items: [
+        {
+          title: "Support",
+          icon: SupportIcon,
+          href: "/dashboard/help-and-support",
+        },
+      ],
+    },
+  ];
 
   return (
     <aside
@@ -194,7 +191,7 @@ const resellerSidebarMenu: Section[] = [
             isCollapsed ? "opacity-0 w-0" : "opacity-100 w-[120px]"
           }`}
         >
-          <Link href={'/'} className="w-[120px] h-[22px] object-contain">
+          <Link href={"/"} className="w-[120px] h-[22px] object-contain">
             <LogoIcon className="w-full h-full" />
           </Link>
         </div>
@@ -247,14 +244,16 @@ const resellerSidebarMenu: Section[] = [
         </div>
       </div>
 
-      {resellerSidebarMenu.map((section, idx) => (
-        <SidebarSection
-          key={idx}
-          label={section.label}
-          items={section.items}
-          isCollapsed={isCollapsed}
-        />
-      ))}
+      <div className="overflow-y-auto flex-1">
+        {resellerSidebarMenu.map((section, idx) => (
+          <SidebarSection
+            key={idx}
+            label={section.label}
+            items={section.items}
+            isCollapsed={isCollapsed}
+          />
+        ))}
+      </div>
     </aside>
   );
 }

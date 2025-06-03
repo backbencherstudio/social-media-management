@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
 import { GrView } from "react-icons/gr";
 import { Pagination } from "./pagination";

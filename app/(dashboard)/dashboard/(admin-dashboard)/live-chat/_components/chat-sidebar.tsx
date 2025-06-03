@@ -3,7 +3,6 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avator";
 import { User } from "../types";
 import { cn } from "@/lib/utils";
-import { se } from "date-fns/locale";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 

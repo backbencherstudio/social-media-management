@@ -12,7 +12,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
-  // Always show 4 numbers, stable, centered if possible, with dots and first/last page if needed
+
   const getPageNumbers = () => {
     const maxNumbers = 3;
     let start = Math.max(1, currentPage - Math.floor(maxNumbers / 2));

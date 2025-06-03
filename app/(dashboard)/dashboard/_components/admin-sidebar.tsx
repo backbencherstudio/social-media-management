@@ -108,7 +108,7 @@ export default function AdminSidebar({
 
   const adminSidebarMenu: Section[] = [
     {
-      label: role ,
+      label: role,
       items: [{ title: "Dashboard", icon: DashboardIcon, href: "/dashboard" }],
     },
     {
@@ -229,14 +229,16 @@ export default function AdminSidebar({
         </button>
       </div>
 
-      {adminSidebarMenu.map((section, idx) => (
-        <SidebarSection
-          key={idx}
-          label={section.label}
-          items={section.items}
-          isCollapsed={isCollapsed}
-        />
-      ))}
+      <div className="overflow-y-auto flex-1">
+        {adminSidebarMenu.map((section, idx) => (
+          <SidebarSection
+            key={idx}
+            label={section.label}
+            items={section.items}
+            isCollapsed={isCollapsed}
+          />
+        ))}
+      </div>
     </aside>
   );
 }

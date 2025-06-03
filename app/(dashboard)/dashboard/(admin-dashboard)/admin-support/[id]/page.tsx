@@ -1,134 +1,136 @@
 "use client";
 
 import React, { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { FiArrowLeft, FiSend } from "react-icons/fi";
 
 const EmailDetailsPage = () => {
   const params = useParams();
+  const router = useRouter();
   const emailId = params.id;
   const [showReply, setShowReply] = useState(false);
+  const [reply, setReply] = useState("");
 
   return (
-    <div className="p-6 bg-white rounded-lg">
-      <div className="mb-6 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Email Details</h1>
-      </div>
-
-      <div className="space-y-6">
-        {/* Email Header Information */}
-        <div className="border-b pb-4">
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold">
-                MS
-              </div>
-              <div className="flex-1">
-                <h2 className="font-semibold text-gray-900">
-                  Marketing System
-                </h2>
-                <p className="text-sm text-gray-500">marketing@system.com</p>
-              </div>
-            </div>
-            <div className="pl-11">
-              <p className="text-sm text-gray-600">
-                To: all-subscribers@system.com
-              </p>
-              <p className="text-sm text-gray-600">
-                Cc: marketing-team@system.com
-              </p>
-            </div>
-            <div className="pl-11">
-              <h3 className="text-xl font-semibold text-gray-900">
-                New Product Launch Announcement
-              </h3>
-            </div>
-          </div>
+    <div className="">
+      {/*  */}
+      <p
+        className="text-sm text-gray-500 flex items-center gap-1 font-medium 
+      mb-6"
+      >
+        <button
+          className="flex gap-2 items-center cursor-pointer"
+          onClick={() => router.back()}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M15.7071 5.29289C16.0976 5.68342 16.0976 6.31658 15.7071 6.70711L10.4142 12L15.7071 17.2929C16.0976 17.6834 16.0976 18.3166 15.7071 18.7071C15.3166 19.0976 14.6834 19.0976 14.2929 18.7071L8.29289 12.7071C7.90237 12.3166 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289C14.6834 4.90237 15.3166 4.90237 15.7071 5.29289Z"
+              fill="#1D1F2C"
+            />
+          </svg>
+          <p>
+            <span className="text-gray-500">Support / </span>
+            <span className="text-gray-900 font-medium">
+              Mail Details / {emailId}
+            </span>
+          </p>
+        </button>
+      </p>
+      {/* Email Card */}
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        {/* Header */}
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-2xl">🎉</span>
+          <h1 className="text-xl font-semibold">
+            Exclusive Offer – Just for You!
+          </h1>
         </div>
+        <div className="text-sm text-gray-500 mb-4">
+          From : Adam Fard &lt;adam@uxpilot.ai&gt;
+        </div>
+        <hr className="mb-4" />
 
         {/* Email Content */}
-        <div className="pl-11 space-y-4">
-          <div className="prose max-w-none">
-            <p>Dear Valued Customer,</p>
-            <p>
-              We are excited to announce the launch of our new product line that
-              will revolutionize how you manage your social media presence. Our
-              team has been working tirelessly to bring you features that will
-              enhance your digital marketing capabilities.
-            </p>
-            <p>Key highlights of our new offering include:</p>
-            <ul>
-              <li>Advanced analytics dashboard</li>
-              <li>Automated posting scheduler</li>
-              <li>AI-powered content suggestions</li>
-              <li>Integrated team collaboration tools</li>
-            </ul>
-            <p>
-              We look forward to helping you achieve your social media goals
-              with these new tools.
-            </p>
-            <p>
-              Best regards,
-              <br />
-              The Marketing Team
-            </p>
-          </div>
+        <div className="space-y-4 mb-6">
+          <p className="font-medium">Your Exclusive Deal Awaits!</p>
+          <p>
+            We appreciate you and want to offer something special! As a valued
+            customer, you're receiving an exclusive [discount/offer] just for
+            you.
+          </p>
+          <p>
+            For a limited time, enjoy [X% off / free trial / bonus service] on
+            [product/service]—crafted to elevate your experience.
+          </p>
+          <p>🚀 Claim Your Offer Now – only available until [date]!</p>
+          <p>[Redeem Your Offer]</p>
+          <p>Looking forward to making your experience even better!</p>
+          <p>
+            Md. Mansur
+            <br />x company
+          </p>
         </div>
 
-        {/* Reply Section */}
-        <div className="pl-11 pt-4 border-t">
-          <div className="flex gap-5 items-center">
-            <button 
-              onClick={() => setShowReply(!showReply)}
-              className="px-4 py-2 text-sm bg-black text-white rounded-lg flex items-center gap-2"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
-                />
-              </svg>
-              Reply
-            </button>
-            <button
-              onClick={() => window.history.back()}
-              className="flex items-center gap-2 px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50"
-            >
-              Back
-            </button>
-          </div>
-
-          {/* Reply Textbox */}
-          {showReply && (
-            <div className="mt-4 space-y-4">
-              <textarea
-                placeholder="Write your reply..."
-                rows={6}
-                className="w-full border rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-              <div className="flex justify-end gap-2">
-                <button 
-                  onClick={() => setShowReply(false)}
-                  className="px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button 
-                  className="px-4 py-2 text-sm bg-black text-white rounded-lg"
-                >
-                  Send Reply
-                </button>
-              </div>
-            </div>
-          )}
+        {/* Action Buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowReply(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg"
+          >
+            <FiSend className="w-4 h-4" />
+            Reply
+          </button>
+          <button
+            onClick={() => window.history.back()}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50"
+          >
+            <FiArrowLeft className="w-4 h-4" />
+            Back
+          </button>
         </div>
       </div>
+
+      {/* Reply Section */}
+      {showReply && (
+        <div className="bg-white rounded-lg p-6">
+          <div className="mb-2 text-sm text-gray-600">
+            Reply | To: Adam Fard &lt;adam@uxpilot.ai&gt;
+          </div>
+          <textarea
+            value={reply}
+            onChange={(e) => setReply(e.target.value)}
+            placeholder="Type your message..."
+            rows={5}
+            className="w-full border rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-blue-500 mb-4"
+          />
+          <div className="flex justify-end">
+            <button
+              onClick={() => setShowReply(false)}
+              className="px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 mr-2"
+            >
+              Cancel
+            </button>
+            <button
+              className="px-4 py-2 text-sm bg-black text-white rounded-lg"
+              onClick={() => {
+                // handle send
+                setShowReply(false);
+                setReply("");
+              }}
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

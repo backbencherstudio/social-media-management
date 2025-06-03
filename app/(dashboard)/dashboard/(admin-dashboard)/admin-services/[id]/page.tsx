@@ -3,7 +3,8 @@ import {
   useEditServiceMutation,
   useGetSingleServiceQuery,
 } from "@/src/redux/features/admin/services";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -29,7 +30,7 @@ export default function EditService() {
     reset,
     formState: { errors },
   } = useForm<ServiceFormData>();
-
+  const router = useRouter();
   const { id } = useParams() as { id: string };
   const { data } = useGetSingleServiceQuery(id);
   const [editService, { isLoading }] = useEditServiceMutation();
@@ -83,6 +84,37 @@ export default function EditService() {
 
   return (
     <div className="p-6">
+      {/*  */}
+      <p
+        className="text-sm text-gray-500 flex items-center gap-1 font-medium 
+      mb-6"
+      >
+        <button
+          className="flex gap-2 items-center cursor-pointer"
+          onClick={() => router.back()}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M15.7071 5.29289C16.0976 5.68342 16.0976 6.31658 15.7071 6.70711L10.4142 12L15.7071 17.2929C16.0976 17.6834 16.0976 18.3166 15.7071 18.7071C15.3166 19.0976 14.6834 19.0976 14.2929 18.7071L8.29289 12.7071C7.90237 12.3166 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289C14.6834 4.90237 15.3166 4.90237 15.7071 5.29289Z"
+              fill="#1D1F2C"
+            />
+          </svg>
+          <p>
+            <span className="text-gray-500">Services / </span>
+            <span className="text-gray-900 font-medium">
+              Edit service / {id}
+            </span>
+          </p>
+        </button>
+      </p>
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h1 className="text-2xl font-semibold mb-6">Edit Service</h1>
 
