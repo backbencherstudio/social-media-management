@@ -1,4 +1,3 @@
-// OrderStatCard.tsx (Optional reusable card component if you want more control)
 import React from "react";
 
 export type OrderStat = {

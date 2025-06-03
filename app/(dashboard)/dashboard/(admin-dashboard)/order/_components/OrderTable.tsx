@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 
 import { Badge } from "@/components/ui/badge";
-import { EyeIcon, UserRoundPlus, Users2Icon } from "lucide-react";
+import { EyeIcon, UserRoundPlus } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Pagination } from "../../_components/Pagination";

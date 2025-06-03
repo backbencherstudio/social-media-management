@@ -253,7 +253,7 @@ export default function ResellerSidebar({
         <p className="text-sm text-gray-500 mb-4">All Client</p>
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-sm font-medium text-gray-900 p-3 rounded-full bg-[#DAFF05]">
+            <span className="text-sm font-medium text-gray-900 p-3 rounded-full bg-[#DAFF05] border">
               {clientInitials}
             </span>
           </div>

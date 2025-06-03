@@ -1,9 +1,8 @@
+import AnalyticsClockIcon from "@/public/incons/analytics-clock";
 import DiagramIcon from "@/public/incons/diagram";
 import GalleryIcon from "@/public/incons/gallery";
 import PeoplesIcon from "@/public/incons/peoples";
-import { ClockIcon } from "lucide-react";
 import React from "react";
-import { FaUsers, FaChartLine, FaShareAlt } from "react-icons/fa";
 
 export default function AnalyticsInfoCard() {
   return (
@@ -38,7 +37,7 @@ export default function AnalyticsInfoCard() {
       <div className="bg-white p-6 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:shadow-[0_0_20px_rgba(0,0,0,0.15)] transition-shadow">
         <div className="flex items-center justify-between w-full">
           <h3 className="text-lg font-semibold text-gray-800">Avg. Response</h3>
-          <ClockIcon />
+          <AnalyticsClockIcon />
         </div>
         <p className="text-3xl font-semibold mt-2">2.5h</p>
       </div>
