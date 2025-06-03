@@ -40,7 +40,7 @@ export default function EditMemberModal({
 
   useEffect(() => {
     if (member) {
-        console.log("me",member)
+      console.log("me", member);
       setFormData({
         firstName: member.name.split(" ")[0] || "",
         lastName: member.name.split(" ")[1] || "",
@@ -69,7 +69,7 @@ export default function EditMemberModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[520px] bg-white ">
+      <DialogContent className="max-w-[520px] bg-white border border-gray-200">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             Edit Team Member
@@ -83,6 +83,7 @@ export default function EditMemberModal({
               <Input
                 id="firstName"
                 value={formData.firstName}
+                className="w-full border border-gray-300 focus:ring-transparent"
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -97,6 +98,7 @@ export default function EditMemberModal({
               <Input
                 id="lastName"
                 value={formData.lastName}
+                className="w-full border border-gray-300 focus:ring-transparent"
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -112,6 +114,7 @@ export default function EditMemberModal({
             <Input
               id="email"
               type="email"
+              className="w-full border border-gray-300 focus:ring-transparent"
               value={formData.email}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -133,7 +136,7 @@ export default function EditMemberModal({
                 }))
               }
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full border border-gray-300 focus:ring-transparent">
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
               <SelectContent className="bg-white">
@@ -147,16 +150,16 @@ export default function EditMemberModal({
           <div className="flex gap-3 pt-4">
             <Button
               type="submit"
-              className="flex-1 bg-black text-white hover:bg-black/90"
+              className="bg-black text-white hover:bg-black/90"
               disabled={isLoading}
             >
-              {isLoading ? "Updating..." : "Update User"}
+              {isLoading ? "Updating..." : "Save"}
             </Button>
             <Button
               type="button"
-              variant="outline"
+              
               onClick={onClose}
-              className="flex-1"
+              className="border border-gray-300 text-gray-700 hover:bg-gray-100"
             >
               Cancel
             </Button>

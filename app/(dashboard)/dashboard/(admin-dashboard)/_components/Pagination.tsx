@@ -47,9 +47,9 @@ export const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        className="md:p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <ChevronLeft className="w-8 h-8 border border-gray-200 rounded-md" />
+        <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 border border-gray-200 rounded-md" />
       </button>
 
       {getPageNumbers().map((page, index) => (
@@ -57,7 +57,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           key={index}
           onClick={() => typeof page === 'number' ? onPageChange(page) : null}
           disabled={typeof page !== 'number'}
-          className={`h-8 w-8 rounded-lg ${
+          className={`w-6 h-6 md:w-8 md:h-8 rounded-lg ${
             currentPage === page 
               ? "bg-gray-100 text-black" 
               : page === '...' 
@@ -72,9 +72,9 @@ export const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="md:p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <ChevronRight className="w-8 h-8 border border-gray-200 rounded-md" />
+        <ChevronRight className="w-6 h-6 md:w-8 md:h-8 border border-gray-200 rounded-md" />
       </button>
     </div>
   );

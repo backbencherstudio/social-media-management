@@ -37,9 +37,9 @@ export const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        className="md:p-2  rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <ChevronLeft className="w-8 h-8 border border-gray-200 rounded-md" />
+        <ChevronLeft className="w-8  h-8  border border-gray-200 rounded-md" />
       </button>
 
       {/* Show first page and dot if needed */}

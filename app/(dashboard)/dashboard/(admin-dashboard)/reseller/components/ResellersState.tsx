@@ -30,7 +30,7 @@ export default function  ResellersState({data}) {
 
 function SummaryCard({ title, value }: { title: string; value: string | number }) {
   return (
-    <div className="bg-[#F9F9FB] p-6 rounded-xl shadow-sm">
+    <div className="bg-white p-6 rounded-xl shadow-sm">
       <p className="text-sm text-gray-700 font-medium">{title}</p>
       <p className="text-[22px] font-semibold text-gray-900 mt-1">{value}</p>
     </div>

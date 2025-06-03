@@ -9,14 +9,14 @@ import UserHome from "./(user-dashboard-before-purchase)/UserHome";
 import ResellerDashboard from "./(reseller-dashboard)/ResellerDashboard";
 
 
-const ROLE = {
+export const ROLE = {
   USER: "user",
   CLIENT: "client",
   RESELLER: "reseller",
   ADMIN: "admin",
 } as const;
 
-type Role = (typeof ROLE)[keyof typeof ROLE];
+export type Role = (typeof ROLE)[keyof typeof ROLE];
 
 export default function DashboardHome() {
   const role = ROLE.RESELLER as Role;

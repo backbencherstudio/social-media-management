@@ -9,6 +9,7 @@ import { ChatWindow } from "./chat-window";
 export default function ChatInterface() {
   const [selectedUser, setSelectedUser] = useState<User>(mockUsers[1]);
   const [messages, setMessages] = useState<Message[]>(mockMessages);
+  const [role, setRole] = useState<"admin" | "user" | "reseller">("admin");
 
   const handleSendMessage = (content: string) => {
     const newMesssage: Message = {
@@ -32,6 +33,8 @@ export default function ChatInterface() {
   return (
     <div className="flex gap-5">
       <ChatSidebar
+        role={role}
+        setRole={setRole}
         users={mockUsers}
         selectedUser={selectedUser}
         onUserSelect={setSelectedUser}
