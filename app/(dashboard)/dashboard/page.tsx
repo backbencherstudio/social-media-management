@@ -1,4 +1,3 @@
-// File: app/dashboard/DashboardHome.tsx
 "use client";
 
 import React from "react";
