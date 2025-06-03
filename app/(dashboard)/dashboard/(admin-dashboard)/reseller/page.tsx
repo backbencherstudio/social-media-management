@@ -37,7 +37,6 @@ export default function page() {
       <div>
         <div>
           <div className=" rounded-xl mt-6  bg-white shadow">
-           
             {/* table */}
             <ResellerTable
               resellers={fakeResellersList}
@@ -48,8 +47,6 @@ export default function page() {
             />
           </div>
         </div>
-
-       
       </div>
 
       {/* Applicant table */}

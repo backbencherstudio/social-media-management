@@ -9,6 +9,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
 import { DatePickerDemo } from "./calenderComponent";
+import { DatePickerWithRange } from "./DatePickerWithRange";
 // import "@fullcalendar/common/main.css";
 // import "@fullcalendar/daygrid/main.css";
 
@@ -169,7 +170,7 @@ export default function Calendar() {
           {currentDate.toLocaleString("default", { month: "long" })}{" "}
           {currentDate.getFullYear()}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2">
           <select
             value={currentView}
             onChange={(e) => handleViewChange(e.target.value)}
@@ -180,7 +181,11 @@ export default function Calendar() {
             <option value="timeGridDay">Day</option>
           </select>
 
-          <DatePickerDemo />
+          {/* <DatePickerDemo /> */}
+          <div>
+          <DatePickerWithRange/>
+          </div>
+          
         </div>
       </div>
 

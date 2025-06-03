@@ -6,6 +6,7 @@ import ResellerSidebar from "./_components/reseller-sidebar";
 import AdminSidebar from "./_components/admin-sidebar";
 import ClientSidebar from "./_components/client-sidebar";
 import UserSidebar from "@/app/(dashboard)/dashboard/_components/user-sidebar";
+import { ROLE, type Role } from "./page";
 
 export default function ClientLayout({
   children,
@@ -13,12 +14,12 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [currentRole, setCurrentRole] = useState("Client");
+  const [currentRole, setCurrentRole] = useState<Role>(ROLE.USER);
 
   // Function to render appropriate sidebar based on role
   const renderSidebar = () => {
     switch (currentRole) {
-      case "Admin":
+      case ROLE.ADMIN:
         return (
           <AdminSidebar
             isMobileMenuOpen={isMobileMenuOpen}
@@ -26,16 +27,15 @@ export default function ClientLayout({
             onMobileMenuClose={() => setIsMobileMenuOpen(false)}
           />
         );
-      case "Reseller":
+      case ROLE.RESELLER:
         return (
           <ResellerSidebar
-
             isMobileMenuOpen={isMobileMenuOpen}
             role={currentRole}
             onMobileMenuClose={() => setIsMobileMenuOpen(false)}
           />
         );
-      case "Client":
+      case ROLE.CLIENT:
         return (
           <ClientSidebar
             isMobileMenuOpen={isMobileMenuOpen}
