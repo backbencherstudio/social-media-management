@@ -33,8 +33,8 @@ export default function PersonalInformation() {
   };
 
   return (
-    <div className="w-full px-4 ">
-      <div className="rounded-lg mt-4 sm:mt-6 p-4 sm:p-6 md:p-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] space-y-4 sm:space-y-6">
+    <div className="w-full ">
+      <div className="rounded-lg p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-medium font-semibold">
           Personal Information
         </h1>
@@ -75,7 +75,6 @@ export default function PersonalInformation() {
               </button>
             </div>
           </div>
-
           {/* First Name And Last Name */}
           <div className="space-y-4 sm:space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
@@ -111,7 +110,6 @@ export default function PersonalInformation() {
               </div>
             </div>
           </div>
-
           {/* Email and Password */}
           <div className="space-y-4 sm:space-y-6">
             <div className="space-y-2 sm:space-y-3">
@@ -130,7 +128,6 @@ export default function PersonalInformation() {
               />
             </div>
           </div>
-
           {/* Password And Confirm Password */}
           <div className="space-y-4 sm:space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
@@ -168,7 +165,6 @@ export default function PersonalInformation() {
               </div>
             </div>
           </div>
-
           {/* Billing Address Section */}
           <div className="pt-4 sm:pt-6 md:pt-8">
             <h1 className="text-lg sm:text-xl md:text-2xl font-medium font-semibold mb-4 sm:mb-6">
@@ -267,7 +263,6 @@ export default function PersonalInformation() {
               </div>
             </div>
           </div>
-
           {/*  Phone Number */}
           <div>
             <div className="space-y-4 mt-4">
@@ -288,7 +283,6 @@ export default function PersonalInformation() {
               </div>
             </div>
           </div>
-
           {/* Timezone */}
           <div>
             <div className="space-y-4 mt-4">
@@ -322,8 +316,77 @@ export default function PersonalInformation() {
             </div>
           </div>
 
+          {/* Payment */}
+          <div className="w-full ">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-6 ">
+              Payment Method
+            </h2>
+
+            <div className="bg-white rounded-lg  space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Card number
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="1234 1234 1234 1234"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                    <div className="absolute top-1/2 -translate-y-1/2 right-3">
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+                        alt="Visa"
+                        className="h-4"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Expiration date
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="MM YY"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Security code
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="cvc"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Country
+                </label>
+                <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                  <option value="BD">Bangladesh</option>
+                  <option value="US">United States</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="CA">Canada</option>
+                </select>
+              </div>
+
+              <p className="text-sm text-gray-500 pt-2">
+                By providing your card information, you allow Feedbird to charge
+                your card for future payments in accordance with their terms.
+              </p>
+            </div>
+          </div>
           {/* Submit Button */}
-          <div className="pt-4 sm:pt-6">
+          <div className="">
             <button
               type="submit"
               className="w-full sm:w-auto  px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base font-medium"

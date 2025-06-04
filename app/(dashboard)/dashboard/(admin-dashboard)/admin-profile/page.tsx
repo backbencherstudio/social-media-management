@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  FaChevronDown,
-  FaCloudUploadAlt,
-  FaTrash,
-  FaUserCircle,
-} from "react-icons/fa";
+import { FaChevronDown, FaCloudUploadAlt, FaUserCircle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 
 interface ProfileFormData {
