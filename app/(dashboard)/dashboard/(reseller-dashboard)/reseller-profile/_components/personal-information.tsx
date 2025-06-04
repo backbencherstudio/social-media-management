@@ -317,12 +317,12 @@ export default function PersonalInformation() {
           </div>
 
           {/* Payment */}
-          <div className="w-full py-8">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-6 pl-2">
+          <div className="w-full ">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-6 ">
               Payment Method
             </h2>
 
-            <div className="bg-white rounded-lg  p-4 space-y-6">
+            <div className="bg-white rounded-lg  space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -386,7 +386,7 @@ export default function PersonalInformation() {
             </div>
           </div>
           {/* Submit Button */}
-          <div className="pt-4 sm:pt-6">
+          <div className="">
             <button
               type="submit"
               className="w-full sm:w-auto  px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base font-medium"
