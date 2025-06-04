@@ -3,7 +3,6 @@
 import {
   FaChevronDown,
   FaCloudUploadAlt,
-  FaTrash,
   FaUserCircle,
 } from "react-icons/fa";
 import { useForm } from "react-hook-form";
