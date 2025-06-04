@@ -2,12 +2,10 @@
 
 import React from "react";
 import { useState } from "react";
-
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Clock, LucideGlobe, StepBackIcon } from "lucide-react";
+import { ArrowLeft, Clock, LucideGlobe } from "lucide-react";
 import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 import HashIcons from "@/public/incons/hash-icon";

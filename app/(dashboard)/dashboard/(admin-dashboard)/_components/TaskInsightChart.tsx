@@ -1,5 +1,4 @@
-import { PieChart, Pie, Cell, Legend } from "recharts";
-import { ChevronDown } from "lucide-react";
+import { PieChart, Pie, Cell } from "recharts";
 import { useState } from "react";
 
 const data = [

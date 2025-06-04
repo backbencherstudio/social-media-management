@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import { taskStat, TaskStatCard } from "./_components/TaskStatCard";
 import { TaskTable } from "./_components/TasksTable";
 import { fakeTasks } from "./fakeTask";
-import { Pagination } from "../_components/Pagination";
-import CustomSelect from "../../_components/custom-select";
+
 // taskstates
 const taskStats: taskStat[] = [
   {
@@ -26,9 +25,6 @@ const taskStats: taskStat[] = [
 ];
 
 export default function page() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-
   const [period, setPeriod] = useState("week");
   const [orderStatus, setOrderStatus] = useState("all");
   return (

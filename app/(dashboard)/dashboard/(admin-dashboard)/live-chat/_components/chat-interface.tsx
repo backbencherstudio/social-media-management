@@ -14,7 +14,7 @@ export default function ChatInterface() {
   const handleSendMessage = (content: string) => {
     const newMesssage: Message = {
       id: Date.now().toString(),
-      senderId: "current-user", // Replace with actual current user ID
+      senderId: "current-user",
       receiverId: selectedUser.id,
       content,
       timestamp: new Date(),

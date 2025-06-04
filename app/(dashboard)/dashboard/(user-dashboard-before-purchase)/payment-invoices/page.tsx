@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import React, { StartGesture, useState } from "react";
+import React, { useState } from "react";
 import { ImPower } from "react-icons/im";
 
 const services = [

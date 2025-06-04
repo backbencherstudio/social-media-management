@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
-import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
+// import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
 import CategorModal from "../_components/categor-modal";
 import { Editor } from "@tinymce/tinymce-react";
 
@@ -18,7 +18,7 @@ type FormData = {
 
 export default function CreateBlog() {
   const { data } = useGetBlogCategoriesQuery();
-  const [createBlog, { isError, isLoading }] = useCreateBlogMutation();
+  // const [createBlog, { isError, isLoading }] = useCreateBlogMutation();
 
   const { register, handleSubmit, setValue } = useForm<FormData>();
   const [hashtags, setHashtags] = useState<string[]>([]);
@@ -76,7 +76,7 @@ export default function CreateBlog() {
       reader.onloadend = () => {
         const newPreviews = [...mediaPreviews];
         newPreviews[id] = reader.result as string;
-        setMediaPreviews(newPreviews); // Update preview for the specific block
+        setMediaPreviews(newPreviews);
       };
       reader.readAsDataURL(file);
       setValue(`media_${id}`, e.target.files);
