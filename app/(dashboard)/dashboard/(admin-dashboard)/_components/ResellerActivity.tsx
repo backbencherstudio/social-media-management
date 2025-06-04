@@ -1,6 +1,7 @@
 import React from "react";
 
-import Image from "next/image"; // Use for Next.js or use standard <img> in React
+import Image from "next/image"; 
+
 const icon1 = (
   <svg
     xmlns="http://www.w3.org/2000/svg"

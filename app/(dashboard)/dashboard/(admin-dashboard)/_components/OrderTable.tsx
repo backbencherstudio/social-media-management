@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeIcon, User, UserRoundPlus } from "lucide-react";
+import { EyeIcon, UserRoundPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { AssignOrderModal } from "../order/_components/AssignOrderModal";
@@ -85,7 +85,6 @@ const OrderTable = () => {
       </div>
 
       <table className="min-w-full table-auto">
-        
         <thead>
           <tr className="text-left bg-gray-100 text-sm font-medium text-gray-700">
             <th className="px-4 py-2">Order ID</th>

@@ -14,7 +14,6 @@ import CustomSelect from "../../../_components/custom-select";
 import { Pagination } from "../../_components/Pagination";
 import { useState } from "react";
 
-
 export type SimpleClient = {
   id: number;
   company: string;
@@ -124,11 +123,11 @@ export function ClientTable({
               <TableCell>
                 <Badge
                   variant="outline"
-                  className={
+                  className={`rounded-full ${
                     client.status === "Active"
                       ? "text-green-500 border-green-300 bg-green-50"
                       : "text-red-500 border-red-300 bg-red-50"
-                  }
+                  }`}
                 >
                   {client.status}
                 </Badge>
@@ -154,7 +153,6 @@ export function ClientTable({
         </TableBody>
       </Table>
 
-     
       {/* pagination */}
       <div className="mt-4 flex items-center justify-between px-4 pb-4 flex-wrap">
         <Pagination
