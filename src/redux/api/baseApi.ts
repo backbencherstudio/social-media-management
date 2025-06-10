@@ -16,5 +16,6 @@ export const baseApi = createApi({
     "payment-and-transactions",
     "security-settings",
     "user-role-management",
+    "team-members",
   ],
 });

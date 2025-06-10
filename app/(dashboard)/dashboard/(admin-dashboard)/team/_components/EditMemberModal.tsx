@@ -42,8 +42,8 @@ export default function EditMemberModal({
     if (member) {
       console.log("me", member);
       setFormData({
-        firstName: member.name.split(" ")[0] || "",
-        lastName: member.name.split(" ")[1] || "",
+        firstName: member.full_name.split(" ")[0] || "",
+        lastName: member.full_name.split(" ")[1] || "",
         email: member.email || "",
         role: member.role || "Account Manager", // Ensure role is set correctly
       });
@@ -55,9 +55,10 @@ export default function EditMemberModal({
     setIsLoading(true);
     try {
       await onSubmit({
-        name: `${formData.firstName} ${formData.lastName}`,
+        full_name: `${formData.firstName} ${formData.lastName}`,
         role: formData.role,
         email: formData.email,
+        password: ""
       });
       onClose();
     } catch (error) {
@@ -140,9 +141,9 @@ export default function EditMemberModal({
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
               <SelectContent className="bg-white">
-                <SelectItem value="Account Manager">Account Manager</SelectItem>
-                <SelectItem value="Project Manager">Project Manager</SelectItem>
-                <SelectItem value="Content Writer">Content Writer</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="manager">Project Manager</SelectItem>
+                <SelectItem value="writer">Content Writer</SelectItem>
               </SelectContent>
             </Select>
           </div>
