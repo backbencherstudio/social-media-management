@@ -123,7 +123,7 @@ export function ResellerTable({
                   {reseller.skills.map((skill, i) => (
                     <span
                       key={i}
-                      className={`text-xs font-medium px-2 py-1 rounded-md ${skillColor(
+                      className={`text-xs font-medium px-2 py-1 rounded-full ${skillColor(
                         skill
                       )}`}
                     >
