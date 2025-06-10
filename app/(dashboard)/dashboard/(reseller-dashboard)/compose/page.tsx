@@ -1,6 +1,6 @@
 "use client";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SendDesignFile from "./_components/send-design-file";
 import CreateSchedulePost from "./_components/create-schedule-post";
 

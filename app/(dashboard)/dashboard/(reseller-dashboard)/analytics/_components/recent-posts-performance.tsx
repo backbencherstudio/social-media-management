@@ -115,7 +115,7 @@ export default function RecentPostsPerformance() {
               </td>
 
               <td className="py-4 px-4 text-center">
-                <div className="flex items-center px-3 gap-2 rounded-full border py-1">
+                <div className="flex items-center pl-2 gap-1.5 rounded-full border py-1 text-sm">
                   {service.icon} {service.platform}
                 </div>
               </td>

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 
 import { Badge } from "@/components/ui/badge";
-import { EyeIcon, UserRoundPlus, Users2Icon } from "lucide-react";
+import { EyeIcon, UserRoundPlus } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Pagination } from "../../_components/Pagination";
@@ -137,13 +137,13 @@ export function OrderTable({
               <TableCell>
                 <Badge
                   variant="outline"
-                  className={
+                  className={`rounded-full ${
                     order.status === "Pending Assignment"
                       ? "text-orange-500 border-orange-300 bg-orange-50"
                       : order.status === "In Progress"
                       ? "text-blue-500 border-blue-300 bg-blue-50"
                       : "text-green-500 border-green-300 bg-green-50"
-                  }
+                  }`}
                 >
                   {order.status}
                 </Badge>

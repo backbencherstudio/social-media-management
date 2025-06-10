@@ -1,5 +1,3 @@
-import AfordableSeo from "@/app/(client)/(services)/services/seo-backlinks/_components/afordable-seo";
-import SocialMediaPost from "@/app/(client)/_components/_post/affordable-marketing-services";
 import Heading from "@/app/(client)/_components/heading-text";
 import ParagraphText from "@/app/(client)/_components/paragraph-text";
 import ReuseablePricing from "@/app/(client)/pricing-and-package/_components/reuseable-pricing";

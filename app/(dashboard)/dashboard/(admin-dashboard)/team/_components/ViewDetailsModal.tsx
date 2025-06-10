@@ -13,13 +13,14 @@ interface ViewMemberModalProps {
   onClose: () => void;
 }
 
+
 export function ViewMemberModal({
   member,
   isOpen,
   onClose,
 }: ViewMemberModalProps) {
   if (!member) return null;
-
+  
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[450px] bg-white border-gray-400 ">

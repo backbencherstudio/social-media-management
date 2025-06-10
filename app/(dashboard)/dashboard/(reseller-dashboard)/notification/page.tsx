@@ -1,5 +1,6 @@
 import React from "react";
-import { FiUser, FiCheck } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 export default function Notification() {
   return (
@@ -48,7 +49,9 @@ export default function Notification() {
           </div>
         </div>
         <div className="flex justify-end mt-4">
-          <button className="f py-2 px-4 rounded-full">Show More</button>
+          <button className="flex items-center gap-1 py-2 px-4 rounded-full">
+            Show More <MdKeyboardArrowDown className="text-2xl" />
+          </button>
         </div>
       </div>
     </div>

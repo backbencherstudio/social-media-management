@@ -124,13 +124,13 @@ export function TaskTable({
               <TableCell>
                 <Badge
                   variant="outline"
-                  className={
+                  className={`rounded-full ${
                     task.status === "Pending"
                       ? "text-orange-500 border-orange-300 bg-orange-50"
                       : task.status === "In Progress"
                       ? "text-blue-500 border-blue-300 bg-blue-50"
                       : "text-green-500 border-green-300 bg-green-50"
-                  }
+                  }`}
                 >
                   {task.status}
                 </Badge>

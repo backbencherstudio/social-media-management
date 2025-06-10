@@ -9,9 +9,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
 import { DatePickerDemo } from "./calenderComponent";
-import { DatePickerWithRange } from "./DatePickerWithRange";
-// import "@fullcalendar/common/main.css";
-// import "@fullcalendar/daygrid/main.css";
 
 const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
@@ -181,10 +178,7 @@ export default function Calendar() {
             <option value="timeGridDay">Day</option>
           </select>
 
-          {/* <DatePickerDemo /> */}
-          <div>
-          <DatePickerWithRange/>
-          </div>
+          <DatePickerDemo />
           
         </div>
       </div>

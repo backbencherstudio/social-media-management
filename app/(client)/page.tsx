@@ -1,4 +1,3 @@
-import React, { use } from "react";
 import Hero from "./_components/landing-page/hero";
 import ExampleOfWork from "./_components/landing-page/ExampleOfWork";
 import AllServices from "./_components/landing-page/all-services";
@@ -10,7 +9,6 @@ import FrequentlyAsked from "./_components/landing-page/frequently-asked";
 import ClientsProject from "./_components/landing-page/clients-project";
 
 export default function HomePage() {
-
   return (
     <div>
       <Hero />
@@ -22,7 +20,6 @@ export default function HomePage() {
       <SeamlessExperience />
       <FrequentlyAsked />
       <ClientsProject />
-      {/* <SupportChatBoart /> */}
     </div>
   );
 }

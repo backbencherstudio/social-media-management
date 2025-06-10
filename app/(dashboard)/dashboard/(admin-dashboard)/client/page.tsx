@@ -1,12 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { OrderStateCard } from "../order/_components/OrderStatCard";
 import { ClientStateCard } from "./_components/client-stat-cards";
 import { clientStatsData, fakeClientsList } from "./fakeClient";
 import { ClientTable } from "./_components/clientTable";
-import { Pagination } from "../_components/Pagination";
-import CustomSelect from "../../_components/custom-select";
 
 export default function page() {
  
@@ -17,7 +14,6 @@ export default function page() {
 
   return (
     <div className="max-w-[1480px] mx-auto">
-      client page
       {/* stats */}
       <ClientStateCard clientslate={clientStatsData} />
       {/* table with filter */}
