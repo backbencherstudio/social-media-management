@@ -82,7 +82,7 @@ const OrderTable = () => {
         >
           View All
         </Button>
-      </div>
+      </div>p
 
       <table className="min-w-full table-auto">
         

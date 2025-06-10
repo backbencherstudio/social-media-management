@@ -14,7 +14,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [currentRole, setCurrentRole] = useState<Role>(ROLE.USER);
+  const [currentRole, setCurrentRole] = useState<Role>(ROLE.ADMIN);
 
   // Function to render appropriate sidebar based on role
   const renderSidebar = () => {
