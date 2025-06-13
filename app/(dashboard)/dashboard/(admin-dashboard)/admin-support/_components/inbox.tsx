@@ -98,7 +98,7 @@ export default function Inbox() {
         </div>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <select
-            className="w-full sm:w-auto border border-gray-200 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full sm:w-auto border border-gray-200 rounded-md px-3 py-1.5 text-sm"
             defaultValue="this_week"
           >
             <option value="this_week">This week</option>
@@ -204,7 +204,7 @@ export default function Inbox() {
           </label>
           <select
             id="itemsPerPage"
-            className="w-full sm:w-auto border border-gray-200 rounded-md px-2 md:px-3 py-1.5 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full sm:w-auto border border-gray-200 rounded-md px-2 md:px-3 py-1.5 text-xs md:text-sm"
             value={itemsPerPage}
             onChange={(e) => {
               const newItemsPerPage = parseInt(e.target.value);

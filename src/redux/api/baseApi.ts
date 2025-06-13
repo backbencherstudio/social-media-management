@@ -16,5 +16,8 @@ export const baseApi = createApi({
     "payment-and-transactions",
     "security-settings",
     "user-role-management",
+    "create-new-email",
+    "auth-all",
+    "all-sents",
   ],
 });
