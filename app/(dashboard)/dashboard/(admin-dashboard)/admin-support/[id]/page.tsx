@@ -1,15 +1,44 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useParams, useRouter } from "next/navigation";
-import { FiArrowLeft, FiSend } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
+import {
+  // useCreateNewEmailMutation,
+  useGetSingleInboxQuery,
+} from "@/src/redux/features/admin/help-and-support/support";
+// import { useForm } from "react-hook-form";
 
 const EmailDetailsPage = () => {
   const params = useParams();
   const router = useRouter();
   const emailId = params.id;
-  const [showReply, setShowReply] = useState(false);
-  const [reply, setReply] = useState("");
+
+  const { data } = useGetSingleInboxQuery(emailId as string);
+  console.log(data, "data");
+
+  // const { register, handleSubmit, reset } = useForm<{ body: string }>();
+
+  // const onSubmit = async (body: { body: string }) => {
+  //   console.log(body, "formData");
+
+  //   // const [createNewEmail] = useCreateNewEmailMutation();
+
+  //   const sendInfo = {
+  //     type: data?.type,
+  //     subject: data?.subject,
+  //     body,
+  //     recipient_emails: data?.to
+  //   };
+
+
+  //   console.log(sendInfo, "sendInfo");
+  //   // const info = await createNewEmail(sendInfo);
+  //   // console.log(info, "....");
+  //   // reset();
+  // };
+
+  // console.log(data?.data);
 
   return (
     <div className="">
@@ -49,45 +78,25 @@ const EmailDetailsPage = () => {
         {/* Header */}
         <div className="flex items-center gap-2 mb-2">
           <span className="text-2xl">🎉</span>
-          <h1 className="text-xl font-semibold">
-            Exclusive Offer – Just for You!
-          </h1>
+          <h1 className="text-xl font-semibold">{data?.subject}</h1>
         </div>
-        <div className="text-sm text-gray-500 mb-4">
-          From : Adam Fard &lt;adam@uxpilot.ai&gt;
-        </div>
+        <div className="text-sm text-gray-500 mb-4">From : {data?.from};</div>
         <hr className="mb-4" />
 
         {/* Email Content */}
         <div className="space-y-4 mb-6">
-          <p className="font-medium">Your Exclusive Deal Awaits!</p>
-          <p>
-            We appreciate you and want to offer something special! As a valued
-            customer, you're receiving an exclusive [discount/offer] just for
-            you.
-          </p>
-          <p>
-            For a limited time, enjoy [X% off / free trial / bonus service] on
-            [product/service]—crafted to elevate your experience.
-          </p>
-          <p>🚀 Claim Your Offer Now – only available until [date]!</p>
-          <p>[Redeem Your Offer]</p>
-          <p>Looking forward to making your experience even better!</p>
-          <p>
-            Md. Mansur
-            <br />x company
-          </p>
+          <p className="whitespace-pre-line">{data?.text}</p>
         </div>
 
         {/* Action Buttons */}
         <div className="flex gap-2">
-          <button
-            onClick={() => setShowReply(true)}
+          {/* <button
+            // onClick={() => setShowReply(true)}
             className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg"
           >
             <FiSend className="w-4 h-4" />
             Reply
-          </button>
+          </button> */}
           <button
             onClick={() => window.history.back()}
             className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50"
@@ -99,38 +108,36 @@ const EmailDetailsPage = () => {
       </div>
 
       {/* Reply Section */}
-      {showReply && (
-        <div className="bg-white rounded-lg p-6">
-          <div className="mb-2 text-sm text-gray-600">
-            Reply | To: Adam Fard &lt;adam@uxpilot.ai&gt;
-          </div>
+
+      {/* <div className="bg-white rounded-lg p-6">
+        <div className="mb-2 text-sm text-gray-600">
+          Reply | To: {data?.to};
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <textarea
-            value={reply}
-            onChange={(e) => setReply(e.target.value)}
+            {...register("body", { required: true })}
             placeholder="Type your message..."
             rows={5}
-            className="w-full border rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-blue-500 mb-4"
+            className="w-full border rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-1 mb-4"
           />
           <div className="flex justify-end">
             <button
-              onClick={() => setShowReply(false)}
+              type="button"
+              // onClick={() => setShowReply(false)}
               className="px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 mr-2"
             >
               Cancel
             </button>
             <button
+              type="submit"
               className="px-4 py-2 text-sm bg-black text-white rounded-lg"
-              onClick={() => {
-                // handle send
-                setShowReply(false);
-                setReply("");
-              }}
             >
               Send
             </button>
           </div>
-        </div>
-      )}
+        </form>
+      </div> */}
+
     </div>
   );
 };

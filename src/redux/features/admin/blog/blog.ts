@@ -2,9 +2,9 @@ import { baseApi } from "@/src/redux/api/baseApi";
 
 const blog = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBlogs: builder.query<any[], void>({
+    getAllBlogs: builder.query<any[], void>({
       query: () => ({
-        url: "/blogs",
+        url: "/admin/blog",
         method: "GET",
       }),
       providesTags: ["blogs"],
@@ -17,7 +17,18 @@ const blog = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["blogs"],
     }),
+    deleteBlog: builder.mutation({
+      query: (id) => ({
+        url: `/admin/blog/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["blogs"],
+    }),
   }),
 });
 
-export const { useGetBlogsQuery, useCreateBlogMutation } = blog;
+export const {
+  useGetAllBlogsQuery,
+  useCreateBlogMutation,
+  useDeleteBlogMutation,
+} = blog;

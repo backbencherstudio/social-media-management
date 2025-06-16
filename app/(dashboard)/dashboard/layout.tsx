@@ -7,11 +7,7 @@ import AdminSidebar from "./_components/admin-sidebar";
 import ClientSidebar from "./_components/client-sidebar";
 import UserSidebar from "@/app/(dashboard)/dashboard/_components/user-sidebar";
 
-export default function ClientLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ClientLayout({children}: {children: React.ReactNode}) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState("Admin");
 

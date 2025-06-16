@@ -7,6 +7,7 @@ import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_
 // import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
 import CategorModal from "../_components/categor-modal";
 import { Editor } from "@tinymce/tinymce-react";
+import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
 
 type FormData = {
   title: string;
@@ -18,36 +19,35 @@ type FormData = {
 
 export default function CreateBlog() {
   const { data } = useGetBlogCategoriesQuery();
-  // const [createBlog, { isError, isLoading }] = useCreateBlogMutation();
+  const [createBlog] = useCreateBlogMutation();
 
   const { register, handleSubmit, setValue } = useForm<FormData>();
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
 
-  const [textBlocks, setTextBlocks] = useState<number[]>([Date.now()]);
-  const [mediaBlocks, setMediaBlocks] = useState<number[]>([Date.now()]);
-  const [mediaPreviews, setMediaPreviews] = useState<string[]>([]); // Array to store previews per media block
-  const editorRef = useRef<any>(null);
+  const [textBlocks, setTextBlocks] = useState([Date.now()]);
+  const [mediaBlocks, setMediaBlocks] = useState([Date.now() + 1]);
+  const [mediaPreviews, setMediaPreviews] = useState([]);
+
+  const editorRefs = useRef([]);
   const [isOpen, setIsOpen] = useState(false);
 
   // Add new text block
   const addTextBlock = () => {
-    const id = Date.now() + Math.floor(Math.random() * 100);
-    setTextBlocks((prev) => [...prev, id]);
+    setTextBlocks((prev) => [...prev, Date.now()]);
   };
 
   // Add new media block
   const addMediaBlock = () => {
-    const id = Date.now() + Math.floor(Math.random() * 100);
-    setMediaBlocks((prev) => [...prev, id]);
-    setMediaPreviews((prev) => [...prev, ""]); // Add a placeholder for new media preview
+    setMediaBlocks((prev) => [...prev, Date.now()]);
+    setMediaPreviews((prev) => [...prev, null]);
   };
 
   // Handle hashtag input
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (
       e.key === "Enter" &&
-      inputValue.startsWith("#") &&
+      // inputValue.startsWith("#") &&
       inputValue.length > 1
     ) {
       e.preventDefault();
@@ -84,32 +84,80 @@ export default function CreateBlog() {
   };
 
   // Form submit handler
+  // const onSubmit = async (data: FormData) => {
+  //   const mediaFiles = Object.entries(data)
+  //     .filter(([key]) => key.startsWith("media_"))
+  //     .map(([key, value]) => ({
+  //       id: key,
+  //       content: (value as FileList)[0]?.name || "image.jpg",
+  //     }));
+
+  //   const editorContent = editorRefs.current.map((editor) =>
+  //     editor?.getContent()
+  //   );
+
+  //   // console.log(mediaFiles, "mediaFiles");
+  //   // console.log(editorContent, "editorContent");
+
+  //   const blogData = {
+  //     title: data.title,
+  //     categoryIds: [data.categoryIds.toString()],
+  //     hashtags: data.hashtags,
+  //     contents: [
+  //       ...editorContent.map((content) => ({
+  //         contentType: "text",
+  //         content,
+  //       })),
+  //       ...mediaFiles.map((file) => ({
+  //         contentType: "media",
+  //         content: file.content,
+  //       })),
+  //     ],
+  //   };
+  //   console.log(blogData);
+
+  //   const result = await createBlog(blogData);
+  //   console.log(result);
+  // };
+  
   const onSubmit = async (data: FormData) => {
-    const mediaFiles = Object.entries(data)
+    const formData = new FormData();
+
+    const mediaFiles: File[] = [];
+
+    const mediaContents = Object.entries(data)
       .filter(([key]) => key.startsWith("media_"))
-      .map(([key, value]) => ({
-        id: key,
-        content: (value as FileList)[0]?.name || "image.jpg",
-      }));
+      .map(([key, value]: [string, any]) => {
+        const file = value[0];
+        if (file) {
+          mediaFiles.push(file);
+          return {
+            contentType: "media",
+            content: file.name,
+          };
+        }
+        return null;
+      })
+      .filter(Boolean);
 
-    const editorContent = editorRef.current?.getContent();
+    const editorContent = editorRefs.current.map((editor) => ({
+      contentType: "text",
+      content: editor?.getContent() || "",
+    }));
 
-    const formData = {
-      title: data.title,
-      categoryIds: data.categoryIds,
-      hashtags: data.hashtags,
-      contents: [
-        { contentType: "text", content: editorContent },
-        {
-          contentType: "media",
-          content: mediaFiles[0]?.content || "image.jpg",
-        },
-      ],
-    };
-    console.log(formData);
+    const allContents = [...editorContent, ...mediaContents];
 
-    // const result = await createBlog(formData);
-    // console.log(result);
+    formData.append("title", data.title);
+    formData.append("categoryIds", JSON.stringify([data.categoryIds]));
+    formData.append("hashtags", JSON.stringify(hashtags));
+    formData.append("contents", JSON.stringify(allContents));
+
+    mediaFiles.forEach((file) => {
+      formData.append("img", file);
+    });
+
+    const result = await createBlog(formData);
+    console.log(result);
   };
 
   return (
@@ -144,7 +192,7 @@ export default function CreateBlog() {
             <div className="w-full">
               <Editor
                 apiKey="v165paum3r2kwvwl9yfg9md27pv69hd11c2bjcu6yjaxgye9"
-                onInit={(_evt, editor) => (editorRef.current = editor)}
+                onInit={(_evt, editor) => (editorRefs.current[index] = editor)}
                 init={{
                   plugins: ["emoticons", "image", "link", "lists"],
                   toolbar:
@@ -212,6 +260,8 @@ export default function CreateBlog() {
             </div>
           </div>
         ))}
+
+        {<div></div>}
 
         {/* Add Content Buttons */}
         <div className="bg-white p-3 md:p-4 rounded-lg shadow space-y-3 md:space-y-4">
@@ -281,7 +331,7 @@ export default function CreateBlog() {
                   <button
                     type="button"
                     onClick={() => removeHashtag(index)}
-                    className="text-gray-400 hover:text-black"
+                    className="text-gray-400 hover:text-black  cursor-pointer"
                   >
                     ×
                   </button>
@@ -294,13 +344,13 @@ export default function CreateBlog() {
           <div className="flex flex-col sm:flex-row gap-3 md:gap-6 border-t border-gray-200 pt-4 md:pt-5">
             <Button
               type="button"
-              className="w-full sm:w-auto bg-gray-100 px-6 md:px-10 py-4 md:py-6 text-sm md:text-base"
+              className="w-full sm:w-auto bg-gray-100 px-6 md:px-10 py-4 md:py-6 text-sm md:text-base cursor-pointer"
             >
               Save Draft
             </Button>
             <Button
               type="submit"
-              className="w-full sm:w-auto bg-black text-white px-6 md:px-10 py-4 md:py-6 text-sm md:text-base"
+              className="w-full sm:w-auto bg-black text-white px-6 md:px-10 py-4 md:py-6 text-sm md:text-base cursor-pointer"
             >
               Post Publish
             </Button>

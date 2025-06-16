@@ -1,6 +1,11 @@
+import {
+  useCreateNewEmailMutation,
+  useSendAllEmailMutation,
+} from "@/src/redux/features/admin/help-and-support/support";
+import { useGetAllUserQuery } from "@/src/redux/features/user/user-auth";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { MdOutlineEmojiEmotions, MdOutlineAttachFile } from "react-icons/md";
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 
 interface EmailModalProps {
   isOpen: boolean;
@@ -8,10 +13,10 @@ interface EmailModalProps {
 }
 
 interface EmailFormData {
-  emailType: string;
-  recipients: string[];
+  type: string;
+  recipient_emails: string;
   subject: string;
-  message: string;
+  body: string;
 }
 
 export default function CreateNewEmailModal({
@@ -23,19 +28,32 @@ export default function CreateNewEmailModal({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<EmailFormData>({
-    defaultValues: {
-      emailType: "",
-      recipients: [],
-      subject: "",
-      message: "",
-    },
-  });
+  } = useForm<EmailFormData>();
 
-  const onSubmit = (data: EmailFormData) => {
+  const { data } = useGetAllUserQuery();
+
+  const [createNewEmail] = useCreateNewEmailMutation();
+  const [sendAllEmail] = useSendAllEmailMutation();
+
+  const onSubmit = async (data: EmailFormData) => {
     console.log("Form Data:", data);
+
+    const sendInfo = {
+      type: data?.type,
+      subject: data?.subject,
+      body: data?.body,
+    };
+
+    if (data?.recipient_emails === "all") {
+      const result = await sendAllEmail(sendInfo);
+      console.log(result, "all");
+    } else {
+      const info = await createNewEmail(data);
+      console.log(info, "....");
+    }
+
     reset();
-    onClose();
+    // onClose();
   };
 
   if (!isOpen) return null;
@@ -47,7 +65,7 @@ export default function CreateNewEmailModal({
           <h2 className="text-xl font-semibold">Create New Email</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 cursor-pointer"
           >
             ✕
           </button>
@@ -61,45 +79,51 @@ export default function CreateNewEmailModal({
             </label>
             <input
               type="text"
-              {...register("subject", {
-                required: "Subject is required",
-                minLength: { value: 5, message: "Subject is too short" },
+              {...register("type", {
+                required: "Email type is required",
               })}
-              placeholder="Enter email subject"
+              placeholder="Enter email type"
               className="w-full border border-gray-200 rounded-lg px-3 py-2"
             />
-            {errors.subject && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.subject.message}
-              </p>
+            {errors.type && (
+              <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>
             )}
           </div>
 
-          {/* Recipients */}
+          {/* recipient_emails */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Recipients
             </label>
+            {/* <input
+              type="email"
+              {...register("recipient_emails", {
+                required: "Subject is required",
+              })}
+              placeholder="Enter email"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2"
+            /> */}
             <select
-              {...register("emailType", {
+              {...register("recipient_emails", {
                 required: "Please select an email type",
               })}
               className="w-full border border-gray-200 rounded-lg px-3 py-2"
             >
               <option value="">Select email type</option>
-              <option value="notification">Notification</option>
-              <option value="newsletter">Newsletter</option>
+              {data?.data?.data?.data.map((user: any) => (
+                <option key={user.id} value={user.email}>
+                  {user.email}
+                </option>
+              ))}
+              <option value="all">All</option>
+              {/* <option value="newsletter">Newsletter</option>
               <option value="promotion">Promotion</option>
-              <option value="support">Support</option>
+              <option value="support">Support</option> */}
             </select>
-            {errors.emailType && (
+
+            {errors.recipient_emails && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.emailType.message}
-              </p>
-            )}
-            {errors.recipients && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.recipients.message}
+                {errors.recipient_emails.message}
               </p>
             )}
           </div>
@@ -131,7 +155,7 @@ export default function CreateNewEmailModal({
               Message
             </label>
             <textarea
-              {...register("message", {
+              {...register("body", {
                 required: "Message is required",
                 minLength: { value: 10, message: "Message is too short" },
               })}
@@ -139,10 +163,8 @@ export default function CreateNewEmailModal({
               rows={6}
               className="w-full border border-gray-200 rounded-lg px-3 py-2 resize-none"
             />
-            {errors.message && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.message.message}
-              </p>
+            {errors.body && (
+              <p className="text-red-500 text-sm mt-1">{errors.body.message}</p>
             )}
           </div>
 
@@ -167,7 +189,7 @@ export default function CreateNewEmailModal({
               </div>
               <button
                 type="submit"
-                className="bg-black text-white rounded-lg px-4 py-3"
+                className="bg-black text-white rounded-lg px-4 py-3 cursor-pointer"
               >
                 Send Email
               </button>
