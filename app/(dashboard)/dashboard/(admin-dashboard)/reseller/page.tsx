@@ -11,8 +11,12 @@ import {
 import CustomSelect from "../../_components/custom-select";
 import { Pagination } from "../_components/Pagination";
 import ApplicantTable from "./components/ApplicantTabtle";
+import { useGetAllApplicationQuery } from "@/src/redux/features/admin/reseller/resellerApplicationApi";
 
 export default function page() {
+  const { data: applications } = useGetAllApplicationQuery(undefined);
+  console.log("applications", applications?.data);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
@@ -53,7 +57,7 @@ export default function page() {
 
       <div className="mt-6">
         <ApplicantTable
-          applicants={applicantsList}
+          applicants={applications?.data || []}
           periodApplicant={periodApplicant}
           setPeriodApplicant={setPeriodApplicant}
           orderStatusApplicant={orderStatusApplicant}

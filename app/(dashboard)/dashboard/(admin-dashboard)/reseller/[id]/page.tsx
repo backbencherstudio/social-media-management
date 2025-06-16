@@ -1,6 +1,24 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
+import { useGetOneApplicationQuery } from "@/src/redux/features/admin/reseller/resellerApplicationApi";
+
+const fakeApplicant = {
+  applicationId: "cmbbtwh0m0002ret8w7jakeb6",
+  created_at: "2025-06-01T10:12:45.123Z",
+  user_id: "cmb1qwp4z0001ree0q2ikxruz",
+  full_name: "Alex Fake",
+  user_email: "alex.johnson@gmail.com",
+  phone_number: 9876543210,
+  location: "Los Angeles, USA",
+  position: "Software Engineer",
+  experience: 5,
+  cover_letter:
+    "As a software engineer, I specialize in building scalable and efficient systems while leading the development of innovative applications.",
+  portfolio: "http://alexjohnsonportfolio.com",
+  skills: ["JavaScript", "React", "Node.js", "AWS"],
+  status: "pending",
+};
 
 export default function ResellerDetailsPage() {
   const router = useRouter();
@@ -9,16 +27,14 @@ export default function ResellerDetailsPage() {
 
   // Fetch reseller details using id, or get from fakeResellersList
   // Example: const reseller = fakeResellersList.find(r => r.id === Number(id));
-  const applicant = {
-    name: "Cody Fisher",
-    email: "deanna.curtis@example.com",
-    location: "2972 Westheimer Rd. Santa Ana, Illinois 85486",
-    number: "219.555.0114",
-    position: "Digital Marketer",
-    experience: "3",
-    portfolio: "/@portfolio.com",
-    skills: "Social media management, SEO Backlinks",
-  };
+
+  const { data, isLoading, isError } = useGetOneApplicationQuery(id as string);
+  console.log("Data", data);
+  const applicant = data?.data[0] || {};
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error</div>;
+
   return (
     <div className="p-6 md:p-10 space-y-10">
       {/* Breadcrumb */}
@@ -46,6 +62,8 @@ export default function ResellerDetailsPage() {
           </span>
         </p>
       </p>
+
+      <div>
       <div className="space-y-10 bg-white rounded-xl shadow-sm p-6 ">
         {/* Applicant Details Section */}
         <section className="">
@@ -64,17 +82,23 @@ export default function ResellerDetailsPage() {
             </div>
           </div>
           <div className="bg-[#F9F9FB] p-6 md:p-10 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 text-sm text-gray-800 shadow">
-            <Detail label="Name" value={applicant.name} />
-            <Detail label="Mail" value={applicant.email} />
-            <Detail label="Location" value={applicant.location} />
-            <Detail label="Number" value={applicant.number} />
-            <Detail label="Position Applying For" value={applicant.position} />
-            <Detail label="Years of Experience" value={applicant.experience} />
+            <Detail label="Name" value={applicant?.full_name} />
+            <Detail label="Mail" value={applicant?.user_email} />
+            <Detail label="Location" value={applicant?.location} />
+            <Detail label="Number" value={applicant?.phone_number?.toString()} />
+            <Detail label="Position Applying For" value={applicant?.position} />
+            <Detail
+              label="Years of Experience"
+              value={applicant?.experience.toString()}
+            />
             <Detail
               label="Portfolio/LinkedIn (Optional)"
-              value={applicant.portfolio}
+              value={applicant?.portfolio}
             />
-            <Detail label="Relevant Skills" value={applicant.skills} />
+            <Detail
+              label="Relevant Skills"
+              value={applicant?.skills.join(", ")}
+            />
           </div>
         </section>
 
@@ -89,13 +113,7 @@ export default function ResellerDetailsPage() {
               Position
             </p>
             <p>Dear Hiring Manager’s,</p>
-            <p>
-              I am excited to apply for the Social Media Manager position at
-              [Company Name]. With a passion for digital engagement and a track
-              record of creating impactful social media strategies, I am
-              confident in my ability to enhance your brand’s online presence
-              and drive meaningful audience interactions.
-            </p>
+            <p>{applicant?.cover_letter}</p>
             <p>
               In my previous role at [Previous Company], I successfully managed
               multi-platform social media campaigns that increased brand
@@ -106,21 +124,7 @@ export default function ResellerDetailsPage() {
               Hootsuite, Buffer, or Meta Business Suite] to analyze performance
               metrics and optimize content strategies.
             </p>
-            <p>
-              What excites me about [Company Name] is your commitment to
-              [mention a value or initiative of the company that resonates with
-              you]. I am eager to bring my creativity and analytical skills to
-              your team to further amplify your brand’s digital footprint.
-            </p>
-            <p>
-              I would love the opportunity to discuss how my experience and
-              skills can contribute to your social media success. Please feel
-              free to contact me at your convenience to schedule a conversation.
-            </p>
-            <p>
-              Thank you for your time and consideration. I look forward to
-              hearing from you.
-            </p>
+
             <p>
               Best regards,
               <br />
@@ -137,7 +141,7 @@ export default function ResellerDetailsPage() {
           </Button>
         </section>
       </div>
-
+      </div>
       {/* back button */}
     </div>
   );

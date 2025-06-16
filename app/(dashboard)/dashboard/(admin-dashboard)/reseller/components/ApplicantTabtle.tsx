@@ -74,14 +74,14 @@ export default function ApplicantTable({
           <tbody>
             {paginationApplicants.map((applicant: Applicant) => (
               <tr
-                key={applicant.id}
+                key={applicant.applicationId}
                 className=" border-b border-b-gray-100 hover:bg-gray-50"
               >
                 <td className="px-4 py-3 text-gray-900 font-medium">
-                  {applicant.name}
+                    {applicant.full_name}
                 </td>
-                <td className="px-4 py-3 text-gray-600">{applicant.email}</td>
-                <td className="px-4 py-3 text-gray-600">{applicant.number}</td>
+                <td className="px-4 py-3 text-gray-600">{applicant.user_email}</td>
+                <td className="px-4 py-3 text-gray-600">{applicant.phone_number}</td>
                 <td className="px-4 py-3 text-gray-600">
                   {applicant.position}
                 </td>
@@ -96,7 +96,7 @@ export default function ApplicantTable({
                 </td>
                 <td className="px-4 py-3 text-right">
                   <Link
-                    href={`/dashboard/reseller/${applicant.id}`}
+                    href={`/dashboard/reseller/${applicant.applicationId}`}
                     className="text-sm text-blue-600 font-medium hover:underline"
                   >
                     View Details
