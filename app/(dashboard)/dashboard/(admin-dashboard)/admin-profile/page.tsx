@@ -1,0 +1,147 @@
+"use client";
+
+import { FaChevronDown, FaCloudUploadAlt, FaUserCircle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+
+interface ProfileFormData {
+  photo: FileList | null;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
+export default function AdminProfile() {
+  const { register, handleSubmit } = useForm<ProfileFormData>();
+
+  const onSubmit = (data: ProfileFormData) => {
+    console.log("Form data:", data);
+  };
+
+  return (
+    <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-72">
+      <div className="rounded-lg mt-4 sm:mt-6 p-4 sm:p-6 md:p-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] space-y-4 sm:space-y-6">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-medium font-semibold">
+          Edit your details
+        </h1>
+
+        <form
+          className="space-y-6 sm:space-y-8 md:space-y-10"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          {/* Upload and Delete */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-4 sm:p-6 rounded-lg bg-gray-50">
+            <div className="relative mb-4 sm:mb-0 mr-5">
+              <div className="rounded-full bg-gray-200 flex items-center justify-center relative p-2 sm:p-3">
+                <FaUserCircle className="w-10 h-10" />
+                <FaChevronDown className="absolute -right-3 sm:-right-4 md:-right-6 top-1/2 -translate-y-1/2 text-gray-500 w-3 h-3 sm:w-4 sm:h-4" />
+              </div>
+            </div>
+            <div className="flex flex-col lg:flex-row gap-3 w-full sm:w-auto">
+              <label
+                htmlFor="uploadPhoto"
+                className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#F5F5F7] border border-gray-300 text-gray-700 rounded-lg text-sm sm:text-base hover:bg-gray-50 transition-colors"
+              >
+                <FaCloudUploadAlt className="w-4 h-4 sm:w-5 sm:h-5" />
+                Upload Photo
+                <input
+                  type="file"
+                  id="uploadPhoto"
+                  accept="image/*"
+                  className="hidden"
+                  {...register("photo")}
+                />
+              </label>
+              <button
+                type="button"
+                className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#F5F5F7] border border-gray-300 text-gray-700 rounded-lg text-sm sm:text-base hover:bg-gray-50 transition-colors"
+              >
+                Delete Photo
+              </button>
+            </div>
+          </div>
+
+          {/* First Name And Last Name */}
+          <div className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="space-y-2">
+                <label
+                  htmlFor="firstName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  {...register("firstName", { required: true })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                  placeholder="Enter your first name"
+                />
+              </div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="lastName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  {...register("lastName", { required: true })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                  placeholder="Enter your last name"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Email and Password */}
+          <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-2 sm:space-y-3">
+              <label
+                htmlFor="email"
+                className="block text-sm sm:text-base font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                {...register("email", { required: true })}
+                className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                placeholder="Enter your email"
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                {...register("password", { required: true })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
+                placeholder="Enter your password"
+              />
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="pt-4 sm:pt-6 md:pt-8">
+            <button
+              type="submit"
+              className="w-full sm:w-auto min-w-[200px] px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base font-medium"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

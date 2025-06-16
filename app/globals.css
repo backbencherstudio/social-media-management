@@ -1,0 +1,181 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@layer base {
+  :root {
+    --font-inter-tight: 'Inter Tight';
+  }
+
+  .serotiva-regular {
+    font-family: var(--font-serotiva);
+    font-weight: 400;
+  }
+
+  .serotiva-semibold {
+    font-family: var(--font-serotiva);
+    font-weight: 600;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serotiva);
+    font-weight: 700;
+  }
+
+  body {
+    font-family: var(--font-inter-tight);
+  }
+}
+
+.font-serotiva {
+  font-family: var(--font-serotiva);
+}
+
+.font-inter {
+  font-family: var(--font-inter-tight);
+}
+
+.embla__container {
+  backface-visibility: hidden;
+  display: flex;
+  touch-action: pan-y;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+
+.embla__slide {
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .embla__slide {
+    flex: 0 0 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .embla__slide {
+    flex: 0 0 33.33%;
+  }
+}
+
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -24px;
+  /* gutter size offset */
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 24px;
+  /* gutter size */
+  background-clip: padding-box;
+}
+
+.my-masonry-grid_column>div {
+  margin-bottom: 24px;
+}
+
+.no-chevron::after {
+  content: none !important;
+  background-image: none !important;
+  display: none !important;
+}
+
+.css-1u9des2-indicatorSeparator {
+  display: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 8px;
+  border: 1px solid #f1f1f1;
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+  margin-left: 12px;
+}
+
+.custom-scrollbar2::-webkit-scrollbar {
+  width: 14px;
+  /* Controls vertical scrollbar thickness */
+  height: 5px;
+  /* Controls horizontal scrollbar thickness */
+}
+
+.custom-scrollbar2::-webkit-scrollbar-track {
+  background: #5f5f5f;
+  ;
+  border-radius: 8px;
+
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb {
+  background-color: #070707;
+  border-radius: 8px;
+  border: 3px solid #525363;
+}
+
+
+
+.custom-scrollbar2::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+
+}
+
+/* for calender */
+
+.react-datepicker {
+  @apply rounded-xl shadow-lg border border-gray-200;
+}
+
+.react-datepicker__header {
+  @apply bg-white border-b border-gray-200 rounded-t-xl;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  @apply text-gray-900 font-medium;
+}
+
+.react-datepicker__day {
+  @apply text-gray-700 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-100;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-gray-900 text-white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-gray-200;
+}
+
+.react-datepicker__day--today {
+  @apply font-semibold border border-gray-300;
+}
