@@ -13,27 +13,27 @@ import RecentActivity from "@/components/UserDashboard/Home/RecentActivity";
 import ServicesTable, { Service } from "@/components/UserDashboard/Components/services-table";
 
 const servicesData: Service[] = [
-  // {
-  //   id: "62A2AA44-2",
-  //   name: "Email Design",
-  //   started: "Sep 17",
-  //   status: "For Review",
-  //   nextPayment: "Oct 17",
-  // },
-  // {
-  //   id: "62A2AA44-3",
-  //   name: "Plus + 15 posts",
-  //   started: "Sep 17",
-  //   status: "In Progress",
-  //   nextPayment: "Oct 17",
-  // },
-  // {
-  //   id: "62A2AA44-4",
-  //   name: "Plus + 15 posts",
-  //   started: "Sep 17",
-  //   status: "Completed",
-  //   nextPayment: "Oct 17",
-  // },
+  {
+    id: "62A2AA44-2",
+    name: "Email Design",
+    started: "Sep 17",
+    status: "For Review",
+    nextPayment: "Oct 17",
+  },
+  {
+    id: "62A2AA44-3",
+    name: "Plus + 15 posts",
+    started: "Sep 17",
+    status: "In Progress",
+    nextPayment: "Oct 17",
+  },
+  {
+    id: "62A2AA44-4",
+    name: "Plus + 15 posts",
+    started: "Sep 17",
+    status: "Completed",
+    nextPayment: "Oct 17",
+  },
 ];
 
 export default function UserDashboard() {
@@ -76,6 +76,10 @@ export default function UserDashboard() {
       },
     ]);
   };
+
+
+  // // Render the dashboard based on the purchase status(client or user)
+  const isClient: boolean = true
 
   return (
     <>
@@ -188,7 +192,7 @@ export default function UserDashboard() {
         />
       </div>
 
-      {hasPurchased && (
+      {isClient && (
         <div>
           <RecentActivity />
         </div>
