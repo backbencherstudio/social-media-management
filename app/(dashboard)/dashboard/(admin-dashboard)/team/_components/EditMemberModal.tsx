@@ -16,55 +16,62 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { TeamMember } from "../fakeMember";
+import { useUpdateTeamMemberMutation } from "@/src/redux/features/admin/team/teamApi";
+import { toast } from "sonner";
 
 interface EditMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
   member: TeamMember | null;
-  onSubmit: (data: Omit<TeamMember, "id" | "selected">) => Promise<void>;
 }
 
 export default function EditMemberModal({
   isOpen,
   onClose,
   member,
-  onSubmit,
 }: EditMemberModalProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
-    role: "Account Manager",
+    role: "admin",
   });
 
+  // Update the form data when the modal is opened with new member data
   useEffect(() => {
     if (member) {
-      console.log("me", member);
       setFormData({
-        firstName: member.full_name.split(" ")[0] || "",
-        lastName: member.full_name.split(" ")[1] || "",
+        fullName: member?.full_name || "",
         email: member.email || "",
-        role: member.role || "Account Manager", // Ensure role is set correctly
+        role: member.role || "admin",
       });
     }
   }, [member]);
 
+  const [updateTeamMember, { isLoading, isSuccess, isError, error }] =
+    useUpdateTeamMemberMutation();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+
+   
     try {
-      await onSubmit({
-        full_name: `${formData.firstName} ${formData.lastName}`,
-        role: formData.role,
-        email: formData.email,
-        password: ""
-      });
-      onClose();
-    } catch (error) {
-      console.error(error);
+      await updateTeamMember({
+        id: member?.id || "",
+        body: {
+          fullName: formData.fullName,
+          email: formData.email,
+          role: formData.role,
+        },
+      }).unwrap();
+
+      if (isSuccess) {
+        toast.success("Team member updated successfully");
+      }
+    } catch (err) {
+      toast.error("Failed to update team member");
+      console.error(err);
     } finally {
-      setIsLoading(false);
+      onClose();
     }
   };
 
@@ -78,44 +85,32 @@ export default function EditMemberModal({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="firstName">First name</Label>
-              <Input
-                id="firstName"
-                value={formData.firstName}
-                className="w-full border border-gray-300 focus:ring-transparent"
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    firstName: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="lastName">Last name</Label>
-              <Input
-                id="lastName"
-                value={formData.lastName}
-                className="w-full border border-gray-300 focus:ring-transparent"
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    lastName: e.target.value,
-                  }))
-                }
-              />
-            </div>
+          {/* Full Name Input */}
+          <div className="space-y-2">
+            <Label htmlFor="fullName">Full Name</Label>
+            <Input
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  fullName: e.target.value,
+                }))
+              }
+              className="flex-1 border border-gray-300 focus:ring-transparent"
+              placeholder="Enter full name"
+              required
+              autoFocus={true}
+            />
           </div>
 
+          {/* Email Input */}
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
-              className="w-full border border-gray-300 focus:ring-transparent"
               value={formData.email}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -123,9 +118,14 @@ export default function EditMemberModal({
                   email: e.target.value,
                 }))
               }
+              className="w-full border border-gray-300 focus:ring-transparent"
+              placeholder="Enter email"
+              required
+             
             />
           </div>
 
+          {/* Role Selection */}
           <div className="space-y-2">
             <Label htmlFor="role">Role</Label>
             <Select
@@ -148,6 +148,7 @@ export default function EditMemberModal({
             </Select>
           </div>
 
+          {/* Submit and Cancel Buttons */}
           <div className="flex gap-3 pt-4">
             <Button
               type="submit"
@@ -158,7 +159,6 @@ export default function EditMemberModal({
             </Button>
             <Button
               type="button"
-              
               onClick={onClose}
               className="border border-gray-300 text-gray-700 hover:bg-gray-100"
             >

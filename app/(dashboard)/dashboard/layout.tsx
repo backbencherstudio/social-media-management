@@ -6,6 +6,7 @@ import ResellerSidebar from "./_components/reseller-sidebar";
 import AdminSidebar from "./_components/admin-sidebar";
 import ClientSidebar from "./_components/client-sidebar";
 import UserSidebar from "@/app/(dashboard)/dashboard/_components/user-sidebar";
+import { Toaster } from "sonner";
 
 export default function ClientLayout({
   children,
@@ -58,6 +59,7 @@ export default function ClientLayout({
         {renderSidebar()}
 
         <div className="flex-1 flex flex-col overflow-hidden">
+          <Toaster />
           <Navbar
             isMobileMenuOpen={isMobileMenuOpen}
             onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

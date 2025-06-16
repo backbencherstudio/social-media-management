@@ -3,7 +3,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2, Plus, User, Check, Divide } from "lucide-react";
-import { TeamMember, teamMembers } from "./fakeMember";
 import { ViewMemberModal } from "./_components/ViewDetailsModal";
 import { useState } from "react";
 import AddMemeberModal from "./_components/AddMemeberModal";
@@ -11,8 +10,13 @@ import EditMemberModal from "./_components/EditMemberModal";
 import DeleteConfirmationModal from "./_components/DeleteMemberModal";
 import {
   useAddTeamMemberMutation,
+  useDeleteTeamMemberMutation,
   useGetTeamMembersQuery,
 } from "@/src/redux/features/admin/team/teamApi";
+import { ICreateOrUpdateTeamInput } from "@/src/redux/features/admin/team/teamType";
+import { TeamMember } from "./fakeMember";
+import { ITeamMember } from "@/src/redux/features/admin/team/teamType";
+import { toast } from "sonner";
 
 export default function page() {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
@@ -25,43 +29,21 @@ export default function page() {
   const { data, isLoading, error } = useGetTeamMembersQuery();
   const teamMembers = data?.data || [];
 
-  // for adding memeber
-  const [addTeamMember, { isLoading: addMemberLoading }] =
-    useAddTeamMemberMutation();
-  // console.log(teamMembers);
-  //   handle add memeber
-  const handleAddMemeber = async (
-    data: Omit<TeamMember, "id" | "selected">
-  ) => {
-    try {
-      console.log("Adding memeber", data);
-      await addTeamMember(data).unwrap()
-    } catch (error) {
-      console.log("Error adding member", error);
-    }
-  };
+  const [deleteTeamMember, { isLoading: deleteMemberLoading }] =
+    useDeleteTeamMemberMutation();
+ 
 
   // handle select memeber
-  const handleSelectMemeber = (member: TeamMember) => {
+  const handleSelectMemeber = (member) => {
     if (selectedMember?.id === member.id) {
       setSelectedMember(null);
     } else {
       setSelectedMember(member);
+    
     }
   };
 
-  // handle edit member
-  const handleEditMember = async (
-    data: Omit<TeamMember, "id" | "selected">
-  ) => {
-    try {
-      // Later replace with API call
-      console.log("Updating member:", data);
-      console.log("Member ID:", selectedMember?.id);
-    } catch (error) {
-      console.error("Error updating member:", error);
-    }
-  };
+
 
   // handle delete member
   const handleDeleteMember = async () => {
@@ -69,6 +51,8 @@ export default function page() {
       if (!selectedMember) return;
       console.log("Deleting member with ID:", selectedMember.id);
       // When integrated, call your API here.
+      await deleteTeamMember(selectedMember.id).unwrap();
+      toast.success("Member deleted successfully");
     } catch (error) {
       console.error("Error deleting member:", error);
     }
@@ -137,7 +121,7 @@ export default function page() {
                   </div>
                   <div className="mt-2 sm:mt-4 text-center w-full">
                     <h3 className="font-medium text-sm text-[#141416]">
-                      {member.full_name}
+                      {member.fullName}
                     </h3>
                     <p className="text-xs text-[#4A4C56]">{member.role}</p>
                     <Button
@@ -183,14 +167,13 @@ export default function page() {
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         member={selectedMember}
-        onSubmit={handleEditMember}
+          // onSubmit={handleEditMember}
       />
 
       <AddMemeberModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
-        onSubmit={handleAddMemeber}
-      />
+      />  
 
       <DeleteConfirmationModal
         isOpen={isDeleteModalOpen}

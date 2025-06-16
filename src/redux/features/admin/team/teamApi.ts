@@ -12,12 +12,23 @@ const teamApi = baseApi.injectEndpoints({
       query: () => ({
         url: "/team/getall",
       }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map(({ id }) => ({
+                type: "team-members" as const,
+                id,
+              })),
+              { type: "team-members", id: "LIST" },
+            ]
+          : [{ type: "team-members", id: "LIST" }],
     }),
     // get single team member
     getSingleTeamMember: builder.query<ISingleTeamResponse, string>({
       query: (id) => ({
         url: `/team/get/${id}`,
       }),
+      providesTags: (_result, _error, id) => [{ type: "team-members", id }],
     }),
     // add team member
     addTeamMember: builder.mutation<
@@ -29,7 +40,7 @@ const teamApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["team-members"],
+      invalidatesTags: [{ type: "team-members", id: "LIST" }],
     }),
     // update team member
     updateTeamMember: builder.mutation<
@@ -37,19 +48,25 @@ const teamApi = baseApi.injectEndpoints({
       { id: string; body: ICreateOrUpdateTeamInput }
     >({
       query: ({ id, body }) => ({
-        url: `/team/update/${id}`,
-        method: "PUT",
+        url: `/team/edit/${id}`,
+        method: "PATCH",
         body,
       }),
-      invalidatesTags: ["team-members"],
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "team-members", id },
+        { type: "team-members", id: "LIST" },
+      ],
     }),
     // delete team member
     deleteTeamMember: builder.mutation<void, string>({
       query: (id) => ({
-        url: `/team/delete/${id}`,
+        url: `/team/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["team-members"],
+      invalidatesTags: (_result, _error, id) => [
+        { type: "team-members", id },
+        { type: "team-members", id: "LIST" },
+      ],
     }),
   }),
 });

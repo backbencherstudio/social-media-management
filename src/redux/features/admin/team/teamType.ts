@@ -1,6 +1,6 @@
 export interface ITeamMember {
   id: string;
-  full_name: string;
+  fullName: string;
   email: string;
   role: string;
 }
@@ -16,7 +16,7 @@ export interface ISingleTeamResponse {
 }
 
 export interface ICreateOrUpdateTeamInput {
-  full_name: string;
+  fullName: string;
   email: string;
   role: string;
 }

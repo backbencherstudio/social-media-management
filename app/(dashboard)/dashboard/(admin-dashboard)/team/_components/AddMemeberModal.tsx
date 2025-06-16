@@ -16,39 +16,45 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useAddTeamMemberMutation } from "@/src/redux/features/admin/team/teamApi";
+import { toast } from "sonner";
 
 interface AddMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: Omit<TeamMember, "id" | "selected">) => Promise<void>;
 }
 
 export default function AddMemeberModal({
   isOpen,
   onClose,
-  onSubmit,
 }: AddMemberModalProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     role: "admin",
   });
 
+  const [addTeamMember, { isLoading }] = useAddTeamMemberMutation();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     try {
-      await onSubmit({
-        full_name: formData.fullName,
+      await addTeamMember({
+        fullName: formData.fullName,
         role: formData.role,
         email: formData.email,
+      }).unwrap();
+      
+      toast.success("Team member added successfully");
+      setFormData({
+        fullName: "",
+        email: "",
+        role: "admin",
       });
       onClose();
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
+      toast.error("Failed to add team member");
     }
   };
 
