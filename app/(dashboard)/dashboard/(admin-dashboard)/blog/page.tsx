@@ -72,7 +72,7 @@ export default function Blog() {
   const { data, isLoading } = useGetAllBlogsQuery();
   const [deleteBlog] = useDeleteBlogMutation();
   console.log(data, "data");
-  const imageUrl = "http://192.168.4.2:9000/social-media/";
+  const imageURL = "http://192.168.4.2:9000/social-media/";
 
   if (isLoading) {
     return <div className="flex justify-center items-center">Loading...</div>;
@@ -129,7 +129,7 @@ export default function Blog() {
                 );
                 return firstMedia ? (
                   <img
-                    src={`${imageUrl}${firstMedia.content}`}
+                    src={`${imageURL}${firstMedia.content}`}
                     alt={post.title}
                     className="w-full h-36 object-cover"
                   />
