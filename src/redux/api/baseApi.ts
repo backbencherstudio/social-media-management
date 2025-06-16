@@ -19,5 +19,7 @@ export const baseApi = createApi({
     "create-new-email",
     "auth-all",
     "all-sents",
-  ],
+    "single-sent",
+    "all-inbox",
+    ],
 });

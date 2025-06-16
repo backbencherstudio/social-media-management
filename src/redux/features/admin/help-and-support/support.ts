@@ -9,12 +9,26 @@ const helpAndSupport = baseApi.injectEndpoints({
       }),
       providesTags: ["all-sents"],
     }),
-    getAllInbox: builder.query<any, void>({
-      query: () => ({
-        url: "",
+    getSingleSent: builder.query<any, string>({
+      query: (id) => ({
+        url: `/admin/email/${id}`,
         method: "GET",
       }),
-      providesTags: ["all-sents"],
+      providesTags: ["single-sent"],
+    }),
+    getAllInbox: builder.query<any, void>({
+      query: () => ({
+        url: "/admin/email/inbox",
+        method: "GET",
+      }),
+      providesTags: ["all-inbox"],
+    }),
+    getSingleInbox: builder.query<any, string>({
+      query: (id) => ({
+        url: `/admin/email/inbox/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["all-inbox"],
     }),
     createNewEmail: builder.mutation({
       query: (data) => ({
@@ -35,5 +49,11 @@ const helpAndSupport = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllSentsQuery, useGetAllInboxQuery, useCreateNewEmailMutation, useSendAllEmailMutation } =
-  helpAndSupport;
+export const {
+  useGetAllSentsQuery,
+  useGetSingleSentQuery,
+  useGetAllInboxQuery,
+  useGetSingleInboxQuery,
+  useCreateNewEmailMutation,
+  useSendAllEmailMutation,
+} = helpAndSupport;

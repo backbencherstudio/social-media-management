@@ -29,7 +29,8 @@ export default function Sent() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (isLoading) return <div className="p-4">Loading...</div>;
+  if (isLoading)
+    return <div className="flex justify-center items-center">Loading...</div>;
   if (isError)
     return <div className="p-4 text-red-500">Error fetching data.</div>;
 

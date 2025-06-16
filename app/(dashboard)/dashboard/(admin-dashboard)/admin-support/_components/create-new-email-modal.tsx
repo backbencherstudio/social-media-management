@@ -65,7 +65,7 @@ export default function CreateNewEmailModal({
           <h2 className="text-xl font-semibold">Create New Email</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 cursor-pointer"
           >
             ✕
           </button>
@@ -189,7 +189,7 @@ export default function CreateNewEmailModal({
               </div>
               <button
                 type="submit"
-                className="bg-black text-white rounded-lg px-4 py-3"
+                className="bg-black text-white rounded-lg px-4 py-3 cursor-pointer"
               >
                 Send Email
               </button>
