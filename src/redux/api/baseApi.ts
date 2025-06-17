@@ -22,5 +22,9 @@ export const baseApi = createApi({
     "single-sent",
     "all-inbox",
     "categories",
+    "payment",
+    "invoice",
+    "reseller-payment",
+    "release-payment",
     ],
 });

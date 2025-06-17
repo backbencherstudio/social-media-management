@@ -10,23 +10,24 @@ import {
 } from "@/components/ui/table";
 
 import { Badge } from "@/components/ui/badge";
-import { EyeIcon, UserRoundPlus, Users2Icon } from "lucide-react";
-import Image from "next/image";
+import { EyeIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Pagination } from "../../_components/Pagination";
 import CustomSelect from "../../../_components/custom-select";
 
 export type Task = {
-  taskId: string;
+  task_id: string;
   role: string;
-  assignee: string;
+  assignees:{
+    full_name: string;
+  }[];
   avatar: string;
-  dueDate: string;
-  status:
+  due_date: string;
+  task_status:
     | "Pending"
-    | "In Progress"
-    | "Completed"
+    | "In_progress"
+    | "completed"
     | "In Review"
     | "On Hold"
     | "Cancel";
@@ -51,8 +52,8 @@ export function TaskTable({
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const totalPages = Math.ceil(tasks.length / itemsPerPage);
-  const paginatedOrders = tasks.slice(
+  const totalPages = Math.ceil(tasks?.length / itemsPerPage);
+  const paginatedOrders = tasks?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -99,10 +100,10 @@ export function TaskTable({
         </TableHeader>
         {/* table body */}
         <TableBody>
-          {paginatedOrders.map((task, i) => (
+          {tasks?.map((task, i) => (
             <TableRow className="border-b border-gray-100" key={i}>
               <TableCell className="text-sm text-[#1D1F2C] font-medium">
-                {task.taskId}
+                #{task?.task_id}
               </TableCell>
               <TableCell>
                 <div className="flex flex-col">
@@ -114,25 +115,27 @@ export function TaskTable({
 
               <TableCell>
                 <div>
-                  <p className="font-medium text-[#1D1F2C]">{task.assignee}</p>
+                  <p className="font-medium text-[#1D1F2C]">
+                    {task.assignees[0].full_name}
+                  </p>
                 </div>
               </TableCell>
               <TableCell className="text-sm font-medium text-[#4A4C56]">
-                {task.dueDate}
+                {task.due_date}
               </TableCell>
 
               <TableCell>
                 <Badge
                   variant="outline"
                   className={`rounded-full ${
-                    task.status === "Pending"
+                    task.task_status === "Pending"
                       ? "text-orange-500 border-orange-300 bg-orange-50"
-                      : task.status === "In Progress"
+                      : task.task_status === "In_progress"
                       ? "text-blue-500 border-blue-300 bg-blue-50"
                       : "text-green-500 border-green-300 bg-green-50"
                   }`}
                 >
-                  {task.status}
+                  {task.task_status}
                 </Badge>
               </TableCell>
               <TableCell>
@@ -167,8 +170,8 @@ export function TaskTable({
         <div className="flex items-center gap-4">
           <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-            {Math.min(currentPage * itemsPerPage, tasks.length)} of{" "}
-            {tasks.length} entries
+            {Math.min(currentPage * itemsPerPage, tasks?.length)} of{" "}
+            {tasks?.length} entries
           </label>
           <select
             id="itemsPerPage"
