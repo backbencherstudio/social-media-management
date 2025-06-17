@@ -261,7 +261,6 @@ export default function CreateBlog() {
           </div>
         ))}
 
-        {<div></div>}
 
         {/* Add Content Buttons */}
         <div className="bg-white p-3 md:p-4 rounded-lg shadow space-y-3 md:space-y-4">

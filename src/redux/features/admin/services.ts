@@ -45,6 +45,13 @@ const services = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["services"],
     }),
+    allCategories: builder.query<any[], void>({
+      query: () => ({
+        url: "/categories",
+        method: "GET",
+      }),
+      providesTags: ["categories"],
+    }),
   }),
 });
 
@@ -55,4 +62,5 @@ export const {
   useCreateServiceMutation,
   useToggleServiceStatusMutation,
   useEditServiceMutation,
+  useAllCategoriesQuery,
 } = services;

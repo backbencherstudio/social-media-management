@@ -9,6 +9,12 @@ const blog = baseApi.injectEndpoints({
       }),
       providesTags: ["blogs"],
     }),
+    getBlogById: builder.query<any, string>({
+      query: (id) => ({
+        url: `/admin/blog/${id}`,
+        method: "GET",
+      }),
+    }),
     createBlog: builder.mutation({
       query: (data) => ({
         url: "/admin/blog",
@@ -24,11 +30,21 @@ const blog = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["blogs"],
     }),
+    updateBlog: builder.mutation({
+      query: ({ data, id }: { data: any; id: string }) => ({
+        url: `/admin/blog/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["blogs"],
+    }),
   }),
 });
 
 export const {
   useGetAllBlogsQuery,
+  useGetBlogByIdQuery,
   useCreateBlogMutation,
   useDeleteBlogMutation,
+  useUpdateBlogMutation,
 } = blog;

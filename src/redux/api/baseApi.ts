@@ -21,5 +21,6 @@ export const baseApi = createApi({
     "all-sents",
     "single-sent",
     "all-inbox",
+    "categories",
     ],
 });

@@ -1,5 +1,6 @@
 "use client";
 import {
+  useAllCategoriesQuery,
   useEditServiceMutation,
   useGetSingleServiceQuery,
 } from "@/src/redux/features/admin/services";
@@ -34,6 +35,7 @@ export default function EditService() {
   const { id } = useParams() as { id: string };
   const { data } = useGetSingleServiceQuery(id);
   const [editService, { isLoading }] = useEditServiceMutation();
+  const { data: categories } = useAllCategoriesQuery();
 
   // Set default values
   useEffect(() => {
@@ -189,11 +191,11 @@ export default function EditService() {
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             >
               <option value="">Select a category</option>
-              <option value="marketing">Marketing</option>
-              <option value="design">Design</option>
-              <option value="development">Development</option>
-              <option value="content">Content Creation</option>
-              <option value="analytics">Analytics</option>
+              {categories?.map((cat: any) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
             {errors.category_id && (
               <p className="text-red-500 text-sm mt-1">

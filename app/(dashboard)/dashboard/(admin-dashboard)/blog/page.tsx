@@ -127,6 +127,7 @@ export default function Blog() {
                 const firstMedia = post.contents.find(
                   (content) => content.content_type === "media"
                 );
+                console.log(firstMedia?.content, "firstMedia");
                 return firstMedia ? (
                   <img
                     src={`${imageURL}${firstMedia.content}`}
