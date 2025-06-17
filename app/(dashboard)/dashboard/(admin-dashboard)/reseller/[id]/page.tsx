@@ -1,7 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
-import { useGetOneApplicationQuery } from "@/src/redux/features/admin/reseller/resellerApplicationApi";
+import {
+  useAcceptResellerMutation,
+  useGetOneApplicationQuery,
+  useRejectResellerMutation,
+} from "@/src/redux/features/admin/reseller/resellerApplicationApi";
+import { toast } from "sonner";
 
 const fakeApplicant = {
   applicationId: "cmbbtwh0m0002ret8w7jakeb6",
@@ -25,6 +30,8 @@ export default function ResellerDetailsPage() {
   const params = useParams();
   const { id } = params;
 
+  console.log("id", id);
+
   // Fetch reseller details using id, or get from fakeResellersList
   // Example: const reseller = fakeResellersList.find(r => r.id === Number(id));
 
@@ -32,9 +39,36 @@ export default function ResellerDetailsPage() {
   console.log("Data", data);
   const applicant = data?.data[0] || {};
 
+  const [
+    acceptReseller,
+    { isLoading: isAcceptLoading, isError: isAcceptError },
+  ] = useAcceptResellerMutation();
+  const [
+    rejectReseller,
+    { isLoading: isRejectLoading, isError: isRejectError },
+  ] = useRejectResellerMutation();
+
+  const handleAcceptReseller = async () => {
+    try {
+      await acceptReseller({ userId: id as string });
+      toast.success("Reseller accepted successfully");
+      router.push("/dashboard/reseller");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRejectReseller = async () => {
+    try {
+      await rejectReseller({ userId: id as string });
+      toast.success("Reseller rejected successfully");
+      router.push("/dashboard/reseller");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
-
   return (
     <div className="p-6 md:p-10 space-y-10">
       {/* Breadcrumb */}
@@ -64,83 +98,107 @@ export default function ResellerDetailsPage() {
       </p>
 
       <div>
-      <div className="space-y-10 bg-white rounded-xl shadow-sm p-6 ">
-        {/* Applicant Details Section */}
-        <section className="">
-          <div className="flex items-center justify-between mb-2 md:mb-6 mb-4">
-            <h1 className="text-xl md:text-2xl font-semibold ">
-              Applicant Details
-            </h1>
+        <div className="space-y-10 bg-white rounded-xl shadow-sm p-6 ">
+          {/* Applicant Details Section */}
+          <section className="">
+            <div className="flex items-center justify-between mb-2 md:mb-6 mb-4">
+              <h1 className="text-xl md:text-2xl font-semibold ">
+                Applicant Details
+              </h1>
 
-            <div className="flex items-center  gap-2">
-              <Button className="bg-red-100 text-red-400" variant="destructive">
-                Reject
-              </Button>
-              <Button className="bg-green-600 text-white" variant="destructive">
-                Accept
-              </Button>
+              {applicant?.status === "pending" ? (
+                <div className="flex items-center  gap-2">
+                  <Button
+                    className="bg-red-100 text-red-400"
+                    variant="destructive"
+                    onClick={handleRejectReseller}
+                    disabled={isRejectLoading}
+                  >
+                    {isRejectLoading ? "Rejecting..." : "Reject"}
+                  </Button>
+                  <Button
+                    className="bg-green-600 text-white"
+                    variant="destructive"
+                    onClick={handleAcceptReseller}
+                    disabled={isAcceptLoading}
+                  >
+                    {isAcceptLoading ? "Accepting..." : "Accept"}
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center  gap-2">
+                  <Button className="bg-gray-100 text-gray-700 capitalize cursor-not-allowed font-semibold">
+                    {applicant?.status}
+                  </Button>
+                </div>
+              )}
             </div>
-          </div>
-          <div className="bg-[#F9F9FB] p-6 md:p-10 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 text-sm text-gray-800 shadow">
-            <Detail label="Name" value={applicant?.full_name} />
-            <Detail label="Mail" value={applicant?.user_email} />
-            <Detail label="Location" value={applicant?.location} />
-            <Detail label="Number" value={applicant?.phone_number?.toString()} />
-            <Detail label="Position Applying For" value={applicant?.position} />
-            <Detail
-              label="Years of Experience"
-              value={applicant?.experience.toString()}
-            />
-            <Detail
-              label="Portfolio/LinkedIn (Optional)"
-              value={applicant?.portfolio}
-            />
-            <Detail
-              label="Relevant Skills"
-              value={applicant?.skills.join(", ")}
-            />
-          </div>
-        </section>
+            <div className="bg-[#F9F9FB] p-6 md:p-10 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 text-sm text-gray-800 shadow">
+              <Detail label="Name" value={applicant?.full_name} />
+              <Detail label="Mail" value={applicant?.user_email} />
+              <Detail label="Location" value={applicant?.location} />
+              <Detail
+                label="Number"
+                value={applicant?.phone_number?.toString()}
+              />
+              <Detail
+                label="Position Applying For"
+                value={applicant?.position}
+              />
+              <Detail
+                label="Years of Experience"
+                value={applicant?.experience.toString()}
+              />
+              <Detail
+                label="Portfolio/LinkedIn (Optional)"
+                value={applicant?.portfolio}
+              />
+              <Detail
+                label="Relevant Skills"
+                value={applicant?.skills.join(", ")}
+              />
+            </div>
+          </section>
 
-        {/* Cover Letter Section */}
-        <section className=" rounded-xl p-6 md:p-10">
-          <h2 className="text-xl font-semibold mb-6 border-b-2 border-gray-200  pb-2">
-            Cover Letter
-          </h2>
-          <div className="text-sm text-gray-700 space-y-5 leading-relaxed">
-            <p>
-              <strong>Subject:</strong> Application for Social Media Manager
-              Position
-            </p>
-            <p>Dear Hiring Manager’s,</p>
-            <p>{applicant?.cover_letter}</p>
-            <p>
-              In my previous role at [Previous Company], I successfully managed
-              multi-platform social media campaigns that increased brand
-              engagement by [X]%. My expertise in content creation, community
-              management, and data-driven decision-making has allowed me to
-              develop and execute campaigns that align with business goals. I am
-              proficient in using tools like [mention relevant tools, e.g.,
-              Hootsuite, Buffer, or Meta Business Suite] to analyze performance
-              metrics and optimize content strategies.
-            </p>
+          {/* Cover Letter Section */}
+          <section className=" rounded-xl p-6 md:p-10">
+            <h2 className="text-xl font-semibold mb-6 border-b-2 border-gray-200  pb-2">
+              Cover Letter
+            </h2>
+            <div className="text-sm text-gray-700 space-y-5 leading-relaxed">
+              <p>
+                <strong>Subject:</strong> Application for Social Media Manager
+                Position
+              </p>
+              <p>Dear Hiring Manager’s,</p>
+              <p>{applicant?.cover_letter}</p>
+              <p>
+                In my previous role at [Previous Company], I successfully
+                managed multi-platform social media campaigns that increased
+                brand engagement by [X]%. My expertise in content creation,
+                community management, and data-driven decision-making has
+                allowed me to develop and execute campaigns that align with
+                business goals. I am proficient in using tools like [mention
+                relevant tools, e.g., Hootsuite, Buffer, or Meta Business Suite]
+                to analyze performance metrics and optimize content strategies.
+              </p>
 
-            <p>
-              Best regards,
-              <br />
-              Md. Mansur
-            </p>
-          </div>
+              <p>
+                Best regards,
+                <br />
+                Md. Mansur
+              </p>
+            </div>
 
-          <Button
-            onClick={() => router.back()}
-            className="mt-8 bg-[#F5F5F7] text-[#4A4C56] cursor-pointer"
-            variant="secondary"
-          >
-            Back
-          </Button>
-        </section>
-      </div>
+            <Button
+              onClick={() => router.back()}
+              className="mt-8 bg-[#F5F5F7] text-[#4A4C56] cursor-pointer"
+              variant="secondary"
+            >
+              Back
+            </Button>
+          </section>
+        </div>
       </div>
       {/* back button */}
     </div>

@@ -17,6 +17,7 @@ export const baseApi = createApi({
     "security-settings",
     "user-role-management",
     "team-members",
+    "all-resellers",
     "reseller-applications",
   ],
 });

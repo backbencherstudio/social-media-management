@@ -3,16 +3,17 @@ import * as React from "react";
 interface ClientStatusSwitchProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
+  disabled?: boolean;
 }
 
-export default function CustomSwitch({ checked, onChange }: ClientStatusSwitchProps) {
+export default function CustomSwitch({ checked, onChange, disabled }: ClientStatusSwitchProps) {
   return (
     <button
       type="button"
       aria-checked={checked}
       role="switch"
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-6 w-12 items-center rounded-full transition-colors focus:outline-none ${
+      className={`relative inline-flex h-6 w-12 items-center rounded-full transition-colors focus:outline-none cursor-pointer ${disabled ? "cursor-not-allowed" : "cursor-pointer"} ${
         checked ? "bg-emerald-400" : "bg-gray-300"
       }`}
     >

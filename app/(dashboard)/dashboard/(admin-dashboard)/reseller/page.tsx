@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import ResellersState from "./components/ResellersState";
-import { ResellerTable } from "./components/ResellersTable";
+import ResellersState from "./_components/ResellersState";
+import { ResellerTable } from "./_components/ResellersTable";
 import {
   applicantsList,
   fakeResellersList,
@@ -10,13 +10,25 @@ import {
 } from "./fakeResellers";
 import CustomSelect from "../../_components/custom-select";
 import { Pagination } from "../_components/Pagination";
-import ApplicantTable from "./components/ApplicantTabtle";
+import ApplicantTable from "./_components/ApplicantTabtle";
 import { useGetAllApplicationQuery } from "@/src/redux/features/admin/reseller/resellerApplicationApi";
+import { useGetAllResellersQuery } from "@/src/redux/features/admin/reseller/resellerApi";
 
 export default function page() {
-  const { data: applications } = useGetAllApplicationQuery(undefined);
-  console.log("applications", applications?.data);
-  
+  const {
+    data: resellers,
+    isLoading: isResellersLoading,
+    isError: isResellersError,
+  } = useGetAllResellersQuery(undefined);
+  // console.log(resellers);
+
+    const {
+    data: applications,
+    isLoading: isApplicationsLoading,
+    isError: isApplicationsError,
+  } = useGetAllApplicationQuery(undefined);
+  // console.log("applications", applications?.data);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
@@ -43,7 +55,9 @@ export default function page() {
           <div className=" rounded-xl mt-6  bg-white shadow">
             {/* table */}
             <ResellerTable
-              resellers={fakeResellersList}
+              isLoading={isResellersLoading}
+              isError={isResellersError}
+              resellers={resellers?.data || []}
               period={period}
               setPeriod={setPeriod}
               orderStatus={orderStatus}
@@ -57,6 +71,8 @@ export default function page() {
 
       <div className="mt-6">
         <ApplicantTable
+          isLoading={isApplicationsLoading}
+          isError={isApplicationsError}
           applicants={applications?.data || []}
           periodApplicant={periodApplicant}
           setPeriodApplicant={setPeriodApplicant}

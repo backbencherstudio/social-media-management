@@ -6,6 +6,8 @@ import CustomSelect from "../../../_components/custom-select";
 import { Applicant } from "../fakeResellers";
 
 interface ApplicantTableProps {
+  isLoading: boolean;
+  isError: boolean;
   applicants: Applicant[];
   periodApplicant: string;
   setPeriodApplicant: (value: string) => void;
@@ -14,6 +16,8 @@ interface ApplicantTableProps {
 }
 
 export default function ApplicantTable({
+  isLoading,
+  isError,
   applicants,
   periodApplicant,
   setPeriodApplicant,
@@ -28,6 +32,10 @@ export default function ApplicantTable({
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error</div>;
+
   return (
     <>
       <div className="p-6 bg-white rounded-xl shadow-sm overflow-x-auto">
