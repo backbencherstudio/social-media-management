@@ -16,40 +16,45 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useAddTeamMemberMutation } from "@/src/redux/features/admin/team/teamApi";
+import { toast } from "sonner";
 
 interface AddMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: Omit<TeamMember, "id" | "selected">) => Promise<void>;
 }
 
 export default function AddMemeberModal({
   isOpen,
   onClose,
-  onSubmit,
 }: AddMemberModalProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
-    role: "Account Manager",
+    role: "admin",
   });
+
+  const [addTeamMember, { isLoading }] = useAddTeamMemberMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     try {
-      await onSubmit({
-        name: `${formData.firstName} ${formData.lastName}`,
+      await addTeamMember({
+        fullName: formData.fullName,
         role: formData.role,
         email: formData.email,
+      }).unwrap();
+      
+      toast.success("Team member added successfully");
+      setFormData({
+        fullName: "",
+        email: "",
+        role: "admin",
       });
       onClose();
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
+      toast.error("Failed to add team member");
     }
   };
 
@@ -69,34 +74,20 @@ export default function AddMemeberModal({
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className=" gap-4">
             <div className="space-y-2">
-              <Label htmlFor="firstName">First name</Label>
+              <Label htmlFor="fullName">Full Name</Label>
               <Input
-                id="firstName"
+                id="fullName"
+                name="fullName"
                 className="flex-1 border border-gray-300 focus:ring-transparent "
                 placeholder="Md."
-                value={formData.firstName}
+                value={formData.fullName}
+                required
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
-                    firstName: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="lastName">Last name</Label>
-              <Input
-                id="lastName"
-                className="flex-1 border border-gray-300 focus:ring-transparent focus:outline-none focus:ring-0"
-                placeholder="Mansur"
-                value={formData.lastName}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    lastName: e.target.value,
+                    fullName: e.target.value,
                   }))
                 }
               />
@@ -107,10 +98,12 @@ export default function AddMemeberModal({
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="name@domain.com"
               className="border border-gray-300 focus:ring-transparent"
               value={formData.email}
+              required
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
@@ -123,6 +116,7 @@ export default function AddMemeberModal({
           <div className="space-y-2 ">
             <Label htmlFor="role">Role</Label>
             <Select
+              value={formData.role}
               onValueChange={(value) =>
                 setFormData((prev) => ({
                   ...prev,
@@ -134,9 +128,9 @@ export default function AddMemeberModal({
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
               <SelectContent className="bg-white">
-                <SelectItem value="Account Manager">Account Manager</SelectItem>
-                <SelectItem value="Project Manager">Project Manager</SelectItem>
-                <SelectItem value="Content Writer">Content Writer</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="manager">Project Manager</SelectItem>
+                <SelectItem value="writer">Content Writer</SelectItem>
               </SelectContent>
             </Select>
           </div>

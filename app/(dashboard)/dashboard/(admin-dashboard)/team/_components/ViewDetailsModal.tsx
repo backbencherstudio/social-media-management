@@ -29,7 +29,7 @@ export function ViewMemberModal({
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="space-y-2">
-            <h3 className="font-medium">{member.name}</h3>
+            <h3 className="font-medium">{member.full_name}</h3>
             <p className="text-sm text-gray-500">{member.email}</p>
             {/* Add other member details */}
 

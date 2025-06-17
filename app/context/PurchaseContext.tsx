@@ -15,7 +15,7 @@ const PurchaseContext = createContext<PurchaseContextType | undefined>(
 
 // Create a provider component
 export const PurchaseProvider = ({ children }: { children: React.ReactNode }) => {
-  const [hasPurchased, setHasPurchased] = useState(true);
+  const [hasPurchased, setHasPurchased] = useState(false);
 
   return (
     <PurchaseContext.Provider value={{ hasPurchased, setHasPurchased }}>

@@ -56,18 +56,18 @@ export default function FollowerActivityMap() {
         </div>
 
         {/* dropdown and Date */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ">
           {/* Platform dropdown */}
           <div className="relative">
             <button
-              className="flex items-center gap-2 px-4 py-2 border rounded-md bg-white"
+              className="flex items-center gap-2 px-4 py-2 border rounded-md bg-white border-[#E5E5EC] hover:bg-gray-50 "
               onClick={() => setShowPlatformDropdown(!showPlatformDropdown)}
             >
               {platform} <ChevronDown className="h-4 w-4" />
             </button>
 
             {showPlatformDropdown && (
-              <div className="absolute top-full right-0 mt-1 w-40 bg-white border rounded-md shadow-lg z-10">
+              <div className="absolute top-full right-0 mt-1 w-40 bg-white border rounded-md shadow-lg z-10 border-[#E5E5EC]">
                 {["Facebook", "Instagram", "Twitter", "LinkedIn"].map((p) => (
                   <button
                     key={p}
@@ -92,7 +92,7 @@ export default function FollowerActivityMap() {
               endDate={endDate}
               onChange={(update) => setDateRange(update)}
               customInput={
-                <button className="flex items-center gap-2 px-4 py-2 border rounded-md bg-white">
+                <button className="flex items-center gap-2 px-4 py-2 border rounded-md bg-white border-[#E5E5EC]">
                   <Calendar className="h-4 w-4" />
                   {startDate && endDate
                     ? `${format(startDate, "d MMM")} - ${format(
