@@ -94,10 +94,11 @@ export const fakeResellersList: Reseller[] = Array.from({ length: 80 }, (_, i) =
 // fakedata for applicant.ts
 
 export type Applicant = {
-  id: number;
-  name: string;
-  email: string;
-  number: string;
+  user_id: number;
+  applicationId: string;
+  full_name: string;
+  user_email: string;
+  phone_number: string;
   position: string;
   portfolio: string;
 };
@@ -143,11 +144,11 @@ export const applicantsList: Applicant[] = Array.from({ length: 50 }, (_, i) => 
   const portfolio = `http://www.${portfolioSites[i % portfolioSites.length]}`;
   
   return {
-    id: i + 1,
-    name,
-    email: `${name.toLowerCase().split(' ')[0]}@example.com`,
-    number: `(${Math.floor(Math.random() * 900) + 100}) 555-${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`,
+    user_id: i + 1,
+    full_name: name,
+    user_email: `${name.toLowerCase().split(' ')[0]}@example.com`,
+    phone_number: `(${Math.floor(Math.random() * 900) + 100}) 555-${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`,
     position,
-    portfolio,
+    portfolio,  
   };
 });

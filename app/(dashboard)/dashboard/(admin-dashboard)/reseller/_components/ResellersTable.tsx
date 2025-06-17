@@ -15,20 +15,23 @@ import { useRouter } from "next/navigation";
 import CustomSelect from "../../../_components/custom-select";
 import { useState } from "react";
 import { Pagination } from "../../_components/Pagination";
+import { useUpdateResellerStatusMutation } from "@/src/redux/features/admin/reseller/resellerApi";
 
 export type Reseller = {
-  id: number;
-  name: string;
-  email: string;
-  avatar: string;
+  id: string;
+  full_name: string;
+  user_email: string;
+  total_earnings: number;
+  total_task: number;
   skills: string[];
-  task: number;
-  earning: string;
-  status: "Active" | "Deactivate";
-  enabled: boolean;
+  completeTask: number;
+  user_type: string;
+  status: "active" | "inactive";
 };
 
 interface ResellerTableProps {
+  isLoading: boolean;
+  isError: boolean;
   resellers: Reseller[];
   period: string;
   setPeriod: (value: string) => void;
@@ -36,7 +39,24 @@ interface ResellerTableProps {
   setOrderStatus: (value: string) => void;
 }
 
+// const fakeReseller = {
+//   "id": "RES_n461l81lt1q8naigks2170vm",
+//   "full_name": "The Topu",
+//   "user_email": "rjtopu6645@gmail.com",
+//   "total_earnings": 133,
+//   "total_task": 3,
+//   "skills": [
+//     "Product Strategy",
+//     "Agile",
+//     "User Experience"
+//   ],
+//   "completeTask": 1,
+//   "user_type": "reseller",
+//   "status": "active"
+// }
 export function ResellerTable({
+  isLoading,
+  isError,
   resellers,
   period,
   setPeriod,
@@ -55,10 +75,27 @@ export function ResellerTable({
     currentPage * itemsPerPage
   );
 
+  const [
+    updateResellerStatus,
+    { isLoading: isUpdateLoading, isError: isUpdateError },
+  ] = useUpdateResellerStatusMutation();
+
+  const handleUpdateResellerStatus = async (id: string) => {
+    try {
+      await updateResellerStatus(id);
+      console.log("Update id", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error</div>;
+
   return (
     <div className=" overflow-hidden border border-gray-100 shadow-sm px-4">
       <div className="flex items-center justify-between p-2 md:p-5">
-        <h2 className="text-xl font-semibold ">Resellers</h2>
+        <h2 className="text-xl font-semibold">Active Resellers</h2>
 
         <div className="flex flex-wrap items-center justify-center gap-4 ">
           <CustomSelect
@@ -94,24 +131,24 @@ export function ResellerTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {paginationResellersList.map((reseller) => (
+          {paginationResellersList?.map((reseller) => (
             <TableRow key={reseller.id} className="hover:bg-gray-50">
               {/* Reseller Info */}
               <TableCell>
                 <div className="flex items-center space-x-3">
                   <Image
-                    src={reseller.avatar}
-                    alt={reseller.name}
+                    src={reseller?.avatar || "/images/avatar.png"}
+                    alt={reseller.full_name}
                     width={40}
                     height={40}
                     className="rounded-full"
                   />
                   <div className="flex flex-col">
                     <span className="font-medium text-[#1D1F2C]">
-                      {reseller.name}
+                      {reseller.full_name}
                     </span>
                     <span className="text-sm text-[#4A4C56]">
-                      {reseller.email}
+                      {reseller.user_email}
                     </span>
                   </div>
                 </div>
@@ -120,7 +157,7 @@ export function ResellerTable({
               {/* Skills */}
               <TableCell>
                 <div className="flex flex-wrap gap-2">
-                  {reseller.skills.map((skill, i) => (
+                  {reseller?.skills?.map((skill, i) => (
                     <span
                       key={i}
                       className={`text-xs font-medium px-2 py-1 rounded-full ${skillColor(
@@ -135,19 +172,19 @@ export function ResellerTable({
 
               {/* Task */}
               <TableCell className="text-sm text-[#4A4C56] font-medium">
-                {reseller.task}
+                {reseller.total_task}
               </TableCell>
 
               {/* Earning */}
               <TableCell className="text-sm text-[#4A4C56] font-medium">
-                {reseller.earning}
+                {reseller.total_earnings}
               </TableCell>
 
               {/* Status */}
               <TableCell>
                 <span
-                  className={`text-xs font-medium px-3 py-1 rounded-full ${
-                    reseller.status === "Active"
+                  className={`text-xs font-medium px-3 py-1 rounded-full capitalize ${
+                    reseller.status === "active"
                       ? "text-green-600 bg-green-50"
                       : "text-gray-500 bg-gray-100"
                   }`}
@@ -162,22 +199,25 @@ export function ResellerTable({
                   <button
                     className="w-9 h-9 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 cursor-pointer"
                     onClick={() =>
-                      router.push(`/dashboard/reseller/${reseller.id}`)
+                      router.push(`/dashboard/reseller/active/${reseller.id}`)
                     }
                   >
                     <EyeIcon className="w-4 h-4 text-gray-600" />
                   </button>
-                  <button
+                  {/* <button
                     onClick={() =>
                       router.push(`/dashboard/reseller/${reseller.id}/edit`)
                     }
                     className="w-9 h-9 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200"
                   >
                     <PencilIcon className="w-4 h-4 text-gray-600" />
-                  </button>
+                  </button> */}
                   <CustomSwitch
-                    checked={reseller.enabled}
-                    onChange={() => {}}
+                    disabled={isUpdateLoading}
+                    checked={reseller.status === "active"}
+                    onChange={() => {
+                      handleUpdateResellerStatus(reseller.id);
+                    }}
                   />
                 </div>
               </TableCell>

@@ -26,5 +26,6 @@ export const baseApi = createApi({
     "invoice",
     "reseller-payment",
     "release-payment",
+    "all-resellers",
     ],
 });
