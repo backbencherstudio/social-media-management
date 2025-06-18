@@ -1,87 +1,23 @@
 "use client";
+
 import Link from "next/link";
-import Image from "next/image"; // Add this import
 import React, { useState } from "react";
-import { CiCreditCard1 } from "react-icons/ci";
 import { GrView } from "react-icons/gr";
 import { Pagination } from "../../payment/_components/pagination";
 import PaymentDetailsModalReseller from "../../payment/_components/payment-details-modal-reseller";
 import CreateNewEmailModal from "./create-new-email-modal";
+import { useGetAllSentsQuery } from "@/src/redux/features/admin/help-and-support/support";
 
 export default function Sent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<any>(null);
+  const [showModal, setShowModal] = useState(false);
 
-  const baseAssignedAvatars = [
-    "https://img.freepik.com/free-photo/man-wearing-round-eyeglasses-casual-t-shirt_273609-19641.jpg?w=740",
-    "https://img.freepik.com/free-photo/smiling-businessman-face-portrait-wearing-suit_53876-148138.jpg?w=740",
-    "https://img.freepik.com/premium-photo/man-wearing-headset-with-blue-background_758367-169302.jpg?w=740",
-  ];
+  const { data, isLoading, isError } = useGetAllSentsQuery();
 
-  // Extended fake data for pagination
-  const services = [
-    {
-      id: 1,
-      name: "Email Design",
-      started: "2024-12-01",
-      status: "For Review",
-      approval: "Approved",
-      orderId: "62A2AA44-2",
-      amount: "$245.00",
-      package: "Basic Email Package",
-      assignedTo: baseAssignedAvatars,
-    },
-    {
-      id: 2,
-      name: "Plus • 15 posts",
-      started: "2025-01-15",
-      status: "In Progress",
-      approval: "Pending",
-      orderId: "62A2AA44-3",
-      amount: "$350.00",
-      package: "Social Media Package",
-      assignedTo: baseAssignedAvatars,
-    },
-    {
-      id: 3,
-      name: "Email Marketing",
-      started: "2025-01-15",
-      status: "Complete",
-      approval: "Pending",
-      orderId: "62A2AA44-4",
-      amount: "$199.00",
-      package: "Marketing Suite",
-      assignedTo: [],
-    },
-    // Add more items to demonstrate pagination
-    // ...Array.from({ length: 50 }, (_, i) => ({
-    //   id: i + 4,
-    //   name: `${
-    //     [
-    //       "Email Campaign",
-    //       "Social Media Posts",
-    //       "Content Marketing",
-    //       "Digital Marketing",
-    //       "SEO Package",
-    //     ][i % 5]
-    //   } ${i + 4}`,
-    //   started: new Date(2024, Math.floor(i / 30), (i % 30) + 1)
-    //     .toISOString()
-    //     .split("T")[0],
-    //   status: ["For Review", "In Progress", "Complete"][i % 3],
-    //   approval: ["Pending", "Approved"][i % 2],
-    //   orderId: `62A2AA44-${i + 5}`,
-    //   amount: `$${(Math.random() * 900 + 100).toFixed(2)}`,
-    //   package: `${
-    //     ["Basic", "Standard", "Premium", "Enterprise", "Custom"][i % 5]
-    //   } Package ${i + 4}`,
-    //   client: `${["John", "Sarah", "Michael", "Emma", "David"][i % 5]} ${
-    //     ["Smith", "Johnson", "Williams", "Brown", "Jones"][i % 5]
-    //   }`,
-    // })),
-  ];
-
-  // Calculate pagination
+  const services = data?.data || [];
   const totalPages = Math.ceil(services.length / itemsPerPage);
   const paginatedServices = services.slice(
     (currentPage - 1) * itemsPerPage,
@@ -93,22 +29,19 @@ export default function Sent() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<
-    (typeof services)[0] | null
-  >(null);
-  const [showModal, setShowModal] = useState(false);
+  if (isLoading)
+    return <div className="flex justify-center items-center">Loading...</div>;
+  if (isError)
+    return <div className="p-4 text-red-500">Error fetching data.</div>;
 
   return (
     <div className="overflow-x-auto w-full px-4 py-6 bg-white rounded-lg">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 px-1">
-        <div>
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900">Sent</h1>
-        </div>
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900">Sent</h1>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <select
-            className="w-full sm:w-auto border border-gray-200 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full sm:w-auto border border-gray-200 rounded-md px-3 py-1.5 text-sm"
             defaultValue="this_week"
           >
             <option value="this_week">This week</option>
@@ -120,76 +53,56 @@ export default function Sent() {
         </div>
       </div>
 
-      <table className="min-w-full table-auto ">
+      <table className="min-w-full table-auto">
         <thead className="bg-gray-100 text-gray-700 text-left rounded-t-lg">
           <tr>
-            <th className="py-3 px-4 text-left first:rounded-tl-lg whitespace-nowrap text-xs md:text-sm font-medium">
+            <th className="py-3 px-4 text-left text-xs md:text-sm font-medium">
               Email Type
             </th>
-            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+            <th className="py-3 px-4 text-xs md:text-sm font-medium">
               Subject
             </th>
-            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+            <th className="py-3 px-4 text-xs md:text-sm font-medium">
               Recipients
             </th>
-            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
-              Date
-            </th>
-            <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+            <th className="py-3 px-4 text-xs md:text-sm font-medium">Date</th>
+            <th className="py-3 px-4 text-xs md:text-sm font-medium">
               Actions
             </th>
           </tr>
         </thead>
         <tbody>
-          {paginatedServices.map((service) => (
+          {paginatedServices.map((sentData) => (
             <tr
-              key={service.id}
+              key={sentData.id}
               className="border-b border-gray-100 hover:bg-gray-50"
             >
-              <td className="py-4 px-4 whitespace-nowrap text-xs md:text-sm">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <span>{service.orderId}</span>
-                </div>
+              <td className="py-4 px-4 text-xs md:text-sm">
+                {sentData.type || "—"}
               </td>
 
-              <td className="py-4 px-4 whitespace-nowrap">
-                <div>
-                  <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
-                    {service.name}
-                  </h1>
-                  <span className="text-xs text-gray-500">
-                    {service.orderId}
-                  </span>
-                </div>
-              </td>
-              <td className="py-4 px-4 whitespace-nowrap">
-                <div className="flex items-center -space-x-3">
-                  {service?.assignedTo && service.assignedTo.length > 0 ? (
-                    service.assignedTo.map((url, idx) => (
-                      <div key={idx} className="relative">
-                        <Image
-                          src={url}
-                          alt={`Avatar ${idx + 1}`}
-                          width={48}
-                          height={48}
-                          className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-white hover:z-10 transition-all"
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <span className="text-xs text-gray-500">No recipients</span>
-                  )}
-                </div>
+              <td className="py-4 px-4 text-xs md:text-sm font-semibold text-gray-900">
+                {sentData.subject || "No Subject"}
               </td>
 
-              <td className="py-4 px-4 whitespace-nowrap text-xs md:text-sm">
-                <span>{service.started}</span>
+              <td className="py-4 px-4 text-xs md:text-sm">
+                {Array.isArray(sentData.recipient_emails)
+                  ? sentData.recipient_emails.join(", ")
+                  : sentData.recipient_emails}
               </td>
 
-              <td className="py-4 px-4 whitespace-nowrap">
+              <td className="py-4 px-4 text-xs md:text-sm">
+                {new Date(sentData.created_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </td>
+
+              <td className="py-4 px-4">
                 <div className="flex items-center gap-4">
                   <Link
-                    href={`/dashboard/admin-support/${service.id}`}
+                    href={`/dashboard/admin-support/${sentData.id}`}
                     className="hover:text-gray-700 transition-colors"
                   >
                     <GrView className="w-4 h-4 md:w-5 md:h-5" />
@@ -201,6 +114,7 @@ export default function Sent() {
         </tbody>
       </table>
 
+      {/* Pagination */}
       <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <Pagination
           currentPage={currentPage}
@@ -213,11 +127,11 @@ export default function Sent() {
             htmlFor="itemsPerPage"
             className="text-xs md:text-sm text-gray-600 whitespace-nowrap"
           >
-            Showing 1 to 8 of 50 entries
+            Showing {paginatedServices.length} of {services.length} entries
           </label>
           <select
             id="itemsPerPage"
-            className="w-full sm:w-auto border border-gray-200 rounded-md px-2 md:px-3 py-1.5 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full sm:w-auto border border-gray-200 rounded-md px-2 md:px-3 py-1.5 text-xs md:text-sm"
             value={itemsPerPage}
             onChange={(e) => {
               const newItemsPerPage = parseInt(e.target.value);
@@ -232,7 +146,8 @@ export default function Sent() {
           </select>
         </div>
       </div>
-      {/* Payment Details Modal */}
+
+      {/* Modals */}
       <PaymentDetailsModalReseller
         isModalOpen={isModalOpen}
         selectedService={selectedService}

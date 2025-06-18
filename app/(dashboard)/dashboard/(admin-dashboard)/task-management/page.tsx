@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { taskStat, TaskStatCard } from "./_components/TaskStatCard";
 import { TaskTable } from "./_components/TasksTable";
 import { fakeTasks } from "./fakeTask";
+import { useGetAllTasksQuery } from "@/src/redux/features/admin/task-management/task-management";
 
 // taskstates
 const taskStats: taskStat[] = [
@@ -27,6 +28,10 @@ const taskStats: taskStat[] = [
 export default function page() {
   const [period, setPeriod] = useState("week");
   const [orderStatus, setOrderStatus] = useState("all");
+
+  const { data: tasks } = useGetAllTasksQuery();
+  console.log(tasks?.data?.tasks, "tasks");
+
   return (
     <>
       <TaskStatCard taskstate={taskStats}></TaskStatCard>
@@ -34,7 +39,7 @@ export default function page() {
       <div className="rounded-xl  p-4 shadow-sm bg-white my-5">
         {/* table */}
         <TaskTable
-          tasks={fakeTasks}
+          tasks={tasks?.data?.tasks}
           period={period}
           setPeriod={setPeriod}
           orderStatus={orderStatus}

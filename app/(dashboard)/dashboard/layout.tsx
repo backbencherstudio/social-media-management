@@ -8,11 +8,7 @@ import ClientSidebar from "./_components/client-sidebar";
 import UserSidebar from "@/app/(dashboard)/dashboard/_components/user-sidebar";
 import { Toaster } from "sonner";
 
-export default function ClientLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ClientLayout({children}: {children: React.ReactNode}) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState("Admin");
 

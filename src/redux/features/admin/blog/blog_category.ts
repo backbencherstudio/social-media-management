@@ -9,6 +9,12 @@ const blogCategory = baseApi.injectEndpoints({
       }),
       providesTags: ["blog-categories"],
     }),
+    getBlogCategoryById: builder.query<any, string>({
+      query: (id) => ({
+        url: `/blog-categories/${id}`,
+        method: "GET",
+      }),
+    }),
     createBlogCategory: builder.mutation({
       query: (data) => ({
         url: "/blog-categories",
@@ -29,6 +35,7 @@ const blogCategory = baseApi.injectEndpoints({
 
 export const {
   useGetBlogCategoriesQuery,
+  useGetBlogCategoryByIdQuery,
   useCreateBlogCategoryMutation,
   useDeleteBlogCategoryMutation,
 } = blogCategory;

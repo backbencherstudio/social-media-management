@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AlertTriangle } from "lucide-react";
 import ConfirmIcon from "@/public/incons/confirm";
 import { CiCreditCard1 } from "react-icons/ci";
 
@@ -197,7 +196,7 @@ export default function PayoutModal({ isOpen, onClose }: PayoutModalProps) {
               <div className="flex justify-end space-x-4">
                 <button
                   onClick={handleConfirm}
-                  className="flex items-center justify-center gap-3 w-full px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800"
+                  className="flex items-center justify-center gap-3 w-full px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 cursor-pointer"
                 >
                  <CiCreditCard1 className="w-5 h-5" />  Confirm Payment
                 </button>
