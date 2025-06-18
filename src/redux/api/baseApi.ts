@@ -19,5 +19,6 @@ export const baseApi = createApi({
     "team-members",
     "all-resellers",
     "reseller-applications",
+    "clients"
   ],
 });

@@ -13,16 +13,63 @@ import CustomSwitch from "../../_components/CustomSwitch";
 import CustomSelect from "../../../_components/custom-select";
 import { Pagination } from "../../_components/Pagination";
 import { useState } from "react";
-
+import { useUpdateClientStatusMutation } from "@/src/redux/features/admin/client/clientApi";
+import { toast } from "sonner";
+  
+// fake data
 export type SimpleClient = {
-  id: number;
-  company: string;
-  email: string;
-  orders: number;
-  spent: string;
+  id: string;
   status: string;
-  avatar: string;
+  order_status: string;
+  subscription_id: string;
+  ammount: number;
+  pakage_name: string;
+  user_email: string;
+  user_name: string;
+  user_id: string;
+  subscription: {
+    service_id: string;
+    service_tier_id: string;
+  };
+  total_orders: number;
+  total_spent: number;
 };
+const clientData: SimpleClient[] = [
+  {
+    id: "ORD_qqn3h7zd98s58bftq4rfnlfw",
+    status: "active",
+    order_status: "progress",
+    subscription_id: "cmbzxvt8l0005relgymnxiat4",
+    ammount: 149,
+    pakage_name: "Social Media Posts",
+    user_email: "yoyebe7706@pricegh.com",
+    user_name: "tre Arafat",
+    user_id: "cmb1qxtzc0001ree0hcyoc3a8",
+    subscription: {
+      service_id: "cmb1rms8c0005reeowwooy8vm",
+      service_tier_id: "cmb1rmsbi000jreeo1viwwuns",
+    },
+    total_orders: 3,
+    total_spent: 947,
+  },
+  {
+    id: "ORD_qqn3h7zd98s58bftq4rfnlfw",
+    status: "active",
+    order_status: "progress",
+    subscription_id: "cmbzxvt8l0005relgymnxiat4",
+    ammount: 149,
+    pakage_name: "Social Media Posts",
+    user_email: "yoyebe7706@pricegh.com",
+    user_name: "tre Arafat",
+    user_id: "cmb1qxtzc0001ree0hcyoc3a8",
+    subscription: {
+      service_id: "cmb1rms8c0005reeowwooy8vm",
+      service_tier_id: "cmb1rmsbi000jreeo1viwwuns",
+    },
+    total_orders: 3,
+    total_spent: 947,
+  },
+];
 
 interface ClientTableProps {
   clients: SimpleClient[];
@@ -31,10 +78,6 @@ interface ClientTableProps {
   orderStatus: string;
   setOrderStatus: (value: string) => void;
 }
-
-// // filter
-// const [period, setPeriod] = useState("week");
-// const [orderStatus, setOrderStatus] = useState("all");
 
 export function ClientTable({
   clients,
@@ -51,6 +94,23 @@ export function ClientTable({
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+const [updateClientStatus, {isLoading, isError, isSuccess}] = useUpdateClientStatusMutation(undefined);
+
+// console.log(clientResponse)
+
+  const handleSwitch = async(id: string) => {
+    // console.log(id);
+    await updateClientStatus(id).unwrap().then((res) => {
+      console.log(res);
+    });
+    if(isSuccess){
+      toast.success("Client status updated successfully");
+    }
+    if(isError){
+      toast.error("Failed to update client status");
+    }
+  };
   return (
     <>
       <div className="flex items-center justify-between p-5">
@@ -95,36 +155,36 @@ export function ClientTable({
               <TableCell>
                 <div className="flex items-center space-x-3">
                   <Image
-                    src={client.avatar}
-                    alt={client.company}
+                    src={client.avatar || "https://i.pravatar.cc/40?img=56"}
+                    alt={client.user_name}
                     width={40}
                     height={40}
                     className="rounded-full "
                   />
                   <div className="flex flex-col">
                     <span className="font-medium text-[#1D1F2C] truncate max-w-[120px]">
-                      {client.company}
+                      {client.user_name}
                     </span>
                     <span className="text-sm text-[#4A4C56] truncate max-w-[120px]">
-                      {client.email}
+                      {client.user_email}
                     </span>
                   </div>
                 </div>
               </TableCell>
 
               <TableCell className="text-sm font-medium text-[#4A4C56]">
-                {client.orders}
+                {client.total_orders}
               </TableCell>
 
               <TableCell className="text-sm font-medium text-[#4A4C56]">
-                {client.spent}
+                {client.total_spent}
               </TableCell>
 
               <TableCell>
                 <Badge
                   variant="outline"
                   className={`rounded-full ${
-                    client.status === "Active"
+                    client.status === "active"
                       ? "text-green-500 border-green-300 bg-green-50"
                       : "text-red-500 border-red-300 bg-red-50"
                   }`}
@@ -142,8 +202,8 @@ export function ClientTable({
                   <div>
                     {/* switch */}
                     <CustomSwitch
-                      checked={client.status === "Active"}
-                      onChange={() => {}}
+                      checked={client.status === "active"}
+                      onChange={() => {handleSwitch(client.id)}}
                     />
                   </div>
                 </div>
