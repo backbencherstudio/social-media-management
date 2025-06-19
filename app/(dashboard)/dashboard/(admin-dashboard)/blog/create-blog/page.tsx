@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
-// import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
-import CategorModal from "../_components/categor-modal";
 import { Editor } from "@tinymce/tinymce-react";
+import { toast } from "sonner";
+import { Trash2 } from "lucide-react";
+import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
 import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
+import CategorModal from "../_components/categor-modal";
 
 type FormData = {
   title: string;
@@ -21,143 +22,118 @@ export default function CreateBlog() {
   const { data } = useGetBlogCategoriesQuery();
   const [createBlog] = useCreateBlogMutation();
 
-  const { register, handleSubmit, setValue } = useForm<FormData>();
+  const { register, handleSubmit, setValue, reset, watch } =
+    useForm<FormData>();
+  const [contentBlocks, setContentBlocks] = useState<any[]>([
+    { type: "text", content: "" }, // Default text block
+    { type: "media", content: null }, // Default media block
+  ]);
+  const categoryValue = watch("categoryIds");
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
-
-  const [textBlocks, setTextBlocks] = useState([Date.now()]);
-  const [mediaBlocks, setMediaBlocks] = useState([Date.now() + 1]);
-  const [mediaPreviews, setMediaPreviews] = useState([]);
-
-  const editorRefs = useRef([]);
   const [isOpen, setIsOpen] = useState(false);
+
+  // Set default category when data is loaded
+  React.useEffect(() => {
+    if (data && data.length > 0 && !categoryValue) {
+      setValue("categoryIds", data[0].id);
+    }
+  }, [data, categoryValue, setValue]);
 
   // Add new text block
   const addTextBlock = () => {
-    setTextBlocks((prev) => [...prev, Date.now()]);
+    setContentBlocks((prev) => [...prev, { type: "text", content: "" }]);
   };
 
   // Add new media block
   const addMediaBlock = () => {
-    setMediaBlocks((prev) => [...prev, Date.now()]);
-    setMediaPreviews((prev) => [...prev, null]);
+    setContentBlocks((prev) => [...prev, { type: "media", content: null }]);
   };
 
-  // Handle hashtag input
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      e.key === "Enter" &&
-      // inputValue.startsWith("#") &&
-      inputValue.length > 1
-    ) {
-      e.preventDefault();
-      const updated = [...hashtags, inputValue];
-      setHashtags(updated);
-      setInputValue("");
-      setValue("hashtags", updated);
-    }
-  };
-
-  // Remove hashtag
-  const removeHashtag = (index: number) => {
-    const updated = hashtags.filter((_, i) => i !== index);
-    setHashtags(updated);
-    setValue("hashtags", updated);
+  // Handle text editor input
+  const handleEditorChange = (value: string, index: number) => {
+    const updatedBlocks = [...contentBlocks];
+    updatedBlocks[index].content = value;
+    setContentBlocks(updatedBlocks);
   };
 
   // Handle file input for image/video preview
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: number
+    index: number
   ) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const newPreviews = [...mediaPreviews];
-        newPreviews[id] = reader.result as string;
-        setMediaPreviews(newPreviews);
+        const updatedBlocks = [...contentBlocks];
+        updatedBlocks[index].content = file;
+        updatedBlocks[index].preview = reader.result;
+        setContentBlocks(updatedBlocks);
       };
       reader.readAsDataURL(file);
-      setValue(`media_${id}`, e.target.files);
     }
   };
 
-  // Form submit handler
-  // const onSubmit = async (data: FormData) => {
-  //   const mediaFiles = Object.entries(data)
-  //     .filter(([key]) => key.startsWith("media_"))
-  //     .map(([key, value]) => ({
-  //       id: key,
-  //       content: (value as FileList)[0]?.name || "image.jpg",
-  //     }));
+  // Handle category selection
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setValue("categoryIds", e.target.value);
+  };
 
-  //   const editorContent = editorRefs.current.map((editor) =>
-  //     editor?.getContent()
-  //   );
+  // Handle hashtag input
+  const handleHashtagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && inputValue.length > 1) {
+      e.preventDefault();
+      const updated = [...hashtags, inputValue];
+      setHashtags(updated);
+      setInputValue("");
+    }
+  };
 
-  //   // console.log(mediaFiles, "mediaFiles");
-  //   // console.log(editorContent, "editorContent");
+  // Handle removing hashtag
+  const removeHashtag = (index: number) => {
+    const updatedHashtags = hashtags.filter((_, i) => i !== index);
+    setHashtags(updatedHashtags);
+  };
 
-  //   const blogData = {
-  //     title: data.title,
-  //     categoryIds: [data.categoryIds.toString()],
-  //     hashtags: data.hashtags,
-  //     contents: [
-  //       ...editorContent.map((content) => ({
-  //         contentType: "text",
-  //         content,
-  //       })),
-  //       ...mediaFiles.map((file) => ({
-  //         contentType: "media",
-  //         content: file.content,
-  //       })),
-  //     ],
-  //   };
-  //   console.log(blogData);
-
-  //   const result = await createBlog(blogData);
-  //   console.log(result);
-  // };
-  
+  // Handle form submission
   const onSubmit = async (data: FormData) => {
     const formData = new FormData();
+    const contents: any[] = [];
 
-    const mediaFiles: File[] = [];
-
-    const mediaContents = Object.entries(data)
-      .filter(([key]) => key.startsWith("media_"))
-      .map(([key, value]: [string, any]) => {
-        const file = value[0];
-        if (file) {
-          mediaFiles.push(file);
-          return {
+    // Loop through contentBlocks to build contents array and append files
+    contentBlocks.forEach((block, idx) => {
+      if (block.type === "text") {
+        contents.push({
+          contentType: "text",
+          content: block.content,
+        });
+      } else if (block.type === "media") {
+        // If block.content is a File, append it to formData
+        if (block.content instanceof File) {
+          formData.append("img", block.content);
+          contents.push({
             contentType: "media",
-            content: file.name,
-          };
+            content: block.content.name, // Reference the file name
+          });
+        } else if (typeof block.content === "string") {
+          // If it's a base64 string or URL, just add it directly
+          contents.push({
+            contentType: "media",
+            content: block.content,
+          });
         }
-        return null;
-      })
-      .filter(Boolean);
-
-    const editorContent = editorRefs.current.map((editor) => ({
-      contentType: "text",
-      content: editor?.getContent() || "",
-    }));
-
-    const allContents = [...editorContent, ...mediaContents];
+      }
+    });
 
     formData.append("title", data.title);
     formData.append("categoryIds", JSON.stringify([data.categoryIds]));
     formData.append("hashtags", JSON.stringify(hashtags));
-    formData.append("contents", JSON.stringify(allContents));
+    formData.append("contents", JSON.stringify(contents));
 
-    mediaFiles.forEach((file) => {
-      formData.append("img", file);
-    });
-
-    const result = await createBlog(formData);
-    console.log(result);
+    await createBlog(formData);
+    toast.success("Blog created successfully");
+    reset();
   };
 
   return (
@@ -180,87 +156,47 @@ export default function CreateBlog() {
           />
         </div>
 
-        {/* Dynamic Text Editors */}
-        {textBlocks.map((id, index) => (
+        {/* Dynamic Content Blocks */}
+        {contentBlocks.map((block, index) => (
           <div
-            key={`text-${id}`}
-            className="bg-white p-3 md:p-4 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)]"
+            key={index}
+            className="bg-white p-3 md:p-4 rounded-lg shadow-md space-y-4"
           >
-            <h1 className="text-gray-500 font-semibold mb-3 md:mb-4">
-              Text Content - {index + 1}
-            </h1>
-            <div className="w-full">
-              <Editor
-                apiKey="v165paum3r2kwvwl9yfg9md27pv69hd11c2bjcu6yjaxgye9"
-                onInit={(_evt, editor) => (editorRefs.current[index] = editor)}
-                init={{
-                  plugins: ["emoticons", "image", "link", "lists"],
-                  toolbar:
-                    "undo redo | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-                  height: 400,
-                  menubar: false,
-                  content_style:
-                    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+            {block.type === "text" ? (
+              <div>
+                <h2 className="text-gray-600 font-semibold">
+                  Text Content - {index + 1}
+                </h2>
+                <Editor
+                  apiKey="v165paum3r2kwvwl9yfg9md27pv69hd11c2bjcu6yjaxgye9"
+                  value={block.content}
+                  onEditorChange={(value) => handleEditorChange(value, index)}
+                  init={{
+                    plugins: ["emoticons", "image", "link", "lists"],
+                    toolbar:
+                      "undo redo | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+                    height: 300,
+                    menubar: false,
+                    content_style:
+                      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                  }}
+                />
+              </div>
+            ) : (
+              <MediaBlock
+                index={index}
+                preview={block.preview}
+                onFileChange={(e) => handleFileChange(e, index)}
+                onDelete={() => {
+                  const updatedBlocks = [...contentBlocks];
+                  updatedBlocks[index].content = null;
+                  updatedBlocks[index].preview = null;
+                  setContentBlocks(updatedBlocks);
                 }}
               />
-            </div>
+            )}
           </div>
         ))}
-
-        {/* Dynamic Media Uploads */}
-        {mediaBlocks.map((id, index) => (
-          <div
-            key={`media-${id}`}
-            className="bg-white p-3 md:p-4 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)]"
-          >
-            <h1 className="text-gray-500 font-semibold mb-3 md:mb-4">
-              Image - {index + 1}
-            </h1>
-            <div
-              className={`w-full border-2 border-dashed border-gray-300 rounded-lg overflow-hidden relative ${
-                mediaPreviews[index] ? "h-[200px] md:h-[300px]" : "p-4 md:p-8"
-              }`}
-              style={
-                mediaPreviews[index]
-                  ? {
-                      backgroundImage: `url(${mediaPreviews[index]})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }
-                  : {}
-              }
-            >
-              <input
-                type="file"
-                id={`media_${id}`}
-                accept="image/*,video/*"
-                className="hidden"
-                onChange={(e) => handleFileChange(e, index)}
-              />
-              <label
-                htmlFor={`media_${id}`}
-                className={`flex flex-col items-center justify-center cursor-pointer ${
-                  mediaPreviews[index]
-                    ? "absolute inset-0 bg-black/30 hover:bg-black/40 transition-all duration-300"
-                    : ""
-                }`}
-              >
-                <p
-                  className={`px-3 md:px-5 py-2 md:py-3 rounded-lg text-sm md:text-base ${
-                    mediaPreviews[index]
-                      ? "text-white border-2 border-white hover:bg-white/10 transition-all duration-300"
-                      : "bg-gray-50 border-2 border-dashed border-gray-300"
-                  }`}
-                >
-                  {mediaPreviews[index]
-                    ? "Change Image +"
-                    : "Upload Image/Video"}
-                </p>
-              </label>
-            </div>
-          </div>
-        ))}
-
 
         {/* Add Content Buttons */}
         <div className="bg-white p-3 md:p-4 rounded-lg shadow space-y-3 md:space-y-4">
@@ -299,6 +235,8 @@ export default function CreateBlog() {
           <div>
             <select
               {...register("categoryIds", { required: "Category is required" })}
+              value={categoryValue || ""}
+              onChange={handleCategoryChange}
               className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-sm md:text-base"
             >
               {data?.map((category) => (
@@ -317,7 +255,7 @@ export default function CreateBlog() {
               placeholder="Type # to add hashtag"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyDown}
+              onKeyDown={handleHashtagKeyDown}
               className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-lg mb-3 md:mb-4 text-sm md:text-base"
             />
             <div className="flex flex-wrap gap-2">
@@ -357,5 +295,53 @@ export default function CreateBlog() {
         </div>
       </div>
     </form>
+  );
+}
+
+function MediaBlock({ index, preview, onFileChange, onDelete }) {
+  const fileInputRef = useRef(null);
+
+  return (
+    <div className=" relative">
+      <div className="flex justify-between items-center mb-3 md:mb-4">
+        <h1 className="text-gray-500 font-semibold">Image - {index + 1}</h1>
+        <button
+          type="button"
+          onClick={onDelete}
+          className="text-red-500 hover:bg-red-100 rounded-full p-1"
+        >
+          <Trash2 size={18} />
+        </button>
+      </div>
+      <div
+        className="w-full border-2 border-dashed border-gray-300 rounded-lg overflow-hidden relative flex items-center justify-center h-[180px] md:h-[220px] bg-gray-50"
+        style={
+          preview
+            ? {
+                backgroundImage: `url(${preview})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+            : {}
+        }
+      >
+        <input
+          type="file"
+          id={`media_${index}`}
+          accept="image/*,video/*"
+          className="hidden"
+          ref={fileInputRef}
+          onChange={onFileChange}
+        />
+        <label
+          htmlFor={`media_${index}`}
+          className="flex flex-col items-center justify-center cursor-pointer z-10"
+        >
+          <p className="px-3 md:px-5 py-2 md:py-3 rounded-lg text-sm md:text-base bg-white border border-gray-200 shadow hover:bg-gray-100 transition">
+            Upload Image <span className="ml-1">+</span>
+          </p>
+        </label>
+      </div>
+    </div>
   );
 }

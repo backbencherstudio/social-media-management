@@ -1,78 +1,39 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
-import React from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   useDeleteBlogMutation,
   useGetAllBlogsQuery,
 } from "@/src/redux/features/admin/blog/blog";
+import { Pagination } from "../_components/Pagination";
+import DeleteIcon from "@/public/incons/delete";
+import WriteIcon from "@/public/incons/write";
 
 export default function Blog() {
   const router = useRouter();
-  // const blogData = [
-  //   {
-  //     id: 1,
-  //     title: "Discover 12+ Creative Contest Ideas and Examples",
-  //     excerpt:
-  //       "Learn how to create an effective social media strategy that drives engagement and growth...",
-  //     author: "John Doe",
-  //     date: "2024-01-15",
-  //     category: "Marketing",
-  //     readTime: "5 min",
-  //     image: "/blog-1.jpg",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "CCreative Social Media for Entertainment Industry",
-  //     excerpt:
-  //       "Discover proven techniques for creating engaging content that resonates with your audience...",
-  //     author: "Jane Smith",
-  //     date: "2024-01-14",
-  //     category: "Content",
-  //     readTime: "7 min",
-  //     image: "/blog-2.jpg",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Instagram Contest Ideas: Increase User Participation",
-  //     excerpt:
-  //       "Discover proven techniques for creating engaging content that resonates with your audience...",
-  //     author: "Jane Smith",
-  //     date: "2024-01-14",
-  //     category: "Content",
-  //     readTime: "7 min",
-  //     image: "/blog-2.jpg",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Instagram Contest Ideas: Increase User Participation",
-  //     excerpt:
-  //       "Discover proven techniques for creating engaging content that resonates with your audience...",
-  //     author: "Jane Smith",
-  //     date: "2024-01-14",
-  //     category: "Content",
-  //     readTime: "7 min",
-  //     image: "/blog-2.jpg",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Instagram Contest Ideas: Increase User Participation",
-  //     excerpt:
-  //       "Discover proven techniques for creating engaging content that resonates with your audience...",
-  //     author: "Jane Smith",
-  //     date: "2024-01-14",
-  //     category: "Content",
-  //     readTime: "7 min",
-  //     image: "/blog-2.jpg",
-  //   },
-  // ];
 
   const { data, isLoading } = useGetAllBlogsQuery();
   const [deleteBlog] = useDeleteBlogMutation();
   console.log(data, "data");
   const imageURL = "http://192.168.4.2:9000/social-media/";
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
+  const paginatedDetails = data?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   if (isLoading) {
     return <div className="flex justify-center items-center">Loading...</div>;
@@ -85,14 +46,14 @@ export default function Blog() {
         <div className="flex items-center justify-center bg-white h-[420px] rounded-lg shadow-sm p-6 border-2 border-dotted border-gray-400">
           <button
             onClick={() => router.push("/dashboard/blog/create-blog")}
-            className="px-4 py-2 border-2 border-dotted border-gray-400 rounded-lg hover:bg-gray-50 transition-colors text-gray-700"
+            className="px-4 py-2 border-2 border-dotted border-gray-400 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 cursor-pointer"
           >
             Create New +
           </button>
         </div>
 
         {/* Blog Post Cards */}
-        {data?.map((post) => (
+        {paginatedDetails?.map((post) => (
           <div
             key={post.id}
             className="bg-white h-[420px] rounded-lg shadow-sm overflow-hidden"
@@ -109,7 +70,7 @@ export default function Blog() {
                       className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                       title="Edit post"
                     >
-                      <FaEdit className="w-5 h-5 text-gray-600" />
+                      <WriteIcon className={"w-5 h-5 text-gray-600"} />
                     </button>
                   </Link>
                   <button
@@ -117,7 +78,7 @@ export default function Blog() {
                     title="Delete post"
                     onClick={() => deleteBlog(post.blog_id)}
                   >
-                    <FaTrash className="w-5 h-5 text-red-600" />
+                    <DeleteIcon className={"w-5 h-5 text-red-600"} />
                   </button>
                 </div>
               </div>
@@ -127,7 +88,6 @@ export default function Blog() {
                 const firstMedia = post.contents.find(
                   (content) => content.content_type === "media"
                 );
-                console.log(firstMedia?.content, "firstMedia");
                 return firstMedia ? (
                   <img
                     src={`${imageURL}${firstMedia.content}`}
@@ -143,12 +103,58 @@ export default function Blog() {
               <h3 className="text-[24px] font-semibold text-gray-800 line-clamp-2">
                 {post.title}
               </h3>
-              <p className="text-gray-600 text-sm m line-clamp-2">
-                {post.excerpt}
-              </p>
+              {post?.contents &&
+                (() => {
+                  const firstText = post.contents.find(
+                    (content) => content.content_type === "text"
+                  );
+                  return firstText ? (
+                    <div
+                      className="text-[#212121] leading-relaxed blog-content"
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          firstText.content.length > 100
+                            ? firstText.content.slice(0, 100) + "..."
+                            : firstText.content || "",
+                      }}
+                    />
+                  ) : null;
+                })()}
             </div>
           </div>
         ))}
+      </div>
+      <div className="mt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
+          <label
+            htmlFor="itemsPerPage"
+            className="text-xs md:text-sm text-gray-600"
+          >
+            Showing 1 to 8 of 50 entries
+          </label>
+          <select
+            id="itemsPerPage"
+            className="border border-gray-200 rounded-md px-2 md:px-3 py-1.5 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            value={itemsPerPage}
+            onChange={(e) => {
+              const newItemsPerPage = parseInt(e.target.value);
+              setItemsPerPage(newItemsPerPage);
+              setCurrentPage(1);
+            }}
+          >
+            <option value="5">Show 5</option>
+            <option value="10">Show 10</option>
+            <option value="20">Show 20</option>
+            <option value="50">Show 50</option>
+            {/* <option value="100">Show 100</option> */}
+          </select>
+        </div>
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
