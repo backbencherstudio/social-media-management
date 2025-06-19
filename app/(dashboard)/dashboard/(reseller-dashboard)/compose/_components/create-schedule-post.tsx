@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import FilesIcon from "@/public/incons/files";
+import { Editor } from "@tinymce/tinymce-react";
 
 type FormValues = {
   platforms: string[];
@@ -16,41 +16,27 @@ type FormValues = {
 };
 
 export default function CreateSchedulePost() {
-  const { register, handleSubmit, setValue, getValues, watch } = useForm<FormValues>({
-    defaultValues: {
-      platforms: [],
-      hashtags: [],
-      timeZone: "UTC+06:00",
-    },
-  });
+  const { register, handleSubmit, setValue, getValues, watch } =
+    useForm<FormValues>({
+      defaultValues: {
+        platforms: [],
+        hashtags: [],
+        timeZone: "UTC+06:00",
+      },
+    });
 
-  const editorRef = useRef<HTMLDivElement>(null);
-  const quillInstance = useRef<Quill | undefined>(undefined);
+  const editorRef = useRef<any>(null);
 
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
 
-  // Initialize Quill
-  useEffect(() => {
-    if (editorRef.current && !editorRef.current.querySelector(".ql-editor")) {
-      quillInstance.current = new Quill(editorRef.current, {
-        theme: "snow",
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, 3, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "image"],
-            ["clean"],
-          ],
-        },
-      });
-    }
-  }, []);
-
   // Add hashtag
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && inputValue.startsWith("#") && inputValue.length > 1) {
+    if (
+      e.key === "Enter" &&
+      inputValue.startsWith("#") &&
+      inputValue.length > 1
+    ) {
       e.preventDefault();
       const updated = [...hashtags, inputValue];
       setHashtags(updated);
@@ -66,10 +52,10 @@ export default function CreateSchedulePost() {
   };
 
   const onSubmit = (data: FormValues) => {
-    const content = quillInstance.current?.root.innerHTML || "";
+    const editorContent = editorRef.current?.getContent();
     const fullData = {
       ...data,
-      content,
+      content: editorContent,
     };
 
     console.log("Scheduled Post Data:", fullData);
@@ -83,25 +69,51 @@ export default function CreateSchedulePost() {
           <div className="bg-white p-6 rounded-lg shadow">
             <h1 className="text-xl font-semibold mb-4">Select Platforms</h1>
             <div className="flex flex-wrap gap-4">
-              {["Facebook", "Instagram", "Twitter", "LinkedIn"].map((platform) => (
-                <label key={platform} className="flex items-center gap-2 cursor-pointer border px-6 py-2 rounded-lg">
-                  <input
-                    type="checkbox"
-                    value={platform}
-                    {...register("platforms")}
-                    className="w-5 h-5 rounded border-gray-300"
-                  />
-                  <p className="text-gray-700">{platform}</p>
-                </label>
-              ))}
+              {["Facebook", "Instagram", "Twitter", "LinkedIn"].map(
+                (platform) => (
+                  <label
+                    key={platform}
+                    className="flex items-center gap-2 cursor-pointer border px-6 py-2 rounded-lg"
+                  >
+                    <input
+                      type="checkbox"
+                      value={platform}
+                      {...register("platforms")}
+                      className="w-5 h-5 rounded border-gray-300"
+                    />
+                    <p className="text-gray-700">{platform}</p>
+                  </label>
+                )
+              )}
             </div>
           </div>
 
           {/* Content */}
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h1 className="text-xl font-semibold mb-4">Content</h1>
-            <div className="w-full rounded-b-lg" ref={editorRef} style={{ height: 200 }} />
-          </div>
+          <Editor
+            apiKey="v165paum3r2kwvwl9yfg9md27pv69hd11c2bjcu6yjaxgye9"
+            onInit={(_evt, editor) => (editorRef.current = editor)}
+            init={{
+              plugins: [
+                // Core editing features
+                "emoticons",
+                "image",
+                "link",
+                "lists",
+              ],
+              toolbar:
+                "undo redo  | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+              tinycomments_mode: "embedded",
+              tinycomments_author: "Author name",
+              mergetags_list: [
+                { value: "First.Name", title: "First Name" },
+                { value: "Email", title: "Email" },
+              ],
+              ai_request: (request, respondWith) =>
+                respondWith.string(() =>
+                  Promise.reject("See docs to implement AI Assistant")
+                ),
+            }}
+          />
 
           {/* Media */}
           <div className="bg-white p-4 rounded-lg shadow">
@@ -119,14 +131,12 @@ export default function CreateSchedulePost() {
                 className="flex flex-col items-center justify-center cursor-pointer"
               >
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                  </svg>
+                  <FilesIcon />
                 </div>
                 <p className="text-base text-gray-600 mb-1">
                   Drag and drop files here or click to upload
                 </p>
-                <p className="text-sm text-gray-500">Support JPG, PNG, MP4 (max 10MB)</p>
+                <p className="text-sm text-gray-500">Supports: JPG, PNG, MP4</p>
               </label>
             </div>
           </div>
@@ -144,7 +154,10 @@ export default function CreateSchedulePost() {
             />
             <div className="flex flex-wrap gap-2">
               {hashtags.map((tag, index) => (
-                <span key={index} className="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-2">
+                <span
+                  key={index}
+                  className="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-2"
+                >
                   <span className="text-sm">{tag}</span>
                   <button
                     onClick={() => removeHashtag(index)}
@@ -164,7 +177,7 @@ export default function CreateSchedulePost() {
               <div className="col-span-1 md:col-span-8">
                 {/* replace below with your real datepicker */}
                 <input
-                  type="datetime-local"
+                  type="date"
                   {...register("scheduleDate")}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 />

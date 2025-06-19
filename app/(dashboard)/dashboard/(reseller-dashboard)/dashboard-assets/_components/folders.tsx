@@ -22,12 +22,8 @@ export default function Folders() {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-900">
-                Campaign-banner.jpg
-              </p>
-              <p className="text-xs text-gray-500">
-                2.4 MB • Modified 2 days ago
-              </p>
+              <p className="text-sm font-medium text-gray-900">Brand Assets</p>
+              <p className="text-xs text-gray-500">128 files</p>
             </div>
           </div>
 
@@ -49,11 +45,9 @@ export default function Folders() {
             </div>
             <div>
               <p className="text-sm font-medium text-gray-900">
-                Product-promo.mp4
+                Campaign Materials
               </p>
-              <p className="text-xs text-gray-500">
-                8.7 MB • Modified 3 days ago
-              </p>
+              <p className="text-xs text-gray-500">64 files</p>
             </div>
           </div>
 
@@ -74,12 +68,8 @@ export default function Folders() {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-900">
-                Social-cover.jpg
-              </p>
-              <p className="text-xs text-gray-500">
-                1.8 MB • Modified 4 days ago
-              </p>
+              <p className="text-sm font-medium text-gray-900">Social Media</p>
+              <p className="text-xs text-gray-500">256 files</p>
             </div>
           </div>
 
@@ -100,12 +90,8 @@ export default function Folders() {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-900">
-                Product-promo.mp4
-              </p>
-              <p className="text-xs text-gray-500">
-                8.7 MB • Modified 3 days ago
-              </p>
+              <p className="text-sm font-medium text-gray-900">New Folder</p>
+              <p className="text-xs text-gray-500">Create folder</p>
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ const PinterestIcon: React.FC<PinterestIconProps> = ({ className }) => {
       height="48"
       viewBox="0 0 47 48"
       fill="none"
+      className={className}
     >
       <rect
         x="1.45"

@@ -2,14 +2,16 @@ import React from "react";
 import { Navbar } from "./_components/navbar";
 import Footer from "./_components/footer";
 import SupportChatBoart from "./_components/_ai-chatboart/support-chat";
+import { Toaster } from "sonner";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Navbar />
       {children}
-      <div className="fixed bottom-0 right-0 z-50 p-4">
+      <div className="fixed bottom-0 right-0 z-50 p-0 lg:p-4">
         <SupportChatBoart />
+        <Toaster />
       </div>
       <Footer />
     </div>

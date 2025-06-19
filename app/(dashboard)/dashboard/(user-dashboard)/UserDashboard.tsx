@@ -6,7 +6,6 @@ import { FiBox, FiHelpCircle } from "react-icons/fi";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import ActiveServicesTable from "@/components/UserDashboard/Home/ActiveServicesTable";
 import RecommendedResources from "@/components/UserDashboard/Home/RecommendedResources";
 import ServicesWeOffer from "@/components/UserDashboard/Home/ServicesWeOffer";
 import { usePurchase } from "@/app/context/PurchaseContext";
@@ -77,6 +76,10 @@ export default function UserDashboard() {
       },
     ]);
   };
+
+
+  // // Render the dashboard based on the purchase status(client or user)
+  const isClient: boolean = true
 
   return (
     <>
@@ -189,7 +192,7 @@ export default function UserDashboard() {
         />
       </div>
 
-      {hasPurchased && (
+      {isClient && (
         <div>
           <RecentActivity />
         </div>

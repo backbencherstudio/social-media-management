@@ -15,12 +15,9 @@
 //     { id: 6, name: "Analytics" },
 // ];
 
-
-
 // const SeamlessExperience = () => {
 
 //     const [activeTab, setActiveTab] = useState('')
-
 
 //     const handleTab = (item: string) => {
 //         setActiveTab(item)
@@ -41,8 +38,6 @@
 //             </div>
 //         )
 //     }
-
-
 
 //     return (
 //         <div className='bg-[#F7F7F9]'>
@@ -78,15 +73,21 @@
 
 // export default SeamlessExperience;
 
+"use client";
 
-"use client"
-
-import { useState } from "react"
-import Heading from "../heading-text"
-import ParagraphText from "../paragraph-text"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { Check, Users, MessageSquare, FolderKanban, Calendar, BarChart3 } from "lucide-react"
+import { useState } from "react";
+import Heading from "../heading-text";
+import ParagraphText from "../paragraph-text";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Check,
+  Users,
+  MessageSquare,
+  FolderKanban,
+  Calendar,
+  BarChart3,
+} from "lucide-react";
 
 // Define the tab content data structure
 const tabsData = [
@@ -139,23 +140,25 @@ const tabsData = [
     id: "analytics",
     name: "Analytics",
     title: "Comprehensive Performance Analytics",
-    description: "Track and analyze your campaign performance with detailed metrics and actionable insights.",
+    description:
+      "Track and analyze your campaign performance with detailed metrics and actionable insights.",
     icon: <BarChart3 className="w-5 h-5" />,
     imagePath: "/landing-page/analytics.png",
   },
-]
+];
 
 const SeamlessExperience = () => {
   // Set default active tab to the first item
-  const [activeTab, setActiveTab] = useState(tabsData[0].id)
+  const [activeTab, setActiveTab] = useState(tabsData[0].id);
 
   // Handle tab selection
   const handleTabChange = (tabId: string) => {
-    setActiveTab(tabId)
-  }
+    setActiveTab(tabId);
+  };
 
   // Find the active tab data
-  const activeTabData = tabsData.find((tab) => tab.id === activeTab) || tabsData[0]
+  const activeTabData =
+    tabsData.find((tab) => tab.id === activeTab) || tabsData[0];
 
   return (
     <section className="bg-[#F7F7F9] py-16 md:py-24 lg:py-32">
@@ -209,7 +212,9 @@ const SeamlessExperience = () => {
                 <h2 className="text-2xl md:text-[28px] leading-[126%] font-semibold text-[#1D1D1F]">
                   {activeTabData.title}
                 </h2>
-                <p className="text-base leading-[150%] tracking-[.16px] text-[#1D1F2C]">{activeTabData.description}</p>
+                <p className="text-base leading-[150%] tracking-[.16px] text-[#1D1F2C]">
+                  {activeTabData.description}
+                </p>
               </div>
               <div className="md:w-[50%] w-full overflow-hidden rounded-lg">
                 <Image
@@ -225,7 +230,7 @@ const SeamlessExperience = () => {
         </AnimatePresence>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default SeamlessExperience
+export default SeamlessExperience;

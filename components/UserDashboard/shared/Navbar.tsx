@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FaRegUser } from "react-icons/fa";
-import { IoSettingsOutline, IoLogOutOutline, IoNotificationsOutline } from "react-icons/io5";
+import {
+  IoSettingsOutline,
+  IoLogOutOutline,
+  IoNotificationsOutline,
+} from "react-icons/io5";
 import { RiUserLine } from "react-icons/ri";
-import { ImPower } from "react-icons/im";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -13,11 +17,13 @@ interface NavbarProps {
 }
 
 export default function Navbar({
-  isMobileMenuOpen,
   onMobileMenuToggle,
 }: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const pathName = usePathname();
+  const activePath = pathName.split("/")[2] || "Dashboard";
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -44,18 +50,26 @@ export default function Navbar({
           >
             <HiMenuAlt3 className="w-6 h-6" />
           </button>
-          {/* <h1 className="text-xl font-semibold">Overview</h1> */}
+          {/* <h1 className="text-xl font-semibold">{activePath}</h1> */}
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
+          {/* <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
             <ImPower />
             <span>Add Services</span>
-          </button>
+          </button> */}
+
           {/* <NotificationIcon  /> */}
-          <Link href={'/dashboard/notification'} className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
+          <Link
+            href={"/dashboard/notification"}
+            className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200 relative"
+          >
             <IoNotificationsOutline className="w-6 h-6" />
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center">
+              2
+            </span>
           </Link>
+
           <div className="relative" ref={dropdownRef}>
             <div
               className="flex items-center gap-3 p-2 rounded-full hover:bg-gray-100 cursor-pointer transition-colors duration-200"
@@ -94,7 +108,10 @@ export default function Navbar({
               </div>
 
               <div className="py-1">
-                <Link href={'/dashboard/freelancer-profile'} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
+                <Link
+                  href={"/dashboard/reseller-profile"}
+                  className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200"
+                >
                   <RiUserLine className="w-4 h-4" />
                   Profile
                 </Link>

@@ -1,14 +1,14 @@
 import React from "react";
-import { CiCreditCard1 } from "react-icons/ci";
 
 export default function PaymentDetailsModalReseller({
   isModalOpen,
-  selectedService,
+  paymentDetails,
   setIsModalOpen,
 }) {
+  console.log(paymentDetails);
   return (
     <div>
-      {isModalOpen && selectedService && (
+      {isModalOpen && paymentDetails && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg w-full max-w-lg p-6">
             <div className="flex justify-between items-center mb-6">
@@ -27,32 +27,32 @@ export default function PaymentDetailsModalReseller({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Payment ID</p>
-                  <p className="font-medium">{selectedService.orderId}</p>
+                  <p className="font-medium">{paymentDetails.reseller_id}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Date</p>
-                  <p className="font-medium">{selectedService.started}</p>
+                  <p className="font-medium">{paymentDetails.started}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Status</p>
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      selectedService.status === "For Review" &&
+                      paymentDetails.status === "For Review" &&
                       "bg-[#FEF3C7] text-[#984917]"
                     } ${
-                      selectedService.status === "In Progress" &&
+                      paymentDetails.status === "In Progress" &&
                       "bg-[#F5F1FF] text-[#5B21B6]"
                     } ${
-                      selectedService.status === "Complete" &&
+                      paymentDetails.status === "Complete" &&
                       "bg-[#ECEFF3] text-black"
                     }`}
                   >
-                    {selectedService.status}
+                    {paymentDetails.status}
                   </span>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Amount</p>
-                  <p className="font-medium">{selectedService.amount}</p>
+                  <p className="font-medium">{paymentDetails.total_earnings}</p>
                 </div>
               </div>
               <div>
@@ -63,7 +63,7 @@ export default function PaymentDetailsModalReseller({
                   <p>Next Payment: Mar 1, 2024</p>
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <div>
                   <div className="flex items-center gap-4 mt-6">
                     <button
@@ -76,11 +76,11 @@ export default function PaymentDetailsModalReseller({
                       Download Invoice
                     </button>
                     <button className="flex-1 px-4 py-3 rounded-lg bg-blue-700 flex items-center gap-3 text-white justify-center">
-                      <CiCreditCard1 /> Process Payout
+                      <CiCreditCard1 /> Release Payment
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

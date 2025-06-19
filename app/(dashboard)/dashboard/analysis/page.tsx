@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
 
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
@@ -37,7 +37,7 @@ export default function Page() {
               endDate={endDate}
               onChange={(update) => setDateRange(update)}
               customInput={
-                <button className="flex items-center gap-2 px-4 py-2 border rounded-md bg-white">
+                <button className="flex items-center gap-2 px-4 py-2 border rounded-md bg-white border-[#E5E5EC]">
                   <Calendar className="h-4 w-4" />
                   {startDate && endDate
                     ? `${format(startDate, "d MMM")} - ${format(

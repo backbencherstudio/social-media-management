@@ -1,9 +1,6 @@
 import IdeationIcon from "@/public/incons/landin-page/ideation";
-import OnboardingIcon from "@/public/incons/landin-page/onboarding";
-import PublishIcon from "@/public/incons/landin-page/publishIcon";
-import WritingIcon from "@/public/incons/landin-page/writingIcon";
 import React from "react";
-import ServiceCard from "../Components/service-card";
+import {ServiceCard }from "../Components/service-card";
 
 export default function ServicesWeOffer() {
   const services = [

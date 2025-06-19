@@ -3,10 +3,12 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { EventClickArg } from "@fullcalendar/core";
-import { User, X } from "lucide-react";
+import { X } from "lucide-react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { DatePickerDemo } from "./calenderComponent";
 
 const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
@@ -25,14 +27,26 @@ type EventType = {
   timeTo: string;
   subtitle: string | null;
   date: string;
+  type: string;
+  time: string;
+};
+
+const eventColors = {
+  instagram: "bg-pink-100 text-pink-600",
+  facebook: "bg-blue-100 text-blue-600",
+};
+
+const eventIcons = {
+  instagram: <FaInstagram className="inline mr-1" />,
+  facebook: <FaFacebook className="inline mr-1" />,
 };
 
 export default function Calendar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvents, setSelectedEvents] = useState<EventType[]>([]);
   const [currentView, setCurrentView] = useState("dayGridMonth");
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-  // ✅ Fix useRef typing for getApi
   const calendarRef = useRef<null | { getApi: () => any }>(null);
 
   const events: EventType[] = [
@@ -43,7 +57,9 @@ export default function Calendar() {
       timeFrom: "09:00",
       timeTo: "10:00",
       subtitle: "Breathing & Mindfulness",
-      date: "2025-05-20",
+      date: "2025-06-04",
+      type: "instagram",
+      time: "10:30 PM",
     },
     {
       id: "2",
@@ -52,7 +68,9 @@ export default function Calendar() {
       timeFrom: "11:00",
       timeTo: "12:00",
       subtitle: "Meditation Session",
-      date: "2025-05-20",
+      date: "2025-06-01",
+      type: "facebook",
+      time: "10:30 PM",
     },
     {
       id: "3",
@@ -61,7 +79,9 @@ export default function Calendar() {
       timeFrom: "14:00",
       timeTo: "15:00",
       subtitle: "Wellbeing Discussion",
-      date: "2025-05-20",
+      date: "2025-06-20",
+      type: "instagram",
+      time: "10:30 PM",
     },
     {
       id: "4",
@@ -70,7 +90,9 @@ export default function Calendar() {
       timeFrom: "15:00",
       timeTo: "16:00",
       subtitle: "Stretch & Walk",
-      date: "2025-05-20",
+      date: "2025-06-20",
+      type: "facebook",
+      time: "10:30 PM",
     },
     {
       id: "5",
@@ -79,7 +101,9 @@ export default function Calendar() {
       timeFrom: "16:00",
       timeTo: "17:00",
       subtitle: "Nutrition Tips",
-      date: "2025-05-22",
+      date: "2025-06-22",
+      type: "instagram",
+      time: "10:30 PM",
     },
   ];
 
@@ -117,41 +141,66 @@ export default function Calendar() {
     calendarRef.current?.getApi()?.changeView(view);
   };
 
-  return (
-    <div className="bg-white p-6 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)]">
-      <FullCalendar
-        // ref={calendarRef}
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView={currentView}
-        editable={false}
-        selectable={true}
-        events={formatEventsForCalendar()}
-        headerToolbar={{
-          start: "prev,next today",
-          center: "title",
-          end: "dayGridMonth,timeGridWeek,dayGridDay",
-        }}
-        dayMaxEvents={2} // ✅ show max 2 events per day with "+n more"
-        height="auto"
-        aspectRatio={2.5}
-        eventClick={openModal}
-        eventContent={(info) => {
-          const { name, timeFrom, timeTo } = info.event.extendedProps;
-          return (
-            <div className="p-1 space-y-2 text-xs text-center bg-muted rounded">
-              <div className="flex justify-between text-[10px]">
-                <User className="w-3 h-3" />
-                <span>
-                  {timeFrom} - {timeTo}
-                </span>
-              </div>
-              <strong className="block text-start">{name}</strong>
-            </div>
-          );
-        }}
-      />
+  // const handlePrev = () => {
+  //   const calendarApi = calendarRef.current?.getApi();
+  //   calendarApi?.prev();
+  //   setCurrentDate(new Date(calendarApi?.getDate()));
+  // };
 
-      {/* ✅ Modal to show tasks of selected day */}
+  // const handleNext = () => {
+  //   const calendarApi = calendarRef.current?.getApi();
+  //   calendarApi?.next();
+  //   setCurrentDate(new Date(calendarApi?.getDate()));
+  // };
+
+  // const handleToday = () => {
+  //   const calendarApi = calendarRef.current?.getApi();
+  //   calendarApi?.today();
+  //   setCurrentDate(new Date());
+  // };
+
+  return (
+    <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+      {/* Top Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4 w-full">
+        <div className="text-lg font-medium">
+          {currentDate.toLocaleString("default", { month: "long" })}{" "}
+          {currentDate.getFullYear()}
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <select
+            value={currentView}
+            onChange={(e) => handleViewChange(e.target.value)}
+            className="border rounded-lg px-3 py-1 text-sm font-medium bg-white hover:bg-gray-50 focus:outline-none"
+          >
+            <option value="dayGridMonth">Month</option>
+            <option value="timeGridWeek">Week</option>
+            <option value="timeGridDay">Day</option>
+          </select>
+
+          <DatePickerDemo />
+          
+        </div>
+      </div>
+
+      {/* Calendar */}
+      <div className="overflow-x-auto">
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView={currentView}
+          editable={false}
+          selectable={true}
+          events={formatEventsForCalendar()}
+          headerToolbar={false}
+          height="auto"
+          aspectRatio={2.5}
+          eventClick={openModal}
+          eventContent={renderEventContent}
+          dayMaxEventRows={3}
+          fixedWeekCount={false}
+        />
+      </div>
+
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
           <div
@@ -186,6 +235,22 @@ export default function Calendar() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// Custom event rendering
+function renderEventContent(eventInfo: any) {
+  const type = eventInfo.event.extendedProps.type;
+  const colorClass = eventColors[type] || "bg-gray-100 text-gray-700";
+  const icon = eventIcons[type] || null;
+  return (
+    <div
+      className={`flex items-center gap-1 px-2 py-1 rounded ${colorClass} text-xs overflow-hidden`}
+    >
+      {icon}
+      <span>{eventInfo.event.title}</span>
+      <span className="ml-auto">{eventInfo.event.extendedProps.time}</span>
     </div>
   );
 }

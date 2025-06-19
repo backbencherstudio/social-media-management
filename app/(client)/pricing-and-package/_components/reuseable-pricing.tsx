@@ -8,36 +8,60 @@ import Video from "../../_components/_video/video";
 import Email from "../../_components/_email/email";
 import Blogs from "../../_components/_blogs/blogs";
 import { usePathname } from "next/navigation";
+import { useGetAllServicesQuery } from "@/src/redux/features/admin/services";
 
 const services = [
-  { id: "post", title: "Posts" },
-  { id: "videos", title: "Videos" },
-  { id: "email", title: "Email" },
+  { id: "social-media-posts", title: "Posts" },
+  { id: "short-video", title: "Videos" },
+  { id: "email-marketing", title: "Email" },
   { id: "blogs", title: "Blogs" },
 ];
 
 const ReuseablePricing = () => {
   const pathname = usePathname();
   const match = pathname.match(/^\/services\/([^\/]+)$/);
-  const slug = match ? match[1] : null; // "short-video"
+  const slug = match ? match[1] : null;
 
-  const defaultValues = `${
-    (slug === "short-video" && "videos") ||
-    (slug === "social-media-posts" && "post") ||
-    (slug === "email-marketing" && "email") ||
-    (slug === "blogs" && "blogs")
-  }`;
+  // Simplified defaultValue logic
+  const getDefaultValue = () => {
+    if (!slug) return "social-media-posts";
 
-  const [activeTab, setActiveTab] = useState(defaultValues || "post"); // Default to "post"
+    switch (slug) {
+      case "short-video":
+        return "short-video";
+      case "social-media-posts":
+        return "social-media-posts";
+      case "email-marketing":
+        return "email-marketing";
+      case "blogs":
+        return "blogs";
+      default:
+        return "social-media-posts";
+    }
+  };
+
+  const [activeTab, setActiveTab] = useState(getDefaultValue());
+
+  const { data: serviceData, isLoading } = useGetAllServicesQuery();
+
+  // Filter services based on activeTab
+  const filteredService = React.useMemo(() => {
+    if (!serviceData) return null;
+    return serviceData.find(
+      (service) => service?.category === activeTab
+    );
+  }, [serviceData, activeTab]);
+  
+
 
   return (
     <div>
       <Tabs
-        defaultValue={defaultValues || "post"}
+        defaultValue={getDefaultValue()}
         className="w-full"
         onValueChange={setActiveTab}
       >
-        <TabsList className="flex p-[6px] flex-col bg-white h-full sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-20 md:mb-8">
+        <TabsList className="bg-white h-full sm:grid sm:grid-cols-2 md:grid-cols-4 w-full gap-2 sm:gap-4 mb-8">
           {services.map((service) => (
             <TabsTrigger
               key={service.id}
@@ -52,17 +76,17 @@ const ReuseablePricing = () => {
         </TabsList>
 
         <div className="w-full overflow-x-hidden">
-          <TabsContent value="post">
-            <AffordableMarketingServices />
+          <TabsContent value="social-media-posts">
+            <AffordableMarketingServices  />
           </TabsContent>
-          <TabsContent value="videos">
-            <Video />
+          <TabsContent value="short-video">
+            <Video   />
           </TabsContent>
-          <TabsContent value="email">
-            <Email />
+          <TabsContent value="email-marketing">
+            <Email  />
           </TabsContent>
           <TabsContent value="blogs">
-            <Blogs />
+            <Blogs  />
           </TabsContent>
         </div>
       </Tabs>
