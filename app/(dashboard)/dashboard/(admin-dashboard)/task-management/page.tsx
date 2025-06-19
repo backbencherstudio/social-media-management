@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { taskStat, TaskStatCard } from "./_components/TaskStatCard";
 import { TaskTable } from "./_components/TasksTable";
 import { fakeTasks } from "./fakeTask";
-import { useGetAllTasksQuery } from "@/src/redux/features/admin/task-management/task-management";
+import { useGetAllTasksQuery } from "@/src/redux/features/admin/settings/task-management/task-management";
 
 // taskstates
 const taskStats: taskStat[] = [
