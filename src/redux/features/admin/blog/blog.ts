@@ -2,12 +2,18 @@ import { baseApi } from "@/src/redux/api/baseApi";
 
 const blog = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBlogs: builder.query<any[], void>({
+    getAllBlogs: builder.query<any[], void>({
       query: () => ({
-        url: "/blogs",
+        url: "/admin/blog",
         method: "GET",
       }),
       providesTags: ["blogs"],
+    }),
+    getBlogById: builder.query<any, string>({
+      query: (id) => ({
+        url: `/admin/blog/${id}`,
+        method: "GET",
+      }),
     }),
     createBlog: builder.mutation({
       query: (data) => ({
@@ -17,7 +23,28 @@ const blog = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["blogs"],
     }),
+    deleteBlog: builder.mutation({
+      query: (id) => ({
+        url: `/admin/blog/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["blogs"],
+    }),
+    updateBlog: builder.mutation({
+      query: ({ data, id }: { data: any; id: string }) => ({
+        url: `/admin/blog/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["blogs"],
+    }),
   }),
 });
 
-export const { useGetBlogsQuery, useCreateBlogMutation } = blog;
+export const {
+  useGetAllBlogsQuery,
+  useGetBlogByIdQuery,
+  useCreateBlogMutation,
+  useDeleteBlogMutation,
+  useUpdateBlogMutation,
+} = blog;

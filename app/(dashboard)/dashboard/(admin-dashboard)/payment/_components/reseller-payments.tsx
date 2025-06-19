@@ -6,74 +6,80 @@ import { Pagination } from "./pagination";
 import { CiCreditCard1 } from "react-icons/ci";
 import PaymentDetailsModalReseller from "./payment-details-modal-reseller";
 import PayoutModal from "./payout-modal";
+import { useGetAllResellerPaymentQuery } from "@/src/redux/features/admin/payment/payment";
+import ReleaserPaymentModal from "./release-payment-modal";
 
 export default function ResellerPayments() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
+  const { data: resellerPayments } = useGetAllResellerPaymentQuery();
+
   // Extended fake data for pagination
-  const services = [
-    {
-      id: 1,
-      name: "Email Design",
-      started: "2024-12-01",
-      status: "Paid",
-      approval: "Approved",
-      orderId: "62A2AA44-2",
-      amount: "$245.00",
-      package: "Basic Email Package",
-    },
-    {
-      id: 2,
-      name: "Plus • 15 posts",
-      started: "2025-01-15",
-      status: "Pending",
-      approval: "Pending",
-      orderId: "62A2AA44-3",
-      amount: "$350.00",
-      package: "Social Media Package",
-    },
-    {
-      id: 3,
-      name: "Email Marketing",
-      started: "2025-01-15",
-      status: "Pending",
-      approval: "Pending",
-      orderId: "62A2AA44-4",
-      amount: "$199.00",
-      package: "Marketing Suite",
-    },
-    // Add more items to demonstrate pagination
-    ...Array.from({ length: 100 }, (_, i) => ({
-      id: i + 4,
-      name: `${
-        [
-          "Email Campaign",
-          "Social Media Posts",
-          "Content Marketing",
-          "Digital Marketing",
-          "SEO Package",
-        ][i % 5]
-      } ${i + 4}`,
-      started: new Date(2024, Math.floor(i / 30), (i % 30) + 1)
-        .toISOString()
-        .split("T")[0],
-      status: ["Paid", "Pending"][i % 2],
-      approval: ["Pending", "Approved"][i % 2],
-      orderId: `62A2AA44-${i + 5}`,
-      amount: `$${(Math.random() * 900 + 100).toFixed(2)}`,
-      package: `${
-        ["Basic", "Standard", "Premium", "Enterprise", "Custom"][i % 5]
-      } Package ${i + 4}`,
-      client: `${["John", "Sarah", "Michael", "Emma", "David"][i % 5]} ${
-        ["Smith", "Johnson", "Williams", "Brown", "Jones"][i % 5]
-      }`,
-    })),
-  ];
+  // const services = [
+  //   {
+  //     id: 1,
+  //     name: "Email Design",
+  //     started: "2024-12-01",
+  //     status: "Paid",
+  //     approval: "Approved",
+  //     orderId: "62A2AA44-2",
+  //     amount: "$245.00",
+  //     package: "Basic Email Package",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Plus • 15 posts",
+  //     started: "2025-01-15",
+  //     status: "Pending",
+  //     approval: "Pending",
+  //     orderId: "62A2AA44-3",
+  //     amount: "$350.00",
+  //     package: "Social Media Package",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Email Marketing",
+  //     started: "2025-01-15",
+  //     status: "Pending",
+  //     approval: "Pending",
+  //     orderId: "62A2AA44-4",
+  //     amount: "$199.00",
+  //     package: "Marketing Suite",
+  //   },
+  //   // Add more items to demonstrate pagination
+  //   ...Array.from({ length: 50 }, (_, i) => ({
+  //     id: i + 4,
+  //     name: `${
+  //       [
+  //         "Email Campaign",
+  //         "Social Media Posts",
+  //         "Content Marketing",
+  //         "Digital Marketing",
+  //         "SEO Package",
+  //       ][i % 5]
+  //     } ${i + 4}`,
+  //     started: new Date(2024, Math.floor(i / 30), (i % 30) + 1)
+  //       .toISOString()
+  //       .split("T")[0],
+  //     status: ["Paid", "Pending"][i % 2],
+  //     approval: ["Pending", "Approved"][i % 2],
+  //     orderId: `62A2AA44-${i + 5}`,
+  //     amount: `$${(Math.random() * 900 + 100).toFixed(2)}`,
+  //     package: `${
+  //       ["Basic", "Standard", "Premium", "Enterprise", "Custom"][i % 5]
+  //     } Package ${i + 4}`,
+  //     client: `${["John", "Sarah", "Michael", "Emma", "David"][i % 5]} ${
+  //       ["Smith", "Johnson", "Williams", "Brown", "Jones"][i % 5]
+  //     }`,
+  //   })),
+  // ];
 
   // Calculate pagination
-  const totalPages = Math.ceil(services.length / itemsPerPage);
-  const paginatedServices = services.slice(
+  const totalPages = Math.ceil(
+    resellerPayments?.data?.resellers?.length / itemsPerPage
+  );
+  const paginatedDetails = resellerPayments?.data?.resellers?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -84,10 +90,12 @@ export default function ResellerPayments() {
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<
-    (typeof services)[0] | null
+  const [paymentDetails, setpaymentDetails] = useState<
+    (typeof resellerPayments)[0] | null
   >(null);
   const [showPayoutModal, setShowPayoutModal] = useState(false);
+  const [isReleaserModalOpen, setIsReleaserModalOpen] = useState(false);
+  const [releaserPaymentDetails, setReleaserPaymentDetails] = useState(null);
 
   return (
     <div className="overflow-x-auto w-full p-4 md:p-6 lg:p-8 bg-white rounded-lg shadow-sm">
@@ -95,7 +103,7 @@ export default function ResellerPayments() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
           <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">
-            Client Payments
+            Reseller Payments
           </h1>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 ">
@@ -109,12 +117,12 @@ export default function ResellerPayments() {
             <option value="last_month">Last month</option>
             <option value="this_year">This year</option>
           </select>
-          <button
+          {/* <button
             onClick={() => setShowPayoutModal(true)}
             className="px-4 py-2 rounded-lg bg-blue-700 flex items-center justify-center gap-3 text-white hover:bg-blue-800 transition-colors"
           >
             <CiCreditCard1 className="w-5 h-5" /> Release Payment
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -123,13 +131,10 @@ export default function ResellerPayments() {
           <thead className="bg-gray-100 text-gray-700 text-left">
             <tr>
               <th className="py-3 px-2 md:px-4 text-left text-xs md:text-sm font-medium whitespace-nowrap">
-                Order ID
+                Company
               </th>
               <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
-                Client
-              </th>
-              <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
-                Package
+                Task
               </th>
               <th className="py-3 px-2 md:px-4 text-xs md:text-sm font-medium whitespace-nowrap">
                 Amount
@@ -146,43 +151,42 @@ export default function ResellerPayments() {
             </tr>
           </thead>
           <tbody>
-            {paginatedServices.map((service) => (
+            {paginatedDetails?.map((service) => (
               <tr
                 key={service.id}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
-                <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
+                {/* <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <span>{service.orderId}</span>
                   </div>
+                </td> */}
+
+                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
+                  <div>
+                    <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
+                      {service.full_name}
+                    </h1>
+                    <span className="text-xs text-gray-500">
+                      {service.user_email}
+                    </span>
+                  </div>
                 </td>
 
                 <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
                     <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
-                      {service.name}
+                      {service?.total_task} Completed
                     </h1>
-                    <span className="text-xs text-gray-500">
-                      {service.orderId}
-                    </span>
-                  </div>
-                </td>
-                <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
-                  <div>
-                    <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
-                      {service.package}
-                    </h1>
-                    <span className="text-xs text-gray-500">
-                      {service.orderId}
-                    </span>
+                    <span className="text-xs text-gray-500">This Month</span>
                   </div>
                 </td>
 
                 <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
-                  <span>{service.amount}</span>
+                  <span>${service.total_earnings}</span>
                 </td>
                 <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
-                  <span>{service.started}</span>
+                  <span>{service.due_date}</span>
                 </td>
                 <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
@@ -203,19 +207,28 @@ export default function ResellerPayments() {
                   <div className="flex items-center gap-2 md:gap-4">
                     <button
                       onClick={() => {
-                        setSelectedService(service);
+                        setpaymentDetails(service);
                         setIsModalOpen(true);
                       }}
-                      className="hover:text-gray-700 transition-colors p-1"
+                      className="hover:text-gray-700 transition-colors p-1 cursor-pointer"
                     >
                       <GrView className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
-                    <Link
+                    <button
+                      onClick={() => {
+                        setReleaserPaymentDetails(service);
+                        setIsReleaserModalOpen(true);
+                      }}
+                      className="hover:text-gray-700 transition-colors p-1 cursor-pointer"
+                    >
+                       <CiCreditCard1 className="w-4 h-4 md:w-5 md:h-5" />
+                    </button>
+                    {/* <Link
                       href={`/dashboard/service/${service.id}`}
                       className="hover:text-gray-700 transition-colors p-1"
                     >
                       <CiCreditCard1 className="w-4 h-4 md:w-5 md:h-5" />
-                    </Link>
+                    </Link> */}
                   </div>
                 </td>
               </tr>
@@ -258,8 +271,14 @@ export default function ResellerPayments() {
       {/* Payment Details Modal */}
       <PaymentDetailsModalReseller
         isModalOpen={isModalOpen}
-        selectedService={selectedService}
+        paymentDetails={paymentDetails}
         setIsModalOpen={setIsModalOpen}
+      />
+
+      <ReleaserPaymentModal
+        isModalOpen={isReleaserModalOpen}
+        paymentDetails={releaserPaymentDetails}
+        setIsModalOpen={setIsReleaserModalOpen}
       />
 
       <PayoutModal

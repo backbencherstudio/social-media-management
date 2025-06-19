@@ -3,74 +3,20 @@ import React, { useState } from "react";
 import { GrView } from "react-icons/gr";
 import { Pagination } from "./pagination";
 import PaymentDetailsModalClient from "./payment-details-modal-client";
+import { useGetPaymentQuery } from "@/src/redux/features/admin/payment/payment";
 
 export default function ClientPayments() {
+
+  const { data: payments } = useGetPaymentQuery();
+  // console.log(payments, "payments");
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  // Extended fake data for pagination
-  const services = [
-    {
-      id: 1,
-      name: "Email Design",
-      started: "2024-12-01",
-      status: "Pending",
-      approval: "Approved",
-      orderId: "62A2AA44-2",
-      amount: "$245.00",
-      package: "Basic Email Package",
-    },
-    {
-      id: 2,
-      name: "Plus • 15 posts",
-      started: "2025-01-15",
-      status: "Paid",
-      approval: "Pending",
-      orderId: "62A2AA44-3",
-      amount: "$350.00",
-      package: "Social Media Package",
-    },
-    {
-      id: 3,
-      name: "Email Marketing",
-      started: "2025-01-15",
-      status: "Pending",
-      approval: "Pending",
-      orderId: "62A2AA44-4",
-      amount: "$199.00",
-      package: "Marketing Suite",
-    },
-    // Add more items to demonstrate pagination
-    ...Array.from({ length: 100 }, (_, i) => ({
-      id: i + 4,
-      name: `${
-        [
-          "Email Campaign",
-          "Social Media Posts",
-          "Content Marketing",
-          "Digital Marketing",
-          "SEO Package",
-        ][i % 5]
-      } ${i + 4}`,
-      started: new Date(2024, Math.floor(i / 30), (i % 30) + 1)
-        .toISOString()
-        .split("T")[0],
-      status: ["Paid", "Pending"][i % 2],
-      approval: ["Pending", "Approved"][i % 2],
-      orderId: `62A2AA44-${i + 5}`,
-      amount: `$${(Math.random() * 900 + 100).toFixed(2)}`,
-      package: `${
-        ["Basic", "Standard", "Premium", "Enterprise", "Custom"][i % 5]
-      } Package ${i + 4}`,
-      client: `${["John", "Sarah", "Michael", "Emma", "David"][i % 5]} ${
-        ["Smith", "Johnson", "Williams", "Brown", "Jones"][i % 5]
-      }`,
-    })),
-  ];
 
   // Calculate pagination
-  const totalPages = Math.ceil(services.length / itemsPerPage);
-  const paginatedServices = services.slice(
+  const totalPages = Math.ceil(payments?.length / itemsPerPage);
+  const paginatedDetails = payments?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -82,7 +28,7 @@ export default function ClientPayments() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<
-    (typeof services)[0] | null
+    (typeof payments)[0] | null
   >(null);
 
   return (
@@ -136,56 +82,58 @@ export default function ClientPayments() {
             </tr>
           </thead>
           <tbody>
-            {paginatedServices.map((service) => (
+            {paginatedDetails?.map((order) => (
               <tr
-                key={service.id}
+                key={order.id}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
                 <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
                   <div className="flex items-center justify-between flex-wrap gap-2">
-                    <span>{service.orderId}</span>
+                    <span>{order.id}</span>
                   </div>
                 </td>
 
                 <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
-                    <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
-                      {service.name}
+                    <h1 className=" text-gray-500 text-xs md:text-sm">
+                      {order.user_name}
                     </h1>
                     <span className="text-xs text-gray-500">
-                      {service.orderId}
+                      {order.user_email}
                     </span>
                   </div>
                 </td>
                 <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
-                    <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
-                      {service.package}
+                    <h1 className="text-gray-600 text-xs md:text-sm">
+                      {order.package}
                     </h1>
                     <span className="text-xs text-gray-500">
-                      {service.orderId}
+                      {order.orderId}
                     </span>
                   </div>
                 </td>
 
                 <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
-                  <span>{service.amount}</span>
+                  <span>${order.ammount}</span>
                 </td>
                 <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">
-                  <span>{service.started}</span>
+                  <span>{order.started}</span>
                 </td>
                 <td className="py-3 md:py-4 px-2 md:px-4 whitespace-nowrap">
                   <div>
                     <span
                       className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium ${
-                        service.status === "Pending" &&
+                        order.payment_status
+                        === "pending" &&
                         "bg-[#FFF9E9] text-[#ED7600]"
                       } ${
-                        service.status === "Paid" &&
+                        order.payment_status
+                        === "paid" &&
                         "bg-[#EBFBF5] text-[#07811E]"
                       }`}
                     >
-                      {service.status}
+                      {order.payment_status}
                     </span>
                   </div>
                 </td>
@@ -193,10 +141,10 @@ export default function ClientPayments() {
                   <div className="flex items-center gap-2 md:gap-4">
                     <button
                       onClick={() => {
-                        setSelectedService(service);
+                        setSelectedService(order);
                         setIsModalOpen(true);
                       }}
-                      className="hover:text-gray-700 transition-colors p-1"
+                      className="hover:text-gray-700 transition-colors p-1 cursor-pointer"
                     >
                       <GrView className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
@@ -243,7 +191,7 @@ export default function ClientPayments() {
       {/* Payment Details Modal */}
       <PaymentDetailsModalClient
         isModalOpen={isModalOpen}
-        selectedService={selectedService}
+        selectedOrder={selectedService}
         setIsModalOpen={setIsModalOpen}
       />
     </div>
