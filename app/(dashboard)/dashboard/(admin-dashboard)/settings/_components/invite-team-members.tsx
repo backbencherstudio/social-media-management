@@ -1,53 +1,29 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import ManageUserModal from "./manage-user-modal";
-
-const services = [
-  {
-    id: 1,
-    name: "Email Designg",
-    email: "dmail@gmail",
-    started: "2024-12-01",
-    status: 1,
-    approval: "Approved",
-    role: "Super Admin",
-  },
-  {
-    id: 2,
-    name: "Plus • 15 posts",
-    email: "fmail@gmail",
-    started: "2025-01-15",
-    status: 0,
-    approval: "Pending",
-    role: "Admin",
-  },
-  {
-    id: 3,
-    name: "Email Marketing",
-    email: "gmail@gmail",
-    started: "2025-01-15",
-    status: 1,
-    approval: "Pending",
-    role: "Manager",
-  },
-];
+import { useGetAllUserQuery } from "@/src/redux/features/user/user-auth";
+import { useGetUserRoleQuery, useInviteTeamMemberMutation } from "@/src/redux/features/admin/settings/user-role-management";
+import { toast } from "sonner";
 
 export default function InviteTeamMembers() {
   const [showModal, setShowModal] = useState(false);
-  const [selectedService, setSelectedService] = useState<{
-    id: number;
+  const [selectedUserData, setSelectedUserData] = useState<{
+    id: string;
     name: string;
     email: string;
-    started: string;
-    status: number;
-    approval: string;
-    role: string;
+    roles: string;
+    status: string;
+    action: string;
   } | null>(null);
+
+  const { data: userData } = useGetAllUserQuery();
+  const { data } = useGetUserRoleQuery();
+  const [inviteTeamMember] = useInviteTeamMemberMutation();
 
   // Add this interface after imports
   interface InviteFormData {
     email: string;
-    role: string;
+    roleId: string;
   }
 
   const {
@@ -57,8 +33,9 @@ export default function InviteTeamMembers() {
     reset,
   } = useForm<InviteFormData>();
 
-  const onSubmit = (data: InviteFormData) => {
-    console.log(data);
+  const onSubmit =async (data: InviteFormData) => {
+    await inviteTeamMember(data);
+    toast.success("Invite sent successfully");
     reset();
   };
 
@@ -111,7 +88,7 @@ export default function InviteTeamMembers() {
               })}
               type="email"
               placeholder="Enter work email"
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none"
               style={{ minHeight: "48px" }} // Ensures height remains consistent
             />
             {errors.email && (
@@ -123,20 +100,23 @@ export default function InviteTeamMembers() {
 
           <div className="md:col-span-2" style={{ minHeight: "60px" }}>
             <select
-              {...register("role", {
-                required: "Please select a role",
+              {...register("roleId", {
+                required: "Role is required",
               })}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              style={{ minHeight: "48px" }} // Ensures height remains consistent
+              className="w-full border border-gray-200 rounded-lg px-4 py-3"
             >
-              <option value="">Select role</option>
-              <option value="super_admin">Super Admin</option>
-              <option value="admin">Admin</option>
-              <option value="manager">Manager</option>
+              <option value="" disabled>
+                {selectedUserData?.roles}
+              </option>
+              {data?.data?.data?.map((item: any) => (
+                <option key={item?.id} value={item?.id}>
+                  {item.name}
+                </option>
+              ))}
             </select>
-            {errors.role && (
-              <p className="text-xs md:text-sm text-red-500 mt-1">
-                {errors.role.message}
+            {errors.roleId && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.roleId.message}
               </p>
             )}
           </div>
@@ -144,7 +124,7 @@ export default function InviteTeamMembers() {
           <div className="md:col-span-2" style={{ minHeight: "60px" }}>
             <button
               type="submit"
-              className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
             >
               Send Invite
             </button>
@@ -152,71 +132,75 @@ export default function InviteTeamMembers() {
         </form>
 
         <table className="min-w-full table-auto border-collapse bg-white rounded-lg">
-          <thead className="bg-gray-100 text-gray-700 text-center rounded-t-lg">
+          <thead className="bg-gray-100 text-gray-700 rounded-t-lg">
             <tr>
               <th className="py-3 px-4 text-left first:rounded-tl-lg whitespace-nowrap text-xs md:text-sm font-medium">
                 User Name
               </th>
-              <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              <th className="py-3 px-4 text-left whitespace-nowrap text-xs md:text-sm font-medium">
                 Email
               </th>
-              <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              <th className="py-3 px-4 text-left whitespace-nowrap text-xs md:text-sm font-medium">
                 Role
               </th>
-              <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              <th className="py-3 px-4 text-left whitespace-nowrap text-xs md:text-sm font-medium">
                 Status
               </th>
-              <th className="py-3 px-4 whitespace-nowrap text-xs md:text-sm font-medium">
+              <th className="py-3 px-4 text-left whitespace-nowrap text-xs md:text-sm font-medium">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
-            {services.map((service) => (
-              <tr key={service.id} className="">
-                {/* Service cell with left side text & status */}
+            {userData?.data?.map((item) => (
+              <tr key={item.id} className="">
+                {/* item cell with left side text & status */}
                 <td className="py-4 px-4 whitespace-nowrap">
-                  <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-start justify-start flex-wrap gap-2">
                     <div>
                       <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
-                        {service.name}
+                        {item.name}
                       </h1>
                       <span className="text-xs text-gray-500">62A2AA44-2</span>
                     </div>
                   </div>
                 </td>
 
-                <td className="py-4 px-4 text-center whitespace-nowrap text-xs md:text-sm">
-                  {service.started}
+                <td className="py-4 px-4 text-start whitespace-nowrap text-xs md:text-sm">
+                  {item.email}
                 </td>
-                <td className="py-4 px-4 text-center whitespace-nowrap">
-                  <div className="flex justify-center">
+
+                <td className="text-start whitespace-nowrap">
+                  <div className="py-4 flex justify-start">
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        service.status === 1 && "bg-[#EBFBF5] text-[#07811E]"
-                      } ${
-                        service.status === 0 && "bg-[#E8F1FE] text-[#1877F2]"
-                      }`}
+                      className={`px-3 py-1 rounded-full text-xs font-medium`}
                     >
-                      {service.status === 1 ? "Active" : "Inactive"}
+                      {item.roles}
                     </span>
                   </div>
                 </td>
 
-                <td className="py-4 px-4 text-center whitespace-nowrap">
-                  <div className="flex justify-center">
+                <td className="py-4 text-start whitespace-nowrap">
+                  <div className="flex justify-start">
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium`}
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        item.status === "Active" &&
+                        "bg-[#EBFBF5] text-[#07811E]"
+                      } ${
+                        item.status === "Inactive" &&
+                        "bg-[#E8F1FE] text-[#1877F2]"
+                      }`}
                     >
-                      {"Oct 17"}
+                      {item.status}
                     </span>
                   </div>
                 </td>
-                <td className="py-4 px-4 text-center whitespace-nowrap">
-                  <div className="flex items-center justify-center gap-4">
+
+                <td className=" text-start whitespace-nowrap">
+                  <div className="py-4 flex items-start justify-start ">
                     <button
                       onClick={() => {
-                        setSelectedService(service);
+                        setSelectedUserData(item);
                         setShowModal(true);
                       }}
                       className="px-4 py-2 text-blue-700 underline rounded-lg transition-colors cursor-pointer text-xs md:text-sm"
@@ -233,19 +217,11 @@ export default function InviteTeamMembers() {
         {/* Manage Modal */}
         <ManageUserModal
           isOpen={showModal}
+          selectedUserData={selectedUserData}
           onClose={() => {
             setShowModal(false);
-            setSelectedService(null);
+            setSelectedUserData(null);
           }}
-          defaultData={
-            selectedService
-              ? {
-                  name: selectedService.name,
-                  email: selectedService.email,
-                  role: selectedService.role,
-                }
-              : null
-          }
         />
       </div>
     </div>

@@ -18,18 +18,9 @@ export default function GeneralSettings() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<GeneralSettingsFormData>({
-    defaultValues: {
-      site_name: "tag-growth Sitea_",
-      site_description: "Default description",
-      email: "admin@example.com",
-      phone_number: "1234567890",
-      time_zone: "UTC",
-    },
-  });
+  } = useForm<GeneralSettingsFormData>();
 
   const onSubmit = async (data: GeneralSettingsFormData) => {
-    console.log(data);
     // Handle form submission here
     const response = await updateGeneralSetting(data);
     console.log(response);
@@ -51,7 +42,7 @@ export default function GeneralSettings() {
               minLength: { value: 2, message: "Site name is too short" },
             })}
             type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
             placeholder="Enter site name"
           />
           {errors.site_name && (
@@ -67,7 +58,7 @@ export default function GeneralSettings() {
               required: "Site description is required",
               minLength: { value: 10, message: "Description is too short" },
             })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
             rows={3}
             placeholder="Enter site description"
           />
@@ -91,7 +82,7 @@ export default function GeneralSettings() {
                 },
               })}
               type="email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
               placeholder="Enter email"
             />
             {errors.email && (
@@ -114,7 +105,7 @@ export default function GeneralSettings() {
                 },
               })}
               type="tel"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
               placeholder="Enter phone number"
             />
             {errors.phone_number && (
@@ -152,7 +143,7 @@ export default function GeneralSettings() {
         <div className="pt-4">
           <button
             type="submit"
-            className="px-4 py-2 text-white bg-black rounded-md"
+            className="px-4 py-2 text-white bg-black rounded-md cursor-pointer"
           >
             Save Changes
           </button>

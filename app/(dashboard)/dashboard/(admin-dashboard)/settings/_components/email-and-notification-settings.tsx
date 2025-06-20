@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import {
+  useGetEmailAndNotificationSettingsQuery,
+  useUpdateEmailAndNotificationSettingsMutation,
+} from "@/src/redux/features/admin/settings/email-and-notification-settings";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 
 interface EmailSettingsFormData {
   smtpHost: string;
   smtpPort: string;
   smtpUsername: string;
   smtpPassword: string;
+  smtpFrom: string;
 
   // Email Templates
   orderConfirmation: boolean;
@@ -26,29 +33,59 @@ interface EmailSettingsFormData {
 }
 
 export default function EmailAndNotificationSettings() {
+  const { data: emailAndNotificationSettings } =
+    useGetEmailAndNotificationSettingsQuery();
+  const [updateEmailAndNotificationSettings] =
+    useUpdateEmailAndNotificationSettingsMutation(
+      emailAndNotificationSettings?.id
+    );
   const [resellerVerification, setResellerVerification] = useState(true);
   const [userSupportRequests, setUserSupportRequests] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<EmailSettingsFormData>({
-    defaultValues: {
-      smtpHost: "",
-      smtpPort: "",
-      smtpUsername: "",
-      smtpPassword: "",
-    },
-  });
+  } = useForm<EmailSettingsFormData>();
 
-  const onSubmit = (data: EmailSettingsFormData) => {
-    const allData = {
-      ...data,
-      resellerVerification,
-      userSupportRequests,
+  // {
+  //   defaultValues: {
+  //     smtpHost: "",
+  //     smtpPort: "",
+  //     smtpUsername: "",
+  //     smtpPassword: "",
+  //     smtpFrom: "",
+  //   },
+  // }
+
+  useEffect(() => {
+    if (emailAndNotificationSettings) {
+      reset({
+        smtpHost: emailAndNotificationSettings.smtpHost,
+        smtpPort: emailAndNotificationSettings.smtpPort,
+        smtpUsername: emailAndNotificationSettings.smtpUsername,
+        smtpPassword: emailAndNotificationSettings.smtpPassword,
+        smtpFrom: emailAndNotificationSettings.smtpFrom,
+        // Add other fields as needed
+      });
+    }
+  }, [emailAndNotificationSettings, reset]);
+
+  const onSubmit = async (formData) => {
+    const formattedData = {
+      smtpHost: formData.smtpHost,
+      smtpPort: Number(formData.smtpPort),
+      smtpUsername: formData.smtpUsername,
+      smtpPassword: formData.smtpPassword,
+      smtpFrom: formData.smtpFrom,
     };
-    console.log("All Settings Data:", allData);
+    await updateEmailAndNotificationSettings({
+      data: formattedData,
+      id: emailAndNotificationSettings?.id,
+    });
+    toast.success("Email and notification settings updated successfully");
   };
 
   return (
@@ -64,17 +101,11 @@ export default function EmailAndNotificationSettings() {
             <label className="block text-sm font-medium text-gray-700">
               SMTP Host
             </label>
-            <select
+            <input
+              type="text"
               {...register("smtpHost", { required: "SMTP Host is required" })}
-              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-            >
-              <option value="">Select SMTP host</option>
-              <option value="smtp.taggrowth.com">smtp.taggrowth.com</option>
-              <option value="smtp.gmail.com">smtp.gmail.com</option>
-              <option value="smtp.outlook.com">smtp.outlook.com</option>
-              <option value="smtp.yahoo.com">smtp.yahoo.com</option>
-              <option value="smtp.office365.com">smtp.office365.com</option>
-            </select>
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  text-sm md:text-base"
+            />
             {errors.smtpHost && (
               <p className="text-red-500 text-xs md:text-sm">
                 {errors.smtpHost.message}
@@ -97,7 +128,7 @@ export default function EmailAndNotificationSettings() {
                 },
               })}
               placeholder="Enter SMTP port"
-              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  text-sm md:text-base"
             />
             {errors.smtpPort && (
               <p className="text-red-500 text-xs md:text-sm">
@@ -111,24 +142,13 @@ export default function EmailAndNotificationSettings() {
             <label className="block text-sm font-medium text-gray-700">
               SMTP Username
             </label>
-            <select
+            <input
+              type="text"
               {...register("smtpUsername", {
                 required: "SMTP Username is required",
               })}
-              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-            >
-              <option value="">Select SMTP username</option>
-              <option value="noreply@taggrowth.com">
-                noreply@taggrowth.com
-              </option>
-              <option value="support@taggrowth.com">
-                support@taggrowth.com
-              </option>
-              <option value="info@taggrowth.com">info@taggrowth.com</option>
-              <option value="contact@taggrowth.com">
-                contact@taggrowth.com
-              </option>
-            </select>
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  text-sm md:text-base"
+            />
             {errors.smtpUsername && (
               <p className="text-red-500 text-xs md:text-sm">
                 {errors.smtpUsername.message}
@@ -137,21 +157,45 @@ export default function EmailAndNotificationSettings() {
           </div>
 
           {/* SMTP Password */}
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
             <label className="block text-sm font-medium text-gray-700">
               SMTP Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("smtpPassword", {
                 required: "SMTP Password is required",
               })}
               placeholder="Enter SMTP password"
-              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  text-sm md:text-base pr-10"
             />
+            <span
+              className="absolute right-3 bottom-10 cursor-pointer text-gray-400 hover:text-gray-700"
+              onClick={() => setShowPassword((prev) => !prev)}
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </span>
             {errors.smtpPassword && (
               <p className="text-red-500 text-xs md:text-sm">
                 {errors.smtpPassword.message}
+              </p>
+            )}
+          </div>
+
+          {/* SMTP From */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              SMTP From
+            </label>
+            <input
+              type="text"
+              {...register("smtpFrom", { required: "SMTP From is required" })}
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  text-sm md:text-base"
+            />
+            {errors.smtpFrom && (
+              <p className="text-red-500 text-xs md:text-sm">
+                {errors.smtpFrom.message}
               </p>
             )}
           </div>
@@ -383,7 +427,7 @@ export default function EmailAndNotificationSettings() {
       <div className="pt-4">
         <button
           type="submit"
-          className="sm:w-auto px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm md:text-base"
+          className="sm:w-auto px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm md:text-base cursor-pointer"
         >
           Save Changes
         </button>
