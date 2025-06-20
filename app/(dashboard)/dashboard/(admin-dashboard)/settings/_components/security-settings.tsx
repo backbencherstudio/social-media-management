@@ -1,5 +1,7 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import { useUpdateSecuritySettingsMutation } from "@/src/redux/features/admin/settings/security-settings";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface SecuritySettingsForm {
   dataExportBackup: number;
@@ -13,19 +15,21 @@ export default function SecuritySettings() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SecuritySettingsForm>()
+  } = useForm<SecuritySettingsForm>();
+
+  const [updateSecuritySettings] = useUpdateSecuritySettingsMutation();
 
   const onSubmit = async (data: SecuritySettingsForm) => {
     const formattedData = {
       dataExportBackup: Number(data.dataExportBackup),
       sessionTimeout: Number(data.sessionTimeout),
       failedLoginAttempts: Number(data.failedLoginAttempts),
-      passwordExpiry: Number(data.passwordExpiry)
-    }
-    
-    console.log(formattedData)
-    // Handle API call here
-  }
+      passwordExpiry: Number(data.passwordExpiry),
+    };
+
+    await updateSecuritySettings(formattedData);
+    toast.success("Security settings updated successfully");
+  };
 
   return (
     <div className="space-y-6 p-6 bg-white rounded-lg">
@@ -43,7 +47,7 @@ export default function SecuritySettings() {
             {...register("dataExportBackup", {
               required: "Please select backup frequency",
             })}
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none "
           >
             <option value="1">Every 1 day</option>
             <option value="7">Every 7 days</option>
@@ -73,7 +77,7 @@ export default function SecuritySettings() {
               },
             })}
             placeholder="Enter timeout duration"
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none "
           />
           {errors.sessionTimeout && (
             <p className="text-red-500 text-sm">
@@ -91,7 +95,7 @@ export default function SecuritySettings() {
             {...register("failedLoginAttempts", {
               required: "Please select maximum attempts",
             })}
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none "
           >
             <option value="3">3</option>
             <option value="5">5</option>
@@ -118,7 +122,7 @@ export default function SecuritySettings() {
               max: { value: 365, message: "Maximum expiry is 365 days" },
             })}
             placeholder="Enter password expiry days"
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none "
           />
           {errors.passwordExpiry && (
             <p className="text-red-500 text-sm">
@@ -131,7 +135,7 @@ export default function SecuritySettings() {
         <div className="pt-4">
           <button
             type="submit"
-            className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+            className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors cursor-pointer"
           >
             Save Changes
           </button>

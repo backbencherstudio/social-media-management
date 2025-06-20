@@ -31,8 +31,6 @@ export default function Sent() {
 
   if (isLoading)
     return <div className="flex justify-center items-center">Loading...</div>;
-  if (isError)
-    return <div className="p-4 text-red-500">Error fetching data.</div>;
 
   return (
     <div className="overflow-x-auto w-full px-4 py-6 bg-white rounded-lg">
@@ -72,45 +70,53 @@ export default function Sent() {
           </tr>
         </thead>
         <tbody>
-          {paginatedServices.map((sentData) => (
-            <tr
-              key={sentData.id}
-              className="border-b border-gray-100 hover:bg-gray-50"
-            >
-              <td className="py-4 px-4 text-xs md:text-sm">
-                {sentData.type || "—"}
-              </td>
+          {paginatedServices && paginatedServices.length > 0 ? (
+            paginatedServices.map((sentData) => (
+              <tr
+                key={sentData.id}
+                className="border-b border-gray-100 hover:bg-gray-50"
+              >
+                <td className="py-4 px-4 text-xs md:text-sm">
+                  {sentData.type || "—"}
+                </td>
 
-              <td className="py-4 px-4 text-xs md:text-sm font-semibold text-gray-900">
-                {sentData.subject || "No Subject"}
-              </td>
+                <td className="py-4 px-4 text-xs md:text-sm font-semibold text-gray-900">
+                  {sentData.subject || "No Subject"}
+                </td>
 
-              <td className="py-4 px-4 text-xs md:text-sm">
-                {Array.isArray(sentData.recipient_emails)
-                  ? sentData.recipient_emails.join(", ")
-                  : sentData.recipient_emails}
-              </td>
+                <td className="py-4 px-4 text-xs md:text-sm">
+                  {Array.isArray(sentData.recipient_emails)
+                    ? sentData.recipient_emails.join(", ")
+                    : sentData.recipient_emails}
+                </td>
 
-              <td className="py-4 px-4 text-xs md:text-sm">
-                {new Date(sentData.created_at).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </td>
+                <td className="py-4 px-4 text-xs md:text-sm">
+                  {new Date(sentData.created_at).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </td>
 
-              <td className="py-4 px-4">
-                <div className="flex items-center gap-4">
-                  <Link
-                    href={`/dashboard/admin-support/${sentData.id}`}
-                    className="hover:text-gray-700 transition-colors"
-                  >
-                    <GrView className="w-4 h-4 md:w-5 md:h-5" />
-                  </Link>
-                </div>
+                <td className="py-4 px-4">
+                  <div className="flex items-center gap-4">
+                    <Link
+                      href={`/dashboard/admin-support/${sentData.id}`}
+                      className="hover:text-gray-700 transition-colors"
+                    >
+                      <GrView className="w-4 h-4 md:w-5 md:h-5" />
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5} className="py-8 text-center text-gray-400">
+                No data available
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
@@ -150,7 +156,7 @@ export default function Sent() {
       {/* Modals */}
       <PaymentDetailsModalReseller
         isModalOpen={isModalOpen}
-        selectedService={selectedService}
+        paymentDetails={selectedService}
         setIsModalOpen={setIsModalOpen}
       />
 

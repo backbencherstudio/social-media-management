@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+
 import React, { useState } from "react";
 import { GrView } from "react-icons/gr";
 import { Pagination } from "./pagination";
@@ -15,68 +15,7 @@ export default function ResellerPayments() {
 
   const { data: resellerPayments } = useGetAllResellerPaymentQuery();
 
-  // Extended fake data for pagination
-  // const services = [
-  //   {
-  //     id: 1,
-  //     name: "Email Design",
-  //     started: "2024-12-01",
-  //     status: "Paid",
-  //     approval: "Approved",
-  //     orderId: "62A2AA44-2",
-  //     amount: "$245.00",
-  //     package: "Basic Email Package",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Plus • 15 posts",
-  //     started: "2025-01-15",
-  //     status: "Pending",
-  //     approval: "Pending",
-  //     orderId: "62A2AA44-3",
-  //     amount: "$350.00",
-  //     package: "Social Media Package",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Email Marketing",
-  //     started: "2025-01-15",
-  //     status: "Pending",
-  //     approval: "Pending",
-  //     orderId: "62A2AA44-4",
-  //     amount: "$199.00",
-  //     package: "Marketing Suite",
-  //   },
-  //   // Add more items to demonstrate pagination
-  //   ...Array.from({ length: 50 }, (_, i) => ({
-  //     id: i + 4,
-  //     name: `${
-  //       [
-  //         "Email Campaign",
-  //         "Social Media Posts",
-  //         "Content Marketing",
-  //         "Digital Marketing",
-  //         "SEO Package",
-  //       ][i % 5]
-  //     } ${i + 4}`,
-  //     started: new Date(2024, Math.floor(i / 30), (i % 30) + 1)
-  //       .toISOString()
-  //       .split("T")[0],
-  //     status: ["Paid", "Pending"][i % 2],
-  //     approval: ["Pending", "Approved"][i % 2],
-  //     orderId: `62A2AA44-${i + 5}`,
-  //     amount: `$${(Math.random() * 900 + 100).toFixed(2)}`,
-  //     package: `${
-  //       ["Basic", "Standard", "Premium", "Enterprise", "Custom"][i % 5]
-  //     } Package ${i + 4}`,
-  //     client: `${["John", "Sarah", "Michael", "Emma", "David"][i % 5]} ${
-  //       ["Smith", "Johnson", "Williams", "Brown", "Jones"][i % 5]
-  //     }`,
-  //   })),
-  // ];
-
-  // Calculate pagination
-  const totalPages = Math.ceil(
+ const totalPages = Math.ceil(
     resellerPayments?.data?.resellers?.length / itemsPerPage
   );
   const paginatedDetails = resellerPayments?.data?.resellers?.slice(
@@ -153,7 +92,7 @@ export default function ResellerPayments() {
           <tbody>
             {paginatedDetails?.map((service) => (
               <tr
-                key={service.id}
+                key={service.reseller_id}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
                 {/* <td className="py-3 md:py-4 px-2 md:px-4 text-xs md:text-sm whitespace-nowrap">

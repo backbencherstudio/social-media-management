@@ -1,6 +1,7 @@
 import { useUpdatePaymentAndTransactionsMutation } from "@/src/redux/features/admin/settings/payment-and-transactions";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface PaymentFormData {
   minimumWithdrawalAmount: number;
@@ -27,14 +28,9 @@ export default function PaymentAndTransactions() {
   const onSubmit = async (data: PaymentFormData) => {
     // Transform the data to match the required format
     const formattedData = {
-      ...data,
-      minimumWithdrawalAmount: Number(data?.minimumWithdrawalAmount),
-      withdrawalProcessingFee: Number(data?.withdrawalProcessingFee),
-      isFlatCommission: Boolean(data?.isFlatCommission),
-      flatCommissionValue: data?.isFlatCommission
-        ? Number(data?.flatCommissionValue)
-        : null,
-      withdrawalProcessingTime:
+      minimum_withdrawal_amount: Number(data?.minimumWithdrawalAmount),
+      withdrawal_processing_fee: Number(data?.withdrawalProcessingFee),
+      withdrawal_processing_time:
         data.withdrawalProcessingTime === "48"
           ? "2-3 Business Days"
           : data.withdrawalProcessingTime === "24"
@@ -44,10 +40,18 @@ export default function PaymentAndTransactions() {
           : data.withdrawalProcessingTime === "168"
           ? "5-7 Business Days"
           : "Instant",
+      is_flat_commission: Boolean(data?.isFlatCommission),
+      flat_commission_value: data?.isFlatCommission
+        ? Number(data?.flatCommissionValue)
+        : null,
+      percentage_commission_value: !data?.isFlatCommission
+        ? Number(data?.percentageCommissionValue)
+        : null,
+      payment_methods: data?.paymentMethods || [],
     };
 
-    console.log(formattedData);
     await updatePaymentAndTransactions(formattedData);
+    toast.success("Payment and transaction update successfully");
   };
 
   // Watch the commission type to handle value changes
@@ -80,7 +84,7 @@ export default function PaymentAndTransactions() {
             {...register("minimumWithdrawalAmount", {
               required: "This field is required",
             })}
-            className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
+            className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none text-sm md:text-base"
           >
             <option value="50">$50</option>
             <option value="100">$100</option>
@@ -103,7 +107,7 @@ export default function PaymentAndTransactions() {
               min: { value: 0, message: "Must be greater than or equal to 0" },
               max: { value: 100, message: "Must be less than or equal to 100" },
             })}
-            className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
+            className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  text-sm md:text-base"
           />
         </div>
 
@@ -143,7 +147,7 @@ export default function PaymentAndTransactions() {
                 }
               )}
               placeholder={isFlat ? "Enter flat rate" : "Enter percentage"}
-              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
+              className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  text-sm md:text-base"
             />
           </div>
         </div>
@@ -153,27 +157,25 @@ export default function PaymentAndTransactions() {
           <label className="block text-sm font-medium text-gray-700">
             Payment Methods
           </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {["PayPal", "Payoneer", "Visa/MasterCard", "Bank Transfer"].map(
-              (method) => (
-                <div key={method} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    {...register("paymentMethods")}
-                    value={method}
-                    className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <label className="text-sm text-gray-600">{method}</label>
-                </div>
-              )
-            )}
+          <div className="grid grid-cols-1 gap-2">
+            {["PayPal", "Visa/MasterCard", "Bank Transfer"].map((method) => (
+              <div key={method} className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  {...register("paymentMethods")}
+                  value={method}
+                  className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <label className="text-sm text-gray-600">{method}</label>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="pt-4">
           <button
             type="submit"
-            className="sm:w-auto px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm md:text-base"
+            className="sm:w-auto px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm md:text-base cursor-pointer"
           >
             Save Changes
           </button>
