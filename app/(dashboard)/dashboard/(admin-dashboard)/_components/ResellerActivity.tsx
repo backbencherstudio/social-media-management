@@ -1,7 +1,7 @@
 import React from "react";
 
 import Image from "next/image";
-import { useGetAllResellersQuery } from "@/src/redux/features/admin/reseller/resellerApi";
+import { useGetTopResellersQuery } from "@/src/redux/features/admin/dashboard/dashboardApi";
 
 const icon1 = (
   <svg
@@ -121,26 +121,21 @@ export default function ResellerActivity() {
     data: resellers,
     isLoading,
     isError,
-  } = useGetAllResellersQuery(undefined);
+  } = useGetTopResellersQuery(undefined);
 
-  console.log(resellers);
+  console.log(resellers?.data?.data);
   if (isLoading) return <div>Loading...</div>;
-  // if (isError) return <div>Error</div>;
+  if (isError) return <div>Error</div>;
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
-      {/* <TopResellers resellers={resellers?.data || fakeResellers} /> */}
-      <TopResellers resellers={fakeResellers} />
+      <TopResellers resellers={resellers?.data?.data} />
       <AdminInfoSection />
-      {/* <RecentActivities /> */}
     </section>
   );
 }
 
 function TopResellers({ resellers }: { resellers: any[] }) {
-  const topResellers = resellers
-    .sort((a, b) => b.total_earnings - a.total_earnings)
-    .slice(0, 4);
   return (
     <div className="overflow-x-auto bg-white p-6 rounded-xl shadow-md max-w-full">
       <h3 className="text-lg font-semibold text-gray-800 mb-5">
@@ -149,7 +144,7 @@ function TopResellers({ resellers }: { resellers: any[] }) {
 
       <table className="min-w-full table-auto text-sm text-gray-600">
         <tbody>
-          {topResellers.map((reseller, index) => (
+          {resellers?.map((reseller, index) => (
             <tr key={index} className="border-t border-gray-200">
               <td className="px-3 py-3 flex items-center  gap-4">
                 <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center overflow-hidden">
@@ -164,7 +159,7 @@ function TopResellers({ resellers }: { resellers: any[] }) {
 
                 <div className="space-y-1.5">
                   <p className="font-medium">{reseller?.full_name}</p>
-                  <p className="text-sm ">{reseller?.total_task}</p>
+                  <p className="text-sm ">{reseller?.completed_tasks}</p>
                 </div>
               </td>
 

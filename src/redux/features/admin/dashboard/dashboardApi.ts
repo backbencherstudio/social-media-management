@@ -15,10 +15,27 @@ const adminDashboardApi = baseApi.injectEndpoints({
       }),
       providesTags: ["dashboard-data"],
     }),
+
+    getTopResellers: builder.query<any, void>({
+      query: () => ({
+        url: "/admin/website-info/all",
+      }),
+      providesTags: ["dashboard-data"],
+    }),
+    getRecentOrders: builder.query<any, void>({
+      query: () => ({
+        url: "/admin/website-info/recent-orders",
+      }),
+      providesTags: ["dashboard-data"],
+    }),
   }),
 });
 
 export const {
   useGetPieChartDataQuery,
   useGetTopPerformingServicesQuery,
-} = adminDashboardApi;  
+  useGetTopResellersQuery,
+  useGetRecentOrdersQuery,
+} = adminDashboardApi;
+
+// /admin/website-info/recent-orders
