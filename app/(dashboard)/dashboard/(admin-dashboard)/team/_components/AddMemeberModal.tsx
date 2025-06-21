@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useAddTeamMemberMutation } from "@/src/redux/features/admin/team/teamApi";
 import { toast } from "sonner";
+import { useGetUserRoleQuery } from "@/src/redux/features/admin/settings/user-role-management";
 
 interface AddMemberModalProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ export default function AddMemeberModal({
     email: "",
     role: "admin",
   });
+  const { data: roles } = useGetUserRoleQuery(undefined);
 
   const [addTeamMember, { isLoading }] = useAddTeamMemberMutation();
 
@@ -128,9 +130,12 @@ export default function AddMemeberModal({
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
               <SelectContent className="bg-white">
-                <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="manager">Project Manager</SelectItem>
-                <SelectItem value="writer">Content Writer</SelectItem>
+              {roles?.data?.data?.map((role: any) => (
+                console.log(role.title),
+                  <SelectItem key={role.id} value={role.title}>
+                    {role.title}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

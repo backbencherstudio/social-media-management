@@ -27,8 +27,12 @@ export const baseApi = createApi({
     "reseller-payment",
     "release-payment",
     "all-resellers",
-    "reseller-applications",
-    "clients"
-    ],
-
+    "reseller-applications",     
+    "clients",
+    "orders",
+    "team-members",
+    "dashboard-data",
+    
+  ],
+  
 });

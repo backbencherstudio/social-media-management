@@ -16,16 +16,33 @@ import { Pagination } from "../../_components/Pagination";
 import CustomSelect from "../../../_components/custom-select";
 import { useRouter } from "next/navigation";
 
+const order = {
+  id: "ORD_bh759n51x748h3asdcjbut9b",
+  order_status: "progress",
+  subscription_id: null,
+  ammount: 149,
+  pakage_name: "Social Media Posts",
+  user_email: "tqmhosain@gmail.com",
+  user_name: null,
+  user_id: "cmb4xs19l0004uoh41k0zeqjb",
+  payment_status: "paid",
+  subscription: null,
+};
+
 export type Order = {
-  orderId: string;
-  clientName: string;
-  clientEmail: string;
-  packageName: string;
-  packageNote?: string;
-  amount: string;
-  orderDate: string;
-  status: "Pending Assignment" | "In Progress" | "Completed";
-  assignedTo: string[];
+  id: string;
+  order_status: string;
+  subscription_id: string;
+  ammount: number;
+  pakage_name: string;
+  user_email: string;
+  user_name: string;
+  user_id: string;
+  payment_status: string;
+  subscription: {
+    service_id: string;
+    service_tier_id: string;
+  } | null;
 };
 
 interface OrderTableProps {
@@ -51,8 +68,8 @@ export function OrderTable({
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
-  const totalPages = Math.ceil(orders.length / itemsPerPage);
-  const paginationOrders = orders.slice(
+  const totalPages = Math.ceil(orders?.length / itemsPerPage);
+  const paginationOrders = orders?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -103,15 +120,15 @@ export function OrderTable({
           {paginationOrders.map((order, i) => (
             <TableRow className="border-b border-gray-100" key={i}>
               <TableCell className="text-sm text-[#1D1F2C] font-medium">
-                {order.orderId}
+                {order.id}
               </TableCell>
               <TableCell>
                 <div className="flex flex-col">
                   <span className="font-medium text-[#1D1F2C] font-medium">
-                    {order.clientName}
+                    {order.user_name}
                   </span>
                   <span className="text-sm text-muted-foreground text-[#4A4C56]">
-                    {order.clientEmail}
+                    {order.user_email}
                   </span>
                 </div>
               </TableCell>
@@ -119,33 +136,33 @@ export function OrderTable({
               <TableCell>
                 <div>
                   <p className="font-medium text-[#1D1F2C]">
-                    {order.packageName}
+                    {order.pakage_name}
                   </p>
-                  {order.packageNote && (
+                  {order.subscription?.service_id && (
                     <p className="text-sm text-muted-foreground text-[#4A4C56]">
-                      {order.packageNote}
+                      {order.subscription?.service_id}
                     </p>
                   )}
                 </div>
               </TableCell>
               <TableCell className="text-sm font-medium text-[#4A4C56]">
-                {order.amount}
+                {order.ammount}
               </TableCell>
               <TableCell className="text-sm font-medium text-[#4A4C56]">
-                {order.orderDate}
+                {order.order_status}
               </TableCell>
               <TableCell>
                 <Badge
                   variant="outline"
                   className={`rounded-full ${
-                    order.status === "Pending Assignment"
+                    order.order_status === "Pending Assignment"
                       ? "text-orange-500 border-orange-300 bg-orange-50"
-                      : order.status === "In Progress"
+                      : order.order_status === "In Progress"
                       ? "text-blue-500 border-blue-300 bg-blue-50"
                       : "text-green-500 border-green-300 bg-green-50"
                   }`}
                 >
-                  {order.status}
+                  {order.order_status}
                 </Badge>
               </TableCell>
               <TableCell>
@@ -154,7 +171,7 @@ export function OrderTable({
                   <div
                     onClick={() =>
                       router.push(
-                        `/dashboard/order/${encodeURIComponent(order.orderId)}`
+                        `/dashboard/order/${encodeURIComponent(order.id)}`
                       )
                     }
                     className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-300 cursor-pointer"
@@ -168,20 +185,22 @@ export function OrderTable({
                   {/* Assigned Avatars */}
                   <div className="flex">
                     {" "}
-                    {order.assignedTo.length > 0 &&
-                      order.assignedTo.map((url, idx) => (
-                        <Image
-                          key={idx}
-                          src={url}
-                          alt={`Avatar ${idx}`}
-                          width={48}
-                          height={48}
-                          className="w-12 h-12 object-cover rounded-[10px] -mr-4 border border-2 border-white"
-                        />
-                      ))}
+                    {order.subscription?.service_id && (
+                      <Image
+                        key={order.subscription.service_tier_id}
+                        src={
+                          // order.subscription.service_tier_id ||
+                          "https://img.freepik.com/free-photo/man-wearing-round-eyeglasses-casual-t-shirt_273609-19641.jpg?w=740"
+                        }
+                        alt={`Avatar ${order.subscription.service_tier_id} `}
+                        width={48}
+                        height={48}
+                        className="w-12 h-12 object-cover rounded-[10px] -mr-4 border border-2 border-white"
+                      />
+                    )}
                     {/* Add User Button */}
                     <button
-                      onClick={() => onAssignClick(order.orderId)}
+                      onClick={() => onAssignClick(order.id)}
                       className="w-12 h-12 flex items-center justify-center rounded-[10px] bg-[#F3F3FF] text-indigo-600 hover:bg-indigo-100 cursor-pointer border border-4 border-white"
                     >
                       <UserRoundPlus className="w-6 h-6 " />
