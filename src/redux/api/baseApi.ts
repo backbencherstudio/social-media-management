@@ -31,7 +31,13 @@ export const baseApi = createApi({
     "clients",
     "team-members",
     "email-and-notification-settings",
-    "posts"
-    ],
-
+    "posts",
+    "reseller-applications",     
+    "clients",
+    "orders",
+    "team-members",
+    "dashboard-data",
+    
+  ],
+  
 });
