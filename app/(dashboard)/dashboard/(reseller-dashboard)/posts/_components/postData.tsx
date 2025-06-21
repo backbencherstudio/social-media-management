@@ -1,7 +1,10 @@
 import Image from "next/image";
 import React from "react";
+import { DateHelper } from "@/helper/date.helper";
 
 export default function PostData({ post }) {
+  console.log(post);
+
   return (
     <div className="rounded-md border border-gray-200 bg-white p-3 space-y-6">
       <h1 className="text-2xl font-semibold mb-4">Preview</h1>
@@ -22,50 +25,69 @@ export default function PostData({ post }) {
               </div>
               <div>
                 <p className="text-sm font-medium">your_account</p>
-                <p className="text-xs text-gray-500">Instagram</p>
+                <p className="text-xs text-gray-500">{"Facebook"}</p>
               </div>
             </div>
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="20" 
-                height="20" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
                 strokeLinejoin="round"
                 className="text-gray-600"
               >
-                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
-                <path d="m15 5 4 4"/>
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                <path d="m15 5 4 4" />
               </svg>
             </button>
           </div>
         </div>
-        <div className="flex h-40 items-center justify-center rounded-md bg-gray-100">
-          <Image
-            src={
-              "https://img.freepik.com/free-photo/close-up-woman-front-clothing-pile_23-2150951085.jpg"
-            }
-            alt="User Logo"
-            width={300}
-            height={200}
-            className="h-full w-full object-cover rounded-md"
-          />
+
+        <div>
+          {post?.post_files &&
+            post.post_files.map((file: any, index: number) => (
+              <div
+                key={index}
+                className="flex h-40 items-center justify-center rounded-md bg-gray-100"
+              >
+                <Image
+                  src={
+                    "https://img.freepik.com/free-photo/close-up-woman-front-clothing-pile_23-2150951085.jpg"
+                  }
+                  alt="User Logo"
+                  width={300}
+                  height={200}
+                  className="h-full w-full object-cover rounded-md"
+                />
+              </div>
+            ))}
         </div>
-        <p className="mt-4">Your post content will appear here...</p>
-        <p>#socialmedia #marketing #digital</p>
+
+        <div
+          className="mt-4"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+        <p>
+          {post.hashtags.map((hashtag: any) => (
+            <span key={hashtag.id} className="text-sm text-gray-500 mr-2">
+              #{hashtag}
+            </span>
+          ))}
+        </p>
       </div>
       <div className="flex justify-between">
         <div>
           <h2 className="text-lg font-semibold mb-2">Post Create</h2>
-          <p>{post.postCreate}</p>
+          <p>{DateHelper.format(post.created_at, "DD MMM YYYY")}</p>
         </div>
         <div>
           <h2 className="text-lg font-semibold mb-2">Stutus</h2>
-          <p>{post.status}</p>
+          <p>{post.status === 1 ? "Scheduled" : "Published"}</p>
         </div>
       </div>
     </div>

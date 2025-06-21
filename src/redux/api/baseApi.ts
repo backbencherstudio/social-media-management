@@ -30,7 +30,8 @@ export const baseApi = createApi({
     "reseller-applications",
     "clients",
     "team-members",
-    "email-and-notification-settings"
+    "email-and-notification-settings",
+    "posts"
     ],
 
 });
