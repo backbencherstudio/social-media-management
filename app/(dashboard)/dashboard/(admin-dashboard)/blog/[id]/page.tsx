@@ -153,7 +153,6 @@ export default function BlogForm() {
       await updateBlog({ data: formData, id: id as string });
       toast.success("Blog updated successfully");
     }
-
     reset();
   };
 

@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
         hostname: "i.pravatar.cc",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "192.168.4.2",
+        port: "9000",
+        pathname: "/**",
+      },
     ],
   },
 };

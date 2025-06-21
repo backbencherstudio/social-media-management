@@ -10,7 +10,7 @@ import { Toaster } from "sonner";
 
 export default function ClientLayout({children}: {children: React.ReactNode}) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [currentRole, setCurrentRole] = useState("Admin");
+  const [currentRole, setCurrentRole] = useState("Reseller");
 
   // Function to render appropriate sidebar based on role
   const renderSidebar = () => {

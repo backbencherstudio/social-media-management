@@ -18,7 +18,7 @@ export const ROLE = {
 export type Role = (typeof ROLE)[keyof typeof ROLE];
 
 export default function DashboardHome() {
-  const role = ROLE.ADMIN as Role;
+  const role = ROLE.RESELLER as Role;
 
   if (!role) {
     return (
