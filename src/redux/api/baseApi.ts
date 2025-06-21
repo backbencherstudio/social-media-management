@@ -37,7 +37,7 @@ export const baseApi = createApi({
     "orders",
     "team-members",
     "dashboard-data",
-    
+    "reseller-profile",
   ],
   
 });
