@@ -13,6 +13,7 @@ import AssetsIcon from "@/public/incons/assets";
 import SocialInboxIcon from "@/public/incons/social-inbox";
 import SocialsIcon from "@/public/incons/socials";
 import SupportIcon from "@/public/incons/support";
+import { useGetClientListQuery } from "@/src/redux/features/reseller/dashboard/dashboard";
 
 // Menu item type
 interface MenuItem {
@@ -175,18 +176,16 @@ export default function ResellerSidebar({
     },
   ];
 
-  const clients = [
-    { value: "city-shop", name: "City Shop" },
-    { value: "bank-asia", name: "Bank Asia" },
-    { value: "louis-vuitton", name: "Louis Vuitton" },
-    { value: "nintendo", name: "Nintendo" },
-    { value: "louis-roberto", name: "Louis Roberto" },
-    { value: "bank-of-america", name: "Bank of America" },
-    { value: "walt-disney", name: "Walt Disney" },
-  ];
+  const { data: clientList } = useGetClientListQuery();
+
+  const clients =
+    clientList?.data?.map((client: any) => ({
+      value: client.id.toString(),
+      name: client.name,
+    })) || [];
 
   const [selectedClientValue, setSelectedClientValue] = useState(
-    clients[0].value
+    clients[0]?.value || ""
   );
 
   const handleClientChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -254,7 +253,7 @@ export default function ResellerSidebar({
         <div className="flex items-center justify-between">
           <div>
             <span className="flex h-10 w-10 items-center justify-center rounded-full border bg-[#DAFF05] text-sm font-medium text-gray-900">
-              {clientInitials}
+              {clientInitials || "MH"}
             </span>
           </div>
           <select

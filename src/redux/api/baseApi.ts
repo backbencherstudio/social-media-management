@@ -38,6 +38,7 @@ export const baseApi = createApi({
     "team-members",
     "dashboard-data",
     "reseller-profile",
+    "assets",
   ],
   
 });

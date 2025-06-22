@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useCreateSchedulePostMutation } from "@/src/redux/features/reseller/compose/compose";
 import { useGetAllTasksQuery } from "@/src/redux/features/admin/task-management/task-management";
 import { GalleryHorizontal} from "lucide-react";
+import ScheduleGalleryIcon from "@/public/incons/schedule-gallery";
 
 type FormValues = {
   platforms: string[];
@@ -268,7 +269,7 @@ export default function CreateSchedulePost() {
               )
             :
               <div className="flex h-40 items-center justify-center rounded-md bg-gray-100">
-                <GalleryHorizontal />
+                <ScheduleGalleryIcon className="w-8 h-8" />
               </div>
             }
 
