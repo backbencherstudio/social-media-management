@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 .container {
   max-width: 1200px;
   margin-left: auto;
@@ -9,7 +20,7 @@
 
 @layer base {
   :root {
-    --font-inter-tight: 'Inter Tight';
+    --font-inter-tight: "Inter Tight";
   }
 
   .serotiva-regular {
@@ -71,7 +82,6 @@
   }
 }
 
-
 .my-masonry-grid {
   display: flex;
   margin-left: -24px;
@@ -85,7 +95,7 @@
   background-clip: padding-box;
 }
 
-.my-masonry-grid_column>div {
+.my-masonry-grid_column > div {
   margin-bottom: 24px;
 }
 
@@ -101,20 +111,17 @@
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
-
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 8px;
-
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #c1c1c1;
   border-radius: 8px;
   border: 1px solid #f1f1f1;
-
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -131,9 +138,7 @@
 
 .custom-scrollbar2::-webkit-scrollbar-track {
   background: #5f5f5f;
-  ;
   border-radius: 8px;
-
 }
 
 .custom-scrollbar2::-webkit-scrollbar-thumb {
@@ -142,11 +147,8 @@
   border: 3px solid #525363;
 }
 
-
-
 .custom-scrollbar2::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
-
 }
 
 /* for calender */

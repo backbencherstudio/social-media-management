@@ -11,8 +11,15 @@ const post = baseApi.injectEndpoints({
       }),
       providesTags: ["posts"],
     }),
+    deletePost: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/post/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["posts"],
+    }),
   }),
 });
 
 
-export const { useGetAllPostsQuery } = post;
+export const { useGetAllPostsQuery, useDeletePostMutation } = post;

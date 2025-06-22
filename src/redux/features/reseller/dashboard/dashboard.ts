@@ -1,0 +1,28 @@
+import { baseApi } from "@/src/redux/api/baseApi";
+
+
+const dashboard = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getDashboardAnalysis: builder.query<any, void>({
+      query: () => ({
+        url: "/reseller/dashboard/analysis",
+        method: "GET",
+      }),
+    }),
+    getActiveServices: builder.query<any, void>({
+      query: () => ({
+        url: "/reseller/dashboard/active-services",
+        method: "GET",
+      }),
+    }),
+    getClientList: builder.query<any, void>({
+      query: () => ({
+        url: "/reseller/dashboard/clients",
+        method: "GET",
+      }),
+    }),
+  }),
+});
+
+
+export const { useGetDashboardAnalysisQuery, useGetActiveServicesQuery, useGetClientListQuery } = dashboard;

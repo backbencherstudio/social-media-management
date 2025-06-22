@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import calendar from "dayjs/plugin/calendar";
+import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(calendar);
+dayjs.extend(relativeTime);
 /**
  * Date helper
  */
@@ -97,5 +99,9 @@ export class DateHelper {
       lastWeek: "[Last] dddd [at] h:mm A",
       sameElse: "DD/MM/YYYY [at] h:mm A",
     });
+  }
+
+  static fromNow(date: string | number | Date) {
+    return dayjs(date).fromNow();
   }
 }

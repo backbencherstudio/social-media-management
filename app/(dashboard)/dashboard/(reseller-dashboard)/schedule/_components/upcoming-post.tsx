@@ -3,15 +3,19 @@
 import FacebookIcon from "@/public/incons/facebook";
 import React from "react";
 import { MdDeleteForever } from "react-icons/md";
-import { FiCalendar, FiClock } from "react-icons/fi";
+import { FiCalendar } from "react-icons/fi";
 import { useGetAllUpcomingPostQuery } from "@/src/redux/features/reseller/schedule/schedule";
-import Image from "next/image";
 import { DateHelper } from "@/helper/date.helper";
 import ScheduleGalleryIcon from "@/public/incons/schedule-gallery";
+import { useDeletePostMutation } from "@/src/redux/features/reseller/posts/post";
 
 export default function UpcomingPost() {
   const { data: upcomingPosts } = useGetAllUpcomingPostQuery();
-  console.log(upcomingPosts?.data);
+  const [deletePost] = useDeletePostMutation();
+
+  const handleDeletePost = async (id: string) => {
+    await deletePost({ id });
+  };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)]">
@@ -31,7 +35,7 @@ export default function UpcomingPost() {
                 </span>
               </div>
               <span className="text-3xl text-red-800 font-medium">
-                <MdDeleteForever />
+                <MdDeleteForever onClick={() => handleDeletePost(post.id)} />
               </span>
             </div>
             <hr className="my-4 text-gray-300" />

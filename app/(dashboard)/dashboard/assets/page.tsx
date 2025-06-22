@@ -98,6 +98,7 @@ export default function page() {
       {/* content card */}
       <div className="mx-auto grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 lg:gap-10">
         <ScheduledPostCard
+          key={scheduledPostData.title}
           title={scheduledPostData.title}
           scheduledFor={scheduledPostData.scheduledFor}
           platforms={scheduledPostData.platforms}
