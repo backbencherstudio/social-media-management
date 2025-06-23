@@ -39,6 +39,7 @@ export const baseApi = createApi({
     "dashboard-data",
     "reseller-profile",
     "assets",
+    "allAnalyticsServices"
   ],
   
 });

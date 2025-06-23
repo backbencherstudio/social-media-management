@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import DatePicker from "../../reseller-dashboard/_components/date-picker";
@@ -5,47 +7,12 @@ import ActionIcon from "@/public/incons/actions";
 import FacebookIcon from "@/public/incons/facebook";
 import InstagramIcon from "@/public/incons/instagram";
 import LinkedInIcon from "@/public/incons/linkedIn";
+import { useGetAllAnalyticsAllServicesQuery } from "@/src/redux/features/reseller/analytics/analytics";
 
-const services = [
-  {
-    id: 1,
-    post: "10 Tips for Digital Marketing",
-    platform: "Instagram",
-    date: "Mar 15, 2024",
-    likes: 25,
-    icon: <FacebookIcon className="w-5 h-5 text-[#1877F2]" />,
-    comments: 10,
-    shares: 15,
-    reach: 100,
-    engagementRate: 10,
-  },
-  {
-    id: 2,
-    post: "10 Tips for Digital Marketing",
-    platform: "Facebook",
-    date: "Mar 15, 2024",
-    likes: 25,
-    icon: <InstagramIcon className="w-5 h-5 text-[#E4405F]" />,
-    comments: 10,
-    shares: 15,
-    reach: 100,
-    engagementRate: 10,
-  },
-  {
-    id: 3,
-    post: "10 Tips for Digital Marketing",
-    platform: "Instagram",
-    date: "Mar 15, 2024",
-    likes: 25,
-    icon: <LinkedInIcon className="w-5 h-5 text-[#0A66C2]" />,
-    comments: 10,
-    shares: 15,
-    reach: 100,
-    engagementRate: 10,
-  },
-];
 
 export default function RecentPostsPerformance() {
+  const { data } = useGetAllAnalyticsAllServicesQuery();
+
   return (
     <div className="overflow-x-auto w-full px-3 md:px-4 py-4 md:py-6 bg-white rounded-lg">
       {/* Header Section */}
@@ -98,8 +65,8 @@ export default function RecentPostsPerformance() {
           </tr>
         </thead>
         <tbody>
-          {services.map((service) => (
-            <tr key={service.id} className="">
+          {data?.data?.map((service, index) => (
+            <tr key={service.cucid} className="">
               {/* Service cell with left side text & status */}
               <td className="py-4 px-4">
                 <div className="flex items-center justify-between flex-wrap gap-2">
@@ -108,7 +75,7 @@ export default function RecentPostsPerformance() {
                       {service.post}
                     </h1>
                     <span className="text-sm text-gray-500 block truncate">
-                      62A2AA44-2
+                      {service.cucid}
                     </span>
                   </div>
                 </div>
@@ -116,22 +83,23 @@ export default function RecentPostsPerformance() {
 
               <td className="py-4 px-4 text-center">
                 <div className="flex items-center pl-2 gap-1.5 rounded-full border py-1 text-sm">
-                  {service.icon} {service.platform}
+                  {/* {service.icon}  */}
+                  {service.platform}
                 </div>
               </td>
               <td className="py-4 px-4 text-center whitespace-nowrap">
                 {service.date}
               </td>
-              <td className="py-4 px-4 text-center">{service.likes}</td>
-              <td className="py-4 px-4 text-center">{service.comments}</td>
-              <td className="py-4 px-4 text-center">{service.shares}</td>
-              <td className="py-4 px-4 text-center">{service.reach}</td>
+              <td className="py-4 px-4 text-center">{service.likes || 0}</td>
+              <td className="py-4 px-4 text-center">{service.comments || 0}</td>
+              <td className="py-4 px-4 text-center">{service.shares || 0}</td>
+              <td className="py-4 px-4 text-center">{service.reach || 0}</td>
               <td className="py-4 px-4 text-center">
-                {service.engagementRate}
+                {service.engagementRate || 0}%
               </td>
 
               <td className="py-4 px-4 flex justify-center">
-                <Link href={`/dashboard/service/${service.id}`}>
+                <Link href={`/dashboard/service/${service.cucid}`}>
                   <ActionIcon />
                 </Link>
               </td>
