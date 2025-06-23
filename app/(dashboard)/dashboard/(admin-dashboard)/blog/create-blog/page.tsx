@@ -25,8 +25,8 @@ export default function CreateBlog() {
   const { register, handleSubmit, setValue, reset, watch } =
     useForm<FormData>();
   const [contentBlocks, setContentBlocks] = useState<any[]>([
-    { type: "text", content: "" }, // Default text block
-    { type: "media", content: null }, // Default media block
+    { type: "text", content: "" },
+    { type: "media", content: null },
   ]);
   const categoryValue = watch("categoryIds");
   const [hashtags, setHashtags] = useState<string[]>([]);

@@ -191,7 +191,7 @@ function generateSampleData(): ActivityData[] {
       data.push({
         day,
         hour,
-        value: Math.max(0, value), // Ensure no negative values
+        value: Math.max(0, value), 
       });
     }
   }

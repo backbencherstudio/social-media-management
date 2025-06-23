@@ -28,7 +28,7 @@ export default function RecentFiles() {
             };
 
             if (file.type.includes("image")) {
-              return <ImageFile {...commonProps}  />;
+              return <ImageFile {...commonProps} />;
             }
             if (file.type.includes("video")) {
               return <VideoFile {...commonProps} />;

@@ -8,7 +8,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { toast } from "sonner";
 import { useCreateSchedulePostMutation } from "@/src/redux/features/reseller/compose/compose";
 import { useGetAllTasksQuery } from "@/src/redux/features/admin/task-management/task-management";
-import { GalleryHorizontal} from "lucide-react";
+import { GalleryHorizontal } from "lucide-react";
 import ScheduleGalleryIcon from "@/public/incons/schedule-gallery";
 
 type FormValues = {
@@ -66,7 +66,6 @@ export default function CreateSchedulePost() {
       content: editorContent || "",
       task_id: data.taskId,
     };
-    console.log(jsonData, "jsonData");
 
     formData.append("data", JSON.stringify(jsonData));
 
@@ -266,18 +265,16 @@ export default function CreateSchedulePost() {
                     className="h-full w-full object-cover rounded-md"
                   />
                 </div>
-              )
-            :
-              <div className="flex h-40 items-center justify-center rounded-md bg-gray-100">
-                <ScheduleGalleryIcon className="w-8 h-8" />
-              </div>
-            }
+              ) : (
+                <div className="flex h-40 items-center justify-center rounded-md bg-gray-100">
+                  <ScheduleGalleryIcon className="w-8 h-8" />
+                </div>
+              )}
 
               <div
                 className="mt-4 prose max-w-none"
                 dangerouslySetInnerHTML={{
-                  __html:
-                    editorRef.current?.getContent(),
+                  __html: editorRef.current?.getContent(),
                 }}
               ></div>
 
