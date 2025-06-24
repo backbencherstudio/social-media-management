@@ -70,7 +70,7 @@ export default function PostData({ post }) {
 
         <div
           className="mt-4"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{ __html: post.content.slice(0, 60) }}
         />
         <p>
           {post.hashtags.map((hashtag: any) => (

@@ -51,7 +51,7 @@ export default function RecentFiles() {
 }
 
 const FileWrapper = ({ children, name, size, updated_at }: any) => (
-  <div className="w-full flex flex-col justify-center border border-gray-100 space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors space-y-3">
+  <div className="w-[350px] flex flex-col justify-center border border-gray-100 space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors space-y-3">
     {children}
     <div className="pl-3">
       <p className="text-sm font-medium text-gray-900 truncate">{name}</p>
@@ -66,8 +66,7 @@ const FileWrapper = ({ children, name, size, updated_at }: any) => (
 const ImageFile = ({ name, ...props }: any) => (
   <FileWrapper name={name} {...props}>
     <div
-      className="w-full h-[250px] sm:h-[280px] md:h-[300px] rounded-lg 
-    bg-gray-100 flex items-center justify-center"
+      className="w-[300px] mx-auto h-[250px] sm:h-[280px] md:h-[300px] rounded-lg bg-gray-100 flex items-center justify-center"
     >
       <BlackGalleryIcon />
     </div>
@@ -76,7 +75,7 @@ const ImageFile = ({ name, ...props }: any) => (
 
 const VideoFile = (props: any) => (
   <FileWrapper {...props}>
-    <div className="w-full h-[250px] sm:h-[280px] md:h-[300px] rounded-lg bg-gray-100 flex items-center justify-center">
+    <div className="w-[300px] mx-auto h-[250px] sm:h-[280px] md:h-[300px] rounded-lg bg-gray-100 flex items-center justify-center">
       <VideoPlayIcon />
     </div>
   </FileWrapper>
@@ -84,7 +83,7 @@ const VideoFile = (props: any) => (
 
 const PdfFile = (props: any) => (
   <FileWrapper {...props}>
-    <div className="w-full h-[250px] sm:h-[280px] md:h-[300px] rounded-lg bg-gray-100 flex items-center justify-center">
+    <div className="w-[300px] mx-auto h-[250px] sm:h-[280px] md:h-[300px] rounded-lg bg-gray-100 flex items-center justify-center">
       <PdfFileIcon />
     </div>
   </FileWrapper>
