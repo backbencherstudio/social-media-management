@@ -8,9 +8,13 @@ import { useGetAllUpcomingPostQuery } from "@/src/redux/features/reseller/schedu
 import { DateHelper } from "@/helper/date.helper";
 import ScheduleGalleryIcon from "@/public/incons/schedule-gallery";
 import { useDeletePostMutation } from "@/src/redux/features/reseller/posts/post";
+import { useSelector } from "react-redux";
+import { RootState } from "@/src/redux/store";
 
 export default function UpcomingPost() {
-  const { data: upcomingPosts } = useGetAllUpcomingPostQuery();
+
+  const clientId = useSelector((state: RootState) => state.clientId.id);
+  const { data: upcomingPosts } = useGetAllUpcomingPostQuery(clientId);
   const [deletePost] = useDeletePostMutation();
 
   const handleDeletePost = async (id: string) => {

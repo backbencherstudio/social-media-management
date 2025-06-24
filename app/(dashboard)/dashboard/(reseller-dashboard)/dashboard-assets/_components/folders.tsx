@@ -8,6 +8,7 @@ import AttachmentsIcon from "@/public/incons/attachments-icon";
 import BlogsIcon from "@/public/incons/blogs-icon";
 import { RootState } from "@/src/redux/store";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 const iconMap: { [key: string]: React.ElementType } = {
   posts: PostsIcon,
@@ -20,6 +21,7 @@ const iconMap: { [key: string]: React.ElementType } = {
 export default function Folders() {
   const clientId = useSelector((state: RootState) => state.clientId.id);
   const { data: folders } = useGetFoldersQuery(clientId);
+  console.log("data", folders);
 
   return (
     <div>
@@ -30,9 +32,10 @@ export default function Folders() {
           {folders?.map((folder: any) => {
             const Icon = iconMap[folder.name.toLowerCase()] || ImageIcon;
             return (
-              <div
+              // Card
+              <Link href={`/dashboard/dashboard-assets/${folder?.type?.toLowerCase()}`}
                 key={folder.name}
-                className="flex items-start space-x-3 border border-gray-200 p-5 hover:bg-gray-50 rounded-lg transition-colors"
+                className="flex items-start space-x-3 border border-gray-200 p-5 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
               >
                 <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
                   <Icon className="w-6 h-6 text-blue-600" />
@@ -43,7 +46,7 @@ export default function Folders() {
                   </p>
                   <p className="text-xs text-gray-500">{folder?.count} files</p>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
