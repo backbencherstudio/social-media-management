@@ -119,7 +119,7 @@ export default function FollowerActivityMap() {
                 key={hour}
                 className="text-center text-xs text-gray-500 py-1"
               >
-                {hour}
+                {hour} 
               </div>
             ))}
           </div>
