@@ -26,7 +26,7 @@ export default function Posts() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {posts?.data?.map((post: any) => (
-          <PostData key={post.id} post={post} />
+          <PostData key={post.id} post={post} />  
         ))}
       </div>
     </div>

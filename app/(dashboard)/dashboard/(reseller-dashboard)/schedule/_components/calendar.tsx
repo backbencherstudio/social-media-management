@@ -10,6 +10,8 @@ import { FaInstagram, FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { DatePickerDemo } from "./calenderComponent";
 import { useGetScheduleCalendarQuery } from "@/src/redux/features/reseller/schedule/schedule";
 import { DateHelper } from "@/helper/date.helper";
+import { RootState } from "@/src/redux/store";
+import { useSelector } from "react-redux";
 
 const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
@@ -51,7 +53,8 @@ export default function Calendar() {
   const [selectedEvents, setSelectedEvents] = useState<EventType[]>([]);
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [currentDate, setCurrentDate] = useState(new Date());
-  const { data: scheduleCalendar } = useGetScheduleCalendarQuery();
+  const clientId = useSelector((state: RootState) => state.clientId.id);
+  const { data: scheduleCalendar } = useGetScheduleCalendarQuery(clientId);
 
   console.log(scheduleCalendar?.data);
 
