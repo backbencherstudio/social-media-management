@@ -46,43 +46,40 @@ export default function ActiveServices() {
             </tr>
           </thead>
           <tbody>
-            {activeServices?.data?.map(
-              (service) => (
-                console.log(service),
-                (
-                  <tr key={service.id} className="">
-                    {/* Service cell with left side text & status */}
-                    <td className="py-4">
-                      <div className="flex items-center justify-between flex-wrap gap-2">
-                        <div className="max-w-full overflow-hidden">
-                          <h1 className="font-semibold text-gray-900 truncate whitespace-nowrap">
-                            {service.name}
-                          </h1>
-                          <span className="text-sm text-gray-500 block truncate">
-                            {service.id}
-                          </span>
-                        </div>
-                      </div>
-                    </td>
+            {activeServices?.data?.map((service) => (
+              <tr key={service.id} className="">
+                {/* Service cell with left side text & status */}
+                <td className="py-4">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="max-w-full overflow-hidden">
+                      <h1 className="font-semibold text-gray-900 truncate whitespace-nowrap">
+                        {service.name}
+                      </h1>
+                      <span className="text-sm text-gray-500 block truncate">
+                        {service.id}
+                      </span>
+                    </div>
+                  </div>
+                </td>
 
-                    <td className="py-4 px-4 text-center whitespace-nowrap overflow-hidden text-ellipsis">
-                      {DateHelper.format(
-                        service.created_at,
-                        "MMM DD"
-                      ).toLowerCase()}
-                    </td>
+                <td className="py-4 px-4 text-center whitespace-nowrap overflow-hidden text-ellipsis">
+                  {DateHelper.format(
+                    service.created_at,
+                    "MMM DD"
+                  ).toLowerCase()}
+                </td>
 
-                    <td className="py-4 px-4 text-center">
-                      <div className="flex justify-center">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-2 whitespace-nowrap overflow-hidden  
+                <td className="py-4 px-4 text-center">
+                  <div className="flex justify-center">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-2 whitespace-nowrap overflow-hidden  
                       ${
                         service.status === 1
                           ? "bg-[#EBFBF5] text-[#00A86B]"
                           : "bg-[#ECEFF3] text-black"
                       }`}
-                        >
-                          {/* ${
+                    >
+                      {/* ${
                         service.status === "For Review" &&
                         "bg-[#FEF3C7] text-[#984917]"
                       } ${
@@ -92,7 +89,7 @@ export default function ActiveServices() {
                         service.status === "Complete" && "bg-[#ECEFF3] text-black"
                       }  */}
 
-                          {/* <div
+                      {/* <div
                         className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
                           service.status === "For Review" && "bg-[#984917]"
                         } ${service.status === "In Progress" && "bg-[#5B21B6]"} ${
@@ -101,32 +98,30 @@ export default function ActiveServices() {
                         service.status === "Active" && "bg-[#EBFBF5] text-[#00A86B]"
                       }`}
                       ></div> */}
-                          {service.status === 1 ? "Active" : "Inactive"}
-                        </span>
-                      </div>
-                    </td>
+                      {service.status === 1 ? "Active" : "Inactive"}
+                    </span>
+                  </div>
+                </td>
 
-                    <td className="py-4 px-4 text-center">
-                      <div className="flex justify-center">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium`}
-                        >
-                          {"Oct 17"}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-end">
-                      <Link
-                        href={`/dashboard/service/${service.id}`}
-                        className="border px-3 py-1 rounded-md transition-colors"
-                      >
-                        Details
-                      </Link>
-                    </td>
-                  </tr>
-                )
-              )
-            )}
+                <td className="py-4 px-4 text-center">
+                  <div className="flex justify-center">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium`}
+                    >
+                      {"Oct 17"}
+                    </span>
+                  </div>
+                </td>
+                <td className="py-4 px-4 text-end">
+                  <Link
+                    href={`/dashboard/service/${service.id}`}
+                    className="border px-3 py-1 rounded-md transition-colors"
+                  >
+                    Details
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

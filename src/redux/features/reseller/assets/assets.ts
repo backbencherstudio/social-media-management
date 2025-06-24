@@ -3,23 +3,23 @@ import { baseApi } from "@/src/redux/api/baseApi";
 
 const assets = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getFiles: builder.query<any, void>({
-      query: () => ({
-        url: "/assets/recent",
+    getFiles: builder.query({
+      query: (id: string) => ({
+        url: `/assets/recent/${id}`,
         method: "GET",
       }),
       providesTags: ["assets"],
     }),
-    getAssetsStats: builder.query<any, void>({
-      query: () => ({
-        url: "/assets/stats",
+    getAssetsStats: builder.query({
+      query: (id: string) => ({
+        url: `/assets/stats/${id}`,
         method: "GET",
       }),
       providesTags: ["assets"],
     }),
-    getFolders: builder.query<any, void>({
-      query: () => ({
-        url: "/assets/folders",
+    getFolders: builder.query({
+      query: (id: string) => ({
+        url: `/assets/folders/${id}`,
         method: "GET",
       }),
     }),

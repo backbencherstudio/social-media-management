@@ -6,6 +6,8 @@ import PostsIcon from "@/public/incons/posts-icon";
 import DesignsIcon from "@/public/incons/designs-icon";
 import AttachmentsIcon from "@/public/incons/attachments-icon";
 import BlogsIcon from "@/public/incons/blogs-icon";
+import { RootState } from "@/src/redux/store";
+import { useSelector } from "react-redux";
 
 const iconMap: { [key: string]: React.ElementType } = {
   posts: PostsIcon,
@@ -16,14 +18,15 @@ const iconMap: { [key: string]: React.ElementType } = {
 };
 
 export default function Folders() {
-  const { data: folders } = useGetFoldersQuery();
+  const clientId = useSelector((state: RootState) => state.clientId.id);
+  const { data: folders } = useGetFoldersQuery(clientId);
 
   return (
     <div>
       <h1 className="px-4 mb-4">Folders</h1>
       <hr className="text-gray-200" />
       <div className="px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {folders?.map((folder: any) => {
             const Icon = iconMap[folder.name.toLowerCase()] || ImageIcon;
             return (

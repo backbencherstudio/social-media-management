@@ -3,11 +3,14 @@
 import DocumentIcon from "@/public/incons/document";
 import GalleryIcon from "@/public/incons/gallery";
 import { useGetAssetsStatsQuery } from "@/src/redux/features/reseller/assets/assets";
+import { RootState } from "@/src/redux/store";
 import React from "react";
 import { FiVideo } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 export default function Card() {
-  const { data: assetsStats } = useGetAssetsStatsQuery();
+  const clientId = useSelector((state: RootState) => state.clientId.id);
+  const { data: assetsStats } = useGetAssetsStatsQuery(clientId);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

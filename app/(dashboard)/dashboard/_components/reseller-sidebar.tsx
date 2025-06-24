@@ -13,7 +13,11 @@ import AssetsIcon from "@/public/incons/assets";
 import SocialInboxIcon from "@/public/incons/social-inbox";
 import SocialsIcon from "@/public/incons/socials";
 import SupportIcon from "@/public/incons/support";
-import { useGetClientListQuery } from "@/src/redux/features/reseller/dashboard/dashboard";
+import {
+  useGetClientListQuery,
+} from "@/src/redux/features/reseller/dashboard/dashboard";
+import { useDispatch } from "react-redux";
+import { setId } from "@/src/redux/slice/clientIdSlice";
 
 // Menu item type
 interface MenuItem {
@@ -184,12 +188,19 @@ export default function ResellerSidebar({
       name: client.name,
     })) || [];
 
+  // console.log(clients);
+
   const [selectedClientValue, setSelectedClientValue] = useState(
     clients[0]?.value || ""
   );
 
-  const handleClientChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const dispatch = useDispatch();
+
+  const handleClientChange = async (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setSelectedClientValue(event.target.value);
+    dispatch(setId(event.target.value));
   };
 
   const selectedClient = clients.find(

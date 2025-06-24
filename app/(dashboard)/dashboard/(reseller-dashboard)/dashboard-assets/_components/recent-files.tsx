@@ -7,9 +7,13 @@ import { useGetFilesQuery } from "@/src/redux/features/reseller/assets/assets";
 import React from "react";
 import { DateHelper } from "@/helper/date.helper";
 import { FileHelper } from "@/helper/file.helper";
+import { RootState } from "@/src/redux/store";
+import { useSelector } from "react-redux";
 
 export default function RecentFiles() {
-  const { data: files } = useGetFilesQuery();
+
+  const clientId = useSelector((state: RootState) => state.clientId.id);
+  const { data: files } = useGetFilesQuery(clientId);
 
   return (
     <div>
