@@ -8,7 +8,6 @@ import { Editor } from "@tinymce/tinymce-react";
 import { toast } from "sonner";
 import { useCreateSchedulePostMutation } from "@/src/redux/features/reseller/compose/compose";
 import { useGetAllTasksQuery } from "@/src/redux/features/admin/task-management/task-management";
-import { GalleryHorizontal } from "lucide-react";
 import ScheduleGalleryIcon from "@/public/incons/schedule-gallery";
 
 type FormValues = {
@@ -76,7 +75,9 @@ export default function CreateSchedulePost() {
       });
     }
 
-    if (formData.get("data") && formData.getAll("files")) {
+    console.log(formData.get("data"), formData.getAll("files"));
+
+    if (formData.get("data") && formData.getAll("files").length > 0) {
       await createSchedulePost(formData);
       toast.success("Post scheduled successfully");
     }
