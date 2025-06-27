@@ -85,55 +85,63 @@ export default function Inbox() {
           </tr>
         </thead>
         <tbody>
-          {paginatedServices?.map((service: any, index: number) => (
-            <tr
-              key={service.id}
-              className="border-b border-gray-100 hover:bg-gray-50"
-            >
-              {/* <td className="py-4 px-4 whitespace-nowrap text-xs md:text-sm">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <span>{service.orderId}</span>
-                </div>
-              </td> */}
+          {paginatedServices && paginatedServices.length > 0 ? (
+            paginatedServices.map((service: any, index: number) => (
+              <tr
+                key={service.id}
+                className="border-b border-gray-100 hover:bg-gray-50"
+              >
+                {/* <td className="py-4 px-4 whitespace-nowrap text-xs md:text-sm">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <span>{service.orderId}</span>
+                  </div>
+                </td> */}
 
-              <td className="py-4 px-4 whitespace-nowrap">
-                <div>
-                  <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
-                    {service.subject}
-                  </h1>
-                  <span className="text-xs text-gray-500">
-                    {service.orderId}
-                  </span>
-                </div>
-              </td>
-              <td className="py-4 px-4 whitespace-nowrap">
-                <div>
-                  <span className="text-xs text-gray-500">
-                    {service.from?.match(/<([^>]+)>/)?.[1] || service.from}
-                  </span>
-                </div>
-              </td>
+                <td className="py-4 px-4 whitespace-nowrap">
+                  <div>
+                    <h1 className="font-semibold text-gray-900 text-xs md:text-sm">
+                      {service.subject}
+                    </h1>
+                    <span className="text-xs text-gray-500">
+                      {service.orderId}
+                    </span>
+                  </div>
+                </td>
+                <td className="py-4 px-4 whitespace-nowrap">
+                  <div>
+                    <span className="text-xs text-gray-500">
+                      {service.from?.match(/<([^>]+)>/)?.[1] || service.from}
+                    </span>
+                  </div>
+                </td>
 
-              <td className="py-4 px-4 text-xs md:text-sm">
-                {new Date(service.date).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </td>
+                <td className="py-4 px-4 text-xs md:text-sm">
+                  {new Date(service.date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </td>
 
-              <td className="py-4 px-4 whitespace-nowrap">
-                <div className="flex items-center gap-4">
-                  <Link
-                    href={`/dashboard/admin-support/${service.uid}`}
-                    className="hover:text-gray-700 transition-colors"
-                  >
-                    <GrView className="w-4 h-4 md:w-5 md:h-5" />
-                  </Link>
-                </div>
+                <td className="py-4 px-4 whitespace-nowrap">
+                  <div className="flex items-center gap-4">
+                    <Link
+                      href={`/dashboard/admin-support/${service.uid}`}
+                      className="hover:text-gray-700 transition-colors"
+                    >
+                      <GrView className="w-4 h-4 md:w-5 md:h-5" />
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={4} className="py-8 text-center text-gray-400">
+                No data available
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
@@ -171,7 +179,7 @@ export default function Inbox() {
       {/* Payment Details Modal */}
       <PaymentDetailsModalReseller
         isModalOpen={isModalOpen}
-        selectedService={selectedService}
+        paymentDetails={selectedService}
         setIsModalOpen={setIsModalOpen}
       />
 

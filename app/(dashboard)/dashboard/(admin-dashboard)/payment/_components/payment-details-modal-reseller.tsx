@@ -5,7 +5,7 @@ export default function PaymentDetailsModalReseller({
   paymentDetails,
   setIsModalOpen,
 }) {
-  console.log(paymentDetails);
+
   return (
     <div>
       {isModalOpen && paymentDetails && (

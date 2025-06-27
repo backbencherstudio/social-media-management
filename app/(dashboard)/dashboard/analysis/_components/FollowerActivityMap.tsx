@@ -119,7 +119,7 @@ export default function FollowerActivityMap() {
                 key={hour}
                 className="text-center text-xs text-gray-500 py-1"
               >
-                {hour}
+                {hour} 
               </div>
             ))}
           </div>
@@ -191,7 +191,7 @@ function generateSampleData(): ActivityData[] {
       data.push({
         day,
         hour,
-        value: Math.max(0, value), // Ensure no negative values
+        value: Math.max(0, value), 
       });
     }
   }

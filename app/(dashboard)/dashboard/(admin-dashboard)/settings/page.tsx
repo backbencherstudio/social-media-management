@@ -6,9 +6,9 @@ import InviteTeamMembers from "./_components/invite-team-members";
 import PaymentAndTransactions from "./_components/payment-and-transactions";
 import EmailAndNotificationSettings from "./_components/email-and-notification-settings";
 import SecuritySettings from "./_components/security-settings";
+import AdminInfo from "./_components/admin-info";
 
 export default function Settings() {
-
   return (
     <div className="p-6">
       <Tabs
@@ -19,33 +19,39 @@ export default function Settings() {
         <TabsList className="flex flex-col gap-2 w-full h-fit rounded-lg p-4 bg-white">
           <TabsTrigger
             value="General Settings"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2 cursor-pointer"
           >
             General Settings
           </TabsTrigger>
           <TabsTrigger
             value="User & Role Management"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2 cursor-pointer"
           >
             User & Role Management
           </TabsTrigger>
           <TabsTrigger
             value="Payment & Transactions"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2 cursor-pointer"
           >
             Payment & Transactions
           </TabsTrigger>
           <TabsTrigger
             value="Email & Notification Settings"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2 cursor-pointer"
           >
             Email & Notification Settings
           </TabsTrigger>
           <TabsTrigger
             value="Security Settings"
-            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2 cursor-pointer"
           >
             Security Settings
+          </TabsTrigger>
+          <TabsTrigger
+            value="Admin Info"
+            className="justify-start w-full data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-colors rounded-md px-4 py-2 cursor-pointer"
+          >
+            Admin Info
           </TabsTrigger>
         </TabsList>
 
@@ -69,6 +75,10 @@ export default function Settings() {
 
           <TabsContent value="Security Settings">
             <SecuritySettings />
+          </TabsContent>
+
+          <TabsContent value="Admin Info">
+            <AdminInfo />
           </TabsContent>
         </div>
       </Tabs>

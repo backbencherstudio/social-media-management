@@ -15,6 +15,20 @@ const userRole = baseApi.injectEndpoints({
       }),
       providesTags: ["user-role-management"],
     }),
+    getAllUser: builder.query<any, void>({
+      query: () => ({
+        url: "/user-and-role-management",
+        method: "GET",
+      }),
+      providesTags: ["user-role-management"],
+    }),
+    inviteTeamMember: builder.mutation({
+      query: (data) => ({
+        url: "/user-and-role-management/assign-role",
+        method: "PATCH",
+        body: data,
+      }),
+    }),
     updateUserAndRole: builder.mutation({
       query: (data) => ({
         url: "/user-and-role-management/manage-role",
@@ -26,4 +40,4 @@ const userRole = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUserRoleQuery, useUpdateUserAndRoleMutation } = userRole;
+export const { useGetUserRoleQuery, useGetAllUserQuery, useInviteTeamMemberMutation, useUpdateUserAndRoleMutation } = userRole;

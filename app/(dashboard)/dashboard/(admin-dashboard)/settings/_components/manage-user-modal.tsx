@@ -4,7 +4,7 @@ import {
   useGetUserRoleQuery,
   useUpdateUserAndRoleMutation,
 } from "@/src/redux/features/admin/settings/user-role-management";
-import React, { useState } from "react"; // Update this line
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 interface EmailModalProps {
@@ -15,18 +15,26 @@ interface EmailModalProps {
     email: string;
     role: string;
   } | null;
+  selectedUserData: {
+    id: string;
+    name: string;
+    email: string;
+    roles: string;
+    status: string;
+    action: string;
+  } | null;
 }
 
-interface EmailFormData {
-  // name: string;
-  roleId: number;
+interface IFormInput {
   email: string;
+  roleId: string;
 }
 
 export default function ManageUserModal({
   isOpen,
   onClose,
   defaultData,
+  selectedUserData,
 }: EmailModalProps) {
   const { data } = useGetUserRoleQuery();
 
@@ -39,31 +47,42 @@ export default function ManageUserModal({
     formState: { errors },
     reset,
     setValue,
-  } = useForm<EmailFormData>({
-    defaultValues: {
-      // name: defaultData?.name || "",
-      email: defaultData?.email || "",
-    },
-  });
+  } = useForm<IFormInput>();
+
+  useEffect(() => {
+    if (selectedUserData && data?.data?.data) {
+      const selectedRole = data.data.data.find(
+        (role: any) => role.name === selectedUserData.roles
+      );
+      reset({
+        email: selectedUserData.email,
+        roleId: selectedRole ? selectedRole.id : "",
+      });
+      setIsActive(selectedUserData.status === "Active");
+    }
+  }, [selectedUserData, data, reset]);
 
   // Update form values when defaultData changes
   React.useEffect(() => {
     if (defaultData) {
-      // setValue("name", defaultData.name);
       setValue("email", defaultData.email);
     }
   }, [defaultData, setValue]);
 
-  const onSubmit = async (data: EmailFormData) => {
+  const onSubmit = async (data: IFormInput) => {
     const formData = {
       ...data,
       status: isActive ? 1 : 0,
     };
+
+    console.log(formData);
     const result = await updateUserAndRole(formData);
     console.log(result);
-    reset();
+    // reset();
   };
+
   if (!isOpen) return null;
+
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -72,31 +91,13 @@ export default function ManageUserModal({
           <h2 className="text-xl font-semibold">Manage User</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 cursor-pointer"
           >
             ✕
           </button>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Name Type */}
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              User Name
-            </label>
-            <input
-              type="text"
-              {...register("name", {
-                required: "Name is required",
-              })}
-              placeholder="Enter Name"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2"
-            />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-            )}
-          </div> */}
-
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -108,7 +109,7 @@ export default function ManageUserModal({
                 required: "Email is required",
               })}
               placeholder="Enter email"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none" 
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">
@@ -120,16 +121,17 @@ export default function ManageUserModal({
           {/* Role */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Recipients
+              Role
             </label>
             <select
               {...register("roleId", {
-                required: "Please select a role",
+                required: "Role is required",
               })}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none"
             >
-              {data?.data?.roles?.map((item: any) => (
-                <option key={item.id} value={item.id}>
+              <option value="" disabled>{selectedUserData?.roles}</option>
+              {data?.data?.data?.map((item: any) => (
+                <option key={item?.id} value={item?.id}>
                   {item.name}
                 </option>
               ))}
@@ -142,7 +144,6 @@ export default function ManageUserModal({
           </div>
 
           {/* Switch */}
-
           <div className="flex items-center justify-between">
             <label className="block text-sm font-medium text-gray-700">
               Status (
@@ -171,7 +172,7 @@ export default function ManageUserModal({
             <div className="flex items-center gap-4">
               <button
                 type="submit"
-                className="bg-black text-white rounded-lg px-4 py-3"
+                className="bg-black text-white rounded-lg px-4 py-3 cursor-pointer"
               >
                 Save changes
               </button>
@@ -179,7 +180,7 @@ export default function ManageUserModal({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="bg-gray-100 text-gray-600 rounded-lg px-5 py-3 hover:bg-gray-200 transition-colors"
+                  className="bg-gray-100 text-gray-600 rounded-lg px-5 py-3 hover:bg-gray-200 transition-colors cursor-pointer"
                 >
                   Close
                 </button>

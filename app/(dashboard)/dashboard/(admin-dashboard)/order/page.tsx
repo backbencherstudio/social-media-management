@@ -4,6 +4,11 @@ import React, { useState } from "react";
 import { OrderStat, OrderStateCard } from "./_components/OrderStatCard";
 import { Order, OrderTable } from "./_components/OrderTable";
 import { AssignOrderModal } from "./_components/AssignOrderModal";
+import {
+  useAssignOrderMutation,
+  useGetAllOrdersQuery,
+} from "@/src/redux/features/admin/order/orderApi";
+import { toast } from "sonner";
 
 // orderstates
 const orderStats: OrderStat[] = [
@@ -31,56 +36,9 @@ const baseAssignedAvatars = [
   "https://img.freepik.com/premium-photo/man-wearing-headset-with-blue-background_758367-169302.jpg?w=740",
 ];
 
-// fake table data
-const fakeOrders: Order[] = [
-  {
-    orderId: "#ORD-2024001",
-    clientName: "McDonald's",
-    clientEmail: "jennings@example.com",
-    packageName: "Social Media Post",
-    packageNote: "With 3 Add Ons",
-    amount: "$245.00",
-    orderDate: "Feb 18, 2024",
-    status: "Pending Assignment",
-    assignedTo: [],
-  },
-  {
-    orderId: "#ORD-2024002",
-    clientName: "McDonald's",
-    clientEmail: "weaver@example.com",
-    packageName: "Email Design",
-    amount: "$99.00",
-    orderDate: "Feb 17, 2024",
-    status: "Pending Assignment",
-    assignedTo: [],
-  },
-  {
-    orderId: "#ORD-2024003",
-    clientName: "Mitsubishi",
-    clientEmail: "holt@example.com",
-    packageName: "Short-Form Videos",
-    amount: "$99.00",
-    orderDate: "Feb 16, 2024",
-    status: "In Progress",
-    assignedTo: baseAssignedAvatars,
-  },
-  ...Array.from({ length: 100 }, (_, i) => ({
-    orderId: `#ORD-2024${(i + 4).toString().padStart(3, "0")}`,
-    clientName: `Client ${i + 4}`,
-    clientEmail: `client${i + 4}@example.com`,
-    packageName: ["Website Design", "Logo Pack", "Brand Strategy"][i % 3],
-    packageNote: i % 2 === 0 ? "Priority Project" : undefined,
-    amount: `$${(Math.random() * 500 + 50).toFixed(2)}`,
-    orderDate: `Feb ${Math.floor(Math.random() * 28) + 1}, 2024`,
-    status: ["Pending Assignment", "In Progress", "Completed"][i % 3] as
-      | "Pending Assignment"
-      | "In Progress"
-      | "Completed",
-    assignedTo: i % 3 === 0 ? baseAssignedAvatars : [],
-  })),
-];
-
 const page = () => {
+  const { data: orders } = useGetAllOrdersQuery(undefined);
+  console.log(orders);
   //   for modal
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -93,6 +51,41 @@ const page = () => {
   const [period, setPeriod] = useState("week");
   const [orderStatus, setOrderStatus] = useState("all");
 
+  const [assignOrder, { isLoading }] = useAssignOrderMutation(undefined);
+
+  const handleAssign = async (
+    reseller: string,
+    role: string,
+    amount: string,
+    notes: string,
+    postType: string,
+    postCount: string
+  ) => {
+    // Map incoming data to the target format
+    const mappedData = {
+      res_id: reseller, // map reseller to res_id
+      roleId: role, // map role to roleId
+      ammount: parseInt(amount, 10), // Convert amount to integer
+      note: notes, // map notes to note
+      post_type: postType, // map post type to post_type
+      post_count: parseInt(postCount, 10), // Convert post count to integer
+    };
+
+    // Log the mapped data
+    console.log("Assigning to:", mappedData);
+    try {
+      const response = await assignOrder({
+        id: selectedOrderId,
+        data: mappedData,
+      }).unwrap();
+      toast.success("Order assigned successfully");
+      console.log(response);
+    } catch (error) {
+      toast.error("Failed to assign order");
+      console.log(error);
+    }
+  };
+
   return (
     <div className=" mx-auto p-2 md:p-6 ">
       <OrderStateCard orderslate={orderStats} />
@@ -100,7 +93,7 @@ const page = () => {
       <div className="rounded-xl  p-4 shadow-sm bg-white my-5">
         {/* table data */}
         <OrderTable
-          orders={fakeOrders}
+          orders={orders || []}
           onAssignClick={handleAssignClick}
           period={period}
           setPeriod={setPeriod}
@@ -115,9 +108,7 @@ const page = () => {
           orderId={selectedOrderId}
           open={modalOpen}
           onClose={() => setModalOpen(false)}
-          onAssign={(reseller, role, notes) => {
-            console.log("Assigning to:", reseller, role, notes);
-          }}
+          onAssign={handleAssign}
         />
       )}
     </div>

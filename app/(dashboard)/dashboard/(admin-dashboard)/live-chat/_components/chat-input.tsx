@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Smile, Paperclip, Send } from "lucide-react";
+import { log } from "node:console";
 
 interface ChatInputProps {
   onSendMessage: (content: string) => void;
@@ -12,8 +13,10 @@ interface ChatInputProps {
 export function ChatInput({ onSendMessage }: ChatInputProps) {
   const [message, setMessage] = useState("");
 
+ 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("ChatInput handleSubmit called with message:", message);
     if (message.trim()) {
       onSendMessage(message.trim());
       setMessage("");

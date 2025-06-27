@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import {
   Dialog,
@@ -18,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { TeamMember } from "../fakeMember";
 import { useUpdateTeamMemberMutation } from "@/src/redux/features/admin/team/teamApi";
 import { toast } from "sonner";
+import { useGetUserRoleQuery } from "@/src/redux/features/admin/settings/user-role-management";
 
 interface EditMemberModalProps {
   isOpen: boolean;
@@ -33,22 +36,33 @@ export default function EditMemberModal({
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
-    role: "admin",
+    role: "",
   });
+
+  const { data: roles } = useGetUserRoleQuery(undefined);
 
   // Update the form data when the modal is opened with new member data
   useEffect(() => {
     if (member) {
       setFormData({
-        fullName: member?.full_name || "",
+        fullName: member?.full_name || member?.fullName || "",
         email: member.email || "",
-        role: member.role || "admin",
+        role: member.role || ""
       });
     }
   }, [member]);
 
   const [updateTeamMember, { isLoading, isSuccess, isError, error }] =
     useUpdateTeamMemberMutation();
+
+  // useEffect(() => {
+  //   if (roles?.data?.data?.length > 0 && !formData.role) {
+  //     setFormData(prev => ({
+  //       ...prev,
+  //       role: roles.data.data[0].id.toString()
+  //     }));
+  //   }
+  // }, [roles, formData.role]); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,9 +155,11 @@ export default function EditMemberModal({
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
               <SelectContent className="bg-white">
-                <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="manager">Project Manager</SelectItem>
-                <SelectItem value="writer">Content Writer</SelectItem>
+                {roles?.data?.data?.map((role: any) => (
+                    <SelectItem key={role.id} value={role.title}>
+                    {role.title}
+                  </SelectItem>
+                ))} 
               </SelectContent>
             </Select>
           </div>

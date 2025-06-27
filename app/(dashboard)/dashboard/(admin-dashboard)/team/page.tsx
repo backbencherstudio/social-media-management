@@ -43,8 +43,6 @@ export default function page() {
     }
   };
 
-
-
   // handle delete member
   const handleDeleteMember = async () => {
     try {

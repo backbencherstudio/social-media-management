@@ -55,7 +55,7 @@ export default function CategorModal({ isOpen, setIsOpen }) {
           <Button
             type="button"
             variant="outline"
-            className="px-3 py-1 bg-gray-50 border-0 rounded-full text-sm"
+            className="px-3 py-1 bg-gray-50 border-0 rounded-full text-sm cursor-pointer"
           >
             + Add New
           </Button>
@@ -74,7 +74,7 @@ export default function CategorModal({ isOpen, setIsOpen }) {
               />
               <Button
                 type="submit"
-                className="bg-black text-white px-4 py-4"
+                className="bg-black text-white px-4 py-4 cursor-pointer"
                 disabled={isLoading}
               >
                 {isLoading ? "Adding..." : "Add"}

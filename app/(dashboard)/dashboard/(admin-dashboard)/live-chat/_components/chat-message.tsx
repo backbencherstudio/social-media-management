@@ -1,11 +1,13 @@
+// app/chat/_components/chat-message.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avator";
+
 import { cn } from "@/lib/utils";
 import { formatMessageTime } from "@/lib/utils";
 import { Message } from "../types";
 import { mockUsers } from "../mock-data";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
 interface ChatMessagesProps {
   messages: Message[];
@@ -14,7 +16,9 @@ interface ChatMessagesProps {
 
 export function ChatMessages({ messages, currentUserId }: ChatMessagesProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+ 
 
+  
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -27,7 +31,6 @@ export function ChatMessages({ messages, currentUserId }: ChatMessagesProps) {
     return mockUsers.find((user) => user.id === id);
   };
 
-  console.log("Messages:", messages);
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#F9F9FB]">
       {messages.map((message) => {

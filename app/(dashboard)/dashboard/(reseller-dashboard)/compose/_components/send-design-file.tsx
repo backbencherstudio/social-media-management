@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import FilesIcon from "@/public/incons/files";
 import { Editor } from "@tinymce/tinymce-react";
+import { usePostSendDesignfileMutation } from "@/src/redux/features/reseller/compose/compose";
+import { toast } from "sonner";
 
 type FormData = {
   content: string;
-  media: FileList;
+  files: FileList;
 };
 
 export default function SendDesignFile() {
@@ -17,13 +19,14 @@ export default function SendDesignFile() {
   const editorRef = useRef<any>(null);
   const [file, setFile] = useState<File | null>(null);
   const [mediaPreview, setMediaPreview] = useState<string | null>(null);
+  const [ postSendDesignfile ] = usePostSendDesignfileMutation();
 
   // Handle media file change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setFile(file);
     if (file) {
-      setValue("media", e.target.files);
+      setValue("files", e.target.files);
       // Create preview for image files
       if (file.type.startsWith("image/")) {
         const reader = new FileReader();
@@ -36,14 +39,19 @@ export default function SendDesignFile() {
   };
 
   // Handle form submission
-  const onSubmit = (data: FormData) => {
+  const onSubmit =async (data: FormData) => {
+    const formData = new FormData();
     const editorContent = editorRef.current?.getContent();
-    const formData = {
-      ...data,
-      content: editorContent,
-      media: file,
-    };
-    console.log("Complete Form Data:", formData);
+
+    formData.append("content", editorContent || "");
+
+    if (file) {
+      formData.append("files", file);
+    }
+
+
+    await postSendDesignfile(formData);
+    toast.success("Design file sent successfully");
   };
 
   return (
@@ -86,7 +94,7 @@ export default function SendDesignFile() {
           <input
             type="file"
             id="media-upload"
-            {...register("media")}
+            {...register("files")}
             onChange={handleFileChange}
             className="hidden"
             accept="image/*,video/*"
@@ -123,7 +131,7 @@ export default function SendDesignFile() {
       </div>
 
       {/* Submit Button */}
-      <Button type="submit" className="bg-black text-white px-8 py-6">
+      <Button type="submit" className="bg-black text-white px-8 py-6 cursor-pointer">
         Send File
       </Button>
     </form>
