@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import StatusBar from "./status-bar";
 import { useGetAllClientConversationQuery } from "@/src/redux/features/admin/help-and-support/support";
-
+import { C } from "@fullcalendar/core/internal-common";
 
 interface ChatInterfaceProps {
   userId: string;
@@ -42,7 +42,8 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
 
   const { data: allClient, isLoading } =
     useGetAllClientConversationQuery(undefined);
-  console.log(allClient, "all Cllient");
+
+    
 
   useEffect(() => {
     const newSocket = io(
@@ -68,9 +69,9 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     //user registration
     newSocket.on(
       "user_registered",
-      (data: { success: boolean; conversationId?: string }) => {
+      (data: { success: boolean; conversationId?: string; userId: string }) => {
         if (data.success && data.conversationId) {
-          setActiveUserId(data.conversationId);
+          setActiveUserId(data?.userId);
         }
       }
     );
@@ -187,6 +188,16 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
       });
   };
 
+  const formatMessages = (messages: any[], userId: string): Message[] => {
+    return messages?.map((msg: any) => ({
+      id: msg?.id || Date.now().toString(),
+      sender: msg?.sender_id === userId ? msg?.sender_id : "you", // Customize sender logic
+      text: msg?.message || msg?.text, // Use the correct field for the message content
+      timestamp: new Date(msg?.created_at), // Format timestamp correctly
+      type: msg?.sender_id === userId ? "received" : "sent", // Determine message type
+    }));
+  };
+
   //user selection handler
   const handleUserSelect = async (userId: string) => {
     setActiveUserId(userId);
@@ -197,60 +208,61 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     );
 
     try {
-      //fetching messages for the selected user
-      const res = await fetch(
-        `https://trademarks-removed-examinations-cassette.trycloudflare.com/api/messages/conversations`
+      const existingUser = allClient?.filter(
+        (client: any) => client?.creator_id === userId
       );
-      const data = await res.json();
-      const data2 = data?.filter((d: any) => d?.creator_id === userId);
-      console.log(data2[0]?.messages, "data22222222222222222222222");
-      if (Array.isArray(data2[0].messages)) {
-        const formatted: Message[] = data2[0]?.messages.map((msg: any) => ({
-          id: msg?.id || Date.now().toString(),
-          sender: msg?.sender_id === userId ? msg?.sender_id : "you",
-          text: msg?.message || msg?.text,
-          timestamp: new Date(msg?.created_at),
-          type: msg?.sender_id === userId ? "received" : "sent",
-        }));
-        console.log(formatted, "formateddddddddddddddd");
-        setMessagesByUser((prev) => ({ ...prev, [userId]: formatted }));
-      }
+      const formattedMessages = formatMessages(
+        existingUser[0]?.messages,
+        userId
+      );
+      setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
     } catch (error) {
       console.error("Error loading messages", error);
     }
   };
 
-useEffect(() => {
-  if (!isLoading && allClient?.length > 0) {
-    const updatedUsers = allClient.map((client: any) => ({
-      id: client.creator_id, 
-      name: `User ${client.creator_id.slice(0, 6)}...`, 
-      unreadCount: 0, 
-      isOnline: true,
-    }));
+  useEffect(() => {
+    if (!isLoading && allClient?.length > 0) {
+      const updatedUsers = allClient.map((client: any) => ({
+        id: client.creator_id,
+        name: `User ${client.creator_id.slice(0, 6)}...`,
+        unreadCount: 0,
+        isOnline: true,
+      }));
 
-    setUsers(updatedUsers);
+      const currentUser = updatedUsers?.filter(
+        (user: any) => user?.id === userId
+      );
+      setUsers(updatedUsers);
+      setActiveUserId(currentUser[0]?.id);
+
+      const existingUser = allClient?.filter(
+        (client: any) => client?.creator_id === userId
+      );
+        const formattedMessages = formatMessages(
+        existingUser[0]?.messages,
+        userId
+      );
+        setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
+      }
+  }, [allClient, isLoading]);
+
+  if (isLoading) {
+    return <p>Loading.............</p>;
   }
-}, [allClient, isLoading]);
-
-  if(isLoading) {
-    return(
-      <p>Loading............</p>
-    )
-  }
-
-  console.log(users, "uyssersssssssssssss");
 
   const currentMessages = activeUserId
     ? messagesByUser[activeUserId] || []
     : [];
-  // console.log(currentMessages, "currentMessages");
+
+  console.log(currentMessages, "crbt");
+
   return (
     <div className="flex flex-col h-[calc(100vh-100px)]">
       <StatusBar status={status} userId={userId} isAdmin={isAdmin} />
 
       <div className="flex flex-1 overflow-hidden">
-        {(isAdmin && !isLoading)&& (
+        {isAdmin && !isLoading && (
           <ChatSidebar
             users={users}
             activeUserId={activeUserId}
@@ -308,12 +320,9 @@ useEffect(() => {
                 onChange={(e) => setMessageInput(e.target.value)}
                 placeholder="Type your message..."
                 disabled={!activeUserId}
-                onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               />
-              <Button
-                onClick={sendMessage}
-                disabled={!messageInput.trim()}
-              >
+              <Button onClick={sendMessage} disabled={!messageInput.trim()}>
                 Send
               </Button>
             </div>
