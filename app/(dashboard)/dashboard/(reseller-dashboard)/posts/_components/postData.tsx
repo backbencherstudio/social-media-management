@@ -3,7 +3,6 @@ import React from "react";
 import { DateHelper } from "@/helper/date.helper";
 
 export default function PostData({ post }) {
-  console.log(post);
 
   return (
     <div className="rounded-md border border-gray-200 bg-white p-3 space-y-6">
