@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter_Tight } from "next/font/google";
 import localFont from "next/font/local";
 import { ReduxProvider } from "@/src/redux/provider";
+import { Toaster } from "sonner";
 
 // Load Inter Tight from Google Fonts
 const interTight = Inter_Tight({
@@ -51,6 +52,7 @@ export default function RootLayout({
       className={`${interTight.className} ${serotiva.variable}`}
     >
       <body>
+        <Toaster richColors position="top-center" />
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
