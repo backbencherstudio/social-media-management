@@ -6,22 +6,29 @@ import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Heading from "@/app/(client)/_components/heading-text";
-import Link from "next/link";
 import CustomImage from "@/components/reusable/CustomImage";
-import { useRegisterMutation } from "@/src/redux/auth/all-auth";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useVerifyRegistrationMutation } from "@/src/redux/auth/all-auth";
+import SetCookies from "../_components/set-cookies";
 import { toast } from "sonner";
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [register, { isLoading }] = useRegisterMutation();
+export default function VerifyRegistration() {
+  const [verifyRegistration, { isLoading }] = useVerifyRegistrationMutation();
+  const router = useRouter();
+  const query = useSearchParams();
+  const [password, setpassword] = useState("");
 
-  const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await register({ email });
-    console.log(res?.data?.success);
-    // if (res?.data?.success) {
-      toast.success("Please check your email for verification");
-    // }
+    const res = await verifyRegistration({
+      data: { password },
+      token: query?.get("token"),
+    });
+    if (res?.data?.success) {
+      SetCookies(res);
+      toast.success("Registration verified successfully");
+      router.push("/auth/login-with-password");
+    }
   };
 
   return (
@@ -45,30 +52,30 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="mt-8 space-y-4">
               <div>
                 <Input
-                  type="email"
-                  placeholder="Enter work email"
+                  type="password"
+                  placeholder="Enter Your Password"
                   className="h-12 focus-visible:ring-0"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={password}
+                  onChange={(e) => setpassword(e.target.value)}
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4 cursor-pointer" 
+                className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4"
               >
-                {isLoading ? "Sending..." : "Login"}
+                {isLoading ? "Verifying..." : "Verify"}
               </Button>
             </form>
 
-            <div>
+            {/* <div>
               <Link
                 href="/auth/login-with-password"
                 className="text-[#1877F2] flex justify-end mt-4 hover:underline"
               >
                 Sign Up
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
 

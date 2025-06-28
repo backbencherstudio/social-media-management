@@ -6,7 +6,6 @@ import loginImg from "@/public/login.png";
 import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Heading from "@/app/(client)/_components/heading-text";
 
 export default function SetNewPassword() {
