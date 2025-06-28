@@ -8,16 +8,27 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Heading from "@/app/(client)/_components/heading-text";
+import { useLoginWithPasswordMutation } from "@/src/redux/auth/all-auth";
+import { toast } from "sonner";
+import SetCookies from "../_components/set-and-get-token";
+import { useRouter } from "next/navigation";
 
 export default function LoginWithPassword() {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [loginWithPassword, { isLoading }] = useLoginWithPasswordMutation();
+  const router = useRouter();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+    const res = await loginWithPassword(formData);
+    if (res?.data?.success) {
+      SetCookies(res);
+      toast.success("Login successful");
+      router.push("/");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,9 +89,9 @@ export default function LoginWithPassword() {
 
               <Button
                 type="submit"
-                className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4"
+                className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4 cursor-pointer"
               >
-                Login
+                 {isLoading ? "Logging..." : "Login"}
               </Button>
             </form>
           </div>

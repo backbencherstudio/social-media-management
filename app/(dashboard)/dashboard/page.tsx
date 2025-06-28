@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import UserDashboard from "./(user-dashboard)/UserDashboard";
 import AdminDashboard from "./(admin-dashboard)/admin-dashboard";
 import UserHome from "./(user-dashboard-before-purchase)/UserHome";
 import ResellerDashboard from "./(reseller-dashboard)/ResellerDashboard";
-
+import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
+import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 
 export const ROLE = {
   USER: "user",
@@ -18,9 +18,21 @@ export const ROLE = {
 export type Role = (typeof ROLE)[keyof typeof ROLE];
 
 export default function DashboardHome() {
-  const role = ROLE.ADMIN as Role;
+  const [token, setToken] = useState("");
+  const { data: user, isLoading } = useGetCurrentUserQuery(token);
+  const role = user?.data?.type;
 
-  if (!role) {
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken();
+      setToken(token);
+    };
+    fetchToken();
+  }, []);
+
+  // const role = ROLE.ADMIN as Role;
+
+  if (isLoading) {
     return (
       <div className="p-10 text-center text-gray-600">
         Loading your dashboard...

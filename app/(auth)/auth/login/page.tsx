@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import loginImg from "@/public/login.png";
 import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
@@ -15,14 +15,14 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [register, { isLoading }] = useRegisterMutation();
 
-  const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await register({ email });
-    console.log(res?.data?.success);
-    // if (res?.data?.success) {
-      toast.success("Please check your email for verification");
-    // }
+    if (res?.data?.success) {
+    toast.success("Please check your email for verification");
+    }
   };
+
 
   return (
     <div className="container h-screen flex items-center justify-center">
@@ -55,7 +55,7 @@ export default function Login() {
 
               <Button
                 type="submit"
-                className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4 cursor-pointer" 
+                className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4 cursor-pointer"
               >
                 {isLoading ? "Sending..." : "Login"}
               </Button>
