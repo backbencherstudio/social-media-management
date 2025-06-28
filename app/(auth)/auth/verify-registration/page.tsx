@@ -9,7 +9,6 @@ import Heading from "@/app/(client)/_components/heading-text";
 import CustomImage from "@/components/reusable/CustomImage";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useVerifyRegistrationMutation } from "@/src/redux/auth/all-auth";
-import SetCookies from "../_components/set-cookies";
 import { toast } from "sonner";
 
 export default function VerifyRegistration() {
@@ -25,7 +24,6 @@ export default function VerifyRegistration() {
       token: query?.get("token"),
     });
     if (res?.data?.success) {
-      SetCookies(res);
       toast.success("Registration verified successfully");
       router.push("/auth/login-with-password");
     }

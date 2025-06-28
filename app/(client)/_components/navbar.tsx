@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, ChevronDown, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,6 @@ import BookIcon from "@/public/incons/book-icon";
 import MediaIcon from "@/public/incons/media-icon";
 import EmailIcon from "@/public/incons/email-icon";
 import LinkIcon from "@/public/incons/link-icon";
-import LikeIcon from "@/public/incons/like-icon";
 import StarIcon from "@/public/incons/star-icon";
 import CameraIcon from "@/public/incons/camera-icon";
 import AnalysisIcon from "@/public/incons/analysis-icon";
@@ -201,6 +200,8 @@ import { ServicesDropdownContent } from "./_navbar-component/services-dropdown";
 import LogoIcon from "@/public/incons/logo";
 import { BsArrowUpRightCircle } from "react-icons/bs";
 import InstagramGrowthIcon from "@/public/incons/instagram-growth";
+import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
+import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 
 // services dropdown mobile
 const MobileServicesDropdown = ({ isOpen, onToggle }) => (
@@ -242,7 +243,9 @@ const MobileServicesDropdown = ({ isOpen, onToggle }) => (
           />
           <MobileNavLink
             href="/services/instagram-growth"
-            icon={<InstagramGrowthIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
+            icon={
+              <InstagramGrowthIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />
+            }
             text="Instagram Growth"
           />
           <MobileNavLink
@@ -277,6 +280,16 @@ const MobileServicesDropdown = ({ isOpen, onToggle }) => (
 export function Navbar() {
   const [isAboutMenuOpen, setIsAboutMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
+  const [token, setToken] = useState("");
+  const { data: user } = useGetCurrentUserQuery(token);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken();
+      setToken(token);
+    };
+    fetchToken();
+  }, []);
 
   return (
     <header className="w-full shadow bg-[#FFF]">
@@ -360,9 +373,18 @@ export function Navbar() {
               </div>
 
               <div className="flex flex-col space-y-3 mt-4">
-                <Link href="/auth/login" className="serotiva-regular">
+                {user?.data?.email ? (
+                  <Link href="/dashboard" className="serotiva-regular">
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link href="/auth/login" className="serotiva-regular">
+                    Log in
+                  </Link>
+                )}
+                {/* <Link href="/auth/login" className="serotiva-regular">
                   Log in
-                </Link>
+                </Link> */}
                 <Link href="get-startd" className="serotiva-regular">
                   Get Started
                 </Link>
@@ -379,12 +401,15 @@ export function Navbar() {
 
         {/* Right Side - Desktop */}
         <div className="hidden lg:flex items-center space-x-4 text-base text-gray-700">
-          <Link
-            href="/auth/login"
-            className="hover:text-blue-500 transition serotiva-regular"
-          >
-            Log in
-          </Link>
+          {user?.data?.email ? (
+            <Link href="/dashboard" className="hover:text-blue-500 transition serotiva-regular">
+              Dashboard
+            </Link>
+          ) : (
+            <Link href="/auth/login" className="hover:text-blue-500 transition serotiva-regular">
+              Log in
+            </Link>
+          )}
           <Link href="/" className="hover:text-blue-500 serotiva-regular">
             Get Started
           </Link>

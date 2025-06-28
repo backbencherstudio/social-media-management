@@ -9,7 +9,17 @@ const userAuth = baseApi.injectEndpoints({
       }),
       providesTags: ["auth-all"],
     }),
+    getCurrentUser: builder.query({
+      query: (token: string) => ({
+        url: "/auth/me",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["auth-all"],
+    }),
   }),
 });
 
-export const { useGetAllUserQuery } = userAuth;
+export const { useGetAllUserQuery, useGetCurrentUserQuery } = userAuth;
