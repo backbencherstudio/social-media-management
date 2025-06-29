@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import loginImg from "@/public/login.png";
 import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
@@ -57,7 +57,7 @@ export default function Login() {
                 type="submit"
                 className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4 cursor-pointer"
               >
-                {isLoading ? "Sending..." : "Login"}
+                {isLoading ? "Sending..." : "Register"}
               </Button>
             </form>
 
@@ -66,7 +66,7 @@ export default function Login() {
                 href="/auth/login-with-password"
                 className="text-[#1877F2] flex justify-end mt-4 hover:underline"
               >
-                Sign Up
+                Login
               </Link>
             </div>
           </div>

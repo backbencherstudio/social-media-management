@@ -11,7 +11,7 @@ import Heading from "@/app/(client)/_components/heading-text";
 import { useLoginWithPasswordMutation } from "@/src/redux/auth/all-auth";
 import { toast } from "sonner";
 import SetCookies from "../_components/set-and-get-token";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginWithPassword() {
   const [formData, setFormData] = useState({
@@ -19,6 +19,8 @@ export default function LoginWithPassword() {
     password: ''
   });
   const [loginWithPassword, { isLoading }] = useLoginWithPasswordMutation();
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirectPath')
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -27,7 +29,7 @@ export default function LoginWithPassword() {
     if (res?.data?.success) {
       SetCookies(res);
       toast.success("Login successful");
-      router.push("/");
+      router.push(redirect || '/');
     }
   };
 
