@@ -6,7 +6,10 @@ import ChatSidebar from "./chat-sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import StatusBar from "./status-bar";
-import { useGetAllClientConversationQuery } from "@/src/redux/features/admin/help-and-support/support";
+import {
+  useGetAllClientConversationQuery,
+  useGetSingleUserMessageQuery,
+} from "@/src/redux/features/admin/help-and-support/support";
 import { C } from "@fullcalendar/core/internal-common";
 
 interface ChatInterfaceProps {
@@ -35,6 +38,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
   >("disconnected");
   const [users, setUsers] = useState<User[]>([]);
   const [activeUserId, setActiveUserId] = useState<string | null>(null);
+  const [clintId, setClientId] = useState("");
   const [messagesByUser, setMessagesByUser] = useState<
     Record<string, Message[]>
   >({});
@@ -42,8 +46,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
 
   const { data: allClient, isLoading } =
     useGetAllClientConversationQuery(undefined);
-
-    
+  const { data: singleUserMessage } = useGetSingleUserMessageQuery(clintId);
 
   useEffect(() => {
     const newSocket = io(
@@ -189,6 +192,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
   };
 
   const formatMessages = (messages: any[], userId: string): Message[] => {
+    console.log("Formatting messages:", messages);
     return messages?.map((msg: any) => ({
       id: msg?.id || Date.now().toString(),
       sender: msg?.sender_id === userId ? msg?.sender_id : "you", // Customize sender logic
@@ -200,7 +204,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
 
   //user selection handler
   const handleUserSelect = async (userId: string) => {
-    setActiveUserId(userId);
+    setClientId(userId);
     setUsers((prev) =>
       prev.map((user) =>
         user.id === userId ? { ...user, unreadCount: 0 } : user
@@ -208,14 +212,21 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     );
 
     try {
-      const existingUser = allClient?.filter(
-        (client: any) => client?.creator_id === userId
-      );
+      // console.log(currentUserMessage,"crnt user message")
       const formattedMessages = formatMessages(
-        existingUser[0]?.messages,
+        singleUserMessage?.messages,
         userId
       );
-      setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
+      // Update the state with formatted messages
+      setMessagesByUser((prev) => {
+        const updatedMessages = {
+          ...prev,
+          [userId]: formattedMessages,
+        };
+        console.log("Updated Messages:", updatedMessages); // Ensure messages are set in state
+        return updatedMessages;
+      });
+      setActiveUserId(userId)
     } catch (error) {
       console.error("Error loading messages", error);
     }
@@ -239,12 +250,12 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
       const existingUser = allClient?.filter(
         (client: any) => client?.creator_id === userId
       );
-        const formattedMessages = formatMessages(
+      const formattedMessages = formatMessages(
         existingUser[0]?.messages,
         userId
       );
-        setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
-      }
+      setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
+    }
   }, [allClient, isLoading]);
 
   if (isLoading) {
@@ -255,7 +266,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     ? messagesByUser[activeUserId] || []
     : [];
 
-  console.log(currentMessages, "crbt");
+    console.log(activeUserId,"crnt msg")
 
   return (
     <div className="flex flex-col h-[calc(100vh-100px)]">

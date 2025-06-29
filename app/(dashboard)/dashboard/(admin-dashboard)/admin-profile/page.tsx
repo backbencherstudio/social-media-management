@@ -21,7 +21,7 @@ export default function AdminProfile() {
   return (
     <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-72">
       <div className="rounded-lg mt-4 sm:mt-6 p-4 sm:p-6 md:p-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] space-y-4 sm:space-y-6">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-medium font-semibold">
+        <h1 className="text-xl sm:text-2xl md:text-3xl  font-semibold">
           Edit your details
         </h1>
 
