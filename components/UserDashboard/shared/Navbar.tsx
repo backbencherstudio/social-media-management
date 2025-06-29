@@ -10,15 +10,14 @@ import { RiUserLine } from "react-icons/ri";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { removeToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
   isMobileMenuOpen: boolean;
 }
 
-export default function Navbar({
-  onMobileMenuToggle,
-}: NavbarProps) {
+export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +38,11 @@ export default function Navbar({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleSignOut = () => {
+    console.log("Sign out");
+    removeToken();
+  };
 
   return (
     <header className="bg-white border-b border-[#E9E9EA] z-10">
@@ -120,7 +124,10 @@ export default function Navbar({
                   Settings
                 </button>
                 <div className="border-t border-gray-200 my-1"></div>
-                <button className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
+                <button
+                  onClick={handleSignOut}
+                  className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200"
+                >
                   <IoLogOutOutline className="w-4 h-4" />
                   Sign out
                 </button>
