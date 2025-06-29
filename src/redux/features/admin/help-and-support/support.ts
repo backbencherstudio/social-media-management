@@ -46,6 +46,13 @@ const helpAndSupport = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["create-new-email"],
     }),
+    getAllClientConversation: builder.query<any, void>({
+      query: () => ({
+        url: "/messages/conversations",
+        method: "GET",
+      }),
+    }),
+    
   }),
 });
 
@@ -56,4 +63,5 @@ export const {
   useGetSingleInboxQuery,
   useCreateNewEmailMutation,
   useSendAllEmailMutation,
+  useGetAllClientConversationQuery
 } = helpAndSupport;

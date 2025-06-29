@@ -16,7 +16,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="h-[80%]">
       {!isLoggedIn ? (
         <LoginPanel onLogin={handleLogin} />
       ) : (

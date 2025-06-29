@@ -6,6 +6,8 @@ import ChatSidebar from "./chat-sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import StatusBar from "./status-bar";
+import { useGetAllClientConversationQuery } from "@/src/redux/features/admin/help-and-support/support";
+import { C } from "@fullcalendar/core/internal-common";
 
 interface ChatInterfaceProps {
   userId: string;
@@ -28,95 +30,118 @@ interface User {
 
 export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [status, setStatus] = useState<"disconnected" | "connecting" | "connected">("disconnected");
+  const [status, setStatus] = useState<
+    "disconnected" | "connecting" | "connected"
+  >("disconnected");
   const [users, setUsers] = useState<User[]>([]);
   const [activeUserId, setActiveUserId] = useState<string | null>(null);
-  const [messagesByUser, setMessagesByUser] = useState<Record<string, Message[]>>({});
+  const [messagesByUser, setMessagesByUser] = useState<
+    Record<string, Message[]>
+  >({});
   const [messageInput, setMessageInput] = useState("");
 
+  const { data: allClient, isLoading } =
+    useGetAllClientConversationQuery(undefined);
 
+    
 
-  // Connect socket here
   useEffect(() => {
-    const newSocket = io("http://localhost:4000");
+    const newSocket = io(
+      "https://trademarks-removed-examinations-cassette.trycloudflare.com"
+    );
+
     setSocket(newSocket);
     setStatus("connecting");
 
     newSocket.on("connect", () => {
       setStatus("connected");
-      isAdmin  //admin check
+      isAdmin //admin check
         ? newSocket.emit("register_admin", userId)
         : newSocket.emit("register_user", userId);
     });
-   
+
     newSocket.on("disconnect", () => setStatus("disconnected"));
     newSocket.on("connect_error", () => setStatus("disconnected"));
 
     newSocket.on("admin_registered", (data: { success: boolean }) => {
       if (data.success) console.log("Admin registered successfully");
     });
-//user registration
-    newSocket.on("user_registered", (data: { success: boolean; conversationId?: string }) => {
-      if (data.success && data.conversationId) {
-        setActiveUserId(data.conversationId);
+    //user registration
+    newSocket.on(
+      "user_registered",
+      (data: { success: boolean; conversationId?: string; userId: string }) => {
+        if (data.success && data.conversationId) {
+          setActiveUserId(data?.userId);
+        }
       }
-    });
+    );
     // Fetch initial users
     newSocket.on("new_conversation", (data: { userId: string }) => {
       setUsers((prev) => {
         if (!prev.some((u) => u.id === data.userId)) {
-          return [...prev, { id: data.userId, name: `User ${data.userId.slice(0, 6)}...` }];
+          return [
+            ...prev,
+            { id: data.userId, name: `User ${data.userId.slice(0, 6)}...` },
+          ];
         }
         return prev;
       });
     });
-//emmit messages from user to admin
-    newSocket.on("message_from_user", (data: { userId: string; message: string }) => {
-      const newMessage: Message = {
-        id: Date.now().toString(),
-        sender: `User ${data.userId.slice(0, 6)}...`,
-        text: data.message,
-        timestamp: new Date(),
-        type: "received",
-      };
+    //emmit messages from user to admin
+    newSocket.on(
+      "message_from_user",
+      (data: { userId: string; message: string }) => {
+        const newMessage: Message = {
+          id: Date.now().toString(),
+          sender: `User ${data.userId.slice(0, 6)}...`,
+          text: data.message,
+          timestamp: new Date(),
+          type: "received",
+        };
 
-      setMessagesByUser((prev) => {
-        const existing = prev[data.userId] || [];
-        return { ...prev, [data.userId]: [...existing, newMessage] };
-      });
+        setMessagesByUser((prev) => {
+          const existing = prev[data.userId] || [];
+          return { ...prev, [data.userId]: [...existing, newMessage] };
+        });
 
-      if (activeUserId !== data.userId) {
-        setUsers((prev) =>
-          prev.map((user) =>
-            user.id === data.userId
-              ? { ...user, unreadCount: (user.unreadCount || 0) + 1 }
-              : user
-          )
-        );
+        if (activeUserId !== data.userId) {
+          setUsers((prev) =>
+            prev.map((user) =>
+              user.id === data.userId
+                ? { ...user, unreadCount: (user.unreadCount || 0) + 1 }
+                : user
+            )
+          );
+        }
       }
-    });
+    );
 
     // emit messages from admin to user
-    newSocket.on("message_from_admin", (data: { message: string; timestamp?: string }) => {
-      const newMessage: Message = {
-        id: Date.now().toString(),
-        sender: "Admin",
-        text: data.message,
-        timestamp: data.timestamp ? new Date(data.timestamp) : new Date(),
-        type: "received",
-      };
+    newSocket.on(
+      "message_from_admin",
+      (data: { message: string; timestamp?: string }) => {
+        const newMessage: Message = {
+          id: Date.now().toString(),
+          sender: "Admin",
+          text: data.message,
+          timestamp: data.timestamp ? new Date(data.timestamp) : new Date(),
+          type: "received",
+        };
 
-      if (activeUserId) {
-        setMessagesByUser((prev) => {
-          const existing = prev[activeUserId] || [];
-          return { ...prev, [activeUserId]: [...existing, newMessage] };
-        });
+        if (activeUserId) {
+          setMessagesByUser((prev) => {
+            const existing = prev[activeUserId] || [];
+            return { ...prev, [activeUserId]: [...existing, newMessage] };
+          });
+        }
       }
-    });
+    );
 
     newSocket.on("user_disconnected", (userId: string) => {
       setUsers((prev) =>
-        prev.map((user) => (user.id === userId ? { ...user, isOnline: false } : user))
+        prev.map((user) =>
+          user.id === userId ? { ...user, isOnline: true } : user
+        )
       );
     });
 
@@ -130,8 +155,8 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     if (!messageInput.trim() || !socket || !activeUserId) return;
 
     const url = isAdmin
-      ? "http://localhost:4000/api/messages/message-to-user"
-      : "http://localhost:4000/api/messages/message-to-admin";
+      ? "https://trademarks-removed-examinations-cassette.trycloudflare.com/api/messages/message-to-user"
+      : "https://trademarks-removed-examinations-cassette.trycloudflare.com/api/messages/message-to-admin";
 
     const payload = isAdmin
       ? { adminId: userId, userId: activeUserId, message: messageInput }
@@ -163,42 +188,81 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
       });
   };
 
-//user selection handler
+  const formatMessages = (messages: any[], userId: string): Message[] => {
+    return messages?.map((msg: any) => ({
+      id: msg?.id || Date.now().toString(),
+      sender: msg?.sender_id === userId ? msg?.sender_id : "you", // Customize sender logic
+      text: msg?.message || msg?.text, // Use the correct field for the message content
+      timestamp: new Date(msg?.created_at), // Format timestamp correctly
+      type: msg?.sender_id === userId ? "received" : "sent", // Determine message type
+    }));
+  };
+
+  //user selection handler
   const handleUserSelect = async (userId: string) => {
     setActiveUserId(userId);
     setUsers((prev) =>
-      prev.map((user) => (user.id === userId ? { ...user, unreadCount: 0 } : user))
+      prev.map((user) =>
+        user.id === userId ? { ...user, unreadCount: 0 } : user
+      )
     );
 
-    try { //fetching messages for the selected user
-      const res = await fetch(`http://localhost:4000/api/messages/conversation/cmcbkkpu70001remc44qvajna`);
-      const data = await res.json();
-    console.log(res, data,"ashdhkdhahasdaf");
-    
-      if (data.success && Array.isArray(data.messages)) {
-        const formatted: Message[] = data.messages.map((msg: any) => ({
-          id: msg.id || Date.now().toString(),
-          sender: msg.sender || "Unknown",
-          text: msg.text || msg.message,
-          timestamp: new Date(msg.timestamp),
-          type: msg.sender === userId ? "received" : "sent",
-        }));
-
-        setMessagesByUser((prev) => ({ ...prev, [userId]: formatted }));
-      }
+    try {
+      const existingUser = allClient?.filter(
+        (client: any) => client?.creator_id === userId
+      );
+      const formattedMessages = formatMessages(
+        existingUser[0]?.messages,
+        userId
+      );
+      setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
     } catch (error) {
       console.error("Error loading messages", error);
     }
   };
 
-  const currentMessages = activeUserId ? messagesByUser[activeUserId] || [] : [];
-console.log(currentMessages, "currentMessages");
+  useEffect(() => {
+    if (!isLoading && allClient?.length > 0) {
+      const updatedUsers = allClient.map((client: any) => ({
+        id: client.creator_id,
+        name: `User ${client.creator_id.slice(0, 6)}...`,
+        unreadCount: 0,
+        isOnline: true,
+      }));
+
+      const currentUser = updatedUsers?.filter(
+        (user: any) => user?.id === userId
+      );
+      setUsers(updatedUsers);
+      setActiveUserId(currentUser[0]?.id);
+
+      const existingUser = allClient?.filter(
+        (client: any) => client?.creator_id === userId
+      );
+        const formattedMessages = formatMessages(
+        existingUser[0]?.messages,
+        userId
+      );
+        setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
+      }
+  }, [allClient, isLoading]);
+
+  if (isLoading) {
+    return <p>Loading.............</p>;
+  }
+
+  const currentMessages = activeUserId
+    ? messagesByUser[activeUserId] || []
+    : [];
+
+  console.log(currentMessages, "crbt");
+
   return (
-    <div className="flex flex-col h-[calc(100vh-64px)]">
+    <div className="flex flex-col h-[calc(100vh-100px)]">
       <StatusBar status={status} userId={userId} isAdmin={isAdmin} />
 
       <div className="flex flex-1 overflow-hidden">
-        {isAdmin && (
+        {isAdmin && !isLoading && (
           <ChatSidebar
             users={users}
             activeUserId={activeUserId}
@@ -224,7 +288,9 @@ console.log(currentMessages, "currentMessages");
               currentMessages?.map((message) => (
                 <div
                   key={message.id}
-                  className={`flex ${message.type === "sent" ? "justify-end" : "justify-start"}`}
+                  className={`flex ${
+                    message.type === "sent" ? "justify-end" : "justify-start"
+                  }`}
                 >
                   <div
                     className={`max-w-xs md:max-w-md rounded-lg px-4 py-2 ${
@@ -244,8 +310,7 @@ console.log(currentMessages, "currentMessages");
                   </div>
                 </div>
               ))
-            )
-            }
+            )}
           </div>
 
           <div className="p-4 border-t">
@@ -255,12 +320,9 @@ console.log(currentMessages, "currentMessages");
                 onChange={(e) => setMessageInput(e.target.value)}
                 placeholder="Type your message..."
                 disabled={!activeUserId}
-                onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               />
-              <Button
-                onClick={sendMessage}
-                disabled={!messageInput.trim() || !activeUserId}
-              >
+              <Button onClick={sendMessage} disabled={!messageInput.trim()}>
                 Send
               </Button>
             </div>

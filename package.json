@@ -76,6 +76,7 @@
     "zod": "^3.24.3"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.5",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.4",
     "@tailwindcss/typography": "^0.5.16",
@@ -83,7 +84,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
-    "tailwindcss": "^4.1.4",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.5",
     "typescript": "^5"
   },
   "packageManager": "yarn@4.5.2+sha224.c2e2e9ed3cdadd6ec250589b3393f71ae56d5ec297af11cec1eba3b4"
