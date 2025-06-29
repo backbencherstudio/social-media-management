@@ -14,15 +14,15 @@ import AnalysisIcon from "@/public/incons/analysis-icon";
 import SocialsIcon from "@/public/incons/socials";
 
 const clientTopMenuItems = [
-  { title: "Home", icon: Home, href: "/dashboard" },
-  { title: "Schedule", icon: ScheduleIcon, href: "/dashboard/schedule" },
-  { title: "Assets", icon: AssetsIcon, href: "/dashboard/assets" },
-  { title: "Analysis", icon: AnalysisIcon, href: "/dashboard/analysis" },
-  { title: "Service", icon: UserServicesIcon, href: "/dashboard/service" },
+  { title: "Home", icon: Home, href: "/dashboard/client-dashboard" },
+  { title: "Schedule", icon: ScheduleIcon, href: "/dashboard/client-dashboard/schedule" },
+  { title: "Assets", icon: AssetsIcon, href: "/dashboard/client-dashboard/assets" },
+  { title: "Analysis", icon: AnalysisIcon, href: "/dashboard/client-dashboard/analysis" },
+  { title: "Service", icon: UserServicesIcon, href: "/dashboard/client-dashboard/service" },
   {
     title: "Social Media",
     icon: SocialsIcon,
-    href: "/dashboard/social-media",
+    href: "/dashboard/client-dashboard/social-media",
   },
 ];
 
@@ -33,14 +33,14 @@ const bottomMenuItems = [
       {
         title: "Profile/account",
         icon: ProfileIcon,
-        href: "/dashboard/profile",
+        href: "/dashboard/client-dashboard/profile",
       },
       {
         title: "Payment",
         icon: PaymentIcon,
-        href: "/dashboard/payment-method",
+        href: "/dashboard/client-dashboard/payment-method",
       },
-      { title: "Invoices", icon: InvoicesIcon, href: "/dashboard/invoices" },
+      { title: "Invoices", icon: InvoicesIcon, href: "/dashboard/client-dashboard/invoices" },
     ],
   },
 ];

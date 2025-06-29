@@ -8,13 +8,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Heading from "@/app/(client)/_components/heading-text";
+import { useRouter } from "next/navigation";
+import { useForgotPasswordMutation } from "@/src/redux/auth/all-auth";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
+  const router = useRouter()
+  const [forgotPassword] = useForgotPasswordMutation()
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form Data:", { email });
+    const res =await forgotPassword({ email })
+    console.log(res)
+
+    router.push('/auth/set-new-password')
   };
 
   return (
@@ -48,7 +55,7 @@ export default function ForgotPassword() {
 
               <Button
                 type="submit"
-                className="w-full bg-black text-white hover:bg-gray-800 h-12"
+                className="w-full bg-black text-white hover:bg-gray-800 h-12 cursor-pointer"
               >
                 Send recovery link
               </Button>
@@ -61,6 +68,14 @@ export default function ForgotPassword() {
                 Sign in
               </Link>
             </div>
+            {/* <div>
+              <Link
+                href="/auth/set-new-password"
+                className="text-[#1877F2] flex justify-end mt-4 hover:underline"
+              >
+                New Password
+              </Link>
+            </div> */}
           </div>
         </div>
 

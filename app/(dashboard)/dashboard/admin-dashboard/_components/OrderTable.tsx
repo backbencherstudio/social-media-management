@@ -1,12 +1,12 @@
-"use cient";
+"use client";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { EyeIcon, UserRoundPlus } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { EyeIcon } from "lucide-react"
 import React, { useState } from "react";
 import { AssignOrderModal } from "../order/_components/AssignOrderModal";
 import { useGetRecentOrdersQuery } from "@/src/redux/features/admin/dashboard/dashboardApi";
+import { useRouter } from "next/navigation";
 
 const OrderTable = () => {
   const { data: recentOrders } = useGetRecentOrdersQuery(undefined);
@@ -18,7 +18,7 @@ const OrderTable = () => {
   // view all orders handler
   const handleViewAll = () => {
     // Logic to view all orders
-    router.push("/dashboard/order");
+    router.push("/dashboard/admin-dashboard/order");
   };
 
   //   for modal

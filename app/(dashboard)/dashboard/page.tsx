@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import UserDashboard from "./(user-dashboard)/UserDashboard";
-import AdminDashboard from "./(admin-dashboard)/admin-dashboard";
-import UserHome from "./(user-dashboard-before-purchase)/UserHome";
-import ResellerDashboard from "./(reseller-dashboard)/ResellerDashboard";
 import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
 import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
+import AdminDashboard from "./admin-dashboard/page";
+import ResellerDashboard from "./reseller-dashboard/page";
+import UserDashboard from "./client-dashboard/page";
+import UserHome from "./user-dashboard/page";
 
 export const ROLE = {
   USER: "user",
@@ -51,5 +51,7 @@ export default function DashboardHome() {
     return <UserDashboard />;
   }
 
-  return <UserHome />;
+  if (role === ROLE.USER) {
+    return <UserHome />;
+  }
 }

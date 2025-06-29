@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
-import DashboardIcon from "@/public/incons/dashboard";
 import AnalysisIcon from "@/public/incons/analysis-icon";
 import ComposeIcon from "@/public/incons/compose";
 import ScheduleIcon from "@/public/incons/schedule";
@@ -13,11 +12,11 @@ import AssetsIcon from "@/public/incons/assets";
 import SocialInboxIcon from "@/public/incons/social-inbox";
 import SocialsIcon from "@/public/incons/socials";
 import SupportIcon from "@/public/incons/support";
-import {
-  useGetClientListQuery,
-} from "@/src/redux/features/reseller/dashboard/dashboard";
+
 import { useDispatch } from "react-redux";
 import { setId } from "@/src/redux/slice/clientIdSlice";
+import DashboardIcon from "@/public/incons/dashboard";
+import { useGetClientListQuery } from "@/src/redux/features/reseller/dashboard/dashboard";
 
 // Menu item type
 interface MenuItem {
@@ -117,29 +116,29 @@ export default function ResellerSidebar({
         {
           title: "Dashboard",
           icon: DashboardIcon,
-          href: "/dashboard",
+          href: "/dashboard/reseller-dashboard",
         },
         {
           title: "Analytics",
           icon: AnalysisIcon,
-          href: "/dashboard/analytics",
+          href: "/dashboard/reseller-dashboard/analytics",
         },
       ],
     },
     {
       label: "Content",
       items: [
-        { title: "Compose", icon: ComposeIcon, href: "/dashboard/compose" },
+        { title: "Compose", icon: ComposeIcon, href: "/dashboard/reseller-dashboard/compose" },
         {
           title: "Schedule",
           icon: ScheduleIcon,
-          href: "/dashboard/schedule",
+          href: "/dashboard/reseller-dashboard/schedule",
         },
-        { title: "Post", icon: PostIcon, href: "/dashboard/posts" },
+        { title: "Post", icon: PostIcon, href: "/dashboard/reseller-dashboard/posts" },
         {
           title: "Assets",
           icon: AssetsIcon,
-          href: "/dashboard/dashboard-assets",
+          href: "/dashboard/reseller-dashboard/dashboard/reseller-dashboard-assets",
         },
       ],
     },
@@ -149,12 +148,12 @@ export default function ResellerSidebar({
         // {
         //   title: "Automotion",
         //   icon: RiLayoutGridLine,
-        //   href: "/dashboard/automation",
+        //   href: "/dashboard/reseller-dashboard/automation",
         // },
         {
           title: "Social Inbox",
           icon: SocialInboxIcon,
-          href: "/dashboard/social-inbox",
+          href: "/dashboard/reseller-dashboard/social-inbox",
         },
       ],
     },
@@ -164,7 +163,7 @@ export default function ResellerSidebar({
         {
           title: "Socials",
           icon: SocialsIcon,
-          href: "/dashboard/social-media",
+          href: "/dashboard/reseller-dashboard/social-media",
         },
       ],
     },
@@ -174,7 +173,7 @@ export default function ResellerSidebar({
         {
           title: "Support",
           icon: SupportIcon,
-          href: "/dashboard/help-and-support",
+          href: "/dashboard/reseller-dashboard/help-and-support",
         },
       ],
     },
