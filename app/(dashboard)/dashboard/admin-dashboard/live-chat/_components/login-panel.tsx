@@ -27,10 +27,10 @@ export default function LoginPanel({ onLogin }: LoginPanelProps) {
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">I am a:</label>
           <Select onValueChange={setUserType} value={userType}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full cursor-pointer">
               <SelectValue placeholder="Select user type" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white ">
               <SelectItem value="admin">Admin</SelectItem>
               <SelectItem value="user">User</SelectItem>
             </SelectContent>
@@ -44,6 +44,7 @@ export default function LoginPanel({ onLogin }: LoginPanelProps) {
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
             required
+            className=""
           />
         </div>
         <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
