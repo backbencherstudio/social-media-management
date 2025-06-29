@@ -7,16 +7,26 @@ import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Heading from "@/app/(client)/_components/heading-text";
+import { useResetPasswordMutation } from "@/src/redux/auth/all-auth";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 
 export default function SetNewPassword() {
   const [formData, setFormData] = useState({
-    newPassword: '',
-    confirmPassword: ''
+    email: '',
+    password: '',
+    token: ''
   });
+  const router = useRouter()
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const [resetPassword] = useResetPasswordMutation()
+
+  const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+    await resetPassword(formData)
+    toast.success("Change password successfully")
+    router.push('/auth/login-with-password')
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,23 +54,33 @@ export default function SetNewPassword() {
             {/* Form */}
             <form onSubmit={handleSubmit} className="mt-8 space-y-4">
               <div className="space-y-4">
+              <div>
+                  <Input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    className="h-12"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
                 <div>
                   <Input
-                    type="password"
-                    name="newPassword"
-                    placeholder="Choose a new password"
+                    type="text"
+                    name="token"
+                    placeholder="Enter your otp"
                     className="h-12"
-                    value={formData.newPassword}
+                    value={formData.token}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
                   <Input
                     type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm password"
+                    name="password"
+                    placeholder="Choose a new password"
                     className="h-12"
-                    value={formData.confirmPassword}
+                    value={formData.password}
                     onChange={handleChange}
                   />
                 </div>

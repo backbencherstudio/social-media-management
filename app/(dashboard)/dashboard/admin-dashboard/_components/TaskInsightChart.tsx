@@ -1,3 +1,5 @@
+"use client"
+
 import { PieChart, Pie, Cell } from "recharts";
 import { useState } from "react";
 import {

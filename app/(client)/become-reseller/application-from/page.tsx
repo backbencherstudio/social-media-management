@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreateApplicationMutation } from "@/src/redux/features/admin/reseller/resellerApplicationApi";
 import { toast } from "sonner";
+import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
+import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const [termsAgreed, setTermsAgreed] = useState(false);
+  const router = useRouter()
   const [formData, setFormData] = useState({
     full_name: "",
     user_email: "",
@@ -56,13 +60,21 @@ export default function page() {
   const [createApplication, { isLoading, isError, isSuccess }] =
     useCreateApplicationMutation();
 
+    const [token, setToken] = useState("");
+    const { data: user } = useGetCurrentUserQuery(token);
+  
+    useEffect(() => {
+      const fetchToken = async () => {
+        const token = await getToken();
+        setToken(token);
+      };
+      fetchToken();
+    }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic (e.g., send data to an API)
 
-    console.log(transdormData(formData), isLoading, isError, isSuccess);
-
-    const userId = "cmb4pc8f70003uoh4qkmtcc1x";
+    const userId = user?.data?.id;
     try {
       await createApplication({
         userId,
@@ -80,6 +92,7 @@ export default function page() {
         portfolio: "",
         skills: [],
       });
+      router.push('/')
     } catch (error) {
       console.log(error);
     }
@@ -300,9 +313,9 @@ export default function page() {
           <button
             type="submit"
             disabled={!termsAgreed}
-            className="mt-4 px-8 py-2 bg-black text-white rounded-md hover:bg-gray-900 disabled:bg-gray-300"
+            className="mt-4 px-8 py-2 bg-black text-white rounded-md hover:bg-gray-900 disabled:bg-gray-300 cursor-pointer"
           >
-            Apply
+            {isLoading ? "Applying" : "Apply"}
           </button>
         </div>
       </form>

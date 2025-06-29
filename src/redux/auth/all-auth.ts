@@ -20,8 +20,6 @@ const auth = baseApi.injectEndpoints({
     }),
     verifyRegistration: build.mutation({
       query: ({ data, token }: { data: any; token: any }) => {
-        console.log("verifyRegistration data:", data);
-        console.log("verifyRegistration token:", token);
         return {
           url: `/auth/verify-registration?token=${token}`,
           method: "POST",
@@ -30,6 +28,23 @@ const auth = baseApi.injectEndpoints({
       },
       invalidatesTags: ["auth-all"],
     }),
+    forgotPassword: build.mutation({
+      query: (data) => {
+       return {
+        url: "/auth/forgot-password",
+        method: "POST",
+        body: data,
+       }
+      },
+      invalidatesTags: ["auth-all"],
+    }),
+    resetPassword: build.mutation({
+        query: (data) => ({
+          url: '/auth/reset-password',
+          method: "POST",
+          body: data
+        })
+    })
   }),
 });
 
@@ -37,4 +52,6 @@ export const {
   useLoginWithPasswordMutation,
   useRegisterMutation,
   useVerifyRegistrationMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation
 } = auth;

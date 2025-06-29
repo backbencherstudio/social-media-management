@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 import { HiArrowUpRight } from "react-icons/hi2";
 
@@ -30,10 +31,10 @@ const Hero = () => {
           freelancers, costly agencies. Pay a fixed, monthly, and predictable
           rate, with no contracts or surprises.
         </p>
-        <button className="bg-white text-black font-semibold px-6 py-3 rounded-md hover:bg-gray-300 transition flex items-center gap-2 group">
+        <Link href={'/become-reseller/application-from'} className="bg-white text-black font-semibold px-6 py-3 rounded-md hover:bg-gray-300 transition flex items-center gap-2 group">
           Become a Reseller 
           <HiArrowUpRight className="text-xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-        </button>
+        </Link>
       </div>
     </section>
   );

@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
 import { PanelLeftClose, PanelLeftOpen, SettingsIcon } from "lucide-react";
 import LogoIcon from "@/public/incons/logo";
-import DashboardIcon from "@/public/incons/dashboard";
 import SupportIcon from "@/public/incons/support";
 import OrderIcon from "@/public/incons/order";
 import TaskManagementIcon from "@/public/incons/task-management";
@@ -15,6 +14,7 @@ import ServicesIcon from "@/public/incons/services";
 import BlogIcon from "@/public/incons/blog";
 import PaymentIcon from "@/public/incons/payment";
 import LiveChatIcon from "@/public/incons/live-chat";
+import DashboardIcon from "@/public/incons/dashboard";
 
 // Menu item type
 interface MenuItem {
@@ -109,24 +109,24 @@ export default function AdminSidebar({
   const adminSidebarMenu: Section[] = [
     {
       label: role,
-      items: [{ title: "Dashboard", icon: DashboardIcon, href: "/dashboard" }],
+      items: [{ title: "Dashboard", icon: DashboardIcon, href: "/dashboard/admin-dashboard" }],
     },
     {
       label: "Operation",
       items: [
-        { title: "Order", icon: OrderIcon, href: "/dashboard/order" },
+        { title: "Order", icon: OrderIcon, href: "/dashboard/admin-dashboard/order" },
         {
           title: "Task Management",
           icon: TaskManagementIcon,
-          href: "/dashboard/task-management",
+          href: "/dashboard/admin-dashboard/task-management",
         },
-        { title: "Client", icon: ClientIcon, href: "/dashboard/client" },
+        { title: "Client", icon: ClientIcon, href: "/dashboard/admin-dashboard/client" },
         {
           title: "Reseller",
           icon: ResellerIcon,
-          href: "/dashboard/reseller",
+          href: "/dashboard/admin-dashboard/reseller",
         },
-        { title: "Team", icon: TeamIcon, href: "/dashboard/team" },
+        { title: "Team", icon: TeamIcon, href: "/dashboard/admin-dashboard/team" },
       ],
     },
     {
@@ -135,12 +135,12 @@ export default function AdminSidebar({
         {
           title: "Services",
           icon: ServicesIcon,
-          href: "/dashboard/admin-services",
+          href: "/dashboard/admin-dashboard/admin-services",
         },
         {
           title: "Blog",
           icon: BlogIcon,
-          href: "/dashboard/blog",
+          href: "/dashboard/admin-dashboard/blog",
         },
       ],
     },
@@ -150,7 +150,7 @@ export default function AdminSidebar({
         {
           title: "Payment",
           icon: PaymentIcon,
-          href: "/dashboard/payment",
+          href: "/dashboard/admin-dashboard/payment",
         },
       ],
     },
@@ -160,12 +160,12 @@ export default function AdminSidebar({
         {
           title: "Live Chat",
           icon: LiveChatIcon,
-          href: "/dashboard/live-chat",
+          href: "/dashboard/admin-dashboard/live-chat",
         },
         {
           title: "Support",
           icon: SupportIcon,
-          href: "/dashboard/admin-support",
+          href: "/dashboard/admin-dashboard/admin-support",
         },
       ],
     },
@@ -175,7 +175,7 @@ export default function AdminSidebar({
         {
           title: "Settings",
           icon: SettingsIcon,
-          href: "/dashboard/settings",
+          href: "/dashboard/admin-dashboard/settings",
         },
       ],
     },
