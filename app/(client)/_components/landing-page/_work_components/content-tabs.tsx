@@ -1,7 +1,5 @@
 "use client"
 
-
-
 // Import your tab-specific components
 import PostsContent from "@/app/(client)/_components/landing-page/_work_components/posts-content"
 import VideosContent from "@/app/(client)/_components/landing-page/_work_components/videos-content"
