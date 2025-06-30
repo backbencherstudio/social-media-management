@@ -8,7 +8,9 @@ import SeamlessExperience from "./_components/landing-page/seamless-experience";
 import FrequentlyAsked from "./_components/landing-page/frequently-asked";
 import ClientsProject from "./_components/landing-page/clients-project";
 
+
 export default function HomePage() {
+
   return (
     <div>
       <Hero />

@@ -286,7 +286,7 @@ export function Navbar() {
   useEffect(() => {
     const fetchToken = async () => {
       const token = await getToken();
-      setToken(token);
+      setToken(token as string);
     };
     fetchToken();
   }, []);

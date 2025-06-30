@@ -1,7 +1,7 @@
 "use client";
 
 import CustomImage from "@/components/reusable/CustomImage";
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { FormEvent, useState } from "react";
 import loginImg from "@/public/login.png";
 import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ import { useLoginWithPasswordMutation } from "@/src/redux/auth/all-auth";
 import { toast } from "sonner";
 import SetCookies, { setRole } from "../_components/set-and-get-token";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
+
 
 export default function LoginWithPassword() {
   const [formData, setFormData] = useState({
@@ -24,28 +24,17 @@ export default function LoginWithPassword() {
   const redirect = searchParams.get("redirectPath");
   const router = useRouter();
 
-  const [token, setToken] = useState("");
-  console.log(token);
-  const { data: user } = useGetCurrentUserQuery(token);
-  const role = user?.data?.type;
-
-  useEffect(() => {
-    if (role) {
-      setRole(role);
-      // document.cookie = `role=${role}`;
-    }
-  }, [role]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await loginWithPassword(formData);
-    const tokens = res?.data?.authorization?.token;
 
     if (res?.data?.success) {
       await SetCookies(res);
-      setToken(tokens);
+      await setRole(res)
+
       toast.success("Login successful");
-      if(redirect){
+      if (redirect) {
         return router.push(redirect);
       }
       router.push("/");

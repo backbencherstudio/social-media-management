@@ -1,5 +1,8 @@
+"use server";
+
 import { NextRequest, NextResponse } from "next/server";
 import cookie from "cookie";
+// import GetRole from "./app/(auth)/auth/_components/get-role";
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -14,14 +17,6 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  // Allow /dashboard/schedule for client and reseller
-  // if (pathname.startsWith("/dashboard/schedule")) {
-  //   if (role === "client" || role === "reseller") {
-  //     return NextResponse.next();
-  //   } else {
-  //     return NextResponse.redirect(new URL("/", req.url));
-  //   }
-  // }
 
   const dashboardMatch = pathname.match(/^\/dashboard\/([a-z-]+)-dashboard/);
   const routeRole = dashboardMatch?.[1];
@@ -31,7 +26,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  return NextResponse.next(); 
+  return NextResponse.next();
 }
 
 export const config = {
