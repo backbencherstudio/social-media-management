@@ -32,7 +32,7 @@ export default function LoginWithPassword() {
   useEffect(() => {
     if (role) {
       setRole(role);
-      document.cookie = `role=${role}`;
+      // document.cookie = `role=${role}`;
     }
   }, [role]);
 
@@ -42,10 +42,13 @@ export default function LoginWithPassword() {
     const tokens = res?.data?.authorization?.token;
 
     if (res?.data?.success) {
-      SetCookies(res);
+      await SetCookies(res);
       setToken(tokens);
       toast.success("Login successful");
-      router.push(redirect || "/");
+      if(redirect){
+        return router.push(redirect);
+      }
+      router.push("/");
     }
   };
 

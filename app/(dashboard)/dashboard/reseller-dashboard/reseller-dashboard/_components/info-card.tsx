@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import CompletedTasksIcon from "@/public/incons/completed-tasks";
 import CompletedTasksArrowIcon from "@/public/incons/completed-tasks-arrow";
@@ -12,7 +14,7 @@ import type { RootState } from "@/src/redux/store";
 export default function InfoCard() {
   const clientId = useSelector((state: RootState) => state.clientId.id);
 
-  const { data: dashboardAnalysis } = useGetDashboardAnalysisQuery(clientId);
+  const { data: dashboardAnalysis } = useGetDashboardAnalysisQuery(clientId!);
 
   return (
     <div className="flex flex-col 2xl:flex-row justify-between gap-4 xl:gap-10 mt-4 md:mt-6">

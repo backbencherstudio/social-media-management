@@ -23,17 +23,15 @@ export function middleware(req: NextRequest) {
   //   }
   // }
 
-  // Match route pattern like /dashboard/admin-dashboard or /dashboard/client-dashboard/...
-  // const dashboardMatch = pathname.match(/^\/dashboard\/([a-z-]+)-dashboard/);
   const dashboardMatch = pathname.match(/^\/dashboard\/([a-z-]+)-dashboard/);
-  const routeRole = dashboardMatch?.[1]; // e.g., "admin", "client", "user", etc.
+  const routeRole = dashboardMatch?.[1];
 
   // If no match or mismatch between role and route
   if (!routeRole || routeRole !== role) {
-    return NextResponse.redirect(new URL("/", req.url)); // or "/"
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
-  return NextResponse.next(); // Role and route match, allow access
+  return NextResponse.next(); 
 }
 
 export const config = {
