@@ -11,7 +11,11 @@ import { Toaster } from "sonner";
 import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
 import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 
-export default function ClientLayout({children}: {children: React.ReactNode}) {
+export default function ClientLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [token, setToken] = useState("");
@@ -21,7 +25,7 @@ export default function ClientLayout({children}: {children: React.ReactNode}) {
   useEffect(() => {
     const fetchToken = async () => {
       const token = await getToken();
-      setToken(token);
+      setToken(token as string);
     };
     fetchToken();
   }, []);
@@ -40,7 +44,6 @@ export default function ClientLayout({children}: {children: React.ReactNode}) {
       case "reseller":
         return (
           <ResellerSidebar
-
             isMobileMenuOpen={isMobileMenuOpen}
             role={currentRole}
             onMobileMenuClose={() => setIsMobileMenuOpen(false)}
@@ -53,7 +56,7 @@ export default function ClientLayout({children}: {children: React.ReactNode}) {
             onMobileMenuClose={() => setIsMobileMenuOpen(false)}
           />
         );
-      default:
+      case "user":
         return (
           <UserSidebar
             isMobileMenuOpen={isMobileMenuOpen}

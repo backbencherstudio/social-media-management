@@ -9,8 +9,11 @@ import {
 import { RiUserLine } from "react-icons/ri";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { removeToken } from "@/app/(auth)/auth/_components/set-and-get-token";
+import {
+  removeRole,
+  removeToken,
+} from "@/app/(auth)/auth/_components/set-and-get-token";
+import { useRouter } from "next/navigation";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -21,8 +24,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const pathName = usePathname();
-  const activePath = pathName.split("/")[2] || "Dashboard";
+  const router = useRouter();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -39,9 +41,10 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSignOut = () => {
-    console.log("Sign out");
-    removeToken();
+  const handleSignOut =async () => {
+    await removeToken();
+    await removeRole();
+    router.push("/");
   };
 
   return (

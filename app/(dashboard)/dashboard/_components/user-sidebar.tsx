@@ -8,12 +8,18 @@ import UserServicesIcon from "@/public/incons/user-services";
 import InvoicesIcon from "@/public/incons/invoices";
 import ProfileIcon from "@/public/incons/profile";
 import PaymentIcon from "@/public/incons/payment";
+import { FaBusinessTime } from "react-icons/fa6";
 
 // top menu items for purchased users
 const userTopMenuItems = [
   ,
-  { title: "Home", icon: Home, href: "/dashboard" },
-  { title: "Services", icon: UserServicesIcon, href: "/dashboard/services" },
+  { title: "Home", icon: Home, href: "/dashboard/user-dashboard" },
+  {
+    title: "Services",
+    icon: UserServicesIcon,
+    href: "/dashboard/user-dashboard/services",
+  },
+  { title: "Become Reseller", icon: FaBusinessTime, href: "/become-reseller" },
 ];
 
 // bottomMenuItems
@@ -24,17 +30,17 @@ const bottomMenuItems = [
       {
         title: "Profile/account",
         icon: ProfileIcon,
-        href: "/dashboard/profile",
+        href: "/dashboard/user-dashboard/profile",
       },
       {
         title: "Payment",
         icon: PaymentIcon,
-        href: "/dashboard/payment-method",
+        href: "/dashboard/user-dashboard/payment-method",
       },
       {
         title: "Invoices",
         icon: InvoicesIcon,
-        href: "/dashboard/payment-invoices",
+        href: "/dashboard/user-dashboard/payment-invoices",
       },
     ],
   },

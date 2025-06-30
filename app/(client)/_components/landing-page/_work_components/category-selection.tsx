@@ -37,7 +37,7 @@ export default function CategorySelector({ categories, activeCategory, setActive
     }
 
     emblaApi.on("select", onSelect)
-    onSelect() // Run once on mount
+    onSelect()
 
     return () => {
       emblaApi.off("select", onSelect)

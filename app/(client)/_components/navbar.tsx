@@ -286,7 +286,7 @@ export function Navbar() {
   useEffect(() => {
     const fetchToken = async () => {
       const token = await getToken();
-      setToken(token);
+      setToken(token as string);
     };
     fetchToken();
   }, []);
@@ -374,7 +374,20 @@ export function Navbar() {
 
               <div className="flex flex-col space-y-3 mt-4">
                 {user?.data?.email ? (
-                  <Link href="/dashboard" className="serotiva-regular">
+                  <Link
+                    href={
+                      user?.data?.type === "admin"
+                        ? "/dashboard/admin-dashboard"
+                        : user?.data?.type === "user"
+                        ? "/dashboard/user-dashboard"
+                        : user?.data?.type === "client"
+                        ? "/dashboard/client-dashboard"
+                        : user?.data?.type === "reseller"
+                        ? "/dashboard/reseller-dashboard"
+                        : "/dashboard"
+                    }
+                    className="hover:text-blue-500 transition serotiva-regular"
+                  >
                     Dashboard
                   </Link>
                 ) : (
@@ -382,9 +395,6 @@ export function Navbar() {
                     Log in
                   </Link>
                 )}
-                {/* <Link href="/auth/login" className="serotiva-regular">
-                  Log in
-                </Link> */}
                 <Link href="get-startd" className="serotiva-regular">
                   Get Started
                 </Link>
@@ -402,11 +412,27 @@ export function Navbar() {
         {/* Right Side - Desktop */}
         <div className="hidden lg:flex items-center space-x-4 text-base text-gray-700">
           {user?.data?.email ? (
-            <Link href="/dashboard" className="hover:text-blue-500 transition serotiva-regular">
+            <Link
+              href={
+                user?.data?.type === "admin"
+                  ? "/dashboard/admin-dashboard"
+                  : user?.data?.type === "user"
+                  ? "/dashboard/user-dashboard"
+                  : user?.data?.type === "client"
+                  ? "/dashboard/client-dashboard"
+                  : user?.data?.type === "reseller"
+                  ? "/dashboard/reseller-dashboard"
+                  : "/dashboard"
+              }
+              className="hover:text-blue-500 transition serotiva-regular"
+            >
               Dashboard
             </Link>
           ) : (
-            <Link href="/auth/login" className="hover:text-blue-500 transition serotiva-regular">
+            <Link
+              href="/auth/login"
+              className="hover:text-blue-500 transition serotiva-regular"
+            >
               Log in
             </Link>
           )}

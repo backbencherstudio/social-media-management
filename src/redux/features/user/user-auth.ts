@@ -22,4 +22,7 @@ const userAuth = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllUserQuery, useGetCurrentUserQuery } = userAuth;
+export const {
+  useGetAllUserQuery,
+  useGetCurrentUserQuery,
+} = userAuth;

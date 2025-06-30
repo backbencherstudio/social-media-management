@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 
+// Token
 export default async function SetCookies(res: any) {
   (await cookies()).set("accessToken", res?.data?.authorization?.token);
 }
@@ -13,4 +14,14 @@ export const getToken = async () => {
 
 export async function removeToken() {
   (await cookies()).delete("accessToken");
+}
+
+// Role
+export async function setRole(res: any) {
+  await (await cookies()).set("role", res?.data?.type);
+}
+
+export async function removeRole() {
+  await (await cookies()).delete("role");
+  await (await cookies()).delete("role");
 }
