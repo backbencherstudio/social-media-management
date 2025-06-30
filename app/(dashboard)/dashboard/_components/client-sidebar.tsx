@@ -17,7 +17,7 @@ const clientTopMenuItems = [
   { title: "Home", icon: Home, href: "/dashboard/client-dashboard" },
   { title: "Schedule", icon: ScheduleIcon, href: "/dashboard/client-dashboard/schedule" },
   { title: "Assets", icon: AssetsIcon, href: "/dashboard/client-dashboard/assets" },
-  { title: "Analysis", icon: AnalysisIcon, href: "/dashboard/client-dashboard/analysis" },
+  { title: "Analytics", icon: AnalysisIcon, href: "/dashboard/client-dashboard/analytics" },
   { title: "Service", icon: UserServicesIcon, href: "/dashboard/client-dashboard/service" },
   {
     title: "Social Media",
