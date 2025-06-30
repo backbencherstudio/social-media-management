@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import ChatSidebar from "./chat-sidebar";
 import { Button } from "@/components/ui/button";
@@ -38,15 +38,27 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
   >("disconnected");
   const [users, setUsers] = useState<User[]>([]);
   const [activeUserId, setActiveUserId] = useState<string | null>(null);
-  const [clintId, setClientId] = useState("");
   const [messagesByUser, setMessagesByUser] = useState<
     Record<string, Message[]>
   >({});
+  const clientIdRef = useRef("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [messageInput, setMessageInput] = useState("");
-
+  const [loadingMessages, setLoadingMessages] = useState(false);
+console.log(users,"users")
   const { data: allClient, isLoading } =
     useGetAllClientConversationQuery(undefined);
-  const { data: singleUserMessage } = useGetSingleUserMessageQuery(clintId);
+  const { data: singleUserMessage, refetch } = useGetSingleUserMessageQuery(
+    clientIdRef.current
+  );
+  
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      // This will ensure that the chat scrolls to the bottom whenever the messages change
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messagesByUser]); // This ensures scroll happens whenever messagesByUser is updated
+
 
   useEffect(() => {
     const newSocket = io(
@@ -151,7 +163,8 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     return () => {
       newSocket.disconnect();
     };
-  }, [userId, isAdmin, activeUserId]);
+  }, [userId, isAdmin, activeUserId, refetch]);
+
 
   // Send message function
   const sendMessage = () => {
@@ -191,46 +204,57 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
       });
   };
 
-  const formatMessages = (messages: any[], userId: string): Message[] => {
-    console.log("Formatting messages:", messages);
+  const formatMessages = (messages: any[]): Message[] => {
     return messages?.map((msg: any) => ({
       id: msg?.id || Date.now().toString(),
-      sender: msg?.sender_id === userId ? msg?.sender_id : "you", // Customize sender logic
-      text: msg?.message || msg?.text, // Use the correct field for the message content
-      timestamp: new Date(msg?.created_at), // Format timestamp correctly
-      type: msg?.sender_id === userId ? "received" : "sent", // Determine message type
+      sender: msg?.sender_id === userId ? "You" : msg?.sender_id, // Correct message type check
+      text: msg?.message || msg?.text,
+      timestamp: new Date(msg?.created_at),
+      type: msg?.sender_id === userId ? "sent" : "received", // Message type check
     }));
   };
 
-  //user selection handler
   const handleUserSelect = async (userId: string) => {
-    setClientId(userId);
+    setLoadingMessages(true); // Start loading messages
+
+    clientIdRef.current = userId;
     setUsers((prev) =>
       prev.map((user) =>
         user.id === userId ? { ...user, unreadCount: 0 } : user
       )
     );
+  };
 
+  const updatedData = useCallback(async () => {
     try {
-      // console.log(currentUserMessage,"crnt user message")
+      // Refetch messages only after the clientId has been fully updated
+      await refetch();
+
       const formattedMessages = formatMessages(
-        singleUserMessage?.messages,
-        userId
+        singleUserMessage?.messages || []
       );
-      // Update the state with formatted messages
+
       setMessagesByUser((prev) => {
         const updatedMessages = {
           ...prev,
-          [userId]: formattedMessages,
+          [clientIdRef.current]: formattedMessages, // Use clientIdRef.current to update
         };
-        console.log("Updated Messages:", updatedMessages); // Ensure messages are set in state
         return updatedMessages;
       });
-      setActiveUserId(userId)
+
+      setActiveUserId(clientIdRef.current); // Use clientIdRef.current for active user
     } catch (error) {
       console.error("Error loading messages", error);
+    } finally {
+      setLoadingMessages(false); // Stop loading messages
     }
-  };
+  }, [clientIdRef.current, refetch, singleUserMessage]); // Added missing dependencies
+
+  useEffect(() => {
+    if (clientIdRef.current) {
+      updatedData(); // Trigger updatedData when clientIdRef.current changes
+    }
+  }, [clientIdRef.current, updatedData]); // Trigger useEffect when clientIdRef.current or updatedData changes
 
   useEffect(() => {
     if (!isLoading && allClient?.length > 0) {
@@ -250,10 +274,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
       const existingUser = allClient?.filter(
         (client: any) => client?.creator_id === userId
       );
-      const formattedMessages = formatMessages(
-        existingUser[0]?.messages,
-        userId
-      );
+      const formattedMessages = formatMessages(existingUser[0]?.messages);
       setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
     }
   }, [allClient, isLoading]);
@@ -266,7 +287,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     ? messagesByUser[activeUserId] || []
     : [];
 
-    console.log(activeUserId,"crnt msg")
+ 
 
   return (
     <div className="flex flex-col h-[calc(100vh-100px)]">
@@ -293,7 +314,9 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {currentMessages?.length === 0 ? (
+            {loadingMessages ? (
+              <p className="text-center text-gray-500">Loading messages...</p>
+            ) : currentMessages?.length === 0 ? (
               <p className="text-center text-gray-500">No messages yet</p>
             ) : (
               currentMessages?.map((message) => (
@@ -322,6 +345,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
                 </div>
               ))
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           <div className="p-4 border-t">

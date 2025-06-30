@@ -13,7 +13,6 @@ interface ChatSidebarProps {
 
 export default function ChatSidebar({ users, activeUserId, onUserSelect }: ChatSidebarProps) {
 
-  console.log(users,"usersss")
 
   return (
     <div className="w-64 border-r bg-white overflow-y-auto">
