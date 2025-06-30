@@ -138,7 +138,7 @@ export default function ResellerSidebar({
         {
           title: "Assets",
           icon: AssetsIcon,
-          href: "/dashboard/reseller-dashboard/dashboard/reseller-dashboard-assets",
+          href: "/dashboard/reseller-dashboard/dashboard-assets",
         },
       ],
     },
@@ -203,7 +203,7 @@ export default function ResellerSidebar({
   };
 
   const selectedClient = clients.find(
-    (client) => client.value === selectedClientValue
+    (client : any) => client.value === selectedClientValue
   );
 
   const clientInitials = selectedClient
@@ -271,7 +271,7 @@ export default function ResellerSidebar({
             value={selectedClientValue}
             onChange={handleClientChange}
           >
-            {clients.map((client) => (
+            {clients.map((client: any) => (
               <option key={client.value} value={client.value}>
                 {client.name}
               </option>
