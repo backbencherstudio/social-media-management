@@ -127,13 +127,21 @@ export default function ResellerSidebar({
     {
       label: "Content",
       items: [
-        { title: "Compose", icon: ComposeIcon, href: "/dashboard/reseller-dashboard/compose" },
+        {
+          title: "Compose",
+          icon: ComposeIcon,
+          href: "/dashboard/reseller-dashboard/compose",
+        },
         {
           title: "Schedule",
           icon: ScheduleIcon,
           href: "/dashboard/reseller-dashboard/schedule",
         },
-        { title: "Post", icon: PostIcon, href: "/dashboard/reseller-dashboard/posts" },
+        {
+          title: "Post",
+          icon: PostIcon,
+          href: "/dashboard/reseller-dashboard/posts",
+        },
         {
           title: "Assets",
           icon: AssetsIcon,
@@ -186,8 +194,6 @@ export default function ResellerSidebar({
       name: client.name,
     })) || [];
 
-  // console.log(clients);
-
   const [selectedClientValue, setSelectedClientValue] = useState(
     clients[0]?.value || ""
   );
@@ -202,7 +208,7 @@ export default function ResellerSidebar({
   };
 
   const selectedClient = clients.find(
-    (client : any) => client.value === selectedClientValue
+    (client: any) => client.value === selectedClientValue
   );
 
   const clientInitials = selectedClient
