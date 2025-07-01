@@ -6,9 +6,12 @@ export default function PaymentDetailsModalClient({
   selectedOrder,
   setIsModalOpen,
 }) {
-  const { data: invoicePdf, isLoading } = useGetInvoicePdfQuery(selectedOrder?.id, {
-    skip: !selectedOrder?.id || !isModalOpen,
-  });
+  const { data: invoicePdf, isLoading } = useGetInvoicePdfQuery(
+    selectedOrder?.id,
+    {
+      skip: !selectedOrder?.id || !isModalOpen,
+    }
+  );
 
   const handleInvoice = () => {
     if (!invoicePdf) return;

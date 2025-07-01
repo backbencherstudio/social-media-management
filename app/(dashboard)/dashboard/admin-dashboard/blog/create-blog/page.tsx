@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
@@ -9,6 +9,7 @@ import { Trash2 } from "lucide-react";
 import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
 import { useCreateBlogMutation } from "@/src/redux/features/admin/blog/blog";
 import CategorModal from "../_components/categor-modal";
+import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 
 type FormData = {
   title: string;
@@ -21,6 +22,16 @@ type FormData = {
 export default function CreateBlog() {
   const { data } = useGetBlogCategoriesQuery();
   const [createBlog] = useCreateBlogMutation();
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken();
+      setToken(token as string);
+    };
+    fetchToken();
+  }, []);
 
   const { register, handleSubmit, setValue, reset, watch } =
     useForm<FormData>();
@@ -131,8 +142,15 @@ export default function CreateBlog() {
     formData.append("hashtags", JSON.stringify(hashtags));
     formData.append("contents", JSON.stringify(contents));
 
-    await createBlog(formData);
-    toast.success("Blog created successfully");
+    const blgoData = {
+      formData,
+      token,
+    };
+
+    const res = await createBlog(blgoData);
+    if(res?.data?.blog_id){
+      toast.success("Blog created successfully");
+    }
     reset();
   };
 
@@ -344,4 +362,14 @@ function MediaBlock({ index, preview, onFileChange, onDelete }) {
       </div>
     </div>
   );
+}
+
+export async function createBlog({
+  formData,
+  token,
+}: {
+  formData: FormDataType;
+  token: string;
+}) {
+  // ...
 }
