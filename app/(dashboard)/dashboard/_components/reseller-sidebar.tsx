@@ -9,7 +9,6 @@ import ComposeIcon from "@/public/incons/compose";
 import ScheduleIcon from "@/public/incons/schedule";
 import PostIcon from "@/public/incons/post";
 import AssetsIcon from "@/public/incons/assets";
-import SocialInboxIcon from "@/public/incons/social-inbox";
 import SocialsIcon from "@/public/incons/socials";
 import SupportIcon from "@/public/incons/support";
 
@@ -142,21 +141,21 @@ export default function ResellerSidebar({
         },
       ],
     },
-    {
-      label: "Activity",
-      items: [
-        // {
-        //   title: "Automotion",
-        //   icon: RiLayoutGridLine,
-        //   href: "/dashboard/reseller-dashboard/automation",
-        // },
-        {
-          title: "Social Inbox",
-          icon: SocialInboxIcon,
-          href: "/dashboard/reseller-dashboard/social-inbox",
-        },
-      ],
-    },
+    // {
+    //   label: "Activity",
+    //   items: [
+    //     {
+    //       title: "Automotion",
+    //       icon: RiLayoutGridLine,
+    //       href: "/dashboard/reseller-dashboard/automation",
+    //     },
+    //     {
+    //       title: "Social Inbox",
+    //       icon: SocialInboxIcon,
+    //       href: "/dashboard/reseller-dashboard/social-inbox",
+    //     },
+    //   ],
+    // },
     {
       label: "Configuration",
       items: [

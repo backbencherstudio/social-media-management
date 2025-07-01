@@ -33,10 +33,25 @@ const blog = baseApi.injectEndpoints({
       invalidatesTags: ["blogs"],
     }),
     updateBlog: builder.mutation({
-      query: ({ data, id , token}: { data: any; id: string, token:string }) => ({
+      query: ({
+        data,
+        id,
+        token,
+      }: {
+        data: any;
+        id: string;
+        token: string;
+      }) => ({
         url: `/admin/blog/${id}`,
         method: "PATCH",
         body: data,
+      }),
+      invalidatesTags: ["blogs"],
+    }),
+    publishBlog: builder.mutation({
+      query: (id: string) => ({
+        url: `/admin/blog/${id}/publish`,
+        method: "PATCH",
       }),
       invalidatesTags: ["blogs"],
     }),
@@ -49,4 +64,5 @@ export const {
   useCreateBlogMutation,
   useDeleteBlogMutation,
   useUpdateBlogMutation,
+  usePublishBlogMutation,
 } = blog;
