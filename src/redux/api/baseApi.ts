@@ -57,5 +57,6 @@ export const baseApi = createApi({
     "user-active-services",
     "user-services-we-offer",
     "user-recent-activities",
+    "user-assets"
   ],
 });

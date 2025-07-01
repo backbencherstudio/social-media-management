@@ -1,23 +1,22 @@
 "use client";
 
-export interface Asset {
-  fileName: string;
-  type: "Design" | "Post";
-  approvedDate: string;
-  size: string;
-}
+import { useGetAssetsQuery } from "@/src/redux/features/user/assets/userAssetsApi";
 
 interface AssetsTableProps {
-  assets: Asset[];
   emptyMessage?: string;
   title?: string;
 }
 
 export default function AssetsTable({
-  assets,
   emptyMessage = "No assets available.",
   title = "Assets",
 }: AssetsTableProps) {
+  // Replace with real data (example data provided)
+  const { data } = useGetAssetsQuery(undefined);
+
+  const assets = data?.data || [];
+  // console.log(assets)
+
   return (
     <div className="w-full rounded-lg border border-gray-200 bg-white shadow-sm">
       <div className="flex items-center gap-4 p-6 pb-2">
@@ -25,7 +24,7 @@ export default function AssetsTable({
       </div>
 
       <div className="p-6 pt-2">
-        {assets.length === 0 ? (
+        {assets?.length === 0 ? (
           <div className="text-center text-gray-500 py-10 text-sm">
             {emptyMessage}
           </div>
@@ -41,7 +40,7 @@ export default function AssetsTable({
                     Type
                   </th>
                   <th className="pb-3 pt-2 text-left text-sm font-medium text-gray-500">
-                    Approved Date
+                    Description
                   </th>
                   <th className="pb-3 pt-2 text-left text-sm font-medium text-gray-500">
                     Size
@@ -52,16 +51,16 @@ export default function AssetsTable({
                 </tr>
               </thead>
               <tbody>
-                {assets.map((asset, index) => (
+                {assets?.map((asset: any, index: number) => (
                   <tr
-                    key={index}
+                    key={asset.id}
                     className="border-b border-gray-100 hover:bg-gray-50"
                   >
-                    <td className="py-4 pr-4 pl-3 font-medium">{asset.fileName}</td>
+                    <td className="py-4 pr-4 pl-3 font-medium">{asset.name}</td>
                     <td className="py-4 pr-4">
                       <span
-                        className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${
-                          asset.type === "Design"
+                        className={`inline-flex rounded-full px-2 py-1 text-xs font-medium capitalize ${
+                          asset.type === "image"
                             ? "bg-purple-100 text-purple-600"
                             : "bg-blue-100 text-blue-600"
                         }`}
@@ -69,9 +68,14 @@ export default function AssetsTable({
                         {asset.type}
                       </span>
                     </td>
-                    <td className="py-4 pr-4">{asset.approvedDate}</td>
-                    <td className="py-4 pr-4">{asset.size}</td>
+                    <td className="py-4 pr-4">{asset.design_file?.content}</td>
+                    <td className="py-4 pr-4">
+                      {asset.size
+                        ? `${(asset.size / 1024).toFixed(2)} MB`
+                        : "-"}
+                    </td>
                     <td className="py-4 pl-10">
+                      <a href={asset.file_url}>
                       <button className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -89,6 +93,7 @@ export default function AssetsTable({
                         </svg>
                         Download
                       </button>
+                      </a>
                     </td>
                   </tr>
                 ))}

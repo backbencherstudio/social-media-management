@@ -10,26 +10,7 @@ import { SocialMediaDesignCard } from "./_components/social-media-design-card";
 import { ScheduledPostModal } from "./_components/ScheduledPostModal";
 import { SocialMediaDesignModal } from "./_components/SocialMediaDesignModal";
 
-const assets: Asset[] = [
-  {
-    fileName: "Summer_Collection_Banner.png",
-    type: "Design",
-    approvedDate: "November 16, 2025",
-    size: "2.6 MB",
-  },
-  {
-    fileName: "Product_Launch_Post.pdf",
-    type: "Post",
-    approvedDate: "April 28, 2025",
-    size: "2.6 MB",
-  },
-  {
-    fileName: "Winter_Collection_Banner.png",
-    type: "Design",
-    approvedDate: "August 7, 2025",
-    size: "1.2 MB",
-  },
-];
+
 
 export default function page() {
   // view details
@@ -92,7 +73,10 @@ export default function page() {
 
   return (
     <section className="p-3">
-      <AssetsTable assets={assets} title="Assets" />
+      {/* assets data */}
+      <AssetsTable  title="Assets" />
+
+      {/* content card */}
       <ContentQueue />
 
       {/* content card */}
