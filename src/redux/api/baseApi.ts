@@ -49,5 +49,6 @@ export const baseApi = createApi({
     "reseller-profile",
     "assets",
     "allAnalyticsServices",
+    "client-invoices"
   ],
 });
