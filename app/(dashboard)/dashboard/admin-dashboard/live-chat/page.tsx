@@ -20,12 +20,12 @@ export default function ChatPage() {
     };
     fetchToken();
 },[]);
-  console.log(user,"user")
+ 
 
 
   return (
     <div className="h-[80%]">
-      <ChatInterface userId={user?.data?.id} isAdmin={user?.data?.type === "admin"} />
+      <ChatInterface userName = {user?.data?.name} userId={user?.data?.id} isAdmin={user?.data?.type === "admin"} />
     </div>
   );
 }

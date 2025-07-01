@@ -1,5 +1,6 @@
 import React from "react";
 import ChatPage from "../../admin-dashboard/live-chat/page";
+import SupportChat from "./_components/support-chat";
 
 export default function HelpAndSupport() {
   return (

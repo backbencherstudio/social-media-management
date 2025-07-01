@@ -11,6 +11,7 @@ interface ChatHeaderProps {
 }
 
 export function ChatHeader({ user }: ChatHeaderProps) {
+  console.log(user,"userssssssssssssssssss")
   return (
     <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-card ">
       <div className="flex items-center gap-3">
@@ -25,7 +26,7 @@ export function ChatHeader({ user }: ChatHeaderProps) {
         </Avatar>
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold">{user.name}</h3>
+            <h3 className="font-semibold">{user?.name}</h3>
             
           </div>
           {user.responseTime && <p className="text-xs text-muted-foreground">Response time {user.responseTime}</p>}
