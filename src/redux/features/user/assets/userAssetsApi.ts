@@ -8,7 +8,14 @@ export const userAssetsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["user-assets"],
     }),
+
+    getContentQueue: builder.query({
+      query: () => ({
+        url: `/user/assets/queue`,
+      }),
+      providesTags: ["content-queue"],
+    }),
   }),
 });
 
-export const { useGetAssetsQuery } = userAssetsApi;
+export const { useGetAssetsQuery, useGetContentQueueQuery } = userAssetsApi;

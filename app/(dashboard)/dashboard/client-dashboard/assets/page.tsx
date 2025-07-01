@@ -9,29 +9,15 @@ import { ScheduledPostCard } from "./_components/scheduled-post-card";
 import { SocialMediaDesignCard } from "./_components/social-media-design-card";
 import { ScheduledPostModal } from "./_components/ScheduledPostModal";
 import { SocialMediaDesignModal } from "./_components/SocialMediaDesignModal";
-
-const assets: Asset[] = [
-  {
-    fileName: "Summer_Collection_Banner.png",
-    type: "Design",
-    approvedDate: "November 16, 2025",
-    size: "2.6 MB",
-  },
-  {
-    fileName: "Product_Launch_Post.pdf",
-    type: "Post",
-    approvedDate: "April 28, 2025",
-    size: "2.6 MB",
-  },
-  {
-    fileName: "Winter_Collection_Banner.png",
-    type: "Design",
-    approvedDate: "August 7, 2025",
-    size: "1.2 MB",
-  },
-];
+import { useGetContentQueueQuery } from "@/src/redux/features/user/assets/userAssetsApi";
+import { cl } from "@fullcalendar/core/internal-common";
 
 export default function page() {
+  const { data } = useGetContentQueueQuery(undefined);
+
+  const contentQueueData = data?.date;
+  console.log(contentQueueData)
+
   // view details
   const [isSchduledPostCardOpen, setIsScheduledPostCardOpen] = useState(false);
   const [isSocialMediaDesignModalOpen, setIsSocialMediaDesignModalOpen] =
@@ -92,10 +78,13 @@ export default function page() {
 
   return (
     <section className="p-3">
-      <AssetsTable assets={assets} title="Assets" />
+      {/* assets table */}
+      <AssetsTable title="Assets" />
+      {/* content queue header */}
       <ContentQueue />
 
-      {/* content card */}
+      {/* content queue body */}
+
       <div className="mx-auto grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 lg:gap-10">
         <ScheduledPostCard
           key={scheduledPostData.title}
