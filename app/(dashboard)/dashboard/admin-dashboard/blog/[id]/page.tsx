@@ -13,6 +13,7 @@ import {
 } from "@/src/redux/features/admin/blog/blog";
 import { useParams } from "next/navigation";
 import CategorModal from "../_components/categor-modal";
+import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 
 type FormData = {
   title: string;
@@ -34,7 +35,6 @@ export default function BlogForm() {
   const [inputValue, setInputValue] = useState("");
   const [contentBlocks, setContentBlocks] = useState<any[]>([]);
   const categoryValue = watch("categoryIds");
-  const [mediaPreviews, setMediaPreviews] = useState<string[]>([]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,7 +42,7 @@ export default function BlogForm() {
     if (blogData && blogData.blog_contents) {
       // Map blog_contents to contentBlocks
       const mappedBlocks = blogData.blog_contents
-        .map((content) => {
+        .map((content: any) => {
           if (content.content_type === "text") {
             return { type: "text", content: content.content };
           } else if (content.content_type === "media") {
@@ -116,7 +116,16 @@ export default function BlogForm() {
     setHashtags(updatedHashtags);
   };
 
-  console.log(contentBlocks);
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken();
+      setToken(token as string);
+    };
+    fetchToken();
+  }, []);
 
   const onSubmit = async (data: FormData) => {
     const formData = new FormData();
@@ -150,7 +159,7 @@ export default function BlogForm() {
     formData.append("contents", JSON.stringify(contents));
 
     if (id) {
-      await updateBlog({ data: formData, id: id as string });
+      await updateBlog({ data: formData, id: id as string, token });
       toast.success("Blog updated successfully");
     }
     reset();
@@ -206,7 +215,7 @@ export default function BlogForm() {
               <MediaBlock
                 index={index}
                 preview={block.preview}
-                onFileChange={(e) => handleFileChange(e, index)}
+                onFileChange={(e: any) => handleFileChange(e, index)}
                 onDelete={() => {
                   const updatedBlocks = [...contentBlocks];
                   updatedBlocks[index].content = null;
@@ -314,7 +323,17 @@ export default function BlogForm() {
   );
 }
 
-function MediaBlock({ index, preview, onFileChange, onDelete }) {
+function MediaBlock({
+  index,
+  preview,
+  onFileChange,
+  onDelete,
+}: {
+  index: any;
+  preview: any;
+  onFileChange: any;
+  onDelete: any;
+}) {
   const fileInputRef = useRef(null);
 
   return (

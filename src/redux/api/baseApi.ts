@@ -1,3 +1,4 @@
+import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const baseApi = createApi({
@@ -5,6 +6,14 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_URL,
     credentials: "include",
+    prepareHeaders:async  (headers) => {
+      const accessToken = await getToken();
+
+      if (accessToken) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({}),
   tagTypes: [
@@ -32,7 +41,7 @@ export const baseApi = createApi({
     "team-members",
     "email-and-notification-settings",
     "posts",
-    "reseller-applications",     
+    "reseller-applications",
     "clients",
     "orders",
     "team-members",
@@ -40,7 +49,5 @@ export const baseApi = createApi({
     "reseller-profile",
     "assets",
     "allAnalyticsServices",
-    "client-invoices"
   ],
-  
 });

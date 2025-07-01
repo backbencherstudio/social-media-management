@@ -17,7 +17,15 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
+  // Check for admin blog routes first
+  // if (pathname.startsWith("/dashboard/admin-dashboard/blog")) {
+  //   if (role === "admin") {
+  //     return NextResponse.next();
+  //   }
+  //   return NextResponse.redirect(new URL("/", req.url));
+  // }
 
+  // Check for regular dashboard routes
   const dashboardMatch = pathname.match(/^\/dashboard\/([a-z-]+)-dashboard/);
   const routeRole = dashboardMatch?.[1];
 

@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import ManageUserModal from "./manage-user-modal";
@@ -152,7 +154,7 @@ export default function InviteTeamMembers() {
             </tr>
           </thead>
           <tbody>
-            {userData?.data?.map((item) => (
+            { userData?.data?.data?.data && userData?.data?.data?.data.map((item: any) => (
               <tr key={item.id} className="">
                 {/* item cell with left side text & status */}
                 <td className="py-4 px-4 whitespace-nowrap">
