@@ -15,7 +15,7 @@ export default function StatusBar({ status, userId, isAdmin }: StatusBarProps) {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 bg-white border-b">
+    <div className="flex justify-between items-center p-4  border-b">
       <div className="flex items-center gap-2">
         <div className={`w-3 h-3 rounded-full ${statusColors[status]}`} />
         <span className="text-sm capitalize">{status}</span>

@@ -24,7 +24,7 @@ export default function ChatPage() {
 
 
   return (
-    <div className="h-[80%]">
+    <div className="h-[80%] ">
       <ChatInterface userName = {user?.data?.name} userId={user?.data?.id} isAdmin={user?.data?.type === "admin"} />
     </div>
   );
