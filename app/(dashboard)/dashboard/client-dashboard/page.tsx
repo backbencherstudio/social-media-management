@@ -10,26 +10,33 @@ import RecommendedResources from "@/components/UserDashboard/Home/RecommendedRes
 import ServicesWeOffer from "@/components/UserDashboard/Home/ServicesWeOffer";
 import { usePurchase } from "@/app/context/PurchaseContext";
 import RecentActivity from "@/components/UserDashboard/Home/RecentActivity";
-import ServicesTable, { Service } from "@/components/UserDashboard/Components/services-table";
+import ServicesTable, {
+  Service,
+} from "@/components/UserDashboard/Components/services-table";
+import {  
+  useGetUserActiveServicesQuery,
+  useGetUserServicesWeOfferQuery,
+  useGetUserRecentActivitiesQuery,
+} from "@/src/redux/features/user/home/userServicesApi";
 
 const servicesData: Service[] = [
   {
     id: "62A2AA44-2",
-    name: "Email Design",
+    service: "Email Design",
     started: "Sep 17",
     status: "For Review",
     nextPayment: "Oct 17",
   },
   {
     id: "62A2AA44-3",
-    name: "Plus + 15 posts",
+    service: "Plus + 15 posts",
     started: "Sep 17",
     status: "In Progress",
     nextPayment: "Oct 17",
   },
   {
     id: "62A2AA44-4",
-    name: "Plus + 15 posts",
+    service: "Plus + 15 posts",
     started: "Sep 17",
     status: "Completed",
     nextPayment: "Oct 17",
@@ -37,6 +44,12 @@ const servicesData: Service[] = [
 ];
 
 export default function UserDashboard() {
+  const { data: activeServices } = useGetUserActiveServicesQuery(undefined);
+
+  
+
+  console.log(activeServices?.data);
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState([
@@ -44,7 +57,7 @@ export default function UserDashboard() {
       startDate: new Date(),
       endDate: new Date(),
       key: "selection",
-    },
+    },  
   ]);
 
   const { hasPurchased } = usePurchase();
@@ -77,9 +90,8 @@ export default function UserDashboard() {
     ]);
   };
 
-
   // // Render the dashboard based on the purchase status(client or user)
-  const isClient: boolean = true
+  const isClient: boolean = true;
 
   return (
     <>
@@ -91,14 +103,15 @@ export default function UserDashboard() {
               style={{
                 letterSpacing: "-0.02em",
                 lineHeight: "1.1",
-                background: "linear-gradient(to bottom, #000000 0%, #444444 100%)",
+                background:
+                  "linear-gradient(to bottom, #000000 0%, #444444 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
                 color: "transparent",
               }}
             >
-              Welcome! Ali Husni
+              Welcome! Ali Husnii
             </h1>
 
             {/* Date Picker */}
@@ -108,9 +121,21 @@ export default function UserDashboard() {
                 onClick={() => setIsOpen(!isOpen)}
               >
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M6.66667 1.66666V4.16666" stroke="#64748B" strokeWidth="1.5" />
-                  <path d="M13.3333 1.66666V4.16666" stroke="#64748B" strokeWidth="1.5" />
-                  <path d="M2.91667 7.57501H17.0833" stroke="#64748B" strokeWidth="1.5" />
+                  <path
+                    d="M6.66667 1.66666V4.16666"
+                    stroke="#64748B"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M13.3333 1.66666V4.16666"
+                    stroke="#64748B"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M2.91667 7.57501H17.0833"
+                    stroke="#64748B"
+                    strokeWidth="1.5"
+                  />
                   <path
                     d="M17.5 7.08332V14.1667C17.5 16.6667 16.25 18.3333 13.3333 18.3333H6.66667C3.75 18.3333 2.5 16.6667 2.5 14.1667V7.08332C2.5 4.58332 3.75 2.91666 6.66667 2.91666H13.3333C16.25 2.91666 17.5 4.58332 17.5 7.08332Z"
                     stroke="#64748B"
@@ -118,7 +143,8 @@ export default function UserDashboard() {
                   />
                 </svg>
                 <span className="text-gray-700 font-medium">
-                  {state[0].startDate.toLocaleDateString()} - {state[0].endDate.toLocaleDateString()}
+                  {state[0].startDate.toLocaleDateString()} -{" "}
+                  {state[0].endDate.toLocaleDateString()}
                 </span>
               </div>
 
@@ -186,7 +212,7 @@ export default function UserDashboard() {
 
       <div className="mt-6">
         <ServicesTable
-          services={servicesData}
+          services={activeServices?.data}
           emptyMessage="You're not subscribed to any services."
           title="Services"
         />
