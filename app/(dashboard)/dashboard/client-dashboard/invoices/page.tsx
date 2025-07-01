@@ -81,11 +81,23 @@ const Invoices = () => {
                 {new Date(payment?.created_at).toLocaleDateString()}
               </td>
 
+              {/* <span
+                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
+                          service.status === "For Review"
+                            ? "bg-[#E98800]/10 text-[#E98800]"
+                            : service.status === "In Progress"
+                            ? "bg-[#8A71F7]/10 text-[#8A71F7]"
+                            : "bg-green-100 text-green-500"
+                        }`}
+                      >
+                        {service.status}
+                      </span> */}
+
               {/* Status */}
               <td className="py-4 px-4 text-center">
                 <div className="flex justify-center">
                   <span
-                    className={`px-3 py-1 rounded-full font-medium ${
+                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium capitalize ${
                       payment.order_status === "progress" &&
                       "bg-[#FEF3C7] text-[#984917]"
                     } ${
@@ -99,10 +111,10 @@ const Invoices = () => {
               </td>
 
               {/* View Details Button */}
-              <td className="py-4 px-4 text-center">
+              <td className="py-4 px-4 text-center underline-none">
                 <button
                   onClick={() => handleOpenModal(payment)}
-                  className="text-[#2D50FF] underline"
+                  className="text-[#2D50FF] underline-none font-semibold text-sm hover:text-[#2D50FF]/80"
                 >
                   View Details
                 </button>

@@ -49,6 +49,13 @@ export const baseApi = createApi({
     "reseller-profile",
     "assets",
     "allAnalyticsServices",
-    "client-invoices"
+    "client-invoices",
+    "active-services",
+    "recent-activities",
+    "services-we-offer",
+    "all-services",
+    "user-active-services",
+    "user-services-we-offer",
+    "user-recent-activities",
   ],
 });

@@ -2,7 +2,7 @@
 
 export interface Service {
   id: string;
-  name: string;
+  service: string;
   started: string;
   status: "For Review" | "In Progress" | "Completed";
   nextPayment: string;
@@ -25,12 +25,12 @@ export default function ServicesTable({
         <h2 className="text-xl font-bold">{title}</h2>
         <div className="flex items-center rounded-full bg-green-50 px-3 py-1 text-sm ">
           <span className="mr-1.5 h-2 w-2 rounded-full bg-green-500"></span>
-          {services.length} Active
+          {services?.length} Active
         </div>
       </div>
 
       <div className="p-6 pt-2">
-        {services.length === 0 ? (
+        {services?.length === 0 ? (
           <div className="text-center text-gray-500 py-10 text-sm">
             {emptyMessage}
           </div>
@@ -51,27 +51,32 @@ export default function ServicesTable({
                   <th className="pb-3 pt-2 text-left text-sm font-medium text-gray-500">
                     Next Payment
                   </th>
-                  <th className="pb-3 pt-2 text-left text-sm font-medium text-gray-500 pl-20">Actions</th>
+                  <th className="pb-3 pt-2 text-left text-sm font-medium text-gray-500 pl-20">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {services.map((service, index) => (
+                {services?.map((service, index) => (
                   <tr
                     key={index}
                     className="border-b border-gray-100 hover:bg-gray-50"
                   >
                     <td className="py-4 pr-4">
                       <div className="pl-3">
-                        <div className="font-medium ">{service.name}</div>
+                        <div className="font-medium ">{service?.service}</div>
                         <div className="text-xs text-gray-500">
                           {service.id}
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 pr-4">{service.started}</td>
+                    <td className="py-4 pr-4">
+                      {new Date(service.started).toLocaleDateString() ||
+                        "Invalid Date"}
+                    </td>
                     <td className="py-4 pr-4">
                       <span
-                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
+                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium capitalize ${
                           service.status === "For Review"
                             ? "bg-[#E98800]/10 text-[#E98800]"
                             : service.status === "In Progress"
@@ -82,7 +87,7 @@ export default function ServicesTable({
                         {service.status}
                       </span>
                     </td>
-                    <td className="py-4 pr-4">{service.nextPayment}</td>
+                    <td className="py-4 pr-4">{new Date(service.nextPayment).toLocaleDateString()}</td>
                     <td className="py-4 text-left pl-20">
                       <button className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
                         Order Details

@@ -1,6 +1,7 @@
 import IdeationIcon from "@/public/incons/landin-page/ideation";
 import React from "react";
-import {ServiceCard }from "../Components/service-card";
+import { ServiceCard } from "../Components/service-card";
+import { useGetUserServicesWeOfferQuery } from "@/src/redux/features/user/home/userServicesApi";
 
 export default function ServicesWeOffer() {
   const services = [
@@ -42,13 +43,15 @@ export default function ServicesWeOffer() {
     },
   ];
 
+  const { data: servicesWeOffer } = useGetUserServicesWeOfferQuery(undefined);
+  console.log(servicesWeOffer)
   return (
     <section>
       <h3 className="text-[24px] font-bold mb-4">Services we offer</h3>
 
       <div className="grid grid-cols-1 sm:grid-col-2 md:grid-cols-4 gap-6 mt-12">
         {/* <ProcessCard /> */}
-        {services.map((service) => (
+        {servicesWeOffer?.map((service:any) => (
           <ServiceCard service={service} key={service.id}></ServiceCard>
         ))}
       </div>
