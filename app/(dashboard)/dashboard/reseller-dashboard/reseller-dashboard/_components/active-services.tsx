@@ -1,13 +1,16 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import React from "react";
 import DatePicker from "./date-picker";
 import { useGetActiveServicesQuery } from "@/src/redux/features/reseller/dashboard/dashboard";
 import { DateHelper } from "@/helper/date.helper";
+import { useSelector } from "react-redux";
+import { RootState } from "@/src/redux/store";
 
 export default function ActiveServices() {
-  const { data: activeServices } = useGetActiveServicesQuery();
+  const clientId = useSelector((state: RootState) => state.clientId.id);
+  const { data: activeServices } = useGetActiveServicesQuery(clientId);
 
   return (
     <div className="overflow-x-auto w-full px-4 py-6 bg-white rounded-lg">
@@ -48,40 +51,41 @@ export default function ActiveServices() {
             </tr>
           </thead>
           <tbody>
-            {activeServices?.data?.map((service) => (
-              <tr key={service.id} className="">
-                {/* Service cell with left side text & status */}
-                <td className="py-4">
-                  <div className="flex items-center justify-between flex-wrap gap-2">
-                    <div className="max-w-full overflow-hidden">
-                      <h1 className="font-semibold text-gray-900 truncate whitespace-nowrap">
-                        {service.name}
-                      </h1>
-                      <span className="text-sm text-gray-500 block truncate">
-                        {service.id}
-                      </span>
+            {activeServices?.data && activeServices.data.length > 0 ? (
+              activeServices.data.map((service: any) => (
+                <tr key={service.id} className="">
+                  {/* Service cell with left side text & status */}
+                  <td className="py-4">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="max-w-full overflow-hidden">
+                        <h1 className="font-semibold text-gray-900 truncate whitespace-nowrap">
+                          {service.name}
+                        </h1>
+                        <span className="text-sm text-gray-500 block truncate">
+                          {service.id}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </td>
+                  </td>
 
-                <td className="py-4 px-4 text-center whitespace-nowrap overflow-hidden text-ellipsis">
-                  {DateHelper.format(
-                    service.created_at,
-                    "MMM DD"
-                  ).toLowerCase()}
-                </td>
+                  <td className="py-4 px-4 text-center whitespace-nowrap overflow-hidden text-ellipsis">
+                    {DateHelper.format(
+                      service.created_at,
+                      "MMM DD"
+                    ).toLowerCase()}
+                  </td>
 
-                <td className="py-4 px-4 text-center">
-                  <div className="flex justify-center">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-2 whitespace-nowrap overflow-hidden  
+                  <td className="py-4 px-4 text-center">
+                    <div className="flex justify-center">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-2 whitespace-nowrap overflow-hidden  
                       ${
                         service.status === 1
                           ? "bg-[#EBFBF5] text-[#00A86B]"
                           : "bg-[#ECEFF3] text-black"
                       }`}
-                    >
-                      {/* ${
+                      >
+                        {/* ${
                         service.status === "For Review" &&
                         "bg-[#FEF3C7] text-[#984917]"
                       } ${
@@ -91,7 +95,7 @@ export default function ActiveServices() {
                         service.status === "Complete" && "bg-[#ECEFF3] text-black"
                       }  */}
 
-                      {/* <div
+                        {/* <div
                         className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
                           service.status === "For Review" && "bg-[#984917]"
                         } ${service.status === "In Progress" && "bg-[#5B21B6]"} ${
@@ -100,30 +104,40 @@ export default function ActiveServices() {
                         service.status === "Active" && "bg-[#EBFBF5] text-[#00A86B]"
                       }`}
                       ></div> */}
-                      {service.status === 1 ? "Active" : "Inactive"}
-                    </span>
-                  </div>
-                </td>
+                        {service.status === 1 ? "Active" : "Inactive"}
+                      </span>
+                    </div>
+                  </td>
 
-                <td className="py-4 px-4 text-center">
-                  <div className="flex justify-center">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium`}
+                  <td className="py-4 px-4 text-center">
+                    <div className="flex justify-center">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium`}
+                      >
+                        {"Oct 17"}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4 text-end">
+                    <Link
+                      href={`/dashboard/service/${service.id}`}
+                      className="border px-3 py-1 rounded-md transition-colors"
                     >
-                      {"Oct 17"}
-                    </span>
-                  </div>
-                </td>
-                <td className="py-4 px-4 text-end">
-                  <Link
-                    href={`/dashboard/service/${service.id}`}
-                    className="border px-3 py-1 rounded-md transition-colors"
-                  >
-                    Details
-                  </Link>
+                      Details
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="py-10 text-center text-lg font-semibold text-gray-500"
+                >
+                  No Data Found
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

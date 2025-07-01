@@ -4,9 +4,9 @@ import { baseApi } from "@/src/redux/api/baseApi";
 
 const post = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllPosts: builder.query<any, void>({
-      query: () => ({
-        url: "/post",
+    getAllPosts: builder.query({
+      query: (id) => ({
+        url: `/post/user/${id}`,
         method: "GET",
       }),
       providesTags: ["posts"],

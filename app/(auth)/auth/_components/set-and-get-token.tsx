@@ -18,10 +18,10 @@ export async function removeToken() {
 
 // Role
 export async function setRole(res: any) {
-  await (await cookies()).set("role", res?.data?.type);
+   (await cookies()).set("role", res?.data?.type);
 }
 
 export async function removeRole() {
-  await (await cookies()).delete("role");
-  await (await cookies()).delete("role");
+   (await cookies()).delete("role");
+   (await cookies()).delete("role");
 }

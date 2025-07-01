@@ -7,6 +7,7 @@ import Link from "next/link";
 import {
   useDeleteBlogMutation,
   useGetAllBlogsQuery,
+  usePublishBlogMutation,
 } from "@/src/redux/features/admin/blog/blog";
 import { Pagination } from "../_components/Pagination";
 import DeleteIcon from "@/public/incons/delete";
@@ -19,6 +20,7 @@ export default function Blog() {
 
   const { data, isLoading } = useGetAllBlogsQuery();
   const [deleteBlog] = useDeleteBlogMutation();
+  const [publishBlog] = usePublishBlogMutation();
   const imageURL = "http://192.168.4.2:9000/social-media/";
 
   const [token, setToken] = useState("");
@@ -31,16 +33,16 @@ export default function Blog() {
     fetchToken();
   }, []);
 
-  const handleDelete =async (id: string)=> {
-     const data = {
+  const handleDelete = async (id: string) => {
+    const data = {
       id,
-      token
-     }
-    const res =await deleteBlog(data)
-    if(res?.data?.blog_id){
-      toast.success("Blog delete successfully")
+      token,
+    };
+    const res = await deleteBlog(data);
+    if (res?.data?.blog_id) {
+      toast.success("Blog delete successfully");
     }
-  }
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -67,7 +69,9 @@ export default function Blog() {
         {/* Create New Card */}
         <div className="flex items-center justify-center bg-white h-[420px] rounded-lg shadow-sm p-6 border-2 border-dotted border-gray-400">
           <button
-            onClick={() => router.push("/dashboard/admin-dashboard/blog/create-blog")}
+            onClick={() =>
+              router.push("/dashboard/admin-dashboard/blog/create-blog")
+            }
             className="px-4 py-2 border-2 border-dotted border-gray-400 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 cursor-pointer"
           >
             Create New +
@@ -82,12 +86,26 @@ export default function Blog() {
           >
             <div className="flex justify-between items-center">
               <div className="flex gap-4 my-5 px-6">
-                <Button className="bg-gray-100">Draft</Button>
-                <Button className="bg-black text-white">Publish Post</Button>
+                {post?.status === true ? (
+                  <Button className="bg-[#F6F8FA] text-black">Published</Button>
+                ) : (
+                  <div className="flex gap-4">
+                    <Button className="bg-gray-100">Draft</Button>
+                    <Button
+                      onClick={() => publishBlog(post.blog_id)}
+                      className="bg-black text-white cursor-pointer"
+                    >
+                      Publish Post
+                    </Button>
+                  </div>
+                )}
               </div>
+
               <div>
                 <div className="flex items-center gap-2 px-6">
-                  <Link href={`/dashboard/admin-dashboard/blog/${post.blog_id}`}>
+                  <Link
+                    href={`/dashboard/admin-dashboard/blog/${post.blog_id}`}
+                  >
                     <button
                       className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                       title="Edit post"
@@ -98,7 +116,7 @@ export default function Blog() {
                   <button
                     className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                     title="Delete post"
-                    onClick={() =>  handleDelete(post.blog_id)}
+                    onClick={() => handleDelete(post.blog_id)}
                   >
                     <DeleteIcon className={"w-5 h-5 text-red-600"} />
                   </button>
