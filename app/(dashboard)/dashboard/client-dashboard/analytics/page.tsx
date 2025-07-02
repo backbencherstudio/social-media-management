@@ -8,7 +8,7 @@ export default function Analytics() {
   return (
     <div className="space-y-6">
       <AnalyticsInfoCard />
-      <RecentPostsPerformance />
+      {/* <RecentPostsPerformance /> */}
       <FollowerActivityMap />
       <AudienceDemographics />
     </div>

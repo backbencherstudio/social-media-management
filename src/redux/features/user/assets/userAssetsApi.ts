@@ -17,10 +17,10 @@ export const userAssetsApi = baseApi.injectEndpoints({
     }),
 
     updateContentStatus: builder.mutation({
-      query: ({ id, status }) => ({
+      query: ({ id, payload }) => ({
         url: `/user/assets/post/${id}/review`,
         method: "PATCH",
-        body: {status},
+        body: payload,
       }),
       // invalidate related cache after mutation
       invalidatesTags: ["content-queue"],

@@ -18,21 +18,27 @@ import { toast } from "sonner";
 
 export default function page() {
   const { data } = useGetContentQueueQuery(undefined);
-
   const contentQueueData = data?.date;
   // console.log(contentQueueData);
 
   // view details
 
   const [isContentQueueModalOpen, setIsContentQueueModalOpen] = useState(false);
-  const [contentQueueDetails, setContentQueueDetails] = useState(null);
+  const [contentQueueDetails, setContentQueueDetails] = useState<{
+    id: string;
+  } | null>(null);
+  const [feedback, setFeedback] = useState("");
+
+  // const comment = "hello";
 
   const [updateContentStatus, { isLoading, isSuccess, isError }] =
     useUpdateContentStatusMutation();
 
+  const payload = { status: 1, feedback };
+
   // Handlers
   const handleApprove = async (id: string) => {
-    const res = await updateContentStatus({ id, status: 1 }).unwrap();
+    const res = await updateContentStatus({ id, payload }).unwrap();
 
     if (res.success) {
       toast.success(res?.message);
@@ -89,14 +95,18 @@ export default function page() {
         isOpen={isContentQueueModalOpen}
         onClose={() => setIsContentQueueModalOpen(false)}
         data={contentQueueDetails}
+        feedback={feedback}
+        setFeedback={setFeedback}
         onApprove={() => {
-          // console.log("Approved:", contentQueueDetails?.id);
-          handleApprove(contentQueueDetails?.id);
+          if (contentQueueDetails?.id) {
+            handleApprove(contentQueueDetails.id);
+          }
           setIsContentQueueModalOpen(false);
         }}
         onReject={() => {
-          // console.log("Rejected:", contentQueueDetails?.id);
-          handleReject(contentQueueDetails?.id);
+          if (contentQueueDetails?.id) {
+            handleReject(contentQueueDetails.id);
+          }
           setIsContentQueueModalOpen(false);
         }}
       />

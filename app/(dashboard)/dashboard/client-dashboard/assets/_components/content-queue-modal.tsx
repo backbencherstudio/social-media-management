@@ -7,6 +7,8 @@ interface ContentQueueDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   data: any;
+  feedback: string;
+  setFeedback: (value:string) => void;
   onApprove: () => void;
   onReject: () => void;
 }
@@ -15,13 +17,13 @@ export function ContentQueueDetailsModal({
   isOpen,
   onClose,
   data,
+  feedback,
+  setFeedback,
   onApprove,
   onReject,
 }: ContentQueueDetailsModalProps) {
-  const [comment, setComment] = useState("");
-
   if (!isOpen) return null;
-  console.log("content modal data", data);
+  console.log("Feedback", feedback);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-[2px] transition-opacity ">
@@ -112,8 +114,8 @@ export function ContentQueueDetailsModal({
               Review Comments
             </h3>
             <textarea
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
               placeholder="Add your comments or feedback here..."
               className="w-full rounded-md border border-gray-300 p-3 text-sm focus:border-blue-500 focus:outline-none"
               rows={4}
