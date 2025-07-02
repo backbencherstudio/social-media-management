@@ -15,7 +15,21 @@ export const userAssetsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["content-queue"],
     }),
+
+    updateContentStatus: builder.mutation({
+      query: ({ id, payload }) => ({
+        url: `/user/assets/post/${id}/review`,
+        method: "PATCH",
+        body: payload,
+      }),
+      // invalidate related cache after mutation
+      invalidatesTags: ["content-queue"],
+    }),
   }),
 });
 
-export const { useGetAssetsQuery, useGetContentQueueQuery } = userAssetsApi;
+export const {
+  useGetAssetsQuery,
+  useGetContentQueueQuery,
+  useUpdateContentStatusMutation,
+} = userAssetsApi;

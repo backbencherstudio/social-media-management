@@ -7,10 +7,12 @@ import { useClientPaymentsQuery } from "@/src/redux/features/user/invoices/invoi
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { useLazyGetInvoicePdfQuery } from "@/src/redux/features/admin/payment/payment";
+import NoDataAvailable from "@/components/reusable/NoDataAvailable";
 
 const Invoices = () => {
   const { data: payment, isLoading } = useClientPaymentsQuery(null);
   const payments = payment?.data || [];
+
   const [getInvoicePdf, { isLoading: isDownloading }] =
     useLazyGetInvoicePdfQuery();
 
@@ -58,6 +60,7 @@ const Invoices = () => {
             <th className="py-3 px-4 last:rounded-tr-lg">Download</th>
           </tr>
         </thead>
+
         <tbody>
           {payments.map((payment: any) => (
             <tr key={payment.id}>
@@ -134,6 +137,8 @@ const Invoices = () => {
           ))}
         </tbody>
       </table>
+
+      {payments.length === 0 && <NoDataAvailable />}
 
       {/* Show Modal */}
       <InvoiceModal isOpen={isOpen} setIsOpen={setIsOpen} service={modalData} />
