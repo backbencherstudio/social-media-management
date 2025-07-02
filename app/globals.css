@@ -151,6 +151,16 @@
   background: #a8a8a8;
 }
 
+.hide-scrollbar {
+  overflow-y: scroll;  /* Enable vertical scrolling */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
 /* for calender */
 
 .react-datepicker {

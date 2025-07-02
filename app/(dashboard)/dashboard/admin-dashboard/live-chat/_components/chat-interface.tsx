@@ -3,19 +3,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import ChatSidebar from "./chat-sidebar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import StatusBar from "./status-bar";
 import {
   useGetAllAdminsQuery,
   useGetAllClientConversationQuery,
   useGetSingleUserMessageQuery,
 } from "@/src/redux/features/admin/help-and-support/support";
-import { C } from "@fullcalendar/core/internal-common";
-import { FaPaperPlane } from "react-icons/fa";
 import SendIcon from "@/public/incons/sendIcon";
-import getTimeAgo from "../getTimeAgo";
-import Image from "next/image";
+import ChatHeader from "./chat-header";
+import Loader from "../Loader";
+import { Skeleton } from "@/components/ui/skeleton";
+import GroupedMessages from "./group-message";
 
 interface ChatInterfaceProps {
   userId: string;
@@ -328,188 +325,48 @@ export default function ChatInterface({
     }
   }, [allClient, isLoading]);
 
-  if (isLoading) {
-    return <p>Loading.............</p>;
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="h-screen ">
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
 
   const currentMessages = activeUserId
     ? messagesByUser[activeUserId] || []
     : [];
 
   return (
-    <div className="flex flex-col h-[calc(100vh-100px)] font-inter">
+    <div className="flex flex-col h-[calc(100vh-120px)] font-inter">
       {/* <StatusBar status={status} userId={userId} isAdmin={isAdmin} /> */}
 
       <div className="flex flex-1 overflow-hidden gap-5 ">
-        <div className=" flex-1 xl:max-w-[360px] lg:max-w-[35%]">
-          {isAdmin && !isLoading && (
+        {isAdmin && !isLoading && (
+          <div className=" flex-1 xl:max-w-[360px] lg:max-w-[35%]">
             <ChatSidebar
               users={users}
               activeUserId={activeUserId}
               onUserSelect={handleUserSelect}
             />
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="flex-1 flex flex-col bg-white rounded-[12px]">
-          {/* <div className="p-4 ">
-            <h3 className="font-semibold">
-              {isAdmin ? (
-                activeUserId ? (
-                  <div className="flex gap-4 items-center border-b border-[#E9E9EA] pb-4">
-                    <span>
-                      <Image
-                        src="/chat-profile.png"
-                        width={100}
-                        height={100}
-                        alt="profile picture"
-                        className="w-10 h-10"
-                      />
-                    </span>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[#141416] text-sm font-medium leading-[150%] tracking-[.28px]">
-                        {users.find((u) => u.id === activeUserId)?.name || ""}
-                      </span>
-                      <span className="font-serotiva text-xs text-[#4A4C56] font-medium leading-[160%]">
-                        Response time: 5 minutes
-                      </span>
-                    </div>
-                  </div>
-                ) : (
-                  "Select a user to chat"
-                )
-              ) : (
-                "Chat with Admin"
-              )}
-            </h3>
-          </div> */}
-          <div className="p-4">
-            <h3 className="font-semibold">
-              {isAdmin ? (
-                activeUserId ? (
-                  <div className="flex gap-4 items-center border-b border-[#E9E9EA] pb-4">
-                    <span>
-                      <Image
-                        src="/chat-profile.png"
-                        width={100}
-                        height={100}
-                        alt="profile picture"
-                        className="w-10 h-10"
-                      />
-                    </span>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[#141416] text-sm font-medium leading-[150%] tracking-[.28px]">
-                        {users.find((u) => u.id === activeUserId)?.name || ""}
-                      </span>
-                      <span className="font-serotiva text-xs text-[#4A4C56] font-medium leading-[160%]">
-                        Response time: 5 minutes
-                      </span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center text-[#777980] pt-40">
-                    <p className="text-2xl font-medium">No user selected</p>
-                    <p className="mt-2 text-lg">
-                      Please select a user from the left to start chatting.
-                    </p>
-                    <div className="flex items-center  justify-center mt-4">
-                      <Image
-                        src="/empty-box.png"
-                        width={100}
-                        height={100}
-                        alt="profile picture"
-                        className=""
-                        unoptimized
-                      />
-                    </div>
-                  </div>
-                )
-              ) : (
-                "Chat with Admin"
-              )}
-            </h3>
-          </div>
+          <ChatHeader
+            isAdmin={isAdmin}
+            users={users}
+            activeUserId={activeUserId}
+          />
 
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto hide-scrollbar p-4 space-y-2">
             {loadingMessages ? (
               <p className="text-center text-gray-500">Loading messages...</p>
             ) : currentMessages?.length === 0 ? (
               <p className="text-center text-gray-500">No messages yet</p>
             ) : (
-              <div className="">
-                {" "}
-                {/* Initial div wrapping currentMessages */}
-                {currentMessages?.map((message) => {
-                  return (
-                    <div key={message?.id} className="font-inter">
-                      {isAdmin ? (
-                        <div
-                          key={message?.id}
-                          className={`flex ${
-                            message.sender === "Admin"
-                              ? "justify-end"
-                              : "justify-start"
-                          }`}
-                        >
-                          <div
-                            className={`max-w-xs md:max-w-md rounded-lg ${
-                              message.type === "sent" ? " " : " text-gray-800"
-                            }`}
-                          >
-                            <p
-                              className={`${
-                                message?.type === "sent"
-                                  ? " text-white bg-[#070707]  rounded-t-[8px] rounded-l-[8px]"
-                                  : "bg-[#F5F5F7] rounded-b-[8px] rounded-r-[8px] font-serotiva"
-                              } px-2 py-1  text-[#4A4C56] leading-[150%] tracking-[.32px] text-base `}
-                            >
-                              {message.text}
-                            </p>
-                            <p
-                              className={` ${
-                                message?.type === "sent"
-                                  ? "text-right"
-                                  : "text-left"
-                              } text-xs ml-1 mt-1 text-[#777980] font-serotiva font-medium leading-[160%]  bg-transparent`}
-                            >
-                              {message.timestamp.toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                              {/* {getTimeAgo(message?.timestamp, message?.sender)} */}
-                            </p>
-                          </div>
-                        </div>
-                      ) : (
-                        <div
-                          key={message.id}
-                          className={`flex ${
-                            message.sender === "Admin"
-                              ? "justify-start"
-                              : "justify-end"
-                          }`}
-                        >
-                          <div
-                            className={`max-w-xs md:max-w-md rounded-lg px-4 py-2 ${
-                              message.sender === "Admin"
-                                ? "bg-gray-100 text-gray-800"
-                                : "bg-blue-500 text-white"
-                            }`}
-                          >
-                            <p className="font-medium">{message.sender}</p>
-                            <p>{message.text}</p>
-                            <p className="text-xs text-right mt-1">
-                              {message.timestamp.toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+              <div>
+                <GroupedMessages messages={currentMessages} isAdmin={isAdmin} />
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -528,7 +385,7 @@ export default function ChatInterface({
               <button
                 onClick={sendMessage}
                 disabled={!messageInput.trim()}
-                className="h-12 w-12 bg-[#070707] text-white rounded-lg text-xs sm:text-sm flex items-center justify-center hover:bg-gray-900 active:bg-gray-800 transition-colors cursor-pointer"
+                className={`h-12 w-12  bg-[#070707] text-white rounded-lg text-xs sm:text-sm flex items-center justify-center hover:bg-gray-900 active:bg-gray-800 transition-colors cursor-pointer`}
               >
                 <SendIcon />
               </button>
