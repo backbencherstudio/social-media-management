@@ -59,5 +59,8 @@ export const baseApi = createApi({
     "user-recent-activities",
     "user-assets",
     "content-queue",
+    "user-upcoming-post",
+    "user-all-services",
+    "user-notification"
   ],
 });

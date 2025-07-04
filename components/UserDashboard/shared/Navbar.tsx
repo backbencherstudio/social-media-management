@@ -41,7 +41,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSignOut =async () => {
+  const handleSignOut = async () => {
     await removeToken();
     await removeRole();
     router.push("/");

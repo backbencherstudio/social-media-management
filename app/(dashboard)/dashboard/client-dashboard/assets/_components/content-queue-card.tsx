@@ -46,7 +46,9 @@ export function ContentQueueCard({
       <div className="mt-2 space-y-2 px-4">
         <div className="flex flex-col text-sm">
           <span className="font-medium text-[#777980]">Scheduled For:</span>
-          <span>{scheduledFor}</span>
+          <span>{new Date(scheduledFor).toLocaleDateString()}</span>
+
+         
         </div>
 
         <div className="flex flex-col text-sm">
