@@ -12,6 +12,7 @@ import { useGetScheduleCalendarQuery } from "@/src/redux/features/reseller/sched
 import { DateHelper } from "@/helper/date.helper";
 import { RootState } from "@/src/redux/store";
 import { useSelector } from "react-redux";
+import { useGetUserAllUpcomingPostQuery } from "@/src/redux/features/user/schedule/userSchedule";
 
 const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
@@ -54,7 +55,10 @@ export default function Calendar() {
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [currentDate, setCurrentDate] = useState(new Date());
   const clientId = useSelector((state: RootState) => state.clientId.id);
-  const { data: scheduleCalendar } = useGetScheduleCalendarQuery(clientId);
+
+
+  
+  const { data: scheduleCalendar } = useGetUserAllUpcomingPostQuery(undefined);
 
   console.log(scheduleCalendar?.data);
 
@@ -92,7 +96,7 @@ export default function Calendar() {
         id: e.id,
         title: channels.join(", "),
         start: e.created_at,
-        extendedProps: {
+        extendedProps: { 
           ...e,
           time: DateHelper.format(e.created_at, "h:mm A"),
           type: channels[0]?.toLowerCase(),
