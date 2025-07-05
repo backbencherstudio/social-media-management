@@ -1,10 +1,3 @@
-declare global {
-    interface Window {
-      katex: typeof import("katex");
-    }
-  }
-}
-
 export interface BlogContent {
   id?: string;
   content_type: "text" | "media";
@@ -25,4 +18,4 @@ export interface Blog {
   hashtags?: string[];
   created_at?: string;
   updated_at?: string;
-}
+} 

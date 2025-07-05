@@ -57,6 +57,8 @@ export function TaskTable({
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  // console.log(tasks)
   return (
     <>
       <div className="flex items-center justify-between">
@@ -107,7 +109,7 @@ export function TaskTable({
               </TableCell>
               <TableCell>
                 <div className="flex flex-col">
-                  <span className="font-medium text-[#1D1F2C] font-medium">
+                  <span className=" text-[#1D1F2C] font-medium">
                     {task.role}
                   </span>
                 </div>

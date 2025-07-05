@@ -10,10 +10,13 @@ import { RiUserLine } from "react-icons/ri";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import {
+  getToken,
   removeRole,
   removeToken,
 } from "@/app/(auth)/auth/_components/set-and-get-token";
 import { useRouter } from "next/navigation";
+import { useRole } from "@/hooks/useRole";
+import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -25,6 +28,10 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
+
+  // const {user} = useGetUser();
+  const { role, isLoading, error, user } = useRole();
+  // console.log(user);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -107,16 +114,16 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
             >
               <div className="px-4 py-3 border-b border-gray-200">
                 <p className="text-sm font-medium transition-colors duration-200">
-                  Katie Sims
+                  {user?.name || "Rafi"}
                 </p>
                 <p className="text-sm text-gray-500 transition-colors duration-200">
-                  katie@example.com
+                  {user?.email || " rafi@example.com"}
                 </p>
               </div>
 
               <div className="py-1">
                 <Link
-                  href={"/dashboard/reseller-profile"}
+                  href={`/dashboard/${role}-dashboard/${role}-profile`}
                   className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200"
                 >
                   <RiUserLine className="w-4 h-4" />

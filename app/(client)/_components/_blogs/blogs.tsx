@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import TimelineModal from "../timeline-modal";
 import Link from "next/link";
 import { useGetSingleServiceQuery } from "@/src/redux/features/admin/services";
+import { Service, ServiceTier } from "@/types/services";
 
 // const socialPlatforms = [
 //   <FacebookIcon />,
@@ -15,19 +16,19 @@ import { useGetSingleServiceQuery } from "@/src/redux/features/admin/services";
 //   <TiktokIcon />,
 // ];
 
-export default function Blogs({ service }: any) {
+export default function Blogs({ service }: { service: Service }) {
   const { data } = useGetSingleServiceQuery(service?.id);
   console.log(data)
 
   // Extract max_post values from service_tiers
-  const posts = data?.service_tiers?.map((tier: any) => tier.max_post) || [
+  const posts = data?.service_tiers?.map((tier: ServiceTier) => tier.max_post) || [
     10, 15, 20, 25, 30, 35, 40,
   ];
   const [selectedPosts, setSelectedPosts] = useState(posts[2] || 20); // Default to third option or 20
 
   // Calculate base price based on selected posts
   const basePrice = data?.service_tiers?.find(
-    (tier: any) => tier.max_post === selectedPosts
+    (tier: ServiceTier) => tier.max_post === selectedPosts
   )?.price;
 
   // for modal
