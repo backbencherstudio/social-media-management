@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import CreativeCard from "./blog-card";
 import { useGetAllBlogsQuery } from "@/src/redux/features/admin/blog/blog";
 import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
 import { Blog, BlogCategory } from "@/types/blog";
+
+const DEFAULT_CATEGORY = "Latest Updates";
 
 export default function SocialMediaTabs() {
   const { data: blogsData } = useGetAllBlogsQuery();
@@ -17,8 +19,16 @@ export default function SocialMediaTabs() {
   // Prepare categories for tabs
   const categories = categoriesData || [];
 
-  // Set the first category as the default active tab
-  const [activeTab, setActiveTab] = useState(categories[0]?.name || "");
+  const [activeTab, setActiveTab] = useState("");
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setActiveTab(
+        categories.find((item: any) => item.name === DEFAULT_CATEGORY)?.name ||
+          categories[0]?.name
+      );
+    }
+  }, [categories]);
 
   // Filter blogs by selected category
   const filteredBlogs = blogs?.filter((blog: Blog) =>

@@ -2,7 +2,8 @@ import Image from "next/image";
 import React from "react";
 import { DateHelper } from "@/helper/date.helper";
 
-export default function PostData({ post }) {
+export default function PostData({ post }: { post: any }) {
+  console.log(post);
 
   return (
     <div className="rounded-md border border-gray-200 bg-white p-3 space-y-6">
@@ -54,15 +55,19 @@ export default function PostData({ post }) {
                 key={index}
                 className="flex h-40 items-center justify-center rounded-md bg-gray-100"
               >
-                <Image
-                  src={
-                    "https://img.freepik.com/free-photo/close-up-woman-front-clothing-pile_23-2150951085.jpg"
-                  }
-                  alt="User Logo"
-                  width={300}
-                  height={200}
-                  className="h-full w-full object-cover rounded-md"
-                />
+                {file.type === "image" && 
+                (
+                  console.log(file?.file_url),
+                  (
+                    <Image
+                      src={file?.file_url}
+                      alt="User Logo"
+                      width={300}
+                      height={200}
+                      className="h-full w-full object-cover rounded-md"
+                    />
+                  )
+                )}
               </div>
             ))}
         </div>

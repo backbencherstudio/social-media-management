@@ -3,9 +3,12 @@
 import React from "react";
 import PostData from "./_components/postData";
 import { useGetAllPostsQuery } from "@/src/redux/features/reseller/posts/post";
+import { useSelector } from "react-redux";
+import { RootState } from "@/src/redux/store";
 
 export default function Posts() {
-  const { data: posts } = useGetAllPostsQuery();
+  const clientId = useSelector((state: RootState) => state.clientId.id);
+  const { data: posts } = useGetAllPostsQuery(clientId);
 
   return (
     <div className="space-y-6">
@@ -26,7 +29,7 @@ export default function Posts() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {posts?.data?.map((post: any) => (
-          <PostData key={post.id} post={post} />  
+          <PostData key={post?.id} post={post} />  
         ))}
       </div>
     </div>

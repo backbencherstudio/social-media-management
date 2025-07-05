@@ -10,9 +10,9 @@ const dashboard = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    getActiveServices: builder.query<any, void>({
-      query: () => ({
-        url: "/reseller/dashboard/active-services",
+    getActiveServices: builder.query({
+      query: (id) => ({
+        url: `/reseller/dashboard/user/${id}/active-services`,
         method: "GET",
       }),
     }),
