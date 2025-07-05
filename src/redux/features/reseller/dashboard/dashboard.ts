@@ -23,6 +23,8 @@ const dashboard = baseApi.injectEndpoints({
       }),
     }),
   }),
+
+  overrideExisting: true
 });
 
 

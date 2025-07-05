@@ -91,7 +91,7 @@ const OrderTable = () => {
                   <div
                     onClick={() =>
                       router.push(
-                        `/dashboard/order/${encodeURIComponent(order.id)}`
+                        `/dashboard/admin-dashboard/order/${encodeURIComponent(order.id)}`
                       )
                     }
                     className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-300 cursor-pointer"

@@ -20,7 +20,7 @@ const services = baseApi.injectEndpoints({
       query: (id) => ({
         url: `/services/${id}`,
         method: "GET",
-      })
+      }),
     }),
     createService: builder.mutation<void, any>({
       query: (data) => ({
@@ -53,6 +53,7 @@ const services = baseApi.injectEndpoints({
       providesTags: ["categories"],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {

@@ -124,7 +124,7 @@ export function OrderTable({
               </TableCell>
               <TableCell>
                 <div className="flex flex-col">
-                  <span className="font-medium text-[#1D1F2C] font-medium">
+                  <span className="font-medium text-[#1D1F2C] ">
                     {order.user_name}
                   </span>
                   <span className="text-sm text-muted-foreground text-[#4A4C56]">
@@ -171,7 +171,7 @@ export function OrderTable({
                   <div
                     onClick={() =>
                       router.push(
-                        `/dashboard/order/${encodeURIComponent(order.id)}`
+                        `/dashboard/admin-dashboard/order/${encodeURIComponent(order.id)}`
                       )
                     }
                     className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-300 cursor-pointer"
@@ -195,13 +195,13 @@ export function OrderTable({
                         alt={`Avatar ${order.subscription.service_tier_id} `}
                         width={48}
                         height={48}
-                        className="w-12 h-12 object-cover rounded-[10px] -mr-4 border border-2 border-white"
+                        className="w-12 h-12 object-cover rounded-[10px] -mr-4  border-2 border-white"
                       />
                     )}
                     {/* Add User Button */}
                     <button
                       onClick={() => onAssignClick(order.id)}
-                      className="w-12 h-12 flex items-center justify-center rounded-[10px] bg-[#F3F3FF] text-indigo-600 hover:bg-indigo-100 cursor-pointer border border-4 border-white"
+                      className="w-12 h-12 flex items-center justify-center rounded-[10px] bg-[#F3F3FF] text-indigo-600 hover:bg-indigo-100 cursor-pointer  border-4 border-white"
                     >
                       <UserRoundPlus className="w-6 h-6 " />
                     </button>

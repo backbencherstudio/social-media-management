@@ -72,7 +72,7 @@ export default function ResellerDetailsPage() {
   return (
     <div className="p-6 md:p-10 space-y-10">
       {/* Breadcrumb */}
-      <p className="text-sm text-gray-500 flex items-center gap-1 font-medium">
+      <div className="text-sm text-gray-500 flex items-center gap-1 font-medium">
         <button onClick={() => router.back()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ export default function ResellerDetailsPage() {
             Applicant Update / {id}
           </span>
         </p>
-      </p>
+      </div>
 
       <div>
         <div className="space-y-10 bg-white rounded-xl shadow-sm p-6 ">

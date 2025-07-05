@@ -15,10 +15,11 @@ import { Pagination } from "../../_components/Pagination";
 import { useState } from "react";
 import { useUpdateClientStatusMutation } from "@/src/redux/features/admin/client/clientApi";
 import { toast } from "sonner";
-  
+
 // fake data
 export type SimpleClient = {
   id: string;
+  avator: string;
   status: string;
   order_status: string;
   subscription_id: string;
@@ -37,6 +38,7 @@ export type SimpleClient = {
 const clientData: SimpleClient[] = [
   {
     id: "ORD_qqn3h7zd98s58bftq4rfnlfw",
+    avator: "",
     status: "active",
     order_status: "progress",
     subscription_id: "cmbzxvt8l0005relgymnxiat4",
@@ -54,6 +56,7 @@ const clientData: SimpleClient[] = [
   },
   {
     id: "ORD_qqn3h7zd98s58bftq4rfnlfw",
+    avator: "",
     status: "active",
     order_status: "progress",
     subscription_id: "cmbzxvt8l0005relgymnxiat4",
@@ -95,19 +98,22 @@ export function ClientTable({
     currentPage * itemsPerPage
   );
 
-const [updateClientStatus, {isLoading, isError, isSuccess}] = useUpdateClientStatusMutation(undefined);
+  const [updateClientStatus, { isLoading, isError, isSuccess }] =
+    useUpdateClientStatusMutation(undefined);
 
-// console.log(clientResponse)
+  // console.log(clientResponse)
 
-  const handleSwitch = async(id: string) => {
+  const handleSwitch = async (id: string) => {
     // console.log(id);
-    await updateClientStatus(id).unwrap().then((res) => {
-      console.log(res);
-    });
-    if(isSuccess){
+    await updateClientStatus(id)
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+      });
+    if (isSuccess) {
       toast.success("Client status updated successfully");
     }
-    if(isError){
+    if (isError) {
       toast.error("Failed to update client status");
     }
   };
@@ -155,7 +161,7 @@ const [updateClientStatus, {isLoading, isError, isSuccess}] = useUpdateClientSta
               <TableCell>
                 <div className="flex items-center space-x-3">
                   <Image
-                    src={client.avatar || "https://i.pravatar.cc/40?img=56"}
+                    src={client?.avatar || "https://i.pravatar.cc/40?img=56"}
                     alt={client.user_name}
                     width={40}
                     height={40}
@@ -183,7 +189,7 @@ const [updateClientStatus, {isLoading, isError, isSuccess}] = useUpdateClientSta
               <TableCell>
                 <Badge
                   variant="outline"
-                  className={`rounded-full ${
+                  className={`rounded-full capitalize ${
                     client.status === "active"
                       ? "text-green-500 border-green-300 bg-green-50"
                       : "text-red-500 border-red-300 bg-red-50"
@@ -195,15 +201,17 @@ const [updateClientStatus, {isLoading, isError, isSuccess}] = useUpdateClientSta
 
               <TableCell>
                 <div className="flex items-center gap-6">
-                  <div className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-200 cursor-pointer">
+                  {/* <div className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-200 cursor-pointer">
                     <EyeIcon className="w-5 h-5 text-gray-600" />
-                  </div>
+                  </div> */}
 
                   <div>
                     {/* switch */}
                     <CustomSwitch
                       checked={client.status === "active"}
-                      onChange={() => {handleSwitch(client.id)}}
+                      onChange={() => {
+                        handleSwitch(client.id);
+                      }}
                     />
                   </div>
                 </div>
