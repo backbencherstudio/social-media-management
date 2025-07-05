@@ -101,7 +101,7 @@ export default function ResellerDetailsPage() {
         <div className="space-y-10 bg-white rounded-xl shadow-sm p-6 ">
           {/* Applicant Details Section */}
           <section className="">
-            <div className="flex items-center justify-between mb-2 md:mb-6 mb-4">
+            <div className="flex items-center justify-between  md:mb-6 mb-4">
               <h1 className="text-xl md:text-2xl font-semibold ">
                 Applicant Details
               </h1>
