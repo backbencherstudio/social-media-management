@@ -8,12 +8,14 @@ export default function Earnings() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
 
-  const id = "RES_n461l81lt1q8naigks2170vm";
+  const id = "RES_td6d9pei2ly83rp5rp7d2giu";
   const { data } = useGetResellerEarningsQuery(id);
   console.log(data);
 
+
+
   const earnings = data?.data?.completed_tasks || [];
-  console.log(earnings);
+
 
   const handleViewDetails = (service) => {
     setSelectedService(service);

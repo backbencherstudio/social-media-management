@@ -47,7 +47,7 @@ export default function AllTask() {
           </tr>
         </thead>
         <tbody>
-          {tasks?.map((task) => {
+          {tasks?.map((task:any) => {
             const dueDate = task.due_date
               ? new Date(task.due_date).toLocaleDateString()
               : "N/A"; // Format due_date

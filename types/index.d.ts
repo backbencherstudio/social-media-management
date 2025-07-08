@@ -3,7 +3,7 @@ declare global {
       katex: typeof import("katex");
     }
   }
-}
+
 
 export interface BlogContent {
   id?: string;

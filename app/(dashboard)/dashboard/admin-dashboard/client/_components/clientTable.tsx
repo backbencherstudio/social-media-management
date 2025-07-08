@@ -161,7 +161,7 @@ export function ClientTable({
               <TableCell>
                 <div className="flex items-center space-x-3">
                   <Image
-                    src={client?.avatar || "https://i.pravatar.cc/40?img=56"}
+                    src={client?.avator || "https://i.pravatar.cc/40?img=56"}
                     alt={client.user_name}
                     width={40}
                     height={40}

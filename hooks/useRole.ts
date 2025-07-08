@@ -10,7 +10,7 @@ export function useRole() {
   useEffect(() => {
     const fetchToken = async () => {
       const token = await getToken();
-      setToken(token);
+      setToken(token || "");
     };
     fetchToken();
   }, []);
