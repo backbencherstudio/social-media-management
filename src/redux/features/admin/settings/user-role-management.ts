@@ -42,3 +42,4 @@ const userRole = baseApi.injectEndpoints({
 });
 
 export const { useGetUserRoleQuery, useGetAllUserQuery, useInviteTeamMemberMutation, useUpdateUserAndRoleMutation } = userRole;
+       

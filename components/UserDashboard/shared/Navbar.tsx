@@ -31,7 +31,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
 
   // const {user} = useGetUser();
   const { role, isLoading, error, user } = useRole();
-  // console.log(user);
+  console.log(role);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
 
           {/* <NotificationIcon  /> */}
           <Link
-            href={"/dashboard/notification"}
+            href={`/dashboard/${role}-dashboard/notification`}
             className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200 relative"
           >
             <IoNotificationsOutline className="w-6 h-6" />

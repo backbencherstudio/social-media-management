@@ -118,7 +118,7 @@ export function TaskTable({
               <TableCell>
                 <div>
                   <p className="font-medium text-[#1D1F2C]">
-                    {task.assignees[0].full_name}
+                    {task.assignees[0]?.full_name}
                   </p>
                 </div>
               </TableCell>
