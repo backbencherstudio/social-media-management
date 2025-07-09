@@ -33,7 +33,7 @@ const bottomMenuItems = [
       {
         title: "Profile/account",
         icon: ProfileIcon,
-        href: "/dashboard/client-dashboard/profile",
+        href: "/dashboard/client-dashboard/client-profile",
       },
       {
         title: "Payment",

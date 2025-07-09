@@ -32,12 +32,15 @@ export default function PersonalInformation() {
   const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
 
   const [editProfile, { isLoading, isError, error }] = useEditProfileMutation();
-  const photoRef = useRef<HTMLInputElement | null>(null)
-  
+  const photoRef = useRef<HTMLInputElement | null>(null);
 
   const onSubmit = async (data: ProfileFormData) => {
     const formData = new FormData();
-    if (photoRef.current && photoRef.current.files && photoRef.current.files.length > 0) {
+    if (
+      photoRef.current &&
+      photoRef.current.files &&
+      photoRef.current.files.length > 0
+    ) {
       formData.append("image", photoRef.current.files[0]);
     }
     formData.append("first_name", data.firstName);
@@ -430,7 +433,6 @@ export default function PersonalInformation() {
           {/* Submit Button */}
           <div className="">
             <button
-              
               type="submit"
               className="w-full sm:w-auto  px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base font-medium"
             >
