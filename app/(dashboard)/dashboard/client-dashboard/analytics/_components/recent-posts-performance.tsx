@@ -6,13 +6,15 @@ import ActionIcon from "@/public/incons/actions";
 import FacebookIcon from "@/public/incons/facebook";
 import InstagramIcon from "@/public/incons/instagram";
 import LinkedInIcon from "@/public/incons/linkedIn";
-import { useGetAllAnalyticsAllServicesQuery } from "@/src/redux/features/reseller/analytics/analytics";
+import { useGetAllAnalyticsAllServicesQuery, useGetAllstatsQuery } from "@/src/redux/features/reseller/analytics/analytics";
 import DatePicker from "../../../reseller-dashboard/reseller-dashboard/_components/date-picker";
-
+import { useRole } from "@/hooks/useRole";
 
 export default function RecentPostsPerformance() {
-  const { data } = useGetAllAnalyticsAllServicesQuery();
+  const { user } = useRole();
+  const id = user?.id || "cmcaezr200000ws68zs50kn2q";
 
+  const { data } = useGetAllstatsQuery(id);
   return (
     <div className="overflow-x-auto w-full px-3 md:px-4 py-4 md:py-6 bg-white rounded-lg">
       {/* Header Section */}
@@ -65,7 +67,7 @@ export default function RecentPostsPerformance() {
           </tr>
         </thead>
         <tbody>
-          {data?.data?.map((service, index) => (
+          {data?.data?.map((service:any, index:number) => (
             <tr key={service.cucid} className="">
               {/* Service cell with left side text & status */}
               <td className="py-4 px-4">

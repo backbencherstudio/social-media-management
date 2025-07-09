@@ -56,8 +56,6 @@ export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const clientId = useSelector((state: RootState) => state.clientId.id);
 
-
-  
   const { data: scheduleCalendar } = useGetUserAllUpcomingPostQuery(undefined);
 
   console.log(scheduleCalendar?.data);
@@ -96,7 +94,7 @@ export default function Calendar() {
         id: e.id,
         title: channels.join(", "),
         start: e.created_at,
-        extendedProps: { 
+        extendedProps: {
           ...e,
           time: DateHelper.format(e.created_at, "h:mm A"),
           type: channels[0]?.toLowerCase(),

@@ -6,9 +6,13 @@ import DiagramIcon from "@/public/incons/diagram";
 import GalleryIcon from "@/public/incons/gallery";
 import PeoplesIcon from "@/public/incons/peoples";
 import { useGetAllstatsQuery } from "@/src/redux/features/reseller/analytics/analytics";
+import { useRole } from "@/hooks/useRole";
 
 export default function AnalyticsInfoCard() {
-  const { data } = useGetAllstatsQuery();
+  const { user } = useRole();
+  const id = user?.id || "cmcaezr200000ws68zs50kn2q";
+
+  const { data } = useGetAllstatsQuery(id);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
