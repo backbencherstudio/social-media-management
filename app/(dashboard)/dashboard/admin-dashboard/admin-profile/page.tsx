@@ -185,7 +185,7 @@ export default function AdminProfile() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full sm:w-auto min-w-[200px] px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base font-medium"
+              className="w-full sm:w-auto min-w-[200px] px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base font-medium cursor-pointer"
             >
               Save Changes
             </button>

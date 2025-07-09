@@ -197,7 +197,7 @@ export default function page() {
             <select
               id="position"
               name="position"
-              defaultValue=""
+
               value={formData.position}
               onChange={handleChange}
               required

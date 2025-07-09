@@ -30,21 +30,30 @@ const auth = baseApi.injectEndpoints({
     }),
     forgotPassword: build.mutation({
       query: (data) => {
-       return {
-        url: "/auth/forgot-password",
-        method: "POST",
-        body: data,
-       }
+        return {
+          url: "/auth/forgot-password",
+          method: "POST",
+          body: data,
+        };
       },
       invalidatesTags: ["auth-all"],
     }),
     resetPassword: build.mutation({
-        query: (data) => ({
-          url: '/auth/reset-password',
-          method: "POST",
-          body: data
-        })
-    })
+      query: (data) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    // Twitter login
+    twitterConnect: build.mutation({
+      query: () => ({
+        url: "/auth/twitter",
+        method: "POST",
+      }),
+      invalidatesTags: ["auth-all"],
+    }),
   }),
 });
 
@@ -53,5 +62,6 @@ export const {
   useRegisterMutation,
   useVerifyRegistrationMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useTwitterConnectMutation
 } = auth;

@@ -10,7 +10,7 @@ export default function Analytics() {
       <AnalyticsInfoCard />
       {/* <RecentPostsPerformance /> */}
       <FollowerActivityMap />
-      <AudienceDemographics />
+      {/* <AudienceDemographics /> */}
     </div>
   );
 }
