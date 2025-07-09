@@ -61,6 +61,7 @@ export const baseApi = createApi({
     "content-queue",
     "user-upcoming-post",
     "user-all-services",
-    "user-notification"
+    "user-notification",
+    "all-notification"
   ],
 });
