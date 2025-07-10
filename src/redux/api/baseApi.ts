@@ -62,6 +62,7 @@ export const baseApi = createApi({
     "user-upcoming-post",
     "user-all-services",
     "user-notification",
-    "all-notification"
+    "all-notification",
+    "follower-activity"
   ],
 });
