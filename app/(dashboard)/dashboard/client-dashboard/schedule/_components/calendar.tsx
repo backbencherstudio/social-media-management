@@ -13,6 +13,7 @@ import { DateHelper } from "@/helper/date.helper";
 import { RootState } from "@/src/redux/store";
 import { useSelector } from "react-redux";
 import { useGetUserAllUpcomingPostQuery } from "@/src/redux/features/user/schedule/userSchedule";
+import DateRangePicker from "./schedule-date-picker";
 
 const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
@@ -55,6 +56,12 @@ export default function Calendar() {
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [currentDate, setCurrentDate] = useState(new Date());
   const clientId = useSelector((state: RootState) => state.clientId.id);
+
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    new Date(2024, 9, 15),
+    new Date(2024, 9, 22),
+  ]);
+  const [startDate, endDate] = dateRange;
 
   const { data: scheduleCalendar } = useGetUserAllUpcomingPostQuery(undefined);
 
@@ -169,7 +176,16 @@ export default function Calendar() {
             <option value="timeGridDay">Day</option>
           </select>
 
-          <DatePickerDemo />
+          {/* <DatePickerDemo />
+           */}
+          {/* Date picker */}
+          <div className=" relative z-5">
+            <DateRangePicker
+              startDate={startDate}
+              endDate={endDate}
+              setDateRange={setDateRange}
+            />
+          </div>
         </div>
       </div>
 

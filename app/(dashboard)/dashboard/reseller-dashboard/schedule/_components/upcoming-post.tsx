@@ -1,7 +1,7 @@
 "use client";
 
 import FacebookIcon from "@/public/incons/facebook";
-import React from "react";
+import React, { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { FiCalendar } from "react-icons/fi";
 import { useGetAllUpcomingPostQuery } from "@/src/redux/features/reseller/schedule/schedule";
@@ -10,6 +10,8 @@ import ScheduleGalleryIcon from "@/public/incons/schedule-gallery";
 import { useDeletePostMutation } from "@/src/redux/features/reseller/posts/post";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
+import { DatePickerDemo } from "./calenderComponent";
+import DateRangePicker from "./schedule-date-picker";
 
 export default function UpcomingPost() {
 
@@ -21,9 +23,12 @@ export default function UpcomingPost() {
     await deletePost({ id });
   };
 
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)]">
       <h2 className="text-xl font-bold text-gray-900 mb-6">Upcoming Posts</h2>
+
+     
 
       <div className="space-y-4">
         {upcomingPosts?.data?.map((post: any) => (
