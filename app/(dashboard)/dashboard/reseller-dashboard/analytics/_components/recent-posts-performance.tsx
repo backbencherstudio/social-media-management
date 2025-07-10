@@ -11,7 +11,7 @@ import { useGetAllAnalyticsAllServicesQuery } from "@/src/redux/features/reselle
 
 
 export default function RecentPostsPerformance() {
-  const { data } = useGetAllAnalyticsAllServicesQuery();
+  const { data } = useGetAllAnalyticsAllServicesQuery({});
 
   return (
     <div className="overflow-x-auto w-full px-3 md:px-4 py-4 md:py-6 bg-white rounded-lg">
@@ -65,7 +65,7 @@ export default function RecentPostsPerformance() {
           </tr>
         </thead>
         <tbody>
-          {data?.data?.map((service, index) => (
+          {data?.data?.map((service:any, index:number) => (
             <tr key={service.cucid} className="">
               {/* Service cell with left side text & status */}
               <td className="py-4 px-4">

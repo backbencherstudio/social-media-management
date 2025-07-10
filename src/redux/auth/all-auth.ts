@@ -45,15 +45,6 @@ const auth = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-
-    // Twitter login
-    twitterConnect: build.mutation({
-      query: () => ({
-        url: "/auth/twitter",
-        method: "POST",
-      }),
-      invalidatesTags: ["auth-all"],
-    }),
   }),
 });
 
@@ -63,5 +54,4 @@ export const {
   useVerifyRegistrationMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useTwitterConnectMutation
 } = auth;
