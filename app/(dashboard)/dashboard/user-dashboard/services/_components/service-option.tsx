@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Service } from '@/types/services';
-import { Check } from 'lucide-react';
+  SelectValue,
+} from "@/components/ui/select";
+import { Service } from "@/types/services";
+import { Check } from "lucide-react";
 
 interface ServiceOptionProps {
   service: Service;
@@ -22,7 +22,7 @@ const ServiceOption = ({
   isSelected,
   selectedPlan,
   onSelect,
-  onPlanChange
+  onPlanChange,
 }: ServiceOptionProps) => {
   const [selected, setSelected] = useState(isSelected);
 
@@ -48,32 +48,41 @@ const ServiceOption = ({
   };
 
   return (
-    <div >
+    <div>
       <div>
-        <h2 className='text-xl font-semibold capitalize leading-[126%] text-[#1D1D1F] mb-[18px]'>{service.name}</h2>
+        <h2 className="text-xl font-semibold capitalize leading-[126%] text-[#1D1D1F] mb-[18px]">
+          {service.name}
+        </h2>
       </div>
-      <div className="bg-[#F7F7F9] rounded-lg p-4 border-[#E9E9EA] border-[.5px] " >
+      <div className="bg-[#F7F7F9] rounded-lg p-4 border-[#E9E9EA] border-[.5px] ">
         <div className="flex items-start justify-between border-b border-[#E9E9EA] pb-4">
           <div className="flex items-center gap-4">
             <div
-              className={`w-10 h-10 rounded-lg bg-black flex items-center justify-center cursor-pointer ${selected ? 'bg-black' : 'bg-black/90 hover:bg-black'}`}
+              className={`w-10 h-10 rounded-lg bg-black flex items-center justify-center cursor-pointer ${
+                selected ? "bg-black" : "bg-black/90 hover:bg-black"
+              }`}
               onClick={handleSelect}
             >
               {service.icon}
             </div>
             <div>
-              <h3 className="text-base font-semibold capitalize leading-[126%] text-[#1D1D1F]">{service.name}</h3>
+              <h3 className="text-base font-semibold capitalize leading-[126%] text-[#1D1D1F]">
+                {service.name}
+              </h3>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <h3 className="text-base font-semibold text-[#1D1D1F] leading-[126%] capitalize">
-              ${service.startingPrice.toFixed(2)} - ${service.endingPrice.toFixed(2)}/Month
+              ${service.startingPrice.toFixed(2)} - $
+              {service.endingPrice.toFixed(2)}/Month
             </h3>
             <div
               className={`w-6 h-6 rounded-full border-2 flex items-center justify-center cursor-pointer transition-all
-            ${selected
-                  ? 'border-black bg-black text-white'
-                  : 'border-gray-300 hover:border-gray-400'}`}
+            ${
+              selected
+                ? "border-black bg-black text-white"
+                : "border-gray-300 hover:border-gray-400"
+            }`}
               onClick={handleSelect}
             >
               {selected && <Check size={14} />}
@@ -86,18 +95,23 @@ const ServiceOption = ({
         </p>
 
         <Select
-          value={selectedPlan || ''}
+          value={selectedPlan || ""}
           onValueChange={handlePlanChange}
           disabled={!selected}
-        
         >
-          <SelectTrigger className="w-full bg-white cursor-pointer leading-[142%] py-6 text-sm text-black 
-             border border-[#DFE1E7] rounded-[8px]  focus-visible:ring-0  shadow-none">
+          <SelectTrigger
+            className="w-full bg-white cursor-pointer leading-[142%] py-6 text-sm text-black 
+             border border-[#DFE1E7] rounded-[8px]  focus-visible:ring-0  shadow-none"
+          >
             <SelectValue placeholder={service.selectLabel} />
           </SelectTrigger>
-          <SelectContent className=' bg-white border-0 '>
+          <SelectContent className=" bg-white border-0 ">
             {service.plans.map((plan) => (
-              <SelectItem className='hover:bg-blue-600 hover:text-white cursor-pointer text-base ' key={plan.label} value={plan.label}>
+              <SelectItem
+                className="hover:bg-blue-600 hover:text-white cursor-pointer text-base "
+                key={plan.label}
+                value={plan.label}
+              >
                 {plan.label}
               </SelectItem>
             ))}
