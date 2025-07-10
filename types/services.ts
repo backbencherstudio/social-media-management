@@ -21,8 +21,6 @@ export interface Service {
   endingPrice: number;
   selectLabel: string;
   plans: ServicePlan[];
-  features?: string[];
-  service_tiers?: ServiceTier[];
 }
 
 export interface ServiceSelection {
