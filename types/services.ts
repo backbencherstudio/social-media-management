@@ -15,6 +15,7 @@ export interface Service {
   endingPrice: number;
   selectLabel: string;
   plans: ServicePlan[];
+  channels: any[];
 }
 
 export interface ServiceSelection {

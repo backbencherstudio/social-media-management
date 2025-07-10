@@ -22,7 +22,7 @@ const socialPlatforms = [
 ];
 
 export default function AffordableMarketingServices({ service }: any) {
-  console.log(service)
+  console.log(service);
   const { data } = useGetSingleServiceQuery(service?.id);
   console.log(data);
 
@@ -257,8 +257,8 @@ function SocialPlatforms({ platforms }: { platforms: any[] }) {
 function CheckoutButtons() {
   return (
     <>
-      <Link href={"/dashboard/services/service-selection"}>
-        <Button className="w-full bg-black text-white mb-4">Checkout</Button>
+      <Link href={"/dashboard/user-dashboard/services/service-selection"}>
+        <Button className="w-full bg-black text-white mb-4 cursor-pointer">Checkout</Button>
       </Link>
       <Button variant="outline" className="w-full">
         Schedule a Demo
@@ -266,4 +266,3 @@ function CheckoutButtons() {
     </>
   );
 }
-
