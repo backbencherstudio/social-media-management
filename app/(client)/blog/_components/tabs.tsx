@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import CreativeCard from "./blog-card";
 import { useGetAllBlogsQuery } from "@/src/redux/features/admin/blog/blog";
 import { useGetBlogCategoriesQuery } from "@/src/redux/features/admin/blog/blog_category";
+import { Blog, BlogCategory } from "@/types/blog";
 
 const DEFAULT_CATEGORY = "Latest Updates";
 
@@ -13,7 +14,7 @@ export default function SocialMediaTabs() {
   const { data: categoriesData } = useGetBlogCategoriesQuery();
 
   // Only show published blogs
-  const blogs = blogsData?.filter((blog: any) => blog?.status === true) || [];
+  const blogs = blogsData?.filter((blog: Blog) => blog?.status === true) || [];
 
   // Prepare categories for tabs
   const categories = categoriesData || [];
@@ -30,15 +31,15 @@ export default function SocialMediaTabs() {
   }, [categories]);
 
   // Filter blogs by selected category
-  const filteredBlogs = blogs?.filter((blog: any) =>
-    blog?.categories?.some((item: any) => item?.name === activeTab)
+  const filteredBlogs = blogs?.filter((blog: Blog) =>
+    blog?.categories?.some((item: BlogCategory) => item?.name === activeTab)
   );
 
   return (
     <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Tabs */}
       <div className="flex flex-wrap gap-2 mb-8 overflow-x-auto pb-2">
-        {categories.map((category: any) => (
+        {categories.map((category: BlogCategory) => (
           <button
             key={category.id}
             onClick={() => setActiveTab(category.name)}
@@ -57,7 +58,7 @@ export default function SocialMediaTabs() {
       {/* Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredBlogs.length > 0 ? (
-          filteredBlogs.map((item: any, index: number) => (
+          filteredBlogs.map((item: Blog, index: number) => (
             <CreativeCard key={item.id || index} blog={item} />
           ))
         ) : (

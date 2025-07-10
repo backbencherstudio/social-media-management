@@ -7,10 +7,12 @@ import { useClientPaymentsQuery } from "@/src/redux/features/user/invoices/invoi
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { useLazyGetInvoicePdfQuery } from "@/src/redux/features/admin/payment/payment";
+import NoDataAvailable from "@/components/reusable/NoDataAvailable";
 
 const Invoices = () => {
   const { data: payment, isLoading } = useClientPaymentsQuery(null);
   const payments = payment?.data || [];
+
   const [getInvoicePdf, { isLoading: isDownloading }] =
     useLazyGetInvoicePdfQuery();
 
@@ -58,6 +60,7 @@ const Invoices = () => {
             <th className="py-3 px-4 last:rounded-tr-lg">Download</th>
           </tr>
         </thead>
+
         <tbody>
           {payments.map((payment: any) => (
             <tr key={payment.id}>
@@ -81,11 +84,23 @@ const Invoices = () => {
                 {new Date(payment?.created_at).toLocaleDateString()}
               </td>
 
+              {/* <span
+                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
+                          service.status === "For Review"
+                            ? "bg-[#E98800]/10 text-[#E98800]"
+                            : service.status === "In Progress"
+                            ? "bg-[#8A71F7]/10 text-[#8A71F7]"
+                            : "bg-green-100 text-green-500"
+                        }`}
+                      >
+                        {service.status}
+                      </span> */}
+
               {/* Status */}
               <td className="py-4 px-4 text-center">
                 <div className="flex justify-center">
                   <span
-                    className={`px-3 py-1 rounded-full font-medium ${
+                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium capitalize ${
                       payment.order_status === "progress" &&
                       "bg-[#FEF3C7] text-[#984917]"
                     } ${
@@ -99,10 +114,10 @@ const Invoices = () => {
               </td>
 
               {/* View Details Button */}
-              <td className="py-4 px-4 text-center">
+              <td className="py-4 px-4 text-center underline-none">
                 <button
                   onClick={() => handleOpenModal(payment)}
-                  className="text-[#2D50FF] underline"
+                  className="text-[#2D50FF] underline-none font-semibold text-sm hover:text-[#2D50FF]/80"
                 >
                   View Details
                 </button>
@@ -122,6 +137,8 @@ const Invoices = () => {
           ))}
         </tbody>
       </table>
+
+      {payments.length === 0 && <NoDataAvailable />}
 
       {/* Show Modal */}
       <InvoiceModal isOpen={isOpen} setIsOpen={setIsOpen} service={modalData} />

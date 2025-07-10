@@ -211,7 +211,7 @@ export default function ResellerSidebar({
   );
 
   const clientInitials = selectedClient
-    ? selectedClient.name.substring(0, 2).toUpperCase()
+    ? selectedClient?.name?.substring(0, 2).toUpperCase()
     : "";
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   FaChevronDown,
   FaCloudUploadAlt,
@@ -8,6 +8,8 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { useEditProfileMutation } from "@/src/redux/features/common/edit-profile/editProfileApi";
+import { toast } from "sonner";
 
 interface ProfileFormData {
   photo: FileList | null;
@@ -27,15 +29,48 @@ interface ProfileFormData {
 
 export default function PersonalInformation() {
   const { register, handleSubmit } = useForm<ProfileFormData>();
+  const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
 
-  const onSubmit = (data: ProfileFormData) => {
-    console.log("Form data:", data);
+  const [editProfile, { isLoading, isError, error }] = useEditProfileMutation();
+  const photoRef = useRef<HTMLInputElement | null>(null);
+
+  const onSubmit = async (data: ProfileFormData) => {
+    const formData = new FormData();
+    if (
+      photoRef.current &&
+      photoRef.current.files &&
+      photoRef.current.files.length > 0
+    ) {
+      formData.append("image", photoRef.current.files[0]);
+    }
+    formData.append("first_name", data.firstName);
+    formData.append("last_name", data.lastName);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("phone_number", data.phoneNumber);
+    formData.append("country", data.country);
+    formData.append("state", data.state);
+    formData.append("city", data.city);
+
+    const res = await editProfile(formData);
+    if (res?.data?.success) {
+      toast.success(res.data.message);
+    }
+  };
+
+  // Handler for file input change
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedPhotoName(e.target.files[0].name);
+    } else {
+      setSelectedPhotoName("");
+    }
   };
 
   return (
     <div className="w-full ">
       <div className="rounded-lg p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-medium font-semibold">
+        <h1 className="text-xl sm:text-2xl md:text-3xl  font-semibold">
           Personal Information
         </h1>
 
@@ -63,9 +98,19 @@ export default function PersonalInformation() {
                   id="uploadPhoto"
                   accept="image/*"
                   className="hidden"
-                  {...register("photo")}
+                  ref={photoRef}
+                  onChange={handlePhotoChange}
                 />
               </label>
+              {selectedPhotoName && (
+                <span
+                  className="ml-2 text-xs text-gray-500 truncate max-w-[120px] inline-block align-middle absolute"
+                  title={selectedPhotoName}
+                >
+                  {selectedPhotoName}
+                </span>
+              )}
+
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#F5F5F7] border border-gray-300 text-gray-700 rounded-lg text-sm sm:text-base hover:bg-gray-50 transition-colors"
@@ -167,7 +212,7 @@ export default function PersonalInformation() {
           </div>
           {/* Billing Address Section */}
           <div className="pt-4 sm:pt-6 md:pt-8">
-            <h1 className="text-lg sm:text-xl md:text-2xl font-medium font-semibold mb-4 sm:mb-6">
+            <h1 className="text-lg sm:text-xl md:text-2xl  font-semibold mb-4 sm:mb-6">
               Billing address
             </h1>
             <div className="space-y-4 sm:space-y-6">

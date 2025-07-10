@@ -199,7 +199,7 @@ export function ResellerTable({
                   <button
                     className="w-9 h-9 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 cursor-pointer"
                     onClick={() =>
-                      router.push(`/dashboard/reseller/active/${reseller.id}`)
+                      router.push(`/dashboard/admin-dashboard/reseller/active/${reseller.id}`)
                     }
                   >
                     <EyeIcon className="w-4 h-4 text-gray-600" />

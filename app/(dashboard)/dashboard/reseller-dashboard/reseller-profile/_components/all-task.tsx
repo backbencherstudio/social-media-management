@@ -8,7 +8,7 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 import { useGetAllTasksQuery } from "@/src/redux/features/reseller/profile/profileApi";
 
 export default function AllTask() {
-  const id = "RES_n461l81lt1q8naigks2170vm";
+  const id = "RES_td6d9pei2ly83rp5rp7d2giu";
   const { data: allTasks } = useGetAllTasksQuery(id);
   // console.log(allTasks);
 
@@ -47,7 +47,7 @@ export default function AllTask() {
           </tr>
         </thead>
         <tbody>
-          {tasks?.map((task) => {
+          {tasks?.map((task:any) => {
             const dueDate = task.due_date
               ? new Date(task.due_date).toLocaleDateString()
               : "N/A"; // Format due_date
@@ -79,15 +79,15 @@ export default function AllTask() {
                 <td className="py-4 px-4 text-center">
                   <div className="flex justify-center">
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        task.task_status === "For Review" &&
+                      className={`px-3 py-1 capitalize rounded-full text-xs font-medium ${
+                        task.task_status === "Clint_review" &&
                         "bg-[#FEF3C7] text-[#984917]"
                       } ${
                         task.task_status === "In_progress" &&
                         "bg-[#F5F1FF] text-[#5B21B6]"
                       } ${
-                        task.task_status === "Complete" &&
-                        "bg-[#ECEFF3] text-black"
+                        task.task_status === "completed" &&
+                        "bg-green-200/40 text-green-500"
                       }`}
                     >
                       {task.task_status}
@@ -108,7 +108,9 @@ export default function AllTask() {
                 {/* Actions */}
                 <td className="py-4 px-4 text-center">
                   <div className="flex items-center justify-center gap-4">
-                    <Link href={`/dashboard/service/${task.task_id}`}>
+                    <Link
+                      href={`/dashboard/reseller-dashboard/reseller-profile/task/${task.task_id}`}
+                    >
                       <BsBoxArrowUpRight />
                     </Link>
                     <Link href={`/dashboard/service/${task.task_id}`}>

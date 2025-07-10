@@ -79,9 +79,9 @@ export default function Blog() {
         </div>
 
         {/* Blog Post Cards */}
-        {paginatedDetails?.map((post: any) => (
+        {paginatedDetails?.map((post: any, idx:number) => (
           <div
-            key={post.id}
+            key={idx}
             className="bg-white h-[420px] rounded-lg shadow-sm overflow-hidden"
           >
             <div className="flex justify-between items-center">

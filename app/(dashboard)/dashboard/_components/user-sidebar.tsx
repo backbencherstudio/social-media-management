@@ -30,13 +30,13 @@ const bottomMenuItems = [
       {
         title: "Profile/account",
         icon: ProfileIcon,
-        href: "/dashboard/user-dashboard/profile",
+        href: "/dashboard/user-dashboard/user-profile",
       },
-      {
-        title: "Payment",
-        icon: PaymentIcon,
-        href: "/dashboard/user-dashboard/payment-method",
-      },
+      // {
+      //   title: "Payment",
+      //   icon: PaymentIcon,
+      //   href: "/dashboard/user-dashboard/payment-method",
+      // },
       {
         title: "Invoices",
         icon: InvoicesIcon,

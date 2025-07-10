@@ -1,14 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Blog } from "@/types/blog";
 const imageURL = "http://192.168.4.2:9000/social-media/";
 
 
 
-export default function CreativeCard({ blog }: any) {
+export default function CreativeCard({ blog }: { blog: Blog }) {
   // console.log(blog);
   const router = useRouter();
-  const handleBlog = (id: any) => {
+  const handleBlog = (id: string) => {
     router.push(`/blog/${id}`);
   };
 
@@ -22,7 +23,7 @@ export default function CreativeCard({ blog }: any) {
         {blog?.contents &&
           (() => {
             const firstMedia = blog.contents.find(
-              (content: any) => content.content_type === "media"
+              (content) => content.content_type === "media"
             );
             return firstMedia ? (
               <img
@@ -42,7 +43,7 @@ export default function CreativeCard({ blog }: any) {
           {blog?.contents &&
             (() => {
               const firstText = blog.contents.find(
-                (content: any) => content.content_type === "text"
+                (content) => content.content_type === "text"
               );
               return firstText ? (
                 <div

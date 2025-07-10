@@ -6,6 +6,12 @@ export interface ServicePlan {
   basePrice:number;
 }
 
+export interface ServiceTier {
+  id: string;
+  max_post: number;
+  price: number;
+}
+
 export interface Service {
   id: string;
   name: string;
@@ -15,7 +21,6 @@ export interface Service {
   endingPrice: number;
   selectLabel: string;
   plans: ServicePlan[];
-  channels: any[];
 }
 
 export interface ServiceSelection {

@@ -7,9 +7,13 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { useRef, useState } from "react";
+import { useEditProfileMutation } from "@/src/redux/features/common/edit-profile/editProfileApi";
+import { toast } from "sonner";
 
 interface ProfileFormData {
   photo: FileList | null;
+
   email: string;
   password: string;
   firstName: string;
@@ -26,15 +30,57 @@ interface ProfileFormData {
 
 const Profile = () => {
   const { register, handleSubmit } = useForm<ProfileFormData>();
+  const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
 
-  const onSubmit = (data: ProfileFormData) => {
+  const [editProfile, { isLoading, isError, error }] = useEditProfileMutation();
+  const photoRef = useRef<HTMLInputElement | null>(null);
+
+  const onSubmit = async (data: ProfileFormData) => {
     console.log("Form data:", data);
+    const formData = new FormData();
+    if (
+      photoRef.current &&
+      photoRef.current.files &&
+      photoRef.current.files.length > 0
+    ) {
+      formData.append("image", photoRef.current.files[0]);
+    }
+
+    formData.append("first_name", data.firstName);
+    formData.append("last_name", data.lastName);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("phone_number", data.phoneNumber);
+
+    formData.append("country", data.country);
+    formData.append("state", data.state);
+    formData.append("city", data.city);
+    formData.append("location", data.address);
+    formData.append("zip_code", data.postalCode);
+    // formData.append("agreed_terms", data.terms ? "true" : "false");
+
+    console.log(formData);
+
+    const res = await editProfile(formData);
+    if (res?.data?.success) {
+      toast.success(res?.data.message);
+      console.log("update");
+    }
+  };
+
+  // Handler for file input change
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedPhotoName(e.target.files[0].name);
+    } else {
+      setSelectedPhotoName("");
+    }
   };
 
   return (
     <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-48">
       <div className="rounded-lg mt-4 sm:mt-6 p-4 sm:p-6 md:p-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] space-y-4 sm:space-y-6">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-medium font-semibold">
+        <h1 className="text-xl sm:text-2xl md:text-3xl  font-semibold">
           Edit your details
         </h1>
 
@@ -50,7 +96,7 @@ const Profile = () => {
                 <FaChevronDown className="absolute -right-3 sm:-right-4 md:-right-6 top-1/2 -translate-y-1/2 text-gray-500 w-3 h-3 sm:w-4 sm:h-4" />
               </div>
             </div>
-            <div className="flex flex-col lg:flex-row gap-3 w-full sm:w-auto">
+            <div className="flex flex-col lg:flex-row gap-3 w-full sm:w-auto relative">
               <label
                 htmlFor="uploadPhoto"
                 className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#F5F5F7] border border-gray-300 text-gray-700 rounded-lg text-sm sm:text-base hover:bg-gray-50 transition-colors"
@@ -62,9 +108,19 @@ const Profile = () => {
                   id="uploadPhoto"
                   accept="image/*"
                   className="hidden"
-                  {...register("photo")}
+                  // {...register("photo")}
+                  ref={photoRef}
+                  onChange={handlePhotoChange}
                 />
               </label>
+              {selectedPhotoName && (
+                <span
+                  className="ml-2 text-xs text-gray-500 truncate max-w-[140px] inline-block align-middle absolute"
+                  title={selectedPhotoName}
+                >
+                  {selectedPhotoName}
+                </span>
+              )}
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#F5F5F7] border border-gray-300 text-gray-700 rounded-lg text-sm sm:text-base hover:bg-gray-50 transition-colors"
@@ -149,6 +205,7 @@ const Profile = () => {
           <div className="space-y-4 sm:space-y-6">
             <div className="flex items-start gap-2 sm:gap-3">
               <input
+                required
                 type="checkbox"
                 id="terms"
                 {...register("terms", { required: true })}
@@ -174,7 +231,7 @@ const Profile = () => {
 
           {/* Billing Address Section */}
           <div className="pt-4 sm:pt-6 md:pt-8">
-            <h1 className="text-lg sm:text-xl md:text-2xl font-medium font-semibold mb-4 sm:mb-6">
+            <h1 className="text-lg sm:text-xl md:text-2xl  font-semibold mb-4 sm:mb-6">
               Billing address
             </h1>
             <div className="space-y-4 sm:space-y-6">
@@ -329,6 +386,7 @@ const Profile = () => {
           <div className="pt-4 sm:pt-6 md:pt-8">
             <button
               type="submit"
+              disabled={isLoading}
               className="w-full sm:w-auto min-w-[200px] px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base font-medium"
             >
               Save Changes

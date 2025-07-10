@@ -364,12 +364,12 @@ function MediaBlock({ index, preview, onFileChange, onDelete }) {
   );
 }
 
-export async function createBlog({
-  formData,
-  token,
-}: {
-  formData: FormDataType;
-  token: string;
-}) {
-  // ...
-}
+// export async function createBlog({
+//   formData,
+//   token,
+// }: {
+//   formData: FormDataType;
+//   token: string;
+// }) {
+//   // ...
+// }

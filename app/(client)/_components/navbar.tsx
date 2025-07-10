@@ -306,7 +306,7 @@ export function Navbar() {
               <NavigationMenuTrigger className="bg-transparent p-0 hover:text-blue-500 cursor-pointer serotiva-regular">
                 About us
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out absolute left-0 top-0 w-[700px]">
+              <NavigationMenuContent className="data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out absolute left-0 top-0 w-[700px] ">
                 <AboutUsDropdownContent />
               </NavigationMenuContent>
             </NavigationMenuItem>

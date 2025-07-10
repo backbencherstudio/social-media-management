@@ -6,7 +6,7 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_URL,
     credentials: "include",
-    prepareHeaders:async  (headers) => {
+    prepareHeaders: async (headers) => {
       const accessToken = await getToken();
 
       if (accessToken) {
@@ -49,5 +49,19 @@ export const baseApi = createApi({
     "reseller-profile",
     "assets",
     "allAnalyticsServices",
+    "client-invoices",
+    "active-services",
+    "recent-activities",
+    "services-we-offer",
+    "all-services",
+    "user-active-services",
+    "user-services-we-offer",
+    "user-recent-activities",
+    "user-assets",
+    "content-queue",
+    "user-upcoming-post",
+    "user-all-services",
+    "user-notification",
+    "all-notification"
   ],
 });
