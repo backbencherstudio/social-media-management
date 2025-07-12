@@ -20,6 +20,22 @@ const profileApi = baseApi.injectEndpoints({
       }),
       providesTags: ["reseller-profile"],
     }),
+    connectAccount: builder.mutation({
+      query: () => ({
+        url: "/reseller-profile/create-connect-account-payout",
+        method: "POST",
+        body: {},
+      }),
+    }),
+    createConnectAccount: builder.mutation({
+      query: (body) => {
+        return {
+          url: `/reseller-profile/create-connect-account/${body.id}`,
+          method: "POST",
+          body: body,
+        };
+      },
+    }),
   }),
 });
 
@@ -27,4 +43,6 @@ export const {
   useGetAllTasksQuery,
   useGetOneTaskQuery,
   useGetResellerEarningsQuery,
+  useConnectAccountMutation,
+  useCreateConnectAccountMutation,
 } = profileApi;

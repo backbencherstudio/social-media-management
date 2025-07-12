@@ -10,7 +10,7 @@ export default function Earnings() {
 
   const id = "RES_td6d9pei2ly83rp5rp7d2giu";
   const { data } = useGetResellerEarningsQuery(id);
-  console.log(data);
+  // console.log(data);
 
 
 
