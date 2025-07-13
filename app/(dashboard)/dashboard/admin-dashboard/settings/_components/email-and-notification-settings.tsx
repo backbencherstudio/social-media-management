@@ -73,7 +73,7 @@ export default function EmailAndNotificationSettings() {
     }
   }, [emailAndNotificationSettings, reset]);
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async (formData: any) => {
     const formattedData = {
       smtpHost: formData.smtpHost,
       smtpPort: Number(formData.smtpPort),

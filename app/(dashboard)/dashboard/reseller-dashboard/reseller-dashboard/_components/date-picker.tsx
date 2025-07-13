@@ -30,14 +30,16 @@ export default function DatePicker() {
 
       {calendarOpen && (
         <div className="absolute right-0 z-10 mt-1 rounded-md border border-gray-200 bg-white p-3 shadow-lg">
-          <ReactDatePicker
-            selected={selectedDate}
-            onChange={(date: Date) => {
-              setSelectedDate(date);
-              setCalendarOpen(false);
-            }}
-            inline
-          />
+            <ReactDatePicker
+                selected={selectedDate}
+                onChange={(date: Date | null) => {
+                  if (date) {
+                    setSelectedDate(date);
+                    setCalendarOpen(false);
+                  }
+                }}
+                inline
+              />
         </div>
       )}
     </div>

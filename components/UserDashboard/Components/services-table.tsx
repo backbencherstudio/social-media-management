@@ -18,7 +18,7 @@ export default function ServicesTable({
   services,
   emptyMessage = "No active services.",
   title = "Active Services",
-}: ServicesTableProps) {
+}: any) {
   return (
     <div className="w-full rounded-lg border border-gray-200 bg-white shadow-sm">
       <div className="flex items-center gap-4 p-6 pb-2">
@@ -57,7 +57,7 @@ export default function ServicesTable({
                 </tr>
               </thead>
               <tbody>
-                {services?.map((service, index) => (
+                {services?.map((service: any, index: number) => (
                   <tr
                     key={index}
                     className="border-b border-gray-100 hover:bg-gray-50"

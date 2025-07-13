@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ProcessCard({content}) {
+export default function ProcessCard({content}: any) {
   return (
     <div className="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden p-5 relative flex flex-col items-center text-center">
       {/* Step indicator */}

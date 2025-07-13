@@ -1,5 +1,5 @@
 
-const Information = ({header, text}) => {
+const Information = ({header, text}: any) => {
     return (
         <div className="mt-8">
         <p className="text-gray-600 text-sm mb-2">{header}</p>

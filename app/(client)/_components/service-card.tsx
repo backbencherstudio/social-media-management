@@ -19,7 +19,7 @@ export default function ServiceCard({
   description,
   category,
   price,
-}) {
+}: any) {
   return (
     <div className="w-full max-w-[520px] h-[500px] bg-[#F7F7F9] p-6 rounded-2xl flex flex-col justify-between">
       <div className="space-y-2">

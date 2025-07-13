@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 export default function AdminInfo() {
   const [profilePic, setProfilePic] = useState("/default-avatar.png"); // Replace with actual default
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
     register,
@@ -13,7 +13,7 @@ export default function AdminInfo() {
     formState: { errors },
   } = useForm();
 
-  const handlePhotoUpload = (e) => {
+  const handlePhotoUpload = (e: any) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -24,7 +24,7 @@ export default function AdminInfo() {
 
   const handleDeletePhoto = () => setProfilePic("/default-avatar.png");
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     // You can now use all form data here
     // Example: send to API
     console.log({
@@ -55,7 +55,7 @@ export default function AdminInfo() {
         <button
           type="button"
           className="bg-gray-100 px-4 py-2 rounded-md text-sm font-medium cursor-pointer"
-          onClick={() => fileInputRef.current.click()}
+          onClick={() => fileInputRef.current?.click()}
         >
           + Upload photo
         </button>

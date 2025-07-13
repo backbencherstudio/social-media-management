@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function InvoiceModal({ isOpen, setIsOpen, service }) {
+export default function InvoiceModal({ isOpen, setIsOpen, service }: any) {
   if (!isOpen || !service) return null;
 
   console.log("Modal service", service);
@@ -31,10 +31,10 @@ export default function InvoiceModal({ isOpen, setIsOpen, service }) {
   };
 
   // Styles for invoice status
-  const statusStyles = {
-    progress: "bg-blue-100 text-blue-700",
+  const statusStyles: Record<"progress" | "active" | "pending", string> = {
+    progress: "bg-yellow-100 text-yellow-700",
     active: "bg-green-100 text-green-700",
-    pending: "bg-yellow-100 text-yellow-800",
+    pending: "bg-blue-100 text-blue-700",
   };
 
   return (
@@ -71,12 +71,16 @@ export default function InvoiceModal({ isOpen, setIsOpen, service }) {
           </div>
           <div className="space-y-1">
             <p className="text-gray-500">Due Date</p>
-            <p className="font-medium">TBD</p> {/* You can add due date if available */}
+            <p className="font-medium">TBD</p>{" "}
+            {/* You can add due date if available */}
           </div>
           <div className="space-y-1">
             <p className="text-gray-500">Status</p>
             <span
-              className={`inline-block px-3 py-0.5 text-xs rounded-full ${statusStyles[status] || "bg-gray-100 text-gray-700"}`}
+              className={`inline-block px-3 py-0.5 text-xs rounded-full ${
+                statusStyles[status as keyof typeof statusStyles] ||
+                "bg-gray-100 text-gray-700"
+              }`}
             >
               {status}
             </span>

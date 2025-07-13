@@ -102,8 +102,37 @@ const LearnSection = () => (
 );
 // about part end
 
+// TypeScript interfaces
+interface NavLinkProps {
+  icon: React.ReactNode;
+  text: string;
+  className?: string;
+  href: string;
+}
+
+interface MobileAboutUsDropdownProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+interface MobileSectionProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+interface MobileNavLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  text: string;
+}
+
+interface MobileServicesDropdownProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
 // Update NavLink component to accept href prop
-const NavLink = ({ icon, text, className = "", href }) => (
+const NavLink = ({ icon, text, className = "", href }: NavLinkProps) => (
   <li className="list-none">
     <Link
       href={href}
@@ -115,7 +144,10 @@ const NavLink = ({ icon, text, className = "", href }) => (
 );
 
 // Mobile Navigation Components
-const MobileAboutUsDropdown = ({ isOpen, onToggle }) => (
+const MobileAboutUsDropdown = ({
+  isOpen,
+  onToggle,
+}: MobileAboutUsDropdownProps) => (
   <div>
     <button
       onClick={onToggle}
@@ -178,14 +210,14 @@ const MobileAboutUsDropdown = ({ isOpen, onToggle }) => (
   </div>
 );
 
-const MobileSection = ({ title, children }) => (
+const MobileSection = ({ title, children }: MobileSectionProps) => (
   <div>
     <p className="text-gray-500 serotiva-regular text-sm mb-2">{title}</p>
     <div className="space-y-3">{children}</div>
   </div>
 );
 
-const MobileNavLink = ({ href, icon, text }) => (
+const MobileNavLink = ({ href, icon, text }: MobileNavLinkProps) => (
   <Link
     href={href}
     className="flex items-center gap-2 hover:text-black transition"
@@ -204,7 +236,10 @@ import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
 import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 
 // services dropdown mobile
-const MobileServicesDropdown = ({ isOpen, onToggle }) => (
+const MobileServicesDropdown = ({
+  isOpen,
+  onToggle,
+}: MobileServicesDropdownProps) => (
   <div>
     <button
       onClick={onToggle}

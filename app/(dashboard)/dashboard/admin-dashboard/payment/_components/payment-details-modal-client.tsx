@@ -5,7 +5,7 @@ export default function PaymentDetailsModalClient({
   isModalOpen,
   selectedOrder,
   setIsModalOpen,
-}) {
+}: any) {
   const { data: invoicePdf, isLoading } = useGetInvoicePdfQuery(
     selectedOrder?.id,
     {

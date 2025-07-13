@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { EyeIcon } from "lucide-react"
+import { EyeIcon } from "lucide-react";
 import React, { useState } from "react";
 import { AssignOrderModal } from "../order/_components/AssignOrderModal";
 import { useGetRecentOrdersQuery } from "@/src/redux/features/admin/dashboard/dashboardApi";
@@ -56,7 +56,7 @@ const OrderTable = () => {
           </tr>
         </thead>
         <tbody>
-          {recentOrders?.data?.map((order, index) => (
+          {recentOrders?.data?.map((order: any, index: number) => (
             <tr key={index} className="border-b text-sm border-gray-200">
               <td className="px-4 py-2">{order.id}</td>
               <td className="px-4 py-2">
@@ -91,7 +91,9 @@ const OrderTable = () => {
                   <div
                     onClick={() =>
                       router.push(
-                        `/dashboard/admin-dashboard/order/${encodeURIComponent(order.id)}`
+                        `/dashboard/admin-dashboard/order/${encodeURIComponent(
+                          order.id
+                        )}`
                       )
                     }
                     className="w-10 h-10 flex items-center justify-center rounded-[10px] bg-gray-100 hover:bg-gray-300 cursor-pointer"

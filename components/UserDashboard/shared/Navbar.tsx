@@ -10,13 +10,11 @@ import { RiUserLine } from "react-icons/ri";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import {
-  getToken,
   removeRole,
   removeToken,
 } from "@/app/(auth)/auth/_components/set-and-get-token";
 import { useRouter } from "next/navigation";
 import { useRole } from "@/hooks/useRole";
-import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -30,8 +28,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
   const router = useRouter();
 
   // const {user} = useGetUser();
-  const { role, isLoading, error, user } = useRole();
-  console.log(role);
+  const { role, user } = useRole();
 
   // Close dropdown when clicking outside
   useEffect(() => {

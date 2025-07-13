@@ -153,7 +153,7 @@ export default function TrustedBrand({bgcolor = false}:TrustedProps) {
   );
 }
 
-const TestimonialCard = ({ image, name, position, quote, video, bgcolor }) => {
+const TestimonialCard = ({ image, name, position, quote, video, bgcolor }: any) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 

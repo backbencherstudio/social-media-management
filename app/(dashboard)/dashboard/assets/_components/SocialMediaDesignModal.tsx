@@ -24,7 +24,7 @@ export function SocialMediaDesignModal({
   data,
   onApprove,
   onReject,
-}: SocialMediaDesignModalProps) {
+}: any) {
   const [comment, setComment] = useState("");
   const [selectedThumbnail, setSelectedThumbnail] = useState(0);
 
@@ -126,7 +126,7 @@ export function SocialMediaDesignModal({
                       Usage Guidelines
                     </h3>
                     <div className="space-y-1.5">
-                      {data.usageGuidelines.map((guideline, index) => (
+                      {data.usageGuidelines.map((guideline: any, index:number ) => (
                         <div key={index} className="flex items-center gap-1.5">
                           <Check className="h-4 w-4 text-gray-500" />
                           <span className="text-sm text-gray-700">

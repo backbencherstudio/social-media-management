@@ -1,4 +1,4 @@
-import { Notification } from "../page";
+
 
 const getTimeAgo = (dateString: string) => {
   const now = new Date();
@@ -15,9 +15,7 @@ const getTimeAgo = (dateString: string) => {
 // Notification Item Component
 export const NotificationItem = ({
   notification,
-}: {
-  notification: Notification;
-}) => {
+}: any) => {
   const { receiver, notification_event, created_at, sender } = notification;
   const timeAgo = getTimeAgo(created_at);
 

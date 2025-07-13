@@ -45,7 +45,7 @@ function Modal({
   );
 }
 
-export default function SupportChat({height}) {
+export default function SupportChat({height}: any) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
   const [isRecording, setIsRecording] = useState<boolean>(false);

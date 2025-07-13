@@ -71,7 +71,7 @@ export default function Sent() {
         </thead>
         <tbody>
           {paginatedServices && paginatedServices.length > 0 ? (
-            paginatedServices.map((sentData) => (
+            paginatedServices.map((sentData: any) => (
               <tr
                 key={sentData.id}
                 className="border-b border-gray-100 hover:bg-gray-50"

@@ -6,7 +6,7 @@ const imageURL = "http://192.168.4.2:9000/social-media/";
 
 
 
-export default function CreativeCard({ blog }: { blog: Blog }) {
+export default function CreativeCard({ blog }: any) {
   // console.log(blog);
   const router = useRouter();
   const handleBlog = (id: string) => {
@@ -23,7 +23,7 @@ export default function CreativeCard({ blog }: { blog: Blog }) {
         {blog?.contents &&
           (() => {
             const firstMedia = blog.contents.find(
-              (content) => content.content_type === "media"
+              (content: any) => content.content_type === "media"
             );
             return firstMedia ? (
               <img
@@ -43,7 +43,7 @@ export default function CreativeCard({ blog }: { blog: Blog }) {
           {blog?.contents &&
             (() => {
               const firstText = blog.contents.find(
-                (content) => content.content_type === "text"
+                (content: any) => content.content_type === "text"
               );
               return firstText ? (
                 <div

@@ -4,14 +4,13 @@ import FacebookIcon from "@/public/incons/facebook";
 import InstagramIcon from "@/public/incons/instagram";
 import LinkedInIcon from "@/public/incons/linkedIn";
 import TwitterIcon from "@/public/incons/twitter";
-import { useTwitterConnectMutation } from "@/src/redux/auth/all-auth";
 import React from "react";
 
 const SocialMedia = () => {
 
 
   // twitter login
-  const [twitterConnect, {isLoading} ] = useTwitterConnectMutation();
+  // const [twitterConnect, {isLoading} ] = useTwitterConnectMutation();
 
   const handleTwitterConnect = async () => {
     // try {

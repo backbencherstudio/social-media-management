@@ -14,7 +14,7 @@ import ServicesTable, {
   Service,
 } from "@/components/UserDashboard/Components/services-table";
 
-const servicesData: Service[] = [
+const servicesData= [
   {
     id: "62A2AA44-2",
     name: "Email Design",

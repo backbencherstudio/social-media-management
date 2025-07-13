@@ -204,7 +204,7 @@ export default function CreateBlog() {
               <MediaBlock
                 index={index}
                 preview={block.preview}
-                onFileChange={(e) => handleFileChange(e, index)}
+                onFileChange={(e: any) => handleFileChange(e, index)}
                 onDelete={() => {
                   const updatedBlocks = [...contentBlocks];
                   updatedBlocks[index].content = null;
@@ -316,7 +316,7 @@ export default function CreateBlog() {
   );
 }
 
-function MediaBlock({ index, preview, onFileChange, onDelete }) {
+function MediaBlock({ index, preview, onFileChange, onDelete }:any) {
   const fileInputRef = useRef(null);
 
   return (
