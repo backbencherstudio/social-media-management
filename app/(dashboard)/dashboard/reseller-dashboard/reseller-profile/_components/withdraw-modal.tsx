@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
@@ -11,23 +12,37 @@ import {
 import {
   useConnectAccountMutation,
   useCreateConnectAccountMutation,
+  useWithdrawMutation,
 } from "@/src/redux/features/reseller/profile/profileApi";
 import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
 import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+interface WithdrawFormData {
+  amount: number;
+  method: string;
+}
+
 export default function WithdrawModal() {
   const [token, setToken] = useState("");
   const { data: user } = useGetCurrentUserQuery(token);
   const router = useRouter();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<WithdrawFormData>();
+
   const [connectAccount, { data: connectAccountData }] =
     useConnectAccountMutation();
   const [createConnectAccount, { data: createConnectAccountData }] =
     useCreateConnectAccountMutation();
+  const [withdraw] = useWithdrawMutation();
 
-  // console.log(user);
+  // console.log(user?.data?.reseller_id);
   // console.log("data",createConnectAccountData);
   // console.log("id",user?.data?.banking_id);
 
@@ -43,13 +58,31 @@ export default function WithdrawModal() {
     if (!user?.data?.banking_id) {
       try {
         await connectAccount({}).unwrap();
-        toast.success("Account Creating");
+        toast.loading("Account Creating");
       } catch (error) {
         console.error("Connect account error:", error);
       }
-    } else {
-      console.log("alkd");
     }
+  };
+
+  const onSubmit = async (data: WithdrawFormData) => {
+    // console.log("Amount:", data.amount);
+    // console.log("Method:", data.method);
+
+    const withdrawData = {
+      userID: user?.data?.reseller_id,
+      id: user?.data?.banking_id,
+      data: {
+        amount: Number(data.amount),
+        method: data.method,
+      },
+    };
+
+    // Here you can handle the withdraw logic
+    const res = await withdraw(withdrawData);
+    console.log(res)
+    toast.success(`Withdrawing $${data.amount} via ${data.method}`);
+    reset();
   };
 
   useEffect(() => {
@@ -83,7 +116,7 @@ export default function WithdrawModal() {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6 mt-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-4">
           <div className="flex justify-between">
             {/* Available Amount */}
             <div>
@@ -111,10 +144,20 @@ export default function WithdrawModal() {
               </span>
               <input
                 type="number"
+                {...register("amount", {
+                  required: "Amount is required",
+                  min: { value: 1, message: "Amount must be at least $1" },
+                  max: { value: 1500, message: "Amount cannot exceed $1,500" },
+                })}
                 className="w-full pl-8 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
                 placeholder="Enter amount"
               />
             </div>
+            {errors.amount && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.amount.message}
+              </p>
+            )}
           </div>
 
           {/* Select Bank */}
@@ -122,12 +165,24 @@ export default function WithdrawModal() {
             <label className="text-sm text-gray-500 mb-1 block">
               Select Bank
             </label>
-            <select className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none ">
+            <select
+              {...register("method", {
+                required: "Please select a bank",
+              })}
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
+            >
               <option value="">Select a bank</option>
-              <option value="bank1">Bank of America</option>
-              <option value="bank2">Chase Bank</option>
-              <option value="bank3">Wells Fargo</option>
+              <option value="Stripe">Stripe</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Bank of America">Bank of America</option>
+              <option value="Chase Bank">Chase Bank</option>
+              <option value="Wells Fargo">Wells Fargo</option>
             </select>
+            {errors.method && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.method.message}
+              </p>
+            )}
           </div>
 
           {/* Withdraw Button */}
@@ -141,7 +196,7 @@ export default function WithdrawModal() {
               </button>
             )}
           </div>
-        </div>
+        </form>
       </DialogContent>
     </Dialog>
   );

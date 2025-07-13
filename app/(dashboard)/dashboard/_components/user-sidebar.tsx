@@ -12,7 +12,6 @@ import { FaBusinessTime } from "react-icons/fa6";
 
 // top menu items for purchased users
 const userTopMenuItems = [
-  ,
   { title: "Home", icon: Home, href: "/dashboard/user-dashboard" },
   {
     title: "Services",
@@ -69,6 +68,7 @@ export default function UserSidebar({
       | (typeof userTopMenuItems)[0]
       | (typeof bottomMenuItems)[0]["subItems"][0];
   }) => {
+    if (!item) return null;
     const isActive = pathname === item.href;
     return (
       <Link

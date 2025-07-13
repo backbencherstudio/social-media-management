@@ -36,6 +36,18 @@ const profileApi = baseApi.injectEndpoints({
         };
       },
     }),
+    withdraw: builder.mutation({
+      query: (body) => {
+        console.log(body.data)
+        return {
+          // reseller-profile/RES_n461l81lt1q8naigks2170vm/withdraw/acct_1Rcen84KOKGRzFCS
+          url: `/reseller-profile/${body.userID}/withdraw/${body.id}`,
+          method: "POST",
+          body: body.data,
+        };
+      },
+    }),
+
   }),
 });
 
@@ -45,4 +57,5 @@ export const {
   useGetResellerEarningsQuery,
   useConnectAccountMutation,
   useCreateConnectAccountMutation,
+  useWithdrawMutation
 } = profileApi;

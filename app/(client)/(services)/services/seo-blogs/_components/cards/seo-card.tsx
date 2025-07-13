@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SeoCard({content}) {
+export default function SeoCard({content}: any) {
   return (
     <div className="max-w-lg mx-auto bg-white border border-[#E9E9EA] rounded-lg py-6 px-4 flex flex-col items-center text-center">
       {/* Icon */}

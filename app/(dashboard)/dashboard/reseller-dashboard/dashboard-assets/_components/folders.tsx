@@ -20,7 +20,7 @@ const iconMap: { [key: string]: React.ElementType } = {
 
 export default function Folders() {
   const clientId = useSelector((state: RootState) => state.clientId.id);
-  const { data: folders } = useGetFoldersQuery(clientId);
+  const { data: folders } = useGetFoldersQuery(clientId ?? "");
   console.log("data", folders);
 
   return (

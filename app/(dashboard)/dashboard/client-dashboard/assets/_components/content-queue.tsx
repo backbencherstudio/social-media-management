@@ -106,9 +106,11 @@ export default function ContentQueueHeader() {
             <div className="absolute right-0 z-10 mt-1 rounded-md">
               <ReactDatePicker
                 selected={selectedDate}
-                onChange={(date: Date) => {
-                  setSelectedDate(date);
-                  setCalendarOpen(false);
+                onChange={(date: Date | null) => {
+                  if (date) {
+                    setSelectedDate(date);
+                    setCalendarOpen(false);
+                  }
                 }}
                 inline
               />

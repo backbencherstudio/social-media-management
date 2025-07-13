@@ -19,7 +19,7 @@ type FormValues = {
   name: string;
 };
 
-export default function CategorModal({ isOpen, setIsOpen }) {
+export default function CategorModal({ isOpen, setIsOpen }: any) {
   const { data } = useGetBlogCategoriesQuery();
   const [createBlogCategory, { isError, isLoading }] =
     useCreateBlogCategoryMutation();

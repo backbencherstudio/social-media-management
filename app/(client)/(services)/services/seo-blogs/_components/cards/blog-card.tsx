@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function BlogCard({blog}) {
+export default function BlogCard({blog}: any) {
   return (
     <div className="min-w-full bg-white border border-gray-100 rounded-lg p-5 flex flex-col  shadow-sm">
       {/* Header with brain icon */}

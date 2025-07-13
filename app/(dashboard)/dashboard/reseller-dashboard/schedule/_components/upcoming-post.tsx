@@ -16,7 +16,7 @@ import DateRangePicker from "./schedule-date-picker";
 export default function UpcomingPost() {
 
   const clientId = useSelector((state: RootState) => state.clientId.id);
-  const { data: upcomingPosts } = useGetAllUpcomingPostQuery(clientId);
+  const { data: upcomingPosts } = useGetAllUpcomingPostQuery(clientId ?? "");
   const [deletePost] = useDeletePostMutation();
 
   const handleDeletePost = async (id: string) => {

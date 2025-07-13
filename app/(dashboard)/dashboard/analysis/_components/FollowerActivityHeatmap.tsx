@@ -1,10 +1,11 @@
 import ReactApexChart from "react-apexcharts";
+import { ApexOptions } from "apexcharts";
 
 const ActivityHeatmap = ({ activityData, days, hours }: any) => {
   // Configuring the options for the heatmap chart
-  const options = {
+  const options: ApexOptions = {
     chart: {
-      type: "heatmap",
+      type: "heatmap" as const,
       height: 350,
     },
     plotOptions: {
@@ -22,7 +23,9 @@ const ActivityHeatmap = ({ activityData, days, hours }: any) => {
       categories: days, // Days of the week
     },
     yaxis: {
-      categories: hours, // Hours of the day (0-23)
+      labels: {
+        formatter: (val: number) => `${val}:00`,
+      },
     },
     title: {
       text: "User Activity Heatmap",

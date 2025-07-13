@@ -8,7 +8,7 @@ export default function ReleaserPaymentModal({
   isModalOpen,
   paymentDetails,
   setIsModalOpen,
-}) {
+}: any) {
   const [releasePayment] = useReleasePaymentMutation();
   const [showConfirmation, setShowConfirmation] = useState(false);
 

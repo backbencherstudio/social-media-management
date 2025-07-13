@@ -34,7 +34,7 @@ export default function page() {
  
 
   // handle select memeber
-  const handleSelectMemeber = (member) => {
+  const handleSelectMemeber = (member: any) => {
     if (selectedMember?.id === member.id) {
       setSelectedMember(null);
     } else {

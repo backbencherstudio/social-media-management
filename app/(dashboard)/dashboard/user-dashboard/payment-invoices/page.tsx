@@ -37,7 +37,7 @@ export default function PaymentInvoices() {
   const [isOpen, setIsOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
 
-  const handleOpenModal = (item: service) => {
+  const handleOpenModal = (item: any) => {
     setIsOpen(true);
     setModalData(item);
   };

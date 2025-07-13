@@ -5,7 +5,7 @@ export default function RunningTaskTable({
   tasks,
   orderStatus,
   setOrderStatus,
-}) {
+}: any) {
   return (
     <div className="p-6 bg-white rounded-xl shadow-sm overflow-x-auto">
       <div className="flex items-center justify-between mb-4">
@@ -37,7 +37,7 @@ export default function RunningTaskTable({
             </tr>
           </thead>
           <tbody>
-            {tasks.map((task) => (
+            {tasks.map((task: any) => (
               <tr
                 key={task.id}
                 className="border-t border-gray-100 hover:bg-gray-50"

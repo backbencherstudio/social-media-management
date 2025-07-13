@@ -13,11 +13,11 @@ interface DemoScheduleDataProps {
   selectedTimezone: ITimezone;
 }
 
-const DemoScheduleData: React.FC<DemoScheduleDataProps> = ({
+const DemoScheduleData = ({
   dateFormat,
   selectedTime,
   selectedTimezone,
-}) => {
+}: any) => {
   return (
     <div className="flex gap-6">
       <div className="mt-[64px]">

@@ -102,7 +102,7 @@ export default function Video() {
   );
 }
 
-const VideoCard = ({ video, name, position }) => {
+const VideoCard = ({ video, name, position }: any) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (

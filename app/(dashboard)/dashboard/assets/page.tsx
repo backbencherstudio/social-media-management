@@ -1,16 +1,13 @@
 "use client";
 
-import AssetsTable, {
-  Asset,
-} from "@/components/UserDashboard/Components/assets-table";
+
 import React, { useState } from "react";
 import ContentQueue from "./_components/content-queue";
 import { ScheduledPostCard } from "./_components/scheduled-post-card";
 import { SocialMediaDesignCard } from "./_components/social-media-design-card";
 import { ScheduledPostModal } from "./_components/ScheduledPostModal";
 import { SocialMediaDesignModal } from "./_components/SocialMediaDesignModal";
-
-
+import AssetsTable from "@/components/UserDashboard/Components/assets-table";
 
 export default function page() {
   // view details
@@ -74,7 +71,7 @@ export default function page() {
   return (
     <section className="p-3">
       {/* assets data */}
-      <AssetsTable  title="Assets" />
+      <AssetsTable title="Assets" />
 
       {/* content card */}
       <ContentQueue />
@@ -126,11 +123,9 @@ export default function page() {
         onClose={() => setIsSocialMediaDesignModalOpen(false)}
         data={selectedDesignData}
         onApprove={() => {
-          console.log("Approved:", selectedDesignData.title);
           setIsSocialMediaDesignModalOpen(false);
         }}
         onReject={() => {
-          console.log("Rejected:", selectedDesignData.title);
           setIsSocialMediaDesignModalOpen(false);
         }}
       />

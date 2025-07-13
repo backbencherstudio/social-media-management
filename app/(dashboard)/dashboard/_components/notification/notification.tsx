@@ -1,5 +1,3 @@
-
-import { useAllNotificationQuery } from "@/src/redux/features/common/get-notification/getNotificationApi";
 import React from "react";
 import { FiUser } from "react-icons/fi";
 import { MdKeyboardArrowDown } from "react-icons/md";

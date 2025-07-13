@@ -17,7 +17,7 @@ export default function Earnings() {
   const earnings = data?.data?.completed_tasks || [];
 
 
-  const handleViewDetails = (service) => {
+  const handleViewDetails = (service: any) => {
     setSelectedService(service);
     setIsModalOpen(true);
   };
@@ -53,7 +53,7 @@ export default function Earnings() {
           </tr>
         </thead>
         <tbody>
-          {earnings.map((task) => (
+          {earnings.map((task: any) => (
             <tr key={task.task_id}>
               {/* Client Name */}
               <td className="py-4 px-4">

@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import React from 'react'
 
-export default function EarningsModal({isModalOpen, setIsModalOpen, selectedService}) {
+export default function EarningsModal({isModalOpen, setIsModalOpen, selectedService}: any) {
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
     <DialogContent className="bg-white max-w-4xl">

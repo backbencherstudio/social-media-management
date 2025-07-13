@@ -16,7 +16,7 @@ import { Service, ServiceTier } from "@/types/services";
 //   <TiktokIcon />,
 // ];
 
-export default function Blogs({ service }: { service: Service }) {
+export default function Blogs({ service }: any) {
   const { data } = useGetSingleServiceQuery(service?.id);
   console.log(data)
 

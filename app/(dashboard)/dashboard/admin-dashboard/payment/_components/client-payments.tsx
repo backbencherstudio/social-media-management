@@ -82,7 +82,7 @@ export default function ClientPayments() {
             </tr>
           </thead>
           <tbody>
-            {paginatedDetails?.map((order) => (
+            {paginatedDetails?.map((order: any) => (
               <tr
                 key={order.id}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"

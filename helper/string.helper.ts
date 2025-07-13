@@ -5,7 +5,7 @@ export const StringHelper = {
   /**
    * Extract parts of a string
    */
-  textShorten: (text, length = 100) => {
+  textShorten: (text: any, length = 100) => {
     let result;
     if (text.length >= length) {
       result = text.substring(0, length) + "...";
@@ -18,7 +18,7 @@ export const StringHelper = {
   /**
    * Replace text with performance
    */
-  replace: (str, search, replacement) => {
+  replace: (str: any, search: any, replacement: any) => {
     return str.split(search).join(replacement);
   },
 
@@ -27,7 +27,7 @@ export const StringHelper = {
    * @param {number} price
    * @param {number} discount
    */
-  discount: (price, discount) => {
+  discount: (price: any, discount: any) => {
     let result;
     if (discount == null) {
       result = Number(price);
