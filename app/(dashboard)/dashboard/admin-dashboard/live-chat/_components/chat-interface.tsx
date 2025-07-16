@@ -89,7 +89,7 @@ export default function ChatInterface({
 
   useEffect(() => {
     const newSocket = io(
-      "https://trademarks-removed-examinations-cassette.trycloudflare.com"
+      process.env.NEXT_PUBLIC_CHAT_URL
     );
 
     setSocket(newSocket);
@@ -206,8 +206,8 @@ export default function ChatInterface({
     if (!messageInput.trim() || !socket || !activeUserId) return;
 
     const url = isAdmin
-      ? "https://trademarks-removed-examinations-cassette.trycloudflare.com/api/messages/message-to-user"
-      : "https://trademarks-removed-examinations-cassette.trycloudflare.com/api/messages/message-to-admin";
+      ? `${process.env.NEXT_PUBLIC_CHAT_URL}/api/messages/message-to-user`
+      : `${process.env.NEXT_PUBLIC_CHAT_URL}/api/messages/message-to-admin`;
 
     const payload = isAdmin
       ? { adminId: userId, userId: activeUserId, message: messageInput }
