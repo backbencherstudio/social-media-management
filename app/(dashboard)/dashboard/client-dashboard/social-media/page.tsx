@@ -1,3 +1,5 @@
+"use client"
+
 import FacebookIcon from "@/public/incons/facebook";
 import InstagramIcon from "@/public/incons/instagram";
 import LinkedInIcon from "@/public/incons/linkedIn";
@@ -5,6 +7,25 @@ import TwitterIcon from "@/public/incons/twitter";
 import React from "react";
 
 const SocialMedia = () => {
+
+
+  // twitter login
+  // const [twitterConnect, {isLoading} ] = useTwitterConnectMutation();
+
+  const handleTwitterConnect = async () => {
+    // try {
+    //   const res = await twitterConnect({}).unwrap()
+    //   console.log("twittrer", res)
+    // } catch (error) {
+    //   console.log(error)
+    // }
+
+    window.location.href = `${process.env.NEXT_PUBLIC_URL}/auth/twitter`
+  }
+
+
+  const connect = "w-full sm:w-auto bg-black text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm sm:text-base transition-colors hover:bg-gray-800 cursor-pointer"
+
   return (
     <div className="w-full">
       <h1 className="text-xl sm:text-2xl font-semibold mb-2">
@@ -52,7 +73,7 @@ const SocialMedia = () => {
         {/* Twitter */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 bg-gray-100 p-3 sm:p-4 rounded-md">
           <div className="flex items-center gap-3">
-            <TwitterIcon className="w-8 h-8 sm:w-10 sm:h-10" />
+            <TwitterIcon  className="w-8 h-8 sm:w-10 sm:h-10" />
             <div>
               <h1 className="text-base sm:text-xl">Twitter</h1>
               <p className="text-[#4A4C56] text-xs sm:text-base">
@@ -61,7 +82,7 @@ const SocialMedia = () => {
             </div>
           </div>
           <div className="w-full sm:w-auto">
-            <button className="w-full sm:w-auto bg-black text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm sm:text-base transition-colors hover:bg-gray-800">
+            <button onClick={handleTwitterConnect} className={connect}>
               Connect
             </button>
           </div>

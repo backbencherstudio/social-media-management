@@ -17,7 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function LoginWithPassword() {
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
+    password: "12345678",
   });
   const [loginWithPassword, { isLoading }] = useLoginWithPasswordMutation();
   const searchParams = useSearchParams();

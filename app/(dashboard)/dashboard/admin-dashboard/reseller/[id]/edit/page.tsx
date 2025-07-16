@@ -29,7 +29,7 @@ export default function page() {
     <>
       <div className="space-y-6 p-6 bg-[#F9F9FB] rounded-xl">
         {/* Breadcrumb */}
-        <p className="text-sm text-gray-500 flex items-center gap-1 font-medium">
+        <div className="text-sm text-gray-500 flex items-center gap-1 font-medium">
           <button onClick={() => router.back()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ export default function page() {
               Edit Reseller / {id}
             </span>
           </p>
-        </p>
+        </div>
 
         {/* details */}
 

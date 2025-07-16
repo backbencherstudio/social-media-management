@@ -1,19 +1,27 @@
 import React from "react";
 
-export default function InvoiceModal({ isOpen, setIsOpen, service }) {
+export default function InvoiceModal({ isOpen, setIsOpen, service }: any) {
   if (!isOpen || !service) return null;
 
+  console.log("Modal service", service);
+
+  // Destructuring data from the service object
   const {
-    invoiceId,
-    project,
-    amount,
-    date,
-    dueDate = "2024-01-30",
-    status,
-    serviceDetails = "Social media post design project including initial concepts, revisions, and final deliverables. The project was completed within the specified timeline and approved by the client.",
+    id: invoiceId,
+    created_at: date,
+    order_status: status,
+    ammount: amount,
+    pakage_name,
+    Order_Details,
   } = service;
 
-  const formatDate = (dateStr) => {
+  // Default service details, based on the provided service details in the structure
+  const serviceDetails =
+    Order_Details && Order_Details.length > 0
+      ? `${Order_Details[0].service_name} - ${Order_Details[0].service_amount_name}`
+      : "No service details available.";
+
+  const formatDate = (dateStr: any) => {
     const dateObj = new Date(dateStr);
     return dateObj.toLocaleDateString("en-US", {
       year: "numeric",
@@ -22,10 +30,11 @@ export default function InvoiceModal({ isOpen, setIsOpen, service }) {
     });
   };
 
-  const statusStyles = {
-    Paid: "bg-green-100 text-green-700",
-    Pending: "bg-yellow-100 text-yellow-800",
-    Overdue: "bg-red-100 text-red-700",
+  // Styles for invoice status
+  const statusStyles: Record<"progress" | "active" | "pending", string> = {
+    progress: "bg-yellow-100 text-yellow-700",
+    active: "bg-green-100 text-green-700",
+    pending: "bg-blue-100 text-blue-700",
   };
 
   return (
@@ -62,13 +71,15 @@ export default function InvoiceModal({ isOpen, setIsOpen, service }) {
           </div>
           <div className="space-y-1">
             <p className="text-gray-500">Due Date</p>
-            <p className="font-medium">{formatDate(dueDate)}</p>
+            <p className="font-medium">TBD</p>{" "}
+            {/* You can add due date if available */}
           </div>
           <div className="space-y-1">
             <p className="text-gray-500">Status</p>
             <span
               className={`inline-block px-3 py-0.5 text-xs rounded-full ${
-                statusStyles[status] || "bg-gray-100 text-gray-700"
+                statusStyles[status as keyof typeof statusStyles] ||
+                "bg-gray-100 text-gray-700"
               }`}
             >
               {status}
@@ -76,7 +87,7 @@ export default function InvoiceModal({ isOpen, setIsOpen, service }) {
           </div>
           <div className="space-y-1">
             <p className="text-gray-500">Amount</p>
-            <p className="font-medium">{amount}</p>
+            <p className="font-medium">${amount}</p>
           </div>
         </div>
 

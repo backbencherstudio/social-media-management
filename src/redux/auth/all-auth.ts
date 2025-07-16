@@ -30,21 +30,21 @@ const auth = baseApi.injectEndpoints({
     }),
     forgotPassword: build.mutation({
       query: (data) => {
-       return {
-        url: "/auth/forgot-password",
-        method: "POST",
-        body: data,
-       }
+        return {
+          url: "/auth/forgot-password",
+          method: "POST",
+          body: data,
+        };
       },
       invalidatesTags: ["auth-all"],
     }),
     resetPassword: build.mutation({
-        query: (data) => ({
-          url: '/auth/reset-password',
-          method: "POST",
-          body: data
-        })
-    })
+      query: (data) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -53,5 +53,5 @@ export const {
   useRegisterMutation,
   useVerifyRegistrationMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
 } = auth;

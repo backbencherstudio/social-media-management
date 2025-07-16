@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 export default function RecentFiles() {
 
   const clientId = useSelector((state: RootState) => state.clientId.id);
-  const { data: files } = useGetFilesQuery(clientId);
+  const { data: files } = useGetFilesQuery(clientId ?? "");
 
   return (
     <div>

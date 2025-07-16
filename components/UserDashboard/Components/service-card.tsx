@@ -1,3 +1,4 @@
+import IdeationIcon from "@/public/incons/landin-page/ideation";
 
 export function ServiceCard({ service }: any) {
 
@@ -8,24 +9,25 @@ export function ServiceCard({ service }: any) {
       <div className="flex justify-between items-start ">
         <div className="bg-gray-100 p-2 rounded-md ">
           {/* Placeholder image icon */}
-          {service.icon}
+          {/* {service.icon} */}
+          <IdeationIcon />
         </div>
       </div>
 
-      {service.badge && (
+      {service?.badge && (
         <span className="bg-black text-white text-xs font-medium px-2 py-1 rounded-t rounded-bl absolute right-0 top-6">
-          {service.badge}
+          {service?.badge}
         </span>
       )}
       {/* Content */}
       <div>
-        <h3 className="text-lg font-semibold mb-2 mt-5">{service.title}</h3>
-        <p className="text-gray-600 text-sm mt-1">{service.description}</p>
+        <h3 className="text-lg font-semibold mb-2 mt-5">{service?.name}</h3>
+        <p className="text-gray-600 text-sm mt-1 line-clamp-4">{service?.description}</p>
       </div>
 
       {/* Pricing */}
       <p className=" font-medium">
-        Starts from <span className="">{service.price}</span>
+        Starts from <span className="">{service?.price}</span>
       </p>
 
 <hr className="text-gray-200" />

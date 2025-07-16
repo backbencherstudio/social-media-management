@@ -7,10 +7,34 @@ import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
 import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
 import { useRouter } from "next/navigation";
 
+interface FormData {
+  full_name: string;
+  user_email: string;
+  phone_number: string;
+  location: string;
+  position: string;
+  experience: number;
+  cover_letter: string;
+  portfolio: string;
+  skills: string[];
+}
+
+interface TransformedData {
+  full_name: string;
+  user_email: string;
+  phone_number: number;
+  location: string;
+  position: string;
+  experience: number;
+  cover_letter: string;
+  portfolio: string;
+  skills: string[];
+}
+
 export default function page() {
   const [termsAgreed, setTermsAgreed] = useState(false);
-  const router = useRouter()
-  const [formData, setFormData] = useState({
+  const router = useRouter();
+  const [formData, setFormData] = useState<FormData>({
     full_name: "",
     user_email: "",
     phone_number: "",
@@ -22,14 +46,14 @@ export default function page() {
     skills: [],
   });
 
-  const transdormData = (data: any) => {
+  const transdormData = (data: FormData): TransformedData => {
     return {
       full_name: data.full_name,
       user_email: data.user_email,
       phone_number: parseInt(data.phone_number),
       location: data.location,
       position: data.position,
-      experience: parseInt(data.experience),
+      experience: data.experience,
       cover_letter: data.cover_letter,
       portfolio: data.portfolio,
       skills: data.skills,
@@ -60,16 +84,16 @@ export default function page() {
   const [createApplication, { isLoading, isError, isSuccess }] =
     useCreateApplicationMutation();
 
-    const [token, setToken] = useState("");
-    const { data: user } = useGetCurrentUserQuery(token);
-  
-    useEffect(() => {
-      const fetchToken = async () => {
-        const token = await getToken();
-        setToken(token);
-      };
-      fetchToken();
-    }, []);
+  const [token, setToken] = useState("");
+  const { data: user } = useGetCurrentUserQuery(token);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken();
+      setToken(token as string);
+    };
+    fetchToken();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -92,7 +116,7 @@ export default function page() {
         portfolio: "",
         skills: [],
       });
-      router.push('/')
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -197,7 +221,6 @@ export default function page() {
             <select
               id="position"
               name="position"
-              defaultValue=""
               value={formData.position}
               onChange={handleChange}
               required

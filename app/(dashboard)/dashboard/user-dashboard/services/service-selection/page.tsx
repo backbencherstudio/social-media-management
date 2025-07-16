@@ -1,27 +1,32 @@
 "use client";
 
 import { useState } from "react";
-
-import { Service, ServiceSelection } from "@/types/services";
-import { serviceOptions } from "./_components/data";
 import ServiceOption from "./_components/service-option";
 import ServiceSummary from "./_components/service-summary";
+import { useGetAllServicesQuery } from "@/src/redux/features/admin/services";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const ServiceSelectionPage = () => {
-  const [selectedServices, setSelectedServices] = useState<ServiceSelection[]>(
-    []
-  );
+  const { data } = useGetAllServicesQuery();
+  const [selectedServices, setSelectedServices] = useState<any>([]);
   const [promoCode, setPromoCode] = useState<string>("");
 
+  // console.log(selectedServices)
+
   const handleServiceSelect = (
-    service: Service,
+    service: any,
     isSelected: boolean,
-    plan?: string
+    post?: number,
+    price?: number,
+    serviceTierId?: string
   ) => {
+    // console.log(service?.name, isSelected, post, price, serviceTierId);
+
     if (isSelected) {
       // Add service if not already in the list
       const exists = selectedServices.some(
-        (item) => item.service.id === service.id
+        (item: any) => item.service.id === service.id
       );
 
       if (!exists) {
@@ -29,18 +34,21 @@ const ServiceSelectionPage = () => {
           ...selectedServices,
           {
             service,
-            plan: plan || null,
-            price: service.startingPrice,
+            name: service?.name,
+            serviceId: service?.id,
+            post: post || null,
+            price: price,
+            serviceTierId: serviceTierId,
           },
         ]);
       } else {
         setSelectedServices(
-          selectedServices.map((item) =>
+          selectedServices.map((item: any) =>
             item.service.id === service.id
               ? {
                   ...item,
-                  plan: plan || item.plan,
-                  price: plan ? getPlanPrice(service, plan) : item.price,
+                  post: post || item.post,
+                  price: price,
                 }
               : item
           )
@@ -49,32 +57,16 @@ const ServiceSelectionPage = () => {
     } else {
       // Remove service
       setSelectedServices(
-        selectedServices.filter((item) => item.service.id !== service.id)
+        selectedServices.filter((item: any) => item.service.id !== service.id)
       );
     }
   };
 
-  const handlePlanChange = (serviceId: string, planLabel: string) => {
-    setSelectedServices(
-      selectedServices.map((item) =>
-        item.service.id === serviceId
-          ? {
-              ...item,
-              plan: planLabel,
-              price: getPlanPrice(item.service, planLabel),
-            }
-          : item
-      )
-    );
-  };
-
-  const getPlanPrice = (service: Service, planLabel: string): number => {
-    const plan = service.plans.find((p) => p.label === planLabel);
-    return plan ? plan.basePrice : service.startingPrice;
-  };
-
   const calculateTotal = (): number => {
-    return selectedServices.reduce((total, item) => total + item.price, 0);
+    return selectedServices.reduce(
+      (total: any, item: any) => total + item.price,
+      0
+    );
   };
 
   const handlePromoCodeChange = (code: string) => {
@@ -101,22 +93,42 @@ const ServiceSelectionPage = () => {
             Which services are you interested in?
           </h2>
           <div className="space-y-[32px] mt-6 ">
-            {serviceOptions.map((service) => (
+            {data?.map((service) => (
               <ServiceOption
                 key={service.id}
                 service={service}
                 onSelect={handleServiceSelect}
-                onPlanChange={handlePlanChange}
                 isSelected={selectedServices.some(
-                  (item) => item.service.id === service.id
+                  (item: any) => item.service.id === service.id
                 )}
                 selectedPlan={
                   selectedServices.find(
-                    (item) => item.service.id === service.id
+                    (item: any) => item.service.id === service.id
                   )?.plan || null
                 }
               />
             ))}
+          </div>
+          <div
+            className={`${
+              !selectedServices || selectedServices.length === 0
+                ? "opacity-50 pointer-events-none"
+                : "block"
+            }`}
+          >
+            <Link href={"/dashboard/user-dashboard/payment-method"}>
+              <Button
+                className="bg-black text-white mt-5 py-5 w-full cursor-pointer"
+                disabled={!selectedServices || selectedServices.length === 0}
+              >
+                Payment
+              </Button>
+            </Link>
+            {(!selectedServices || selectedServices.length === 0) && (
+              <p className="text-sm text-gray-500 mt-2">
+                Please select at least one service to proceed to payment.
+              </p>
+            )}
           </div>
         </div>
       </div>

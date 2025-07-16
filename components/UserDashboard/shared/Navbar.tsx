@@ -14,6 +14,7 @@ import {
   removeToken,
 } from "@/app/(auth)/auth/_components/set-and-get-token";
 import { useRouter } from "next/navigation";
+import { useRole } from "@/hooks/useRole";
 
 interface NavbarProps {
   onMobileMenuToggle: () => void;
@@ -25,6 +26,9 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
+
+  // const {user} = useGetUser();
+  const { role, user } = useRole();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -41,7 +45,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSignOut =async () => {
+  const handleSignOut = async () => {
     await removeToken();
     await removeRole();
     router.push("/");
@@ -68,7 +72,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
 
           {/* <NotificationIcon  /> */}
           <Link
-            href={"/dashboard/notification"}
+            href={`/dashboard/${role}-dashboard/notification`}
             className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200 relative"
           >
             <IoNotificationsOutline className="w-6 h-6" />
@@ -107,16 +111,16 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
             >
               <div className="px-4 py-3 border-b border-gray-200">
                 <p className="text-sm font-medium transition-colors duration-200">
-                  Katie Sims
+                  {user?.name || "Rafi"}
                 </p>
                 <p className="text-sm text-gray-500 transition-colors duration-200">
-                  katie@example.com
+                  {user?.email || " rafi@example.com"}
                 </p>
               </div>
 
               <div className="py-1">
                 <Link
-                  href={"/dashboard/reseller-profile"}
+                  href={`/dashboard/${role}-dashboard/${role}-profile`}
                   className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200"
                 >
                   <RiUserLine className="w-4 h-4" />

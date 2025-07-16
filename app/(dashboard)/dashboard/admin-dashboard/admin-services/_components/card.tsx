@@ -10,6 +10,9 @@ export default function Card() {
   const { data } = useGetActiveServicesQuery();
   const { data: allServices } = useGetAllServicesQuery();
 
+  console.log(data ,"data")
+  // console.log(allServices, "allservice")
+
   // Calculate total sales from allServices
   const totalSales = allServices?.reduce((total, service) => {
     const saleAmount = service.sale || 0;

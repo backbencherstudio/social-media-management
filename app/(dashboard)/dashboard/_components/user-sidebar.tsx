@@ -12,7 +12,6 @@ import { FaBusinessTime } from "react-icons/fa6";
 
 // top menu items for purchased users
 const userTopMenuItems = [
-  ,
   { title: "Home", icon: Home, href: "/dashboard/user-dashboard" },
   {
     title: "Services",
@@ -30,13 +29,13 @@ const bottomMenuItems = [
       {
         title: "Profile/account",
         icon: ProfileIcon,
-        href: "/dashboard/user-dashboard/profile",
+        href: "/dashboard/user-dashboard/user-profile",
       },
-      {
-        title: "Payment",
-        icon: PaymentIcon,
-        href: "/dashboard/user-dashboard/payment-method",
-      },
+      // {
+      //   title: "Payment",
+      //   icon: PaymentIcon,
+      //   href: "/dashboard/user-dashboard/payment-method",
+      // },
       {
         title: "Invoices",
         icon: InvoicesIcon,
@@ -69,6 +68,7 @@ export default function UserSidebar({
       | (typeof userTopMenuItems)[0]
       | (typeof bottomMenuItems)[0]["subItems"][0];
   }) => {
+    if (!item) return null;
     const isActive = pathname === item.href;
     return (
       <Link

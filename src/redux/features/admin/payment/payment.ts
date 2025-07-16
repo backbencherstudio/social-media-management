@@ -47,4 +47,4 @@ const payment = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetPaymentQuery, useGetInvoicePdfQuery, useGetAllResellerPaymentQuery, useReleasePaymentMutation} = payment;
+export const { useGetPaymentQuery, useGetInvoicePdfQuery, useLazyGetInvoicePdfQuery, useGetAllResellerPaymentQuery, useReleasePaymentMutation} = payment;

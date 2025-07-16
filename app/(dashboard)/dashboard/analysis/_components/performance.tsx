@@ -141,7 +141,7 @@ const PerformanceCard = ({
   );
 };
 
-const ContentPerformanceCard = ({ title, performance }) => {
+const ContentPerformanceCard = ({ title, performance }: any) => {
   return (
     <div
       className={`flex flex-col items-center justify-center p-4 rounded-md gap-5 bg-white shadow border border-[#E9E9EA]`}

@@ -4,12 +4,9 @@ import { useState } from "react";
 import ResellersState from "./_components/ResellersState";
 import { ResellerTable } from "./_components/ResellersTable";
 import {
-  applicantsList,
   fakeResellersList,
   fakeResellerStats,
 } from "./fakeResellers";
-import CustomSelect from "../../_components/custom-select";
-import { Pagination } from "../_components/Pagination";
 import ApplicantTable from "./_components/ApplicantTabtle";
 import { useGetAllApplicationQuery } from "@/src/redux/features/admin/reseller/resellerApplicationApi";
 import { useGetAllResellersQuery } from "@/src/redux/features/admin/reseller/resellerApi";

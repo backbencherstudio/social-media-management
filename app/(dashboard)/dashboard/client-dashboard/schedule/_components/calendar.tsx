@@ -12,6 +12,9 @@ import { useGetScheduleCalendarQuery } from "@/src/redux/features/reseller/sched
 import { DateHelper } from "@/helper/date.helper";
 import { RootState } from "@/src/redux/store";
 import { useSelector } from "react-redux";
+import { useGetUserAllUpcomingPostQuery } from "@/src/redux/features/user/schedule/userSchedule";
+import ScheduleCalendarPicker from "./schedule-date-picker";
+import DateRangePicker from "./schedule-date-picker";
 
 const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
@@ -34,14 +37,20 @@ type EventType = {
   time: string;
 };
 
-const eventColors = {
+const eventColors: Record<
+  "instagram" | "facebook" | "linkedin" | "twitter",
+  string
+> = {
   instagram: "bg-pink-100 text-pink-600",
   facebook: "bg-blue-100 text-blue-600",
   linkedin: "bg-sky-100 text-sky-600",
   twitter: "bg-gray-200 text-gray-800",
 };
 
-const eventIcons = {
+const eventIcons: Record<
+  "instagram" | "facebook" | "linkedin" | "twitter",
+  React.ReactElement
+> = {
   instagram: <FaInstagram className="inline mr-1" />,
   facebook: <FaFacebook className="inline mr-1" />,
   linkedin: <FaLinkedin className="inline mr-1" />,
@@ -54,9 +63,17 @@ export default function Calendar() {
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [currentDate, setCurrentDate] = useState(new Date());
   const clientId = useSelector((state: RootState) => state.clientId.id);
-  const { data: scheduleCalendar } = useGetScheduleCalendarQuery(clientId);
+
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    new Date(2024, 9, 15),
+    new Date(2024, 9, 22),
+  ]);
+  const [startDate, endDate] = dateRange;
+
+  const { data: scheduleCalendar } = useGetUserAllUpcomingPostQuery(undefined);
 
   console.log(scheduleCalendar?.data);
+  console.log(dateRange);
 
   const calendarRef = useRef<any>(null);
 
@@ -64,7 +81,7 @@ export default function Calendar() {
     const clickedDate = event.event.start?.toISOString().split("T")[0];
     if (clickedDate) {
       const matching = scheduleCalendar?.data?.filter(
-        (e) => e.date === clickedDate
+        (e: any) => e.date === clickedDate
       );
       setSelectedEvents(matching);
       setIsModalOpen(true);
@@ -123,8 +140,10 @@ export default function Calendar() {
 
   function renderEventContent(eventInfo: any) {
     const type = eventInfo.event.extendedProps.type;
-    const colorClass = eventColors[type] || "bg-gray-100 text-gray-700";
-    const icon = eventIcons[type] || null;
+    const colorClass =
+      eventColors[type as keyof typeof eventColors] ||
+      "bg-gray-100 text-gray-700";
+    const icon = eventIcons[type as keyof typeof eventIcons] || null;
     return (
       <div
         className={`flex items-center gap-1 px-2 py-1 rounded ${colorClass} text-xs overflow-hidden`}
@@ -167,14 +186,26 @@ export default function Calendar() {
             <option value="timeGridDay">Day</option>
           </select>
 
-          <DatePickerDemo />
+          <div>
+            {/*
+             */}
+
+            {/* Date picker */}
+            <div className="z-100 relative">
+              <DateRangePicker
+                startDate={startDate}
+                endDate={endDate}
+                setDateRange={setDateRange}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Calendar */}
       <div className="overflow-x-auto">
         <FullCalendar
-          ref={calendarRef}
+          // ref={calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView={currentView}
           editable={false}

@@ -1,24 +1,48 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   useDeleteBlogMutation,
   useGetAllBlogsQuery,
+  usePublishBlogMutation,
 } from "@/src/redux/features/admin/blog/blog";
 import { Pagination } from "../_components/Pagination";
 import DeleteIcon from "@/public/incons/delete";
 import WriteIcon from "@/public/incons/write";
+import { getToken } from "@/app/(auth)/auth/_components/set-and-get-token";
+import { toast } from "sonner";
 
 export default function Blog() {
   const router = useRouter();
 
   const { data, isLoading } = useGetAllBlogsQuery();
   const [deleteBlog] = useDeleteBlogMutation();
-  console.log(data, "data");
+  const [publishBlog] = usePublishBlogMutation();
   const imageURL = "http://192.168.4.2:9000/social-media/";
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken();
+      setToken(token as string);
+    };
+    fetchToken();
+  }, []);
+
+  const handleDelete = async (id: string) => {
+    const data = {
+      id,
+      token,
+    };
+    const res = await deleteBlog(data);
+    if (res?.data?.blog_id) {
+      toast.success("Blog delete successfully");
+    }
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -45,7 +69,9 @@ export default function Blog() {
         {/* Create New Card */}
         <div className="flex items-center justify-center bg-white h-[420px] rounded-lg shadow-sm p-6 border-2 border-dotted border-gray-400">
           <button
-            onClick={() => router.push("/dashboard/blog/create-blog")}
+            onClick={() =>
+              router.push("/dashboard/admin-dashboard/blog/create-blog")
+            }
             className="px-4 py-2 border-2 border-dotted border-gray-400 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 cursor-pointer"
           >
             Create New +
@@ -53,19 +79,33 @@ export default function Blog() {
         </div>
 
         {/* Blog Post Cards */}
-        {paginatedDetails?.map((post) => (
+        {paginatedDetails?.map((post: any, idx:number) => (
           <div
-            key={post.id}
+            key={idx}
             className="bg-white h-[420px] rounded-lg shadow-sm overflow-hidden"
           >
             <div className="flex justify-between items-center">
               <div className="flex gap-4 my-5 px-6">
-                <Button className="bg-gray-100">Draft</Button>
-                <Button className="bg-black text-white">Publish Post</Button>
+                {post?.status === true ? (
+                  <Button className="bg-[#F6F8FA] text-black">Published</Button>
+                ) : (
+                  <div className="flex gap-4">
+                    <Button className="bg-gray-100">Draft</Button>
+                    <Button
+                      onClick={() => publishBlog(post.blog_id)}
+                      className="bg-black text-white cursor-pointer"
+                    >
+                      Publish Post
+                    </Button>
+                  </div>
+                )}
               </div>
+
               <div>
                 <div className="flex items-center gap-2 px-6">
-                  <Link href={`/dashboard/blog/${post.blog_id}`}>
+                  <Link
+                    href={`/dashboard/admin-dashboard/blog/${post.blog_id}`}
+                  >
                     <button
                       className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                       title="Edit post"
@@ -76,7 +116,7 @@ export default function Blog() {
                   <button
                     className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                     title="Delete post"
-                    onClick={() => deleteBlog(post.blog_id)}
+                    onClick={() => handleDelete(post.blog_id)}
                   >
                     <DeleteIcon className={"w-5 h-5 text-red-600"} />
                   </button>
@@ -86,7 +126,7 @@ export default function Blog() {
             {post?.contents &&
               (() => {
                 const firstMedia = post.contents.find(
-                  (content) => content.content_type === "media"
+                  (content: any) => content.content_type === "media"
                 );
                 return firstMedia ? (
                   <img
@@ -106,7 +146,7 @@ export default function Blog() {
               {post?.contents &&
                 (() => {
                   const firstText = post.contents.find(
-                    (content) => content.content_type === "text"
+                    (content: any) => content.content_type === "text"
                   );
                   return firstText ? (
                     <div

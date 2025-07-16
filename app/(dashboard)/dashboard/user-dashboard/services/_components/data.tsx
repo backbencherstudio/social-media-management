@@ -1,7 +1,7 @@
 import { Service } from '@/types/services';
 import { Mail, FileText, ExternalLink } from 'lucide-react';
 
-export const serviceOptions: Service[] = [
+export const serviceOptions = [
   {
     id: 'social-media',
     name: 'Social Media Posts',

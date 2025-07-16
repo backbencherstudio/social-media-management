@@ -4,29 +4,47 @@ import FacebookIcon from "@/public/incons/facebook";
 import React from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { FiCalendar } from "react-icons/fi";
-import { useGetAllUpcomingPostQuery } from "@/src/redux/features/reseller/schedule/schedule";
+import {
+  useGetAllUpcomingPostQuery,
+  useGetScheduleCalendarQuery,
+} from "@/src/redux/features/reseller/schedule/schedule";
 import { DateHelper } from "@/helper/date.helper";
 import ScheduleGalleryIcon from "@/public/incons/schedule-gallery";
 import { useDeletePostMutation } from "@/src/redux/features/reseller/posts/post";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/redux/store";
+import NoDataAvailable from "@/components/reusable/NoDataAvailable";
+import {
+  useDeleteUpcomingPostMutation,
+  useGetUserAllUpcomingPostQuery,
+} from "@/src/redux/features/user/schedule/userSchedule";
+import { toast } from "sonner";
 
 export default function UpcomingPost() {
+  const { data, error, isLoading } = useGetUserAllUpcomingPostQuery(undefined);
 
-  const clientId = useSelector((state: RootState) => state.clientId.id);
-  const { data: upcomingPosts } = useGetAllUpcomingPostQuery(clientId);
-  const [deletePost] = useDeletePostMutation();
+  const upcomingPosts = data?.data || [];
+
+  const [deleteUpcomingPost] = useDeleteUpcomingPostMutation();
 
   const handleDeletePost = async (id: string) => {
-    await deletePost({ id });
+    // console.log("Delete this", id);
+    const { data: res } = await deleteUpcomingPost(id);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error("There is something wrong !");
+    }
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)]">
-      <h2 className="text-xl font-bold text-gray-900 mb-6">Upcoming Posts</h2>
+      <h2 className="text-xl font-bold text-gray-900 mb-6">Upcoming Posts U</h2>
+
+      {upcomingPosts.length === 0 && <NoDataAvailable />}
 
       <div className="space-y-4">
-        {upcomingPosts?.data?.map((post: any) => (
+        {upcomingPosts?.map((post: any) => (
           <div
             key={post.id}
             className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50"

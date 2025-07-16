@@ -71,7 +71,7 @@ export default function Sent() {
         </thead>
         <tbody>
           {paginatedServices && paginatedServices.length > 0 ? (
-            paginatedServices.map((sentData) => (
+            paginatedServices.map((sentData: any) => (
               <tr
                 key={sentData.id}
                 className="border-b border-gray-100 hover:bg-gray-50"
@@ -101,7 +101,7 @@ export default function Sent() {
                 <td className="py-4 px-4">
                   <div className="flex items-center gap-4">
                     <Link
-                      href={`/dashboard/admin-support/${sentData.id}`}
+                      href={`/dashboard/admin-dashboard/admin-support/${sentData.id}`}
                       className="hover:text-gray-700 transition-colors"
                     >
                       <GrView className="w-4 h-4 md:w-5 md:h-5" />

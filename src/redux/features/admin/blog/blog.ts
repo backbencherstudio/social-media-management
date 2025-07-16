@@ -2,7 +2,7 @@ import { baseApi } from "@/src/redux/api/baseApi";
 
 const blog = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllBlogs: builder.query<any[], void>({
+    getAllBlogs: builder.query<any, void>({
       query: () => ({
         url: "/admin/blog",
         method: "GET",
@@ -16,25 +16,42 @@ const blog = baseApi.injectEndpoints({
       }),
     }),
     createBlog: builder.mutation({
-      query: (data) => ({
-        url: "/admin/blog",
-        method: "POST",
-        body: data,
-      }),
+      query: (data) => {
+        return {
+          url: "/admin/blog",
+          method: "POST",
+          body: data?.formData,
+        };
+      },
       invalidatesTags: ["blogs"],
     }),
     deleteBlog: builder.mutation({
-      query: (id) => ({
-        url: `/admin/blog/${id}`,
+      query: (data) => ({
+        url: `/admin/blog/${data?.id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["blogs"],
     }),
     updateBlog: builder.mutation({
-      query: ({ data, id }: { data: any; id: string }) => ({
+      query: ({
+        data,
+        id,
+        token,
+      }: {
+        data: any;
+        id: string;
+        token: string;
+      }) => ({
         url: `/admin/blog/${id}`,
         method: "PATCH",
         body: data,
+      }),
+      invalidatesTags: ["blogs"],
+    }),
+    publishBlog: builder.mutation({
+      query: (id: string) => ({
+        url: `/admin/blog/${id}/publish`,
+        method: "PATCH",
       }),
       invalidatesTags: ["blogs"],
     }),
@@ -47,4 +64,5 @@ export const {
   useCreateBlogMutation,
   useDeleteBlogMutation,
   useUpdateBlogMutation,
+  usePublishBlogMutation,
 } = blog;

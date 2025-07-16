@@ -9,10 +9,8 @@ import ComposeIcon from "@/public/incons/compose";
 import ScheduleIcon from "@/public/incons/schedule";
 import PostIcon from "@/public/incons/post";
 import AssetsIcon from "@/public/incons/assets";
-import SocialInboxIcon from "@/public/incons/social-inbox";
 import SocialsIcon from "@/public/incons/socials";
 import SupportIcon from "@/public/incons/support";
-
 import { useDispatch } from "react-redux";
 import { setId } from "@/src/redux/slice/clientIdSlice";
 import DashboardIcon from "@/public/incons/dashboard";
@@ -128,13 +126,21 @@ export default function ResellerSidebar({
     {
       label: "Content",
       items: [
-        { title: "Compose", icon: ComposeIcon, href: "/dashboard/reseller-dashboard/compose" },
+        {
+          title: "Compose",
+          icon: ComposeIcon,
+          href: "/dashboard/reseller-dashboard/compose",
+        },
         {
           title: "Schedule",
           icon: ScheduleIcon,
           href: "/dashboard/reseller-dashboard/schedule",
         },
-        { title: "Post", icon: PostIcon, href: "/dashboard/reseller-dashboard/posts" },
+        {
+          title: "Post",
+          icon: PostIcon,
+          href: "/dashboard/reseller-dashboard/posts",
+        },
         {
           title: "Assets",
           icon: AssetsIcon,
@@ -142,21 +148,21 @@ export default function ResellerSidebar({
         },
       ],
     },
-    {
-      label: "Activity",
-      items: [
-        // {
-        //   title: "Automotion",
-        //   icon: RiLayoutGridLine,
-        //   href: "/dashboard/reseller-dashboard/automation",
-        // },
-        {
-          title: "Social Inbox",
-          icon: SocialInboxIcon,
-          href: "/dashboard/reseller-dashboard/social-inbox",
-        },
-      ],
-    },
+    // {
+    //   label: "Activity",
+    //   items: [
+    //     {
+    //       title: "Automotion",
+    //       icon: RiLayoutGridLine,
+    //       href: "/dashboard/reseller-dashboard/automation",
+    //     },
+    //     {
+    //       title: "Social Inbox",
+    //       icon: SocialInboxIcon,
+    //       href: "/dashboard/reseller-dashboard/social-inbox",
+    //     },
+    //   ],
+    // },
     {
       label: "Configuration",
       items: [
@@ -187,8 +193,6 @@ export default function ResellerSidebar({
       name: client.name,
     })) || [];
 
-  // console.log(clients);
-
   const [selectedClientValue, setSelectedClientValue] = useState(
     clients[0]?.value || ""
   );
@@ -203,11 +207,11 @@ export default function ResellerSidebar({
   };
 
   const selectedClient = clients.find(
-    (client : any) => client.value === selectedClientValue
+    (client: any) => client.value === selectedClientValue
   );
 
   const clientInitials = selectedClient
-    ? selectedClient.name.substring(0, 2).toUpperCase()
+    ? selectedClient?.name?.substring(0, 2).toUpperCase()
     : "";
 
   return (

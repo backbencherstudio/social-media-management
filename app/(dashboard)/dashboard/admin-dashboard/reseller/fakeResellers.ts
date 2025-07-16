@@ -138,7 +138,7 @@ const portfolioSites = [
   "markethub.co"
 ];
 
-export const applicantsList: Applicant[] = Array.from({ length: 50 }, (_, i) => {
+export const applicantsList = Array.from({ length: 50 }, (_, i) => {
   const name = applicantNames[i % applicantNames.length];
   const position = positions[i % positions.length];
   const portfolio = `http://www.${portfolioSites[i % portfolioSites.length]}`;

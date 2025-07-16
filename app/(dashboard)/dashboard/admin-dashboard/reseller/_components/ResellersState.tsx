@@ -1,7 +1,7 @@
 
 
 
-export default function  ResellersState({data}) {
+export default function  ResellersState({data}: any) {
   const { activeResellers, totalTasks, commissionPaid, newResellerRequests } =
     data;
 

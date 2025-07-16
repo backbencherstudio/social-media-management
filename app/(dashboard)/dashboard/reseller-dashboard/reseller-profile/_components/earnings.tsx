@@ -8,14 +8,16 @@ export default function Earnings() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
 
-  const id = "RES_n461l81lt1q8naigks2170vm";
+  const id = "RES_td6d9pei2ly83rp5rp7d2giu";
   const { data } = useGetResellerEarningsQuery(id);
-  console.log(data);
+  // console.log(data);
+
+
 
   const earnings = data?.data?.completed_tasks || [];
-  console.log(earnings);
 
-  const handleViewDetails = (service) => {
+
+  const handleViewDetails = (service: any) => {
     setSelectedService(service);
     setIsModalOpen(true);
   };
@@ -51,7 +53,7 @@ export default function Earnings() {
           </tr>
         </thead>
         <tbody>
-          {earnings.map((task) => (
+          {earnings.map((task: any) => (
             <tr key={task.task_id}>
               {/* Client Name */}
               <td className="py-4 px-4">

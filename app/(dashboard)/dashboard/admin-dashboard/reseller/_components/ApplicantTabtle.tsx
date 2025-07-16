@@ -23,7 +23,7 @@ export default function ApplicantTable({
   setPeriodApplicant,
   orderStatusApplicant,
   setOrderStatusApplicant,
-}) {
+}: any) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
@@ -104,7 +104,7 @@ export default function ApplicantTable({
                 </td>
                 <td className="px-4 py-3 text-right">
                   <Link
-                    href={`/dashboard/reseller/${applicant.applicationId}`}
+                    href={`/dashboard/admin-dashboard/reseller/${applicant.applicationId}`}
                     className="text-sm text-blue-600 font-medium hover:underline"
                   >
                     View Details

@@ -19,14 +19,14 @@ export default function SendDesignFile() {
   const editorRef = useRef<any>(null);
   const [file, setFile] = useState<File | null>(null);
   const [mediaPreview, setMediaPreview] = useState<string | null>(null);
-  const [ postSendDesignfile ] = usePostSendDesignfileMutation();
+  const [postSendDesignfile] = usePostSendDesignfileMutation();
 
   // Handle media file change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setFile(file);
     if (file) {
-      setValue("files", e.target.files);
+      setValue("files", e.target.files ?? new DataTransfer().files);
       // Create preview for image files
       if (file.type.startsWith("image/")) {
         const reader = new FileReader();
@@ -39,7 +39,7 @@ export default function SendDesignFile() {
   };
 
   // Handle form submission
-  const onSubmit =async (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     const formData = new FormData();
     const editorContent = editorRef.current?.getContent();
 
@@ -48,7 +48,6 @@ export default function SendDesignFile() {
     if (file) {
       formData.append("files", file);
     }
-
 
     await postSendDesignfile(formData);
     toast.success("Design file sent successfully");
@@ -131,7 +130,10 @@ export default function SendDesignFile() {
       </div>
 
       {/* Submit Button */}
-      <Button type="submit" className="bg-black text-white px-8 py-6 cursor-pointer">
+      <Button
+        type="submit"
+        className="bg-black text-white px-8 py-6 cursor-pointer"
+      >
         Send File
       </Button>
     </form>

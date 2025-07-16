@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { useGetAllServicesQuery } from "@/src/redux/features/admin/services";
 
 const services = [
-  { id: "social-media-posts", title: "Posts" },
+  { id: "Short-Form Post and video", title: "Posts" },
   { id: "short-video", title: "Videos" },
   { id: "email-marketing", title: "Email" },
   { id: "blogs", title: "Blogs" },
@@ -24,25 +24,26 @@ const ReuseablePricing = () => {
 
   // Simplified defaultValue logic
   const getDefaultValue = () => {
-    if (!slug) return "social-media-posts";
+    if (!slug) return "Short-Form Post and video";
 
     switch (slug) {
       case "short-video":
         return "short-video";
-      case "social-media-posts":
-        return "social-media-posts";
+      case "Short-Form Post and video":
+        return "Short-Form Post and video";
       case "email-marketing":
         return "email-marketing";
       case "blogs":
         return "blogs";
       default:
-        return "social-media-posts";
+        return "Short-Form Post and video";
     }
   };
 
   const [activeTab, setActiveTab] = useState(getDefaultValue());
 
-  const { data: serviceData, isLoading } = useGetAllServicesQuery();
+  const { data: serviceData } = useGetAllServicesQuery();
+
 
   // Filter services based on activeTab
   const filteredService = React.useMemo(() => {
@@ -51,7 +52,6 @@ const ReuseablePricing = () => {
       (service) => service?.category === activeTab
     );
   }, [serviceData, activeTab]);
-  
 
 
   return (
@@ -76,17 +76,17 @@ const ReuseablePricing = () => {
         </TabsList>
 
         <div className="w-full overflow-x-hidden">
-          <TabsContent value="social-media-posts">
-            <AffordableMarketingServices  />
+          <TabsContent value="Short-Form Post and video">
+            <AffordableMarketingServices service={filteredService}  />
           </TabsContent>
           <TabsContent value="short-video">
-            <Video   />
+            <Video  service={filteredService}  />
           </TabsContent>
           <TabsContent value="email-marketing">
-            <Email  />
+            <Email service={filteredService}  />
           </TabsContent>
           <TabsContent value="blogs">
-            <Blogs  />
+            <Blogs service={filteredService}  />
           </TabsContent>
         </div>
       </Tabs>

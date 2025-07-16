@@ -1,5 +1,4 @@
 import React from "react";
-import Banner from "./_components/_banner";
 import Pricing from "./_components/pricing";
 import BusinessTrust from "../_components/business-trust";
 import Packages from "./_components/packages";

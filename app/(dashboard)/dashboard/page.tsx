@@ -7,15 +7,7 @@ import AdminDashboard from "./admin-dashboard/page";
 import ResellerDashboard from "./reseller-dashboard/page";
 import UserDashboard from "./client-dashboard/page";
 import UserHome from "./user-dashboard/page";
-
-export const ROLE = {
-  USER: "user",
-  CLIENT: "client",
-  RESELLER: "reseller",
-  ADMIN: "admin",
-} as const;
-
-export type Role = (typeof ROLE)[keyof typeof ROLE];
+import { ROLE } from "@/lib/constants";
 
 export default function DashboardHome() {
   const [token, setToken] = useState("");
@@ -25,7 +17,7 @@ export default function DashboardHome() {
   useEffect(() => {
     const fetchToken = async () => {
       const token = await getToken();
-      setToken(token);
+      setToken(token as string);
     };
     fetchToken();
   }, []);

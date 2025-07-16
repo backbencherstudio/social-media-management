@@ -38,6 +38,8 @@ const userRole = baseApi.injectEndpoints({
       invalidatesTags: ["user-role-management"],
     }),
   }),
+  overrideExisting: true,
 });
 
 export const { useGetUserRoleQuery, useGetAllUserQuery, useInviteTeamMemberMutation, useUpdateUserAndRoleMutation } = userRole;
+       

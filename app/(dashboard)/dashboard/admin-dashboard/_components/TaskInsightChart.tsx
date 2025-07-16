@@ -163,7 +163,7 @@ function TopPerformingServices() {
       </div>
 
       <div className="space-y-4 sm:space-y-5">
-        {services?.map((service, index) => {
+        {services?.map((service: any, index: number) => {
           const width = (service.total_amount / maxAmount) * 100;
           // console.log(width)
           const widthPercentage = `${width.toFixed(2)}%`;
