@@ -1,17 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import ChatSidebar from "./chat-sidebar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import StatusBar from "./status-bar";
-import { useGetAllClientConversationQuery } from "@/src/redux/features/admin/help-and-support/support";
-import { C } from "@fullcalendar/core/internal-common";
+import {
+  useGetAllAdminsQuery,
+  useGetAllClientConversationQuery,
+  useGetSingleUserMessageQuery,
+} from "@/src/redux/features/admin/help-and-support/support";
+import SendIcon from "@/public/incons/sendIcon";
+import ChatHeader from "./chat-header";
+import Loader from "../Loader";
+import { Skeleton } from "@/components/ui/skeleton";
+import GroupedMessages from "./group-message";
 
 interface ChatInterfaceProps {
   userId: string;
   isAdmin: boolean;
+  userName: string;
 }
 
 interface Message {
@@ -28,7 +34,11 @@ interface User {
   unreadCount?: number;
 }
 
-export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
+export default function ChatInterface({
+  userId,
+  isAdmin,
+  userName,
+}: ChatInterfaceProps) {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [status, setStatus] = useState<
     "disconnected" | "connecting" | "connected"
@@ -38,12 +48,44 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
   const [messagesByUser, setMessagesByUser] = useState<
     Record<string, Message[]>
   >({});
+  const clientIdRef = useRef("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [messageInput, setMessageInput] = useState("");
-
+  const [loadingMessages, setLoadingMessages] = useState(false);
   const { data: allClient, isLoading } =
     useGetAllClientConversationQuery(undefined);
+  const { data: singleUserMessage, refetch } = useGetSingleUserMessageQuery(
+    clientIdRef.current
+  );
+  const { data: allAdmin } = useGetAllAdminsQuery(undefined);
 
-    
+  const { data: singleUserMessageClient, refetch: refetchClient } =
+    useGetSingleUserMessageQuery(userId);
+
+  useEffect(() => {
+    if (userId) {
+      setLoadingMessages(true);
+      // Fetch the messages when the component loads
+      refetchClient()
+        .then(() => {
+          const formattedMessages = formatMessages(
+            singleUserMessageClient?.messages || []
+          );
+          setMessagesByUser((prev) => ({
+            ...prev,
+            [userId]: formattedMessages, // Use userId for client-specific messages
+          }));
+        })
+        .finally(() => setLoadingMessages(false));
+    }
+  }, [userId, singleUserMessageClient, refetchClient]); // Only refetch when userId changes
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      // This will ensure that the chat scrolls to the bottom whenever the messages change
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messagesByUser]); // This ensures scroll happens whenever messagesByUser is updated
 
   useEffect(() => {
     const newSocket = io(
@@ -55,7 +97,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
 
     newSocket.on("connect", () => {
       setStatus("connected");
-      isAdmin //admin check
+      isAdmin
         ? newSocket.emit("register_admin", userId)
         : newSocket.emit("register_user", userId);
     });
@@ -63,84 +105,93 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     newSocket.on("disconnect", () => setStatus("disconnected"));
     newSocket.on("connect_error", () => setStatus("disconnected"));
 
-    newSocket.on("admin_registered", (data: { success: boolean }) => {
+    newSocket.on("admin_registered", (data) => {
       if (data.success) console.log("Admin registered successfully");
     });
-    //user registration
-    newSocket.on(
-      "user_registered",
-      (data: { success: boolean; conversationId?: string; userId: string }) => {
-        if (data.success && data.conversationId) {
-          setActiveUserId(data?.userId);
-        }
+
+    // User registration
+    newSocket.on("user_registered", (data) => {
+      if (data.success && data.conversationId) {
+        setActiveUserId(data?.userId);
       }
-    );
-    // Fetch initial users
-    newSocket.on("new_conversation", (data: { userId: string }) => {
+    });
+
+    // New conversation
+    newSocket.on("new_conversation", (data) => {
       setUsers((prev) => {
         if (!prev.some((u) => u.id === data.userId)) {
-          return [
-            ...prev,
-            { id: data.userId, name: `User ${data.userId.slice(0, 6)}...` },
-          ];
+          return [...prev, { id: data.userId, name: `${data?.username}` }];
         }
         return prev;
       });
     });
-    //emmit messages from user to admin
-    newSocket.on(
-      "message_from_user",
-      (data: { userId: string; message: string }) => {
-        const newMessage: Message = {
-          id: Date.now().toString(),
-          sender: `User ${data.userId.slice(0, 6)}...`,
-          text: data.message,
-          timestamp: new Date(),
-          type: "received",
-        };
 
+    // Emit messages from user to admin
+    newSocket.on("message_from_user", (data) => {
+      const newMessage: Message = {
+        id: Date.now().toString(),
+        sender: `${data?.username}`,
+        text: data.message,
+        timestamp: new Date(),
+        type: "received",
+      };
+
+      setMessagesByUser((prev) => {
+        const existing = prev[data.userId] || [];
+        return { ...prev, [data.userId]: [...existing, newMessage] };
+      });
+
+      // Update unread count for user if not active
+      if (activeUserId !== data.userId) {
+        setUsers((prev) =>
+          prev.map((user) =>
+            user.id === data.userId
+              ? { ...user, unreadCount: (user.unreadCount || 0) + 1 }
+              : user
+          )
+        );
+      }
+    });
+
+    // Emit messages from admin to user
+    newSocket.on("message_from_admin", (data) => {
+      const newMessage: Message = {
+        id: Date.now().toString(),
+        sender: "Admin",
+        text: data.message,
+        timestamp: data.timestamp ? new Date(data.timestamp) : new Date(),
+        type: "received",
+      };
+
+      if (activeUserId) {
         setMessagesByUser((prev) => {
-          const existing = prev[data.userId] || [];
-          return { ...prev, [data.userId]: [...existing, newMessage] };
+          const existing = prev[activeUserId] || [];
+          return { ...prev, [activeUserId]: [...existing, newMessage] };
         });
-
-        if (activeUserId !== data.userId) {
-          setUsers((prev) =>
-            prev.map((user) =>
-              user.id === data.userId
-                ? { ...user, unreadCount: (user.unreadCount || 0) + 1 }
-                : user
-            )
-          );
-        }
       }
-    );
+    });
 
-    // emit messages from admin to user
-    newSocket.on(
-      "message_from_admin",
-      (data: { message: string; timestamp?: string }) => {
-        const newMessage: Message = {
-          id: Date.now().toString(),
-          sender: "Admin",
-          text: data.message,
-          timestamp: data.timestamp ? new Date(data.timestamp) : new Date(),
-          type: "received",
-        };
+    // Listen for messages from other admins
+    newSocket.on("admin_message_received", (data) => {
+      const newAdminMessage: Message = {
+        id: Date.now().toString(),
+        sender: `Admin ${data.senderId}`,
+        text: data.message,
+        timestamp: new Date(data.timestamp),
+        type: "received",
+      };
 
-        if (activeUserId) {
-          setMessagesByUser((prev) => {
-            const existing = prev[activeUserId] || [];
-            return { ...prev, [activeUserId]: [...existing, newMessage] };
-          });
-        }
-      }
-    );
+      setMessagesByUser((prev) => {
+        const existing = prev[data.userId] || [];
+        return { ...prev, [data.userId]: [...existing, newAdminMessage] };
+      });
+    });
 
-    newSocket.on("user_disconnected", (userId: string) => {
+    // User disconnected
+    newSocket.on("user_disconnected", (userId) => {
       setUsers((prev) =>
         prev.map((user) =>
-          user.id === userId ? { ...user, isOnline: true } : user
+          user.id === userId ? { ...user, isOnline: false } : user
         )
       );
     });
@@ -148,7 +199,7 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
     return () => {
       newSocket.disconnect();
     };
-  }, [userId, isAdmin, activeUserId]);
+  }, [userId, isAdmin, activeUserId]); // Dependencies to re-run the effect
 
   // Send message function
   const sendMessage = () => {
@@ -172,7 +223,9 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
         if (data.success) {
           const newMessage: Message = {
             id: Date.now().toString(),
-            sender: "You",
+            sender: isAdmin
+              ? "Admin"
+              : singleUserMessage?.creator?.name || "You",
             text: messageInput,
             timestamp: new Date(),
             type: "sent",
@@ -188,44 +241,72 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
       });
   };
 
-  const formatMessages = (messages: any[], userId: string): Message[] => {
-    return messages?.map((msg: any) => ({
-      id: msg?.id || Date.now().toString(),
-      sender: msg?.sender_id === userId ? msg?.sender_id : "you", // Customize sender logic
-      text: msg?.message || msg?.text, // Use the correct field for the message content
-      timestamp: new Date(msg?.created_at), // Format timestamp correctly
-      type: msg?.sender_id === userId ? "received" : "sent", // Determine message type
-    }));
+  const formatMessages = (messages: any[]): Message[] => {
+    return messages?.map((msg: any) => {
+      // Check if the message is sent by an admin
+      const isAdmin = allAdmin?.data?.data?.some(
+        (admin: any) => admin?.id === msg?.sender_id
+      );
+      return {
+        id: msg?.id || Date.now().toString(),
+
+        sender: isAdmin ? "Admin" : singleUserMessage?.creator?.name || "You", // If the sender is an admin, set sender to "Admin"
+        text: msg?.message || msg?.text,
+        timestamp: new Date(msg?.created_at),
+        // Messages from the user or admin will be on the right side (sent)
+        // Other messages will be on the left side (received)
+        type: isAdmin || msg?.sender_id === userId ? "sent" : "received", // Sent messages from user or admin
+      };
+    });
   };
 
-  //user selection handler
   const handleUserSelect = async (userId: string) => {
-    setActiveUserId(userId);
+    setLoadingMessages(true); // Start loading messages
+
+    clientIdRef.current = userId;
     setUsers((prev) =>
       prev.map((user) =>
         user.id === userId ? { ...user, unreadCount: 0 } : user
       )
     );
+  };
 
+  const updatedData = useCallback(async () => {
     try {
-      const existingUser = allClient?.filter(
-        (client: any) => client?.creator_id === userId
-      );
+      // Refetch messages only after the clientId has been fully updated
+      await refetch();
+
       const formattedMessages = formatMessages(
-        existingUser[0]?.messages,
-        userId
+        singleUserMessage?.messages || []
       );
-      setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
+
+      setMessagesByUser((prev) => {
+        const updatedMessages = {
+          ...prev,
+          [clientIdRef.current]: formattedMessages, // Use clientIdRef.current to update
+        };
+        return updatedMessages;
+      });
+
+      setActiveUserId(clientIdRef.current); // Use clientIdRef.current for active user
     } catch (error) {
       console.error("Error loading messages", error);
+    } finally {
+      setLoadingMessages(false); // Stop loading messages
     }
-  };
+  }, [clientIdRef.current, refetch, singleUserMessage]); // Added missing dependencies
+
+  useEffect(() => {
+    if (clientIdRef.current) {
+      updatedData(); // Trigger updatedData when clientIdRef.current changes
+    }
+  }, [clientIdRef.current, updatedData, loadingMessages]); // Trigger useEffect when clientIdRef.current or updatedData changes
 
   useEffect(() => {
     if (!isLoading && allClient?.length > 0) {
       const updatedUsers = allClient.map((client: any) => ({
         id: client.creator_id,
-        name: `User ${client.creator_id.slice(0, 6)}...`,
+        name: `${client?.creator?.name}`,
         unreadCount: 0,
         isOnline: true,
       }));
@@ -239,92 +320,75 @@ export default function ChatInterface({ userId, isAdmin }: ChatInterfaceProps) {
       const existingUser = allClient?.filter(
         (client: any) => client?.creator_id === userId
       );
-        const formattedMessages = formatMessages(
-        existingUser[0]?.messages,
-        userId
-      );
-        setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
-      }
+      const formattedMessages = formatMessages(existingUser[0]?.messages);
+      setMessagesByUser((prev) => ({ ...prev, [userId]: formattedMessages }));
+    }
   }, [allClient, isLoading]);
 
-  if (isLoading) {
-    return <p>Loading.............</p>;
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="h-screen ">
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
 
   const currentMessages = activeUserId
     ? messagesByUser[activeUserId] || []
     : [];
 
-  console.log(currentMessages, "crbt");
-
   return (
-    <div className="flex flex-col h-[calc(100vh-100px)]">
-      <StatusBar status={status} userId={userId} isAdmin={isAdmin} />
+    <div className="flex flex-col h-[calc(100vh-120px)] font-inter">
+      {/* <StatusBar status={status} userId={userId} isAdmin={isAdmin} /> */}
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden gap-5 ">
         {isAdmin && !isLoading && (
-          <ChatSidebar
-            users={users}
-            activeUserId={activeUserId}
-            onUserSelect={handleUserSelect}
-          />
+          <div className=" flex-1 xl:max-w-[360px] lg:max-w-[35%]">
+            <ChatSidebar
+              users={users}
+              activeUserId={activeUserId}
+              onUserSelect={handleUserSelect}
+            />
+          </div>
         )}
 
-        <div className="flex-1 flex flex-col bg-white">
-          <div className="p-4 border-b">
-            <h3 className="font-semibold">
-              {isAdmin
-                ? activeUserId
-                  ? `Chat with User ${activeUserId.slice(0, 6)}...`
-                  : "Select a user to chat"
-                : "Chat with Admin"}
-            </h3>
-          </div>
+        <div className="flex-1 flex flex-col bg-white rounded-[12px]">
+          <ChatHeader
+            isAdmin={isAdmin}
+            users={users}
+            activeUserId={activeUserId}
+          />
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {currentMessages?.length === 0 ? (
+          <div className="flex-1 overflow-y-auto hide-scrollbar p-4 space-y-2">
+            {loadingMessages ? (
+              <p className="text-center text-gray-500">Loading messages...</p>
+            ) : currentMessages?.length === 0 ? (
               <p className="text-center text-gray-500">No messages yet</p>
             ) : (
-              currentMessages?.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${
-                    message.type === "sent" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`max-w-xs md:max-w-md rounded-lg px-4 py-2 ${
-                      message.type === "sent"
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-100 text-gray-800"
-                    }`}
-                  >
-                    <p className="font-medium">{message.sender}</p>
-                    <p>{message.text}</p>
-                    <p className="text-xs text-right mt-1">
-                      {message.timestamp.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              ))
+              <div>
+                <GroupedMessages messages={currentMessages} isAdmin={isAdmin} />
+              </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-4 border-t">
+          <div className="p-4">
             <div className="flex gap-2">
-              <Input
+              <input
                 value={messageInput}
                 onChange={(e) => setMessageInput(e.target.value)}
                 placeholder="Type your message..."
                 disabled={!activeUserId}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                className="border border-[#DFE1E7] flex-1 gap-2 rounded-lg text-sm text-[#777980] p-3.5 focus:outline-0 focus:border-gray-500"
               />
-              <Button onClick={sendMessage} disabled={!messageInput.trim()}>
-                Send
-              </Button>
+              <button
+                onClick={sendMessage}
+                disabled={!messageInput.trim()}
+                className={`h-12 w-12  bg-[#070707] text-white rounded-lg text-xs sm:text-sm flex items-center justify-center hover:bg-gray-900 active:bg-gray-800 transition-colors cursor-pointer`}
+              >
+                <SendIcon />
+              </button>
             </div>
           </div>
         </div>

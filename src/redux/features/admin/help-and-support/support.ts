@@ -52,6 +52,18 @@ const helpAndSupport = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getSingleUserMessage: builder.query({
+      query: (id:string) => ({
+        url: `/messages/user/${id}`,
+        method: "GET",
+      }),
+    }),
+    getAllAdmins: builder.query({
+      query: () => ({
+        url: `/auth/admins`,
+        method: "GET",
+      }),
+    }),
     
   }),
 });
@@ -63,5 +75,7 @@ export const {
   useGetSingleInboxQuery,
   useCreateNewEmailMutation,
   useSendAllEmailMutation,
-  useGetAllClientConversationQuery
+  useGetAllClientConversationQuery,
+  useGetSingleUserMessageQuery,
+  useGetAllAdminsQuery,
 } = helpAndSupport;
