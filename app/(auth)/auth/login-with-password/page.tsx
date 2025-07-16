@@ -17,11 +17,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function LoginWithPassword() {
   const [formData, setFormData] = useState({
     email: "",
-    password: "12345678",
+    password: "",
   });
   const [loginWithPassword, { isLoading }] = useLoginWithPasswordMutation();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirectPath");
+  // const searchParams = useSearchParams();
+  // const redirect = searchParams.get("redirectPath");
   const router = useRouter();
 
 
@@ -34,9 +34,9 @@ export default function LoginWithPassword() {
       await setRole(res)
 
       toast.success("Login successful");
-      if (redirect) {
-        return router.push(redirect);
-      }
+      // if (redirect) {
+      //   return router.push(redirect);
+      // }
       router.push("/");
     }
   };
