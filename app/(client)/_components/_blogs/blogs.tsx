@@ -18,12 +18,12 @@ import { Service, ServiceTier } from "@/types/services";
 
 export default function Blogs({ service }: any) {
   const { data } = useGetSingleServiceQuery(service?.id);
-  console.log(data)
+  console.log(data);
 
   // Extract max_post values from service_tiers
-  const posts = data?.service_tiers?.map((tier: ServiceTier) => tier.max_post) || [
-    10, 15, 20, 25, 30, 35, 40,
-  ];
+  const posts = data?.service_tiers?.map(
+    (tier: ServiceTier) => tier.max_post
+  ) || [10, 15, 20, 25, 30, 35, 40];
   const [selectedPosts, setSelectedPosts] = useState(posts[2] || 20); // Default to third option or 20
 
   // Calculate base price based on selected posts
@@ -251,7 +251,7 @@ function SocialPlatforms({ platforms }: { platforms: any[] }) {
 function CheckoutButtons() {
   return (
     <>
-      <Link href={"/dashboard/services/service-selection"}>
+      <Link href={"/dashboard/user-dashboard/services/service-selection"}>
         <Button className="w-full bg-black text-white mb-4">Checkout</Button>
       </Link>
       <Button variant="outline" className="w-full">
@@ -260,4 +260,3 @@ function CheckoutButtons() {
     </>
   );
 }
-

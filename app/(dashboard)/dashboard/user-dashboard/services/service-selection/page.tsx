@@ -66,7 +66,7 @@ const ServiceSelectionPage = () => {
     return selectedServices.reduce(
       (total: any, item: any) => total + item.price,
       0
-    );
+    ); 
   };
 
   const handlePromoCodeChange = (code: string) => {

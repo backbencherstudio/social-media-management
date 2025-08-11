@@ -64,7 +64,7 @@ export function AssignOrderModal({
       <DialogContent className="sm:max-w-[500px] bg-white border-none">
         <DialogHeader>
           <DialogTitle className="text-[24px]">
-            Assign Order #{orderId}
+            Assign Order 
           </DialogTitle>
         </DialogHeader>
 

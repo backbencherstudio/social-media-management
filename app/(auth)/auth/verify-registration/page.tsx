@@ -15,23 +15,23 @@ import { toast } from "sonner";
 export default function VerifyRegistration() {
   const [verifyRegistration, { isLoading }] = useVerifyRegistrationMutation();
   const router = useRouter();
-  // const query = useSearchParams();  // Get the query parameters from the URL
+  const query = useSearchParams();  // Get the query parameters from the URL
   const [password, setpassword] = useState("");
 
   // Handle form submission to verify registration
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Extract the token from the query parameters
-    // const res = await verifyRegistration({
-    //   data: { password },
-    //   token: query?.get("token"),  // Retrieve the token from the query
-    // });
+    const res = await verifyRegistration({
+      data: { password },
+      token: query?.get("token"),  // Retrieve the token from the query
+    });
 
     // Handle success
-    // if (res?.data?.success) {
-    //   toast.success("Registration verified successfully");
-    //   router.push("/auth/login-with-password"); // Redirect to login page after successful verification
-    // }
+    if (res?.data?.success) {
+      toast.success("Registration verified successfully");
+      router.push("/auth/login-with-password"); // Redirect to login page after successful verification
+    }
   };
 
   return (
