@@ -1,7 +1,7 @@
 "use client";
 
 import CustomImage from "@/components/reusable/CustomImage";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import loginImg from "@/public/login.png";
 import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
@@ -14,13 +14,14 @@ import SetCookies, { setRole } from "../_components/set-and-get-token";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginWithPassword() {
+
+ 
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [loginWithPassword, { isLoading }] = useLoginWithPasswordMutation();
-  // const searchParams = useSearchParams();
-  // const redirect = searchParams.get("redirectPath");
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -77,7 +78,7 @@ export default function LoginWithPassword() {
                   <Input
                     type="email"
                     placeholder="Enter work email"
-                    className="h-12"
+                    className="h-12 focus-visible:ring-0"
                     value={formData.email}
                     onChange={handleChange}
                   />
@@ -86,7 +87,7 @@ export default function LoginWithPassword() {
                   <Input
                     type="password"
                     placeholder="Password"
-                    className="h-12"
+                    className="h-12 focus-visible:ring-0"
                     value={formData.password}
                     onChange={handleChange}
                   />

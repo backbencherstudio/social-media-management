@@ -13,7 +13,7 @@ interface ChatHeaderProps {
   users: User[];
 }
 
-const ChatHeader: React.FC<ChatHeaderProps> = ({ isAdmin, activeUserId, users }) => {
+const ChatHeader = ({ isAdmin, activeUserId, users }: any) => {
   console.log(users,"usersssssssss")
   return (
     <div className="p-4">
@@ -32,7 +32,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ isAdmin, activeUserId, users })
               </span>
               <div className="flex flex-col gap-1">
                 <span className="text-[#141416] text-sm font-medium leading-[150%] tracking-[.28px]">
-                  {users.find((u) => u.id === activeUserId)?.name || ""}
+                  {users.find((u: any) => u.id === activeUserId)?.name || ""}
                 </span>
                 <span className="font-serotiva text-xs text-[#4A4C56] font-medium leading-[160%]">
                   Response time: 5 minutes

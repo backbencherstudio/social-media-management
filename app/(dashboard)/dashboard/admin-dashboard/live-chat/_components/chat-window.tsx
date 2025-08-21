@@ -5,7 +5,6 @@ import { Message, User } from "../types";
 import { ChatMessages } from "./chat-message";
 import { ChatInput } from "./chat-input";
 import ChatHeader from "./chat-header";
-
 // import { useSession } from "next-auth/react";
 
 interface ChatWindowProps {

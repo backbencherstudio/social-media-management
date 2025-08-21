@@ -17,6 +17,9 @@ const CheckoutForm = () => {
   const elements = useElements();
 
   const [createPayment] = usePaymentServiceMutation();
+
+  // console.log(createPayment);
+
   const services = useSelector((state: any) => state.payment.services);
   const lastService = services[services.length - 1];
 
@@ -25,28 +28,12 @@ const CheckoutForm = () => {
     service_tier_id: service.serviceTierId,
   }));
 
-  useEffect(() => {
-    const createPaymentIntentAsync = async () => {
-      if (orderItems && orderItems.length > 0) {
-        const order = {
-          pakage_name: "Pro Package",
-          order_items: orderItems,
-        };
-        try {
-          if (order) {
-            console.log(order);
-            const res = await createPayment(order);
-            setClientSecret(res?.data?.clientSecret);
-          }
-          // If your backend returns clientSecret, set it here:
-          // setClientSecret(res.data?.clientSecret || res.clientSecret);
-        } catch (err) {
-          console.error("Error creating payment intent:", err);
-        }
-      }
-    };
-    createPaymentIntentAsync();
-  }, []);
+  // useEffect(() => {
+  //   const createPaymentIntentAsync = async () => {
+
+  //   };
+  //   createPaymentIntentAsync();
+  // },);
 
   const totalAmount = lastService?.reduce(
     (total: any, item: any) => total + item.price,
@@ -60,22 +47,32 @@ const CheckoutForm = () => {
   // Create the payment intent using RTK Query when the component loads
   const [createPaymentIntent, { data, error }] = usePaymentServiceMutation();
 
-  useEffect(() => {
-    const fetchPaymentIntent = async () => {
-      try {
-        // Uncomment and implement this with your backend
-        // const response = await createPaymentIntent(services).unwrap();
-        // setClientSecret(response.clientSecret);
-      } catch (err) {
-        console.error("Error creating payment intent:", err);
-      }
-    };
-    if (services.length > 0) {
-      fetchPaymentIntent();
-    }
-  }, [services]);
+  // useEffect(() => {
+  //   const fetchPaymentIntent = async () => {
+  //     try {
+  //       // Uncomment and implement this with your backend
+  //       // const response = await createPaymentIntent(services).unwrap();
+  //       // setClientSecret(response.clientSecret);
+  //     } catch (err) {
+  //       console.error("Error creating payment intent:", err);
+  //     }
+  //   };
+  //   if (services.length > 0) {
+  //     fetchPaymentIntent();
+  //   }
+  // }, [services]);
 
   const onSubmit = async () => {
+    const order = {
+      pakage_name: "Pro Package",
+      order_items: orderItems,
+    };
+
+    console.log(order);
+    const res = await createPayment(order);
+    setClientSecret(res?.data?.clientSecret);
+    console.log(res?.data?.clientSecret);
+
     if (!stripe || !elements) {
       return;
     }
@@ -83,6 +80,7 @@ const CheckoutForm = () => {
     if (card === null) {
       return;
     }
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,
@@ -91,17 +89,18 @@ const CheckoutForm = () => {
       toast.error(error.message);
     } else {
       // toast.success("Payment Done", paymentMethod?.id)
-      console.log(paymentMethod);
+      console.log("paymentMethod", paymentMethod);
     }
 
     const { error: confirmError, paymentIntent } =
-      await stripe.confirmCardPayment(clientSecret, {
+      await stripe.confirmCardPayment(res?.data?.clientSecret, {
         payment_method: {
           card: card,
         },
       });
     if (confirmError) {
-      toast.error("Payment failed:");
+      console.log(confirmError);
+      toast.error("Payment failed");
       // console.log("Payment failed:", confirmError.message);
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       toast.success("Payment successful!");
@@ -110,6 +109,10 @@ const CheckoutForm = () => {
     }
     setLoading(false);
   };
+
+  if(!totalAmount){
+    router.push("/dashboard/user-dashboard/services/service-selection");
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
