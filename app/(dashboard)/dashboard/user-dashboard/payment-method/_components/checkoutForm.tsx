@@ -17,6 +17,9 @@ const CheckoutForm = () => {
   const elements = useElements();
 
   const [createPayment] = usePaymentServiceMutation();
+
+  // console.log(createPayment);
+
   const services = useSelector((state: any) => state.payment.services);
   const lastService = services[services.length - 1];
 
@@ -25,28 +28,12 @@ const CheckoutForm = () => {
     service_tier_id: service.serviceTierId,
   }));
 
-  useEffect(() => {
-    const createPaymentIntentAsync = async () => {
-      if (orderItems && orderItems.length > 0) {
-        const order = {
-          pakage_name: "Pro Package",
-          order_items: orderItems,
-        };
-        try {
-          if (order) {
-            console.log(order);
-            const res = await createPayment(order);
-            setClientSecret(res?.data?.clientSecret);
-          }
-          // If your backend returns clientSecret, set it here:
-          // setClientSecret(res.data?.clientSecret || res.clientSecret);
-        } catch (err) {
-          console.error("Error creating payment intent:", err);
-        }
-      }
-    };
-    createPaymentIntentAsync();
-  }, []);
+  // useEffect(() => {
+  //   const createPaymentIntentAsync = async () => {
+
+  //   };
+  //   createPaymentIntentAsync();
+  // },);
 
   const totalAmount = lastService?.reduce(
     (total: any, item: any) => total + item.price,
@@ -76,6 +63,16 @@ const CheckoutForm = () => {
   }, [services]);
 
   const onSubmit = async () => {
+    const order = {
+      pakage_name: "Pro Package",
+      order_items: orderItems,
+    };
+
+    console.log(order);
+    const res = await createPayment(order);
+    setClientSecret(res?.data?.clientSecret);
+    console.log(res?.data?.clientSecret)
+
     if (!stripe || !elements) {
       return;
     }
@@ -95,13 +92,14 @@ const CheckoutForm = () => {
     }
 
     const { error: confirmError, paymentIntent } =
-      await stripe.confirmCardPayment(clientSecret, {
+      await stripe.confirmCardPayment(res?.data?.clientSecret, {
         payment_method: {
           card: card,
         },
       });
     if (confirmError) {
-      toast.error("Payment failed:");
+      console.log(confirmError);
+      toast.error("Payment failed");
       // console.log("Payment failed:", confirmError.message);
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       toast.success("Payment successful!");

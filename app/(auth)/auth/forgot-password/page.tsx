@@ -47,7 +47,7 @@ export default function ForgotPassword() {
                 <Input
                   type="email"
                   placeholder="Enter work email"
-                  className="h-12"
+                  className="h-12 focus-visible:ring-0"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />

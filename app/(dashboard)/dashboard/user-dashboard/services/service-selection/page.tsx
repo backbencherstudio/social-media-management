@@ -12,7 +12,7 @@ const ServiceSelectionPage = () => {
   const [selectedServices, setSelectedServices] = useState<any>([]);
   const [promoCode, setPromoCode] = useState<string>("");
 
-  // console.log(selectedServices)
+  // console.log(data)
 
   const handleServiceSelect = (
     service: any,
