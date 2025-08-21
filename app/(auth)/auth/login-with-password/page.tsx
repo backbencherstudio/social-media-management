@@ -1,7 +1,7 @@
 "use client";
 
 import CustomImage from "@/components/reusable/CustomImage";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import loginImg from "@/public/login.png";
 import LogoIcon from "@/public/incons/logo";
 import { Input } from "@/components/ui/input";
@@ -10,34 +10,49 @@ import Link from "next/link";
 import Heading from "@/app/(client)/_components/heading-text";
 import { useLoginWithPasswordMutation } from "@/src/redux/auth/all-auth";
 import { toast } from "sonner";
-import SetCookies, { setRole } from "../_components/set-and-get-token";
-import { useRouter, useSearchParams } from "next/navigation";
-
+import SetCookies, { getToken, setRole } from "../_components/set-and-get-token";
+import { useRouter } from "next/navigation";
+import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
 
 export default function LoginWithPassword() {
+
+  const [token, setToken] = useState("");
+  const { data: user } = useGetCurrentUserQuery(token);
+  const currentRole = user?.data?.type;
+  console.log("", currentRole);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken();
+      setToken(token as string);
+    };
+    fetchToken();
+  }, []);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [loginWithPassword, { isLoading }] = useLoginWithPasswordMutation();
-  // const searchParams = useSearchParams();
-  // const redirect = searchParams.get("redirectPath");
   const router = useRouter();
-
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await loginWithPassword(formData);
 
+    // console.log(res);
+
     if (res?.data?.success) {
       await SetCookies(res);
-      await setRole(res)
+      await setRole(res);
 
       toast.success("Login successful");
       // if (redirect) {
       //   return router.push(redirect);
       // }
-      router.push("/");
+      router.push("/dashboard/user-dashboard");
+    } else {
+      toast.error(res?.data?.message || "Login Failed!");
     }
   };
 
@@ -72,7 +87,7 @@ export default function LoginWithPassword() {
                   <Input
                     type="email"
                     placeholder="Enter work email"
-                    className="h-12"
+                    className="h-12 focus-visible:ring-0"
                     value={formData.email}
                     onChange={handleChange}
                   />
@@ -81,7 +96,7 @@ export default function LoginWithPassword() {
                   <Input
                     type="password"
                     placeholder="Password"
-                    className="h-12"
+                    className="h-12 focus-visible:ring-0"
                     value={formData.password}
                     onChange={handleChange}
                   />

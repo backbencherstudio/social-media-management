@@ -16,7 +16,6 @@ const ServiceOption = ({ service, isSelected, onSelect }: any) => {
   const [serviceId, setServiceId] = useState<string | null>(null);
   const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
   const { data } = useGetSingleServiceQuery(serviceId as string);
-  // console.log(data?.service_tiers);
 
   useEffect(() => {
     setSelected(isSelected);

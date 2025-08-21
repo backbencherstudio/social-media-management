@@ -11,28 +11,31 @@ import { useResetPasswordMutation } from "@/src/redux/auth/all-auth";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-
 export default function SetNewPassword() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    token: ''
+    email: "",
+    password: "",
+    token: "",
   });
-  const router = useRouter()
+  const router = useRouter();
 
-  const [resetPassword] = useResetPasswordMutation()
+  const [resetPassword] = useResetPasswordMutation();
 
-  const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await resetPassword(formData)
-    toast.success("Change password successfully")
-    router.push('/auth/login-with-password')
+    const res = await resetPassword(formData);
+
+    if (res?.data?.success) {
+      toast.success("Change password successfully");
+      router.push("/auth/login-with-password");
+    }
+    toast.error("Something went wrong. Please try again later.");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -48,18 +51,21 @@ export default function SetNewPassword() {
             {/* Title */}
             <div className="mt-8">
               {/* <h1 className="text-[32px] font-bold"></h1> */}
-              <Heading text="Account recovery"  className="font-bold text-[32px]"/>
+              <Heading
+                text="Account recovery"
+                className="font-bold text-[32px]"
+              />
             </div>
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="mt-8 space-y-4">
               <div className="space-y-4">
-              <div>
+                <div>
                   <Input
                     type="email"
                     name="email"
                     placeholder="Enter your email"
-                    className="h-12"
+                    className="h-12 focus-visible:ring-0"
                     value={formData.email}
                     onChange={handleChange}
                   />
@@ -69,7 +75,7 @@ export default function SetNewPassword() {
                     type="text"
                     name="token"
                     placeholder="Enter your otp"
-                    className="h-12"
+                    className="h-12 focus-visible:ring-0"
                     value={formData.token}
                     onChange={handleChange}
                   />
@@ -79,17 +85,16 @@ export default function SetNewPassword() {
                     type="password"
                     name="password"
                     placeholder="Choose a new password"
-                    className="h-12"
+                    className="h-12 focus-visible:ring-0"
                     value={formData.password}
                     onChange={handleChange}
                   />
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4"
-              >
+              <Button
+                type="submit"
+                className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4 cursor-pointer">
                 Save changes
               </Button>
             </form>
@@ -98,9 +103,9 @@ export default function SetNewPassword() {
 
         {/* Right Side - Image */}
         <div className="hidden lg:block lg:w-[60%] bg-gray-100">
-          <CustomImage 
-            src={loginImg.src} 
-            alt="login" 
+          <CustomImage
+            src={loginImg.src}
+            alt="login"
             className="w-full h-[90vh] object-cover"
             width={800}
             height={800}
