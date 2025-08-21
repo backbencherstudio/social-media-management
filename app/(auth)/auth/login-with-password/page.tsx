@@ -10,24 +10,12 @@ import Link from "next/link";
 import Heading from "@/app/(client)/_components/heading-text";
 import { useLoginWithPasswordMutation } from "@/src/redux/auth/all-auth";
 import { toast } from "sonner";
-import SetCookies, { getToken, setRole } from "../_components/set-and-get-token";
-import { useRouter } from "next/navigation";
-import { useGetCurrentUserQuery } from "@/src/redux/features/user/user-auth";
+import SetCookies, { setRole } from "../_components/set-and-get-token";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginWithPassword() {
 
-  const [token, setToken] = useState("");
-  const { data: user } = useGetCurrentUserQuery(token);
-  const currentRole = user?.data?.type;
-  console.log("", currentRole);
-
-  useEffect(() => {
-    const fetchToken = async () => {
-      const token = await getToken();
-      setToken(token as string);
-    };
-    fetchToken();
-  }, []);
+ 
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,21 +26,24 @@ export default function LoginWithPassword() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await loginWithPassword(formData);
 
-    // console.log(res);
+    try {
+      const res = await loginWithPassword(formData);
 
-    if (res?.data?.success) {
-      await SetCookies(res);
-      await setRole(res);
+      if (res?.data?.success) {
+        await SetCookies(res);
+        await setRole(res);
 
-      toast.success("Login successful");
-      // if (redirect) {
-      //   return router.push(redirect);
-      // }
-      router.push("/dashboard/user-dashboard");
-    } else {
-      toast.error(res?.data?.message || "Login Failed!");
+        toast.success("Login successful");
+
+        // Redirect to role-based dashboard
+        const role = res?.data?.type;
+        router.push(`/dashboard/${role}-dashboard`);
+      } else {
+        toast.error("Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      toast.error("An error occurred during login.");
     }
   };
 

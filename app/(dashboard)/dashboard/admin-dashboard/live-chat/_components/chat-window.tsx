@@ -22,9 +22,14 @@ export function ChatWindow({
 
   return (
     <div className="flex-1 flex flex-col rounded-md border-l border-gray-200 overflow-hidden shadow-lg">
-      <ChatHeader user={selectedUser} />
-      <ChatMessages 
-        messages={messages} currentUserId={""}        // currentUserId={session?.user.id || ""} 
+      <ChatHeader
+        isAdmin={false}
+        activeUserId={selectedUser?.id ?? null}
+        users={[selectedUser]}
+      />
+      <ChatMessages
+        messages={messages}
+        currentUserId={""} // currentUserId={session?.user.id || ""}
       />
       <ChatInput onSendMessage={onSendMessage} />
     </div>
