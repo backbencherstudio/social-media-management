@@ -13,7 +13,6 @@ import { toast } from "sonner";
 import SetCookies, { setRole } from "../_components/set-and-get-token";
 import { useRouter, useSearchParams } from "next/navigation";
 
-
 export default function LoginWithPassword() {
   const [formData, setFormData] = useState({
     email: "",
@@ -24,20 +23,26 @@ export default function LoginWithPassword() {
   // const redirect = searchParams.get("redirectPath");
   const router = useRouter();
 
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await loginWithPassword(formData);
 
-    if (res?.data?.success) {
-      await SetCookies(res);
-      await setRole(res)
+    try {
+      const res = await loginWithPassword(formData);
 
-      toast.success("Login successful");
-      // if (redirect) {
-      //   return router.push(redirect);
-      // }
-      router.push("/");
+      if (res?.data?.success) {
+        await SetCookies(res);
+        await setRole(res);
+
+        toast.success("Login successful");
+
+        // Redirect to role-based dashboard
+        const role = res?.data?.type;
+        router.push(`/dashboard/${role}-dashboard`);
+      } else {
+        toast.error("Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      toast.error("An error occurred during login.");
     }
   };
 

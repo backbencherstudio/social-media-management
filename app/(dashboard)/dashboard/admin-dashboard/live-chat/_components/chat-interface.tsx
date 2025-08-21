@@ -9,10 +9,11 @@ import {
   useGetSingleUserMessageQuery,
 } from "@/src/redux/features/admin/help-and-support/support";
 import SendIcon from "@/public/incons/sendIcon";
-import ChatHeader from "./chat-header";
+
 import Loader from "../Loader";
 import { Skeleton } from "@/components/ui/skeleton";
 import GroupedMessages from "./group-message";
+import ChatHeader from "./chat-header";
 
 interface ChatInterfaceProps {
   userId: string;
