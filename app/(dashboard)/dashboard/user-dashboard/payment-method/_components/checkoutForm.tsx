@@ -47,20 +47,20 @@ const CheckoutForm = () => {
   // Create the payment intent using RTK Query when the component loads
   const [createPaymentIntent, { data, error }] = usePaymentServiceMutation();
 
-  useEffect(() => {
-    const fetchPaymentIntent = async () => {
-      try {
-        // Uncomment and implement this with your backend
-        // const response = await createPaymentIntent(services).unwrap();
-        // setClientSecret(response.clientSecret);
-      } catch (err) {
-        console.error("Error creating payment intent:", err);
-      }
-    };
-    if (services.length > 0) {
-      fetchPaymentIntent();
-    }
-  }, [services]);
+  // useEffect(() => {
+  //   const fetchPaymentIntent = async () => {
+  //     try {
+  //       // Uncomment and implement this with your backend
+  //       // const response = await createPaymentIntent(services).unwrap();
+  //       // setClientSecret(response.clientSecret);
+  //     } catch (err) {
+  //       console.error("Error creating payment intent:", err);
+  //     }
+  //   };
+  //   if (services.length > 0) {
+  //     fetchPaymentIntent();
+  //   }
+  // }, [services]);
 
   const onSubmit = async () => {
     const order = {
@@ -71,7 +71,7 @@ const CheckoutForm = () => {
     console.log(order);
     const res = await createPayment(order);
     setClientSecret(res?.data?.clientSecret);
-    console.log(res?.data?.clientSecret)
+    console.log(res?.data?.clientSecret);
 
     if (!stripe || !elements) {
       return;
@@ -80,6 +80,7 @@ const CheckoutForm = () => {
     if (card === null) {
       return;
     }
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,
@@ -88,7 +89,7 @@ const CheckoutForm = () => {
       toast.error(error.message);
     } else {
       // toast.success("Payment Done", paymentMethod?.id)
-      console.log(paymentMethod);
+      console.log("paymentMethod", paymentMethod);
     }
 
     const { error: confirmError, paymentIntent } =
@@ -108,6 +109,10 @@ const CheckoutForm = () => {
     }
     setLoading(false);
   };
+
+  if(!totalAmount){
+    router.push("/dashboard/user-dashboard/services/service-selection");
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
