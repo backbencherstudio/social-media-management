@@ -1,5 +1,4 @@
 import { useGetUserRecentActivitiesQuery } from "@/src/redux/features/user/home/userServicesApi";
-import { P } from "framer-motion/dist/types.d-B_QPEvFK";
 import {
   FaInstagram,
   FaTwitter,
