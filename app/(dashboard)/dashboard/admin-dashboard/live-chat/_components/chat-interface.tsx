@@ -90,7 +90,7 @@ export default function ChatInterface({
 
   useEffect(() => {
     const newSocket = io(
-      "https://trademarks-removed-examinations-cassette.trycloudflare.com"
+      "https://taggrowth.co"
     );
 
     setSocket(newSocket);
@@ -207,8 +207,8 @@ export default function ChatInterface({
     if (!messageInput.trim() || !socket || !activeUserId) return;
 
     const url = isAdmin
-      ? "https://trademarks-removed-examinations-cassette.trycloudflare.com/api/messages/message-to-user"
-      : "https://trademarks-removed-examinations-cassette.trycloudflare.com/api/messages/message-to-admin";
+      ? "https://taggrowth.co/api/messages/message-to-user"
+      : "https://taggrowth.co/api/messages/message-to-admin";
 
     const payload = isAdmin
       ? { adminId: userId, userId: activeUserId, message: messageInput }

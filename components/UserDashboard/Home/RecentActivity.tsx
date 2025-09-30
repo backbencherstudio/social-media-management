@@ -8,7 +8,6 @@ import {
 } from "react-icons/fa";
 
 
-
 // Helper function to map the platform to an icon
 const getPlatformIcon = (platform: any) => {
   switch (platform) {
@@ -22,6 +21,7 @@ const getPlatformIcon = (platform: any) => {
       return <FaImage className="text-gray-500" />;
   }
 };
+
 
 export default function RecentActivity() {
   const { data: recentActivities = [] } =
