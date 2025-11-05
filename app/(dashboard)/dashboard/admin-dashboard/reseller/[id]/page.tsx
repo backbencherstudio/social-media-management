@@ -52,7 +52,7 @@ export default function ResellerDetailsPage() {
     try {
       await acceptReseller({ userId: id as string });
       toast.success("Reseller accepted successfully");
-      router.push("/dashboard/reseller");
+      router.push("/dashboard/admin-dashboard/reseller");
     } catch (error) {
       console.log(error);
     }

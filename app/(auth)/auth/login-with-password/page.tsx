@@ -23,13 +23,14 @@ export default function LoginWithPassword() {
   });
   const [loginWithPassword, { isLoading }] = useLoginWithPasswordMutation();
   const router = useRouter();
+  const [userChecking, setUserChecking] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setUserChecking(true);
     try {
       const res = await loginWithPassword(formData);
-
+   
       if (res?.data?.success) {
         await SetCookies(res);
         await setRole(res);
@@ -39,11 +40,14 @@ export default function LoginWithPassword() {
         // Redirect to role-based dashboard
         const role = res?.data?.type;
         router.push(`/dashboard/${role}-dashboard`);
+        setUserChecking(false);
       } else {
         toast.error("Login failed. Please check your credentials.");
       }
     } catch (error) {
       toast.error("An error occurred during login.");
+    }finally{
+      setUserChecking(false);
     }
   };
 
@@ -107,7 +111,7 @@ export default function LoginWithPassword() {
                 type="submit"
                 className="w-full bg-black text-white hover:bg-gray-800 h-12 mt-4 cursor-pointer"
               >
-                {isLoading ? "Logging..." : "Login"}
+                {isLoading || userChecking ? "Logging..." : "Login"}
               </Button>
             </form>
           </div>

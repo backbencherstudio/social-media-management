@@ -37,13 +37,11 @@ export default function TextCard() {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <AnalyticsIcon className="text-4xl" />
-            <h3 className="text-xl font-semibold text-gray-800">Actives</h3>
+            <h3 className="text-xl font-semibold text-gray-800">Activities</h3>
           </div>
           <FaArrowRightLong className="text-gray-500 hover:text-gray-600 transition-colors" />
         </div>
-        <p className="mt-6">
-          Track performance metrics and insights
-        </p>
+        <p className="mt-6">Track performance metrics and insights</p>
         <div className="flex items-center justify-between">
           <span className="text-gray-600">Next post in 2 hours</span>
         </div>
@@ -54,13 +52,11 @@ export default function TextCard() {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <ContentCalendarIcon className="text-2xl" />
-            <h3 className="text-xl font-semibold text-gray-800">Revenue</h3>
+            <h3 className="text-xl font-semibold text-gray-800">Services</h3>
           </div>
-          <FaArrowRightLong className="text-gray-500 hover:text-gray-600 transition-colors" />
+          <FaArrowRightLong className="text-gray-500 hover:text-gray-600 transition-colors" />b
         </div>
-        <p className=" mt-6">
-          View and manage your content schedule
-        </p>
+        <p className=" mt-6">View and manage your content schedule</p>
         <div className="flex items-center justify-between">
           <span className="text-gray-600">Next post in 2 hours</span>
         </div>

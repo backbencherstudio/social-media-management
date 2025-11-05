@@ -1,3 +1,5 @@
+
+
 import React, { useState, useRef, useEffect } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FaRegUser } from "react-icons/fa";
@@ -45,11 +47,27 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // const handleSignOut = async () => {
+  //   await removeToken();
+  //   await removeRole();
+  //   router.push("/");
+  //   window.location.reload();
+
+  // };
+
   const handleSignOut = async () => {
-    await removeToken();
-    await removeRole();
-    router.push("/");
-  };
+  try {
+    // 🔥 Instead of calling server actions directly
+    document.cookie = "accessToken=; Max-Age=0; path=/";
+    document.cookie = "role=; Max-Age=0; path=/";
+
+    router.push("/auth/login-with-password");
+    window.location.reload(); // force refresh if needed
+  } catch (err) {
+    console.error("Logout failed:", err);
+  }
+};
+
 
   return (
     <header className="bg-white border-b border-[#E9E9EA] z-10">
@@ -81,7 +99,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
             </span>
           </Link>
 
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative bg-white" ref={dropdownRef}>
             <div
               className="flex items-center gap-3 p-2 rounded-full hover:bg-gray-100 cursor-pointer transition-colors duration-200"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -99,7 +117,7 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
             {/* Dropdown Menu with enhanced smooth transition */}
             <div
               className={`
-              absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50
+              absolute right-0 mt-2 w-48 bg-white  rounded-lg shadow-lg py-2 z-100 
               transition-all duration-200 ease-out
               transform origin-top-right
               ${
@@ -126,14 +144,18 @@ export default function Navbar({ onMobileMenuToggle }: NavbarProps) {
                   <RiUserLine className="w-4 h-4" />
                   Profile
                 </Link>
-                <button className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200">
-                  <IoSettingsOutline className="w-4 h-4" />
-                  Settings
-                </button>
+                {role === "admin" && (
+                  <Link href={`/dashboard/${role}-dashboard/settings`}>
+                    <button className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200 cursor-pointer">
+                      <IoSettingsOutline className="w-4 h-4" />
+                      Settings
+                    </button>
+                  </Link>
+                )}
                 <div className="border-t border-gray-200 my-1"></div>
                 <button
                   onClick={handleSignOut}
-                  className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200"
+                  className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2 transition-colors duration-200 cursor-pointer"
                 >
                   <IoLogOutOutline className="w-4 h-4" />
                   Sign out

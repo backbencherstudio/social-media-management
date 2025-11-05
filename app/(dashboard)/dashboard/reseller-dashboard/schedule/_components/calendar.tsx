@@ -191,7 +191,7 @@ export default function Calendar() {
              */}
 
             {/* Date picker */}
-            <div className="z-100 relative">
+            <div>
               <DateRangePicker
                 startDate={startDate}
                 endDate={endDate}

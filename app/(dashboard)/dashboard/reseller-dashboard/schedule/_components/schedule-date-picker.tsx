@@ -17,7 +17,8 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
   setDateRange,
 }) => {
   return (
-    <div className="relative">
+    <div className="relative z-4 ">
+      
       <DatePicker
         selectsRange={true}
         startDate={startDate}
@@ -36,6 +37,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
         }
         className="z-10"
       />
+
     </div>
   );
 };
