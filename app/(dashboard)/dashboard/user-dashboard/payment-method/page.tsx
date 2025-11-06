@@ -4,12 +4,16 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 import CheckoutForm from "./_components/checkoutForm";
+import { useRole } from "@/hooks/useRole";
 
 export default function PaymentMethod() {
 
   const stripePromise =  loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
   );
+
+  const {role} = useRole();
+  console.log("This is role 3000", role)
 
   return (
     <div className="max-w-[741px] mx-auto bg-white p-4 md:p-6 lg:p-8 rounded-xl shadow-sm">

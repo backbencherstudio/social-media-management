@@ -13,7 +13,6 @@ import { useRole } from "@/hooks/useRole";
 const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState("");
   const {role} = useRole();
-  console.log("The is role", role)
   
   const router = useRouter();
 
@@ -109,15 +108,14 @@ const CheckoutForm = () => {
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       toast.success("Payment successful!");
       // console.log("", paymentIntent.id);
-      router.push('/dashboard/user-dashboard/payment-invoices');
-      // router.push(`/dashboard/${role}-dashboard/payment-invoices`);
-     
+      router.push("/dashboard/client-dashboard/invoices");
+      
     }
     setLoading(false);
   };
 
   if(!totalAmount){
-    role && router.push(`/dashboard/user-dashboard/services/service-selection`);
+    router.push("/dashboard/client-dashboard/services/service-selection");
   }
 
   return (

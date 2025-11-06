@@ -78,8 +78,12 @@ export default function CreateSchedulePost() {
     console.log(formData.get("data"), formData.getAll("files"));
 
     if (formData.get("data") && formData.getAll("files").length > 0) {
-      await createSchedulePost(formData);
+    try {
+        await createSchedulePost(formData);
       toast.success("Post scheduled successfully");
+    } catch (error) {
+      toast.error
+    }
     }
   };
 

@@ -21,7 +21,7 @@ export default function ActiveServices() {
         </div>
         <div className="w-full sm:w-auto">
           <Link
-            href={"/dashboard/admin-services/create-new-service"}
+            href={"/dashboard/admin-dashboard/admin-services/create-new-service"}
             className="bg-black text-white px-4 py-3 rounded-lg"
           >
             + Create New Service

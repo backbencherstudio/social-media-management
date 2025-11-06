@@ -13,6 +13,8 @@ const Invoices = () => {
   const { data: payment, isLoading } = useClientPaymentsQuery(null);
   const payments = payment?.data || [];
 
+  console.log("Payments from client", payment)
+
   const [getInvoicePdf, { isLoading: isDownloading }] =
     useLazyGetInvoicePdfQuery();
 

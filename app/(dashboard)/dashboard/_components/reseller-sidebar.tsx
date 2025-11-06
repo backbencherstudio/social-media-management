@@ -186,6 +186,7 @@ export default function ResellerSidebar({
   ];
 
   const { data: clientList } = useGetClientListQuery();
+  console.log("ClientList", clientList);
 
   const clients =
     clientList?.data?.map((client: any) => ({

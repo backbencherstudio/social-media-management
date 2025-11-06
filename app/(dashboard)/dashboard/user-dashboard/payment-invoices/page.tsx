@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
 import { ImPower } from "react-icons/im";
 
@@ -48,10 +49,11 @@ export default function PaymentInvoices() {
       <div className="space-y-6 border border-gray-100 p-4 rounded-xl">
         <div className="flex justify-between items-center ">
           <h1>Active Services</h1>
-          <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
+      <Link href="/dashboard/user-dashboard/services">
+        <button className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors duration-200 border border-gray-200">
             <ImPower />
             <span>Add Services</span>
-          </button>
+          </button></Link>
         </div>
         <table className="min-w-full table-auto border-collapse  rounded-lg">
           <thead className="bg-gray-100 text-gray-700 text-left rounded-t-lg">

@@ -4,6 +4,7 @@ import { useCreateServiceMutation } from "@/src/redux/features/admin/services";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface ServiceFormData {
   name: string;
@@ -68,7 +69,13 @@ export default function CreateNewService() {
       features: data.features.split("\n"),
       tiers: validTiers,
     };
-    await createService(allServices);
+    
+    try {
+      await createService(allServices);
+      toast.success("Service created successfully!")
+    } catch (error) {
+      toast.error("Something went wrong!")
+    }
   };
 
   return (
@@ -336,6 +343,7 @@ export default function CreateNewService() {
           {/* Submit Button */}
           <div className="pt-4">
             <button
+              disabled={isLoading}
               type="submit"
               className="w-full md:w-auto px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm md:text-base"
             >

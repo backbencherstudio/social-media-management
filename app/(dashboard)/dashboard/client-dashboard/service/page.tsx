@@ -25,7 +25,7 @@ const Service = () => {
           </div>
         </div>
         <Link
-          href="/dashboard/service/"
+          href="/dashboard/client-dashboard/services/service-selection"
           className="px-7 py-3 bg-[#1A7DFF] text-white rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-2"
         >
           <ImPower className="w-5 h-5" /> Add Services
