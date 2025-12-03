@@ -73,7 +73,7 @@ export default function SupportChatBoart() {
 
     try {
       const res = await fetch(
-        "https://bird-first-axis-fuzzy.trycloudflare.com/api/chat",
+        "https://taggrowth.co/api/chat",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
