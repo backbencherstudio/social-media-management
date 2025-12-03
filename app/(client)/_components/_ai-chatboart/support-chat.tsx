@@ -144,7 +144,7 @@ export default function SupportChatBoart() {
             ref={chatBoxRef}
             className="flex-1 overflow-y-auto px-5 py-3 bg-white"
           >
-            {messages.map((msg, idx) => (
+            {messages?.map((msg, idx) => (
               <div
                 key={`${msg.timestamp}-${idx}-${tick}`}
                 className={`flex flex-col mb-3 ${
