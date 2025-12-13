@@ -36,7 +36,7 @@ const serotiva = localFont({
 });
 
 export const metadata: Metadata = {
-  title: AppConfig().app.name,
+  title: "Social Media Management",
   description: AppConfig().app.slogan,
 };
 
