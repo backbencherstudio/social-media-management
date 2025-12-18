@@ -56,31 +56,30 @@ export const ServicesDropdownContent = () => (
         </ul>
       </div>
 
-      <div>
-        <p className="text-gray-500 serotiva-regular text-sm truncate">COMING SOON</p>
-        <ul className="mt-2 space-y-2">
-          <NavLink
-            href="/services/review-management"
-            icon={<StarIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded flex-shrink-0" />}
-            text="Review Management"
-            className="whitespace-nowrap overflow-hidden text-ellipsis"
-          />
-          <NavLink
-            href="/services/ugc-videos"
-            icon={
-              <UGCVideosIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded flex-shrink-0" />
-            }
-            text="UGC Videos"
-            className="whitespace-nowrap overflow-hidden text-ellipsis"
-          />
-          <NavLink
-            href="/services/meta-ads"
-            icon={<AnalysisIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded flex-shrink-0" />}
-            text="Meta Ads Management"
-            className="whitespace-nowrap overflow-hidden text-ellipsis"
-          />
-        </ul>
-      </div>
+   <div>
+  <p className="text-gray-500 serotiva-regular text-sm truncate">COMING SOON</p>
+
+  <ul className="mt-2 space-y-2 pointer-events-none opacity-80">
+    <NavLink
+      href="/services/review-management"
+      icon={<StarIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded shrink-0" />}
+      text="Review Management"
+    />
+
+    <NavLink
+      href="/services/ugc-videos"
+      icon={<UGCVideosIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded shrink-0" />}
+      text="UGC Videos"
+    />
+
+    <NavLink
+      href="/services/meta-ads"
+      icon={<AnalysisIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded flex-shrink-0" />}
+      text="Meta Ads Management"
+    />
+  </ul>
+</div>
+
     </div>
   </div>
 );
