@@ -51,11 +51,7 @@ const ServiceSection = () => (
         text="Pricing"
         href="/pricing-and-package"
       />
-      <NavLink
-        icon={<EditIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
-        text="Our Work"
-        href="/our-work"
-      />
+
       <NavLink
         icon={<EmojiIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Reviews"
@@ -77,7 +73,7 @@ const CompanySection = () => (
       <NavLink
         icon={<AddIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Get Started"
-        href="/get-started"
+        href="/"
       />
     </ul>
   </div>
@@ -90,7 +86,7 @@ const LearnSection = () => (
       <NavLink
         icon={<WatchIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
         text="Watch Demo Video"
-        href="/demo"
+        href="/#demo-video"
       />
       <NavLink
         icon={<BookIcon className="w-8 h-8 bg-[#F6F8FA] p-2 rounded" />}
@@ -168,11 +164,7 @@ const MobileAboutUsDropdown = ({
             icon={<PricingIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Pricing"
           />
-          <MobileNavLink
-            href="/our-work"
-            icon={<EditIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
-            text="Our Work"
-          />
+
           <MobileNavLink
             href="/reviews"
             icon={<EmojiIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
@@ -187,7 +179,7 @@ const MobileAboutUsDropdown = ({
             text="About Us →"
           />
           <MobileNavLink
-            href="/get-started"
+            href="/"
             icon={<AddIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Get Started"
           />
@@ -291,17 +283,17 @@ const MobileServicesDropdown = ({
         </MobileSection>
         <MobileSection title="COMING SOON">
           <MobileNavLink
-            href="/services/review-management"
+            href="/"
             icon={<StarIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Review Management"
           />
           <MobileNavLink
-            href="/services/ugc-videos"
+            href="/"
             icon={<CameraIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="UGC Videos"
           />
           <MobileNavLink
-            href="/services/meta-ads"
+            href="/"
             icon={<AnalysisIcon className="w-6 h-6 bg-[#F6F8FA] p-1 rounded" />}
             text="Meta Ads Management"
           />

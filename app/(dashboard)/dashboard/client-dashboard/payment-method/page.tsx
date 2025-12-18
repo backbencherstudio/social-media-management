@@ -12,7 +12,7 @@ export default function PaymentMethod() {
   );
 
   return (
-    <div className="max-w-[741px] mx-auto bg-white p-4 md:p-6 lg:p-8 rounded-xl shadow-sm">
+    <div className="max-w-[940px] mx-auto bg-white p-4 md:p-6 lg:p-8 rounded-xl shadow-sm">
       <h1 className="text-2xl md:text-3xl font-bold mb-6">
         Add payment method
       </h1>
